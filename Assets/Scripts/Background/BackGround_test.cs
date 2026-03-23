@@ -25,7 +25,7 @@ public class BackGround_test : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         bgwidth = spriteRenderer.bounds.size.x;
 
-        print("图片的宽度：" + bgwidth);
+        // print("图片的宽度：" + bgwidth);
     }
 
     void bgMove()

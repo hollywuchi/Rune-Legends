@@ -11,3 +11,8 @@ public enum PersistentType
 {
     readwrite,DoNotPersis
 }
+
+public enum AreaName
+{
+    Forest,Desert,None
+}
