@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Back Tree
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - f350126c353746144aeeb9299fdac1b0: 782273283
+    - f350126c353746144aeeb9299fdac1b0: 1310630365
+    - f350126c353746144aeeb9299fdac1b0: -563272406
+    - f350126c353746144aeeb9299fdac1b0: 1514186259
+    - f350126c353746144aeeb9299fdac1b0: -560437549
+    - f350126c353746144aeeb9299fdac1b0: 1521703236
+    - f350126c353746144aeeb9299fdac1b0: 746281332
+    - f350126c353746144aeeb9299fdac1b0: -1383465598
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 782273283, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  - {fileID: 1310630365, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  - {fileID: -563272406, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  - {fileID: 1514186259, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  - {fileID: -560437549, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  - {fileID: 1521703236, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  - {fileID: 746281332, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  - {fileID: -1383465598, guid: f350126c353746144aeeb9299fdac1b0, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Background_6
+  - Background_4
+  - Background_5
+  - Background_2
+  - Background_0
+  - Background_1
+  - Background_9
+  - Background_10
+  m_RenderDataMap: {}
+  m_Tag: Back Tree
+  m_IsVariant: 0

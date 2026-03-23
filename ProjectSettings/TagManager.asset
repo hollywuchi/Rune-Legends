@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Bounds
+  - Water
+  - Interactable
+  - Camera
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Ground
+  - Player
+  - Enemy
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: back3
+    uniqueID: 2435200263
+    locked: 0
+  - name: back2
+    uniqueID: 2074381435
+    locked: 0
+  - name: back1
+    uniqueID: 1731934165
+    locked: 0
+  - name: Player
+    uniqueID: 2842595057
+    locked: 0
+  - name: middle
+    uniqueID: 904739989
+    locked: 0
+  - name: forward1
+    uniqueID: 2710277413
+    locked: 0
+  - name: forward2
+    uniqueID: 2031538403
+    locked: 0
+  - name: forward3
+    uniqueID: 4153474851
+    locked: 0
