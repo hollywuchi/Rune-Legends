@@ -272,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 138384434}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -86.94, y: -5.48, z: 0}
+  m_LocalPosition: {x: -24.7, y: -5.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {fileID: 138384437}
-  firstPosition: {x: -86.94, y: -5.48, z: 0}
+  firstPosition: {x: -24.7, y: -5.48, z: 0}
   menuPosition: {x: 3, y: 4, z: 0}
   SceneLoadEventSO: {fileID: 11400000, guid: d5d257a02561d1642a26eb71e3b1fc96, type: 2}
   NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
@@ -827,54 +827,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180177449}
   m_CullTransparentMesh: 1
---- !u!1 &204739047
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 204739049}
-  - component: {fileID: 204739048}
-  m_Layer: 0
-  m_Name: BackGroundFadeController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &204739048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204739047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 473f40a74bdef674486ea80e178b6569, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerTrans: {fileID: 0}
-  fadeOutSpeed: 1
-  fadeInSpeed: 1
-  areaName: 0
---- !u!4 &204739049
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 204739047}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -73.62056, y: 14.699969, z: -0.5004275}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &254350100
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +896,7 @@ Transform:
   m_GameObject: {fileID: 254350100}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -86.94, y: -4.2, z: -10}
+  m_LocalPosition: {x: -24.7, y: -4.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1718,7 +1670,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -86.94, y: -4.2, z: -10}
+  m_LocalPosition: {x: -24.7, y: -4.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5147,4 +5099,3 @@ SceneRoots:
   - {fileID: 1016437138}
   - {fileID: 420241192}
   - {fileID: 762134287}
-  - {fileID: 204739049}

@@ -14,5 +14,5 @@ public enum PersistentType
 
 public enum AreaName
 {
-    Forest,Desert,None
+    Forest,Mountain,None
 }

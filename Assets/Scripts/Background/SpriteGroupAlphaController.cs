@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.Scripting.APIUpdating;
 
 public class SpriteGroupAlphaController : MonoBehaviour
 {
     private SpriteRenderer[] renders;
-    private float currentAlpha;
+    [SerializeField] private float currentAlpha;
 
     [Header("玩家组件")]
     public Transform playerTrans;
@@ -17,17 +12,25 @@ public class SpriteGroupAlphaController : MonoBehaviour
     public float fadeOutSpeed = 1f;
     public float fadeInSpeed = 1f;
 
-    private float currentTargetAlpha = 1f;
-    private bool playerInside = false;
+    [SerializeField] private float currentTargetAlpha;
+    [SerializeField] private bool playerInside = false;
     private float lastPlayerPosX;
 
     [Header("判断玩家到底进入了那个区域")]
     public AreaName areaName;
+    public AreaName currentArea;
     void Awake()
     {
         renders = GetComponentsInChildren<SpriteRenderer>();
+
+        if (currentArea != areaName && playerInside == false)
+        {
+            currentTargetAlpha = 0;
+            SetAlpha(currentTargetAlpha);
+            // Debug.Log("设置alpha值为" + currentTargetAlpha);
+        }
     }
-    
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -71,7 +74,7 @@ public class SpriteGroupAlphaController : MonoBehaviour
                 currentTargetAlpha += fadeInSpeed * Time.deltaTime;
         }
 
-        if (areaName == AreaName.Desert)
+        if (areaName == AreaName.Mountain)
         {
             if (movementDir >= 0.001f)
                 currentTargetAlpha += fadeInSpeed * Time.deltaTime;
@@ -80,6 +83,7 @@ public class SpriteGroupAlphaController : MonoBehaviour
         }
 
         lastPlayerPosX = playerTrans.position.x;
+        currentTargetAlpha = Mathf.Clamp01(currentTargetAlpha);
     }
 
     /// <summary>
@@ -92,6 +96,7 @@ public class SpriteGroupAlphaController : MonoBehaviour
 
         currentAlpha = Mathf.Clamp01(alpha);
 
+
         foreach (SpriteRenderer sp in renders)
         {
             if (sp != null)
@@ -100,6 +105,32 @@ public class SpriteGroupAlphaController : MonoBehaviour
                 color.a = currentAlpha;
                 sp.color = color;
             }
+        }
+
+        // if (currentAlpha > 0.9)
+        // {
+        //     currentAlpha = 1;
+        //     currentArea = areaName;
+        //     return;
+        // }
+        // else if (currentAlpha <= 0.1)
+        // {
+        //     currentAlpha = 0;
+        //     currentArea = AreaName.None;
+        //     return;
+        // }
+
+        if(playerInside == false && currentAlpha >0.5 )
+        {
+            currentAlpha = 1;
+            currentArea = areaName;
+            return;
+        }
+        else if(playerInside == false && currentAlpha <0.5)
+        {
+            currentAlpha = 0;
+            currentArea = AreaName.None;
+            return;
         }
 
     }
