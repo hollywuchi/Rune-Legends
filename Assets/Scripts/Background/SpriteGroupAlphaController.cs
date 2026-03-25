@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 淡入淡出和背景区域化
 public class SpriteGroupAlphaController : MonoBehaviour
 {
     private SpriteRenderer[] renders;

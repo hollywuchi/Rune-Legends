@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// 视差效果
 public class Parallax : MonoBehaviour
 {
     private Transform camTrans;
@@ -13,7 +14,7 @@ public class Parallax : MonoBehaviour
         lastPos = camTrans.position;
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         ParallaxMove();
     }
@@ -21,7 +22,7 @@ public class Parallax : MonoBehaviour
     private void ParallaxMove()
     {
         float deltaX = camTrans.position.x - lastPos.x;
-        transform.position += new Vector3(deltaX * parallaxSpeed, 0, 0);
+        transform.position += new Vector3(deltaX * parallaxSpeed * Time.fixedDeltaTime, 0, 0);
         lastPos = camTrans.position;
     }
 

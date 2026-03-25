@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEditorInternal;
 using UnityEngine;
 
+// 无限背景
 public class BackGround_test : MonoBehaviour
 {
     private Camera cam;
@@ -15,7 +12,12 @@ public class BackGround_test : MonoBehaviour
         getWidth();
     }
 
-    void Update()
+    // void Update()
+    // {
+    //     bgMove();
+    // }
+
+    void LateUpdate()
     {
         bgMove();
     }
@@ -32,7 +34,7 @@ public class BackGround_test : MonoBehaviour
     {
         float distence = cam.transform.position.x - transform.position.x;
 
-        if(Mathf.Abs(distence) > bgwidth)
+        if (Mathf.Abs(distence) > bgwidth)
         {
             transform.position += Vector3.right * 2 * bgwidth * Mathf.Sign(distence);
         }
