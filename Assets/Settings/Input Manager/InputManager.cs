@@ -139,7 +139,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""WalkOrRun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -150,7 +150,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""WalkOrRun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -161,7 +161,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""WalkOrRun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -172,7 +172,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard&Mouse;Gamepad"",
                     ""action"": ""WalkOrRun"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true

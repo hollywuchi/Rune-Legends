@@ -9,13 +9,19 @@ public class PlayerIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        
-        // WORKFLOW:这里写进入状态之后要做的事
+        player.animator.Play("Idle");
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();  // base因为是继承的PlayerGroundState，地面检测都在其中
-        // WORKFLOW:在这里添加状态切换条件
+        if(player.inputActions.MoveSystem.WalkOrRun.IsPressed())
+            stateMachine.ChangeState(player.runState);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
     }
 }
