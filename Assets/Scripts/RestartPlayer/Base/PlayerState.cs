@@ -24,9 +24,10 @@ public abstract class PlayerState
     public virtual void LogicUpdate() { }       // 每一帧执行（Update）
     public virtual void PhysicsUpdate() { }     // 物理帧执行（FixUpdate)
     public virtual void Exit() { }              // 离开状态的一瞬间执行
-    
+
     public IEnumerator SwitchAnimation(string aniName)
     {
+        // 暂停一帧
         yield return null;
 
         AnimatorStateInfo stateInfo = player.animator.GetCurrentAnimatorStateInfo(0);
@@ -39,5 +40,5 @@ public abstract class PlayerState
 
         player.animator.Play(aniName);
 
-    } 
+    }
 }

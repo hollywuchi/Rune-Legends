@@ -9,13 +9,12 @@ public class PlayerIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        player.animator.Play("Idle");
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();  // base因为是继承的PlayerGroundState，地面检测都在其中
-        if(player.inputActions.MoveSystem.WalkOrRun.IsPressed())
+        if (Mathf.Abs(player.moveInput.x) > 0.01f)
             stateMachine.ChangeState(player.runState);
     }
 

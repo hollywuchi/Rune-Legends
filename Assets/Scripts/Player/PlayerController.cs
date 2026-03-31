@@ -147,7 +147,6 @@ public class PlayerController : MonoBehaviour
 
         while (Time.time < EndTime)
         {
-            // TODO：继续完善手柄震动 但暂时关闭
             // Gamepad.current.SetMotorSpeeds(low, high);
             print("it's shaking");
             yield return null;
