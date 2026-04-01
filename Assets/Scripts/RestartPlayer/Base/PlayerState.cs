@@ -8,6 +8,7 @@ public abstract class PlayerState
 {
     protected Player player;
     protected PlayerStateMachine stateMachine;
+    protected bool isAnimationFinished;
 
     /// <summary>
     /// 构造函数,自动赋值
@@ -20,25 +21,15 @@ public abstract class PlayerState
         this.stateMachine = stateMachine;
     }
 
-    public virtual void Enter() { }             // 进入状态的一瞬间执行
+    public virtual void Enter()
+    {
+        isAnimationFinished = false;
+    }             // 进入状态的一瞬间执行
     public virtual void LogicUpdate() { }       // 每一帧执行（Update）
     public virtual void PhysicsUpdate() { }     // 物理帧执行（FixUpdate)
     public virtual void Exit() { }              // 离开状态的一瞬间执行
-
-    public IEnumerator SwitchAnimation(string aniName)
+    public virtual void OnAnimationFinished()
     {
-        // 暂停一帧
-        yield return null;
-
-        AnimatorStateInfo stateInfo = player.animator.GetCurrentAnimatorStateInfo(0);
-
-        while(stateInfo.normalizedTime < 1.0f || player.animator.IsInTransition(0))
-        {
-            yield return null;
-            stateInfo = player.animator.GetCurrentAnimatorStateInfo(0);
-        }
-
-        player.animator.Play(aniName);
-
-    }
+        isAnimationFinished = true;
+    }    
 }

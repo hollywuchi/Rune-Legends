@@ -9,6 +9,7 @@ public class PlayerIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("进入Idle状态");
     }
 
     public override void LogicUpdate()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -22,7 +23,8 @@ public class Player : MonoBehaviour
     public PlayerWalkState walkState;
 
     [Header("状态参数")]
-    public bool isFaceRight = true;
+    // 角色朝向：1代表右边，-1代表左边
+    public int FacingDirection = 1;
     // [Header("动画片段优化")]
     // public readonly int ToRun = Animator.StringToHash("ToRun");
     // public readonly int Running = Animator.StringToHash("Running");
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
         idleState = new PlayerIdleState(this, stateMachine);
         runState = new PlayerRunState(this, stateMachine);
         turnState = new PlayerTurnState(this, stateMachine);
+        walkState = new PlayerWalkState(this, stateMachine);
         inputActions.Enable();
     }
 
@@ -63,21 +66,30 @@ public class Player : MonoBehaviour
     }
 
 
-    public void CheckTurn()
+    // public void ChackTurn()
+    // {
+    //     if (moveInput.x * rb.velocity.x < 0)
+    //     {
+    //         if (moveInput.x > 0.1f && !isFaceRight)
+    //         {
+    //             stateMachine.ChangeState(turnState);
+    //         }
+    //         else if (moveInput.x < 0.1f && isFaceRight)
+    //         {
+    //             stateMachine.ChangeState(turnState);
+    //         }
+    //         return;
+    //     }
+    // }
+    public void Flip()
     {
-        if (moveInput.x > 0.1f && !isFaceRight)
-        {
-            Flip();
-        }
-        else if (moveInput.x < 0.1f && isFaceRight)
-        {
-            Flip();
-        }
-    }
-    private void Flip()
-    {
-        isFaceRight = !isFaceRight;
+        FacingDirection *= -1;
         transform.Rotate(0, 180f, 0);
+    }
+
+    public void Animation_TurnFinished()
+    {
+        stateMachine.CurrentState.OnAnimationFinished();
     }
 
     /// <summary>
@@ -95,9 +107,10 @@ public class Player : MonoBehaviour
                 // 当玩家不动的时候，return回去，防止其他操作
                 return;
             }
-            // 否则就切换到行走状态
-            stateMachine.ChangeState(walkState);
+            else
+                // 否则就切换到行走状态
+                stateMachine.ChangeState(walkState);
         }
-        else stateMachine.ChangeState(idleState);
     }
+
 }

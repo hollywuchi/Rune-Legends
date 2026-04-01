@@ -10,7 +10,7 @@ public class PlayerWalkState : PlayerGroundState
     {
         base.Enter();
         // player.animator.SetBool("IsWalking",true);
-        Debug.Log("进入行走状态");
+        Debug.Log("进入Walk状态");
     }
 
     public override void LogicUpdate()

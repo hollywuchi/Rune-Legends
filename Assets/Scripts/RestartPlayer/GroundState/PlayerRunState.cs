@@ -19,13 +19,19 @@ public class PlayerRunState : PlayerGroundState
     {
         base.LogicUpdate();
 
-        player.ChackMoveState();
-
-        // 当玩家输入方向和速度方向不匹配的时候，就认为是转向了
-        if (player.moveInput.x * player.rb.velocity.x <= 0)
+        if (player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) != player.FacingDirection)
         {
+            // 输入方向和面朝方向反了！立刻进入转身状态！
             stateMachine.ChangeState(player.turnState);
+            return; 
         }
+        
+        if (Mathf.Abs(player.moveInput.x) < 0.01f && Mathf.Abs(player.rb.velocity.x) < 0.1f)
+            {
+                stateMachine.ChangeState(player.idleState);
+                // 当玩家不动的时候，return回去，防止其他操作
+                return;
+            }
     }
 
     public override void PhysicsUpdate()
@@ -38,14 +44,16 @@ public class PlayerRunState : PlayerGroundState
     {
         base.Exit();
         player.animator.SetBool("IsRunning", false);
+        Debug.Log("退出Run状态");
     }
 
     private void Run()
     {
-        // player.inputActions.MoveSystem.WalkOrRun
         Vector2 dir = player.inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
 
         player.rb.velocity = new Vector2(dir.x * player.Speed * Time.deltaTime, player.rb.velocity.y);
+
+        // Debug.Log(player.rb.velocity);
     }
 
 }
