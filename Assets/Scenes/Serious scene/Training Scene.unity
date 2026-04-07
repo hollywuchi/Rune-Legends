@@ -291,7 +291,8 @@ Transform:
   m_LocalPosition: {x: -29.22, y: -8.37, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 964480553}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &459923746
@@ -558,12 +559,12 @@ Transform:
   m_GameObject: {fileID: 964480550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.6099987, y: 6.8199997, z: -10}
+  m_LocalPosition: {x: 0, y: 5.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1646991212}
-  m_Father: {fileID: 1797461657}
+  m_Father: {fileID: 360653505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1070256464
 GameObject:
@@ -1614,8 +1615,8 @@ MonoBehaviour:
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0.11
-  m_DeadZoneHeight: 0.19
+  m_DeadZoneWidth: 0.1
+  m_DeadZoneHeight: 0.13
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.8
@@ -1833,7 +1834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1728129693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1983,9 +1984,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1797461657}
   - component: {fileID: 1797461656}
-  - component: {fileID: 1797461658}
   - component: {fileID: 1797461661}
   - component: {fileID: 1797461660}
+  - component: {fileID: 1797461658}
   - component: {fileID: 1797461663}
   - component: {fileID: 1797461662}
   m_Layer: 0
@@ -2059,8 +2060,7 @@ Transform:
   m_LocalPosition: {x: -29.22, y: -9.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 964480553}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1797461658
@@ -2143,16 +2143,16 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 55e506ed79d8c1e498f7a6c73f538eb6, type: 2}
+  m_AngularDrag: 0.05
+  m_GravityScale: 4
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -2169,6 +2169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 500
+  walkBufferTimer: 0
   rb: {fileID: 1797461661}
   animator: {fileID: 1797461658}
   stateMachine: {fileID: 1797461663}

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public InputManager inputActions;
     [Header("参数调整")]
     public float Speed;
+    public float walkBufferTimer;
 
     [Header("基本组件")]
     public Rigidbody2D rb;
@@ -25,10 +26,6 @@ public class Player : MonoBehaviour
     [Header("状态参数")]
     // 角色朝向：1代表右边，-1代表左边
     public int FacingDirection = 1;
-    // [Header("动画片段优化")]
-    // public readonly int ToRun = Animator.StringToHash("ToRun");
-    // public readonly int Running = Animator.StringToHash("Running");
-    // public readonly int BreakRun = Animator.StringToHash("BreakRun");
 
     public Vector2 moveInput;
     void Awake()
@@ -40,6 +37,8 @@ public class Player : MonoBehaviour
         runState = new PlayerRunState(this, stateMachine);
         turnState = new PlayerTurnState(this, stateMachine);
         walkState = new PlayerWalkState(this, stateMachine);
+
+        // 别忘了打开新的控制系统
         inputActions.Enable();
     }
 
@@ -66,27 +65,20 @@ public class Player : MonoBehaviour
     }
 
 
-    // public void ChackTurn()
-    // {
-    //     if (moveInput.x * rb.velocity.x < 0)
-    //     {
-    //         if (moveInput.x > 0.1f && !isFaceRight)
-    //         {
-    //             stateMachine.ChangeState(turnState);
-    //         }
-    //         else if (moveInput.x < 0.1f && isFaceRight)
-    //         {
-    //             stateMachine.ChangeState(turnState);
-    //         }
-    //         return;
-    //     }
-    // }
+    public bool WalkBuffer()
+    {
+        walkBufferTimer += Time.deltaTime;
+        if(walkBufferTimer >= 0.05f)
+            return true;
+        else
+            return false;
+    }
     public void Flip()
     {
         FacingDirection *= -1;
         transform.Rotate(0, 180f, 0);
     }
-
+    
     public void Animation_TurnFinished()
     {
         stateMachine.CurrentState.OnAnimationFinished();
@@ -97,7 +89,6 @@ public class Player : MonoBehaviour
     /// </summary>
     public void ChackMoveState()
     {
-        // BUG:玩家当前没有正确判定转身后该进入什么状态，导致状态混乱
         // 根据玩家输入判断是否在行走，轻推摇杆为走路，满摇杆为跑步
         if (Mathf.Abs(moveInput.x) < 0.4f)
         {

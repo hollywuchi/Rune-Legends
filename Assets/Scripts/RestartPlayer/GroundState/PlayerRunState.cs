@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 public class PlayerRunState : PlayerGroundState
 {
     public PlayerRunState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
-
+    
     public override void Enter()
     {
         base.Enter();
+        // player.animator.SetBool("Conversion", false);
         player.animator.SetBool("IsRunning", true);
         Debug.Log("进入跑步状态");
     }
@@ -23,15 +25,23 @@ public class PlayerRunState : PlayerGroundState
         {
             // 输入方向和面朝方向反了！立刻进入转身状态！
             stateMachine.ChangeState(player.turnState);
-            return; 
+            return;
         }
-        
-        if (Mathf.Abs(player.moveInput.x) < 0.01f && Mathf.Abs(player.rb.velocity.x) < 0.1f)
-            {
-                stateMachine.ChangeState(player.idleState);
-                // 当玩家不动的时候，return回去，防止其他操作
-                return;
-            }
+
+        // if (Mathf.Abs(player.moveInput.x) < 0.01f && Mathf.Abs(player.rb.velocity.x) < 0.1f)
+        if (Mathf.Abs(player.moveInput.x) <= 0.1f)
+        {
+            stateMachine.ChangeState(player.idleState);
+            // 当玩家不动的时候，return回去，防止其他操作
+            return;
+        }
+
+        if (Mathf.Abs(player.moveInput.x) <= 0.3f && Mathf.Abs(player.moveInput.x) > 0.1f)
+        {
+            // 如果速度低于某个阈值，切换到行走状态
+            player.animator.SetTrigger("Conversion");
+            stateMachine.ChangeState(player.walkState);
+        }
     }
 
     public override void PhysicsUpdate()
@@ -44,7 +54,6 @@ public class PlayerRunState : PlayerGroundState
     {
         base.Exit();
         player.animator.SetBool("IsRunning", false);
-        Debug.Log("退出Run状态");
     }
 
     private void Run()
@@ -53,7 +62,6 @@ public class PlayerRunState : PlayerGroundState
 
         player.rb.velocity = new Vector2(dir.x * player.Speed * Time.deltaTime, player.rb.velocity.y);
 
-        // Debug.Log(player.rb.velocity);
     }
 
 }
