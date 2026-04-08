@@ -108,6 +108,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""f2dbfb06-91dd-40c2-b656-2d63e188d9f9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +205,28 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8c8735a-cb9a-459e-b078-9d9bb3f1c0ed"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c695d7e1-7504-4180-92d6-737b1217f07d"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -785,6 +816,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_MoveSystem = asset.FindActionMap("MoveSystem", throwIfNotFound: true);
         m_MoveSystem_WalkOrRun = m_MoveSystem.FindAction("WalkOrRun", throwIfNotFound: true);
         m_MoveSystem_Jump = m_MoveSystem.FindAction("Jump", throwIfNotFound: true);
+        m_MoveSystem_Sprint = m_MoveSystem.FindAction("Sprint", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -880,6 +912,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private List<IMoveSystemActions> m_MoveSystemActionsCallbackInterfaces = new List<IMoveSystemActions>();
     private readonly InputAction m_MoveSystem_WalkOrRun;
     private readonly InputAction m_MoveSystem_Jump;
+    private readonly InputAction m_MoveSystem_Sprint;
     /// <summary>
     /// Provides access to input actions defined in input action map "MoveSystem".
     /// </summary>
@@ -899,6 +932,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "MoveSystem/Jump".
         /// </summary>
         public InputAction @Jump => m_Wrapper.m_MoveSystem_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action "MoveSystem/Sprint".
+        /// </summary>
+        public InputAction @Sprint => m_Wrapper.m_MoveSystem_Sprint;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -931,6 +968,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
         }
 
         /// <summary>
@@ -948,6 +988,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
         }
 
         /// <summary>
@@ -1262,6 +1305,13 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJump(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSprint(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

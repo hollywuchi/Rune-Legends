@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     // WORKFLOW:创建一个状态实例
     public PlayerStateMachine stateMachine;
     public PlayerIdleState idleState;
+    public PlayerLocomotionState locomotionState;
     public PlayerRunState runState;
     public PlayerTurnState turnState;
     public PlayerWalkState walkState;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
         runState = new PlayerRunState(this, stateMachine);
         turnState = new PlayerTurnState(this, stateMachine);
         walkState = new PlayerWalkState(this, stateMachine);
+        locomotionState = new PlayerLocomotionState(this, stateMachine);
 
         // 别忘了打开新的控制系统
         inputActions.Enable();
@@ -57,6 +59,7 @@ public class Player : MonoBehaviour
     {
         stateMachine.CurrentState.LogicUpdate();
         moveInput = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
+        animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
     }
 
     void FixedUpdate()
@@ -68,7 +71,7 @@ public class Player : MonoBehaviour
     public bool WalkBuffer()
     {
         walkBufferTimer += Time.deltaTime;
-        if(walkBufferTimer >= 0.05f)
+        if (walkBufferTimer >= 0.05f)
             return true;
         else
             return false;
@@ -78,10 +81,22 @@ public class Player : MonoBehaviour
         FacingDirection *= -1;
         transform.Rotate(0, 180f, 0);
     }
-    
+
+    /// <summary>
+    /// 动画事件：转身动画结束时调用
+    /// </summary>
     public void Animation_TurnFinished()
     {
-        stateMachine.CurrentState.OnAnimationFinished();
+        Flip();
+
+        if (moveInput.x == 0)
+        {
+            stateMachine.ChangeState(idleState);
+        }
+        else
+        {
+            stateMachine.ChangeState(locomotionState);
+        }
     }
 
     /// <summary>

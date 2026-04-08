@@ -19,20 +19,6 @@ public class PlayerTurnState : PlayerGroundState
         {
             stateMachine.ChangeState(player.runState);
         }
-
-        if(isAnimationFinished)
-        {
-            player.Flip();
-
-            if(player.moveInput.x == 0)
-            {
-                stateMachine.ChangeState(player.idleState);
-            }
-            else
-            {
-                stateMachine.ChangeState(player.runState);
-            }
-        }
     }
 
     public override void Exit()
