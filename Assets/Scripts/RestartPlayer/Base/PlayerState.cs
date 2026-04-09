@@ -8,7 +8,6 @@ public abstract class PlayerState
 {
     protected Player player;
     protected PlayerStateMachine stateMachine;
-    protected bool isAnimationFinished;
 
     /// <summary>
     /// 构造函数,自动赋值

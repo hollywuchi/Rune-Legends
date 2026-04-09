@@ -2169,7 +2169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 500
-  walkBufferTimer: 0
+  SprintSpeed: 20
   rb: {fileID: 1797461661}
   animator: {fileID: 1797461658}
   stateMachine: {fileID: 1797461663}

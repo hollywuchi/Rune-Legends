@@ -10,12 +10,17 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate();
 
-        if(player.inputActions.MoveSystem.Jump.IsPressed())
+        if (player.inputActions.MoveSystem.Sprint.WasPressedThisFrame())
+        {
+            stateMachine.ChangeState(player.sprintState);
+            return;
+        }
+
+        if (player.inputActions.MoveSystem.Jump.WasPressedThisFrame())
         {
             // stateMachine.ChangeState(player.jumpState)
         }
 
-        // if(player.inputActions.MoveSystem.)
     }
-        
+
 }

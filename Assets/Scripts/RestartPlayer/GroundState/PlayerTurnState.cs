@@ -17,7 +17,7 @@ public class PlayerTurnState : PlayerGroundState
     {
         if(player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) == player.FacingDirection)
         {
-            stateMachine.ChangeState(player.runState);
+            stateMachine.ChangeState(player.locomotionState);
         }
     }
 

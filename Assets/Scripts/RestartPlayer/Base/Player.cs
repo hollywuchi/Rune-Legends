@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public InputManager inputActions;
     [Header("参数调整")]
     public float Speed;
-    public float walkBufferTimer;
+    public float SprintSpeed;
 
     [Header("基本组件")]
     public Rigidbody2D rb;
@@ -20,10 +20,8 @@ public class Player : MonoBehaviour
     public PlayerStateMachine stateMachine;
     public PlayerIdleState idleState;
     public PlayerLocomotionState locomotionState;
-    public PlayerRunState runState;
     public PlayerTurnState turnState;
-    public PlayerWalkState walkState;
-
+    public PlayerSprintState sprintState;
     [Header("状态参数")]
     // 角色朝向：1代表右边，-1代表左边
     public int FacingDirection = 1;
@@ -33,11 +31,9 @@ public class Player : MonoBehaviour
     {
         inputActions = new InputManager();
 
-        // stateMachine = new PlayerStateMachine();
         idleState = new PlayerIdleState(this, stateMachine);
-        runState = new PlayerRunState(this, stateMachine);
         turnState = new PlayerTurnState(this, stateMachine);
-        walkState = new PlayerWalkState(this, stateMachine);
+        sprintState = new PlayerSprintState(this, stateMachine);
         locomotionState = new PlayerLocomotionState(this, stateMachine);
 
         // 别忘了打开新的控制系统
@@ -59,7 +55,6 @@ public class Player : MonoBehaviour
     {
         stateMachine.CurrentState.LogicUpdate();
         moveInput = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
-        animator.SetFloat("Speed", Mathf.Abs(moveInput.x));
     }
 
     void FixedUpdate()
@@ -68,14 +63,6 @@ public class Player : MonoBehaviour
     }
 
 
-    public bool WalkBuffer()
-    {
-        walkBufferTimer += Time.deltaTime;
-        if (walkBufferTimer >= 0.05f)
-            return true;
-        else
-            return false;
-    }
     public void Flip()
     {
         FacingDirection *= -1;
@@ -83,7 +70,7 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 动画事件：转身动画结束时调用
+    /// 动画事件：转身动画结束时调用,解决转身动画结束之后，仍然停留在转身状态的bug
     /// </summary>
     public void Animation_TurnFinished()
     {
@@ -99,24 +86,29 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void SprintFinished()
+    {
+        sprintState.isSprintFinished = true;
+    }
+
     /// <summary>
     /// 判断玩家行走或者跑步状态
     /// </summary>
-    public void ChackMoveState()
-    {
-        // 根据玩家输入判断是否在行走，轻推摇杆为走路，满摇杆为跑步
-        if (Mathf.Abs(moveInput.x) < 0.4f)
-        {
-            if (Mathf.Abs(moveInput.x) < 0.01f && Mathf.Abs(rb.velocity.x) < 0.1f)
-            {
-                stateMachine.ChangeState(idleState);
-                // 当玩家不动的时候，return回去，防止其他操作
-                return;
-            }
-            else
-                // 否则就切换到行走状态
-                stateMachine.ChangeState(walkState);
-        }
-    }
+    // public void ChackMoveState()
+    // {
+    //     // 根据玩家输入判断是否在行走，轻推摇杆为走路，满摇杆为跑步
+    //     if (Mathf.Abs(moveInput.x) < 0.4f)
+    //     {
+    //         if (Mathf.Abs(moveInput.x) < 0.01f && Mathf.Abs(rb.velocity.x) < 0.1f)
+    //         {
+    //             stateMachine.ChangeState(idleState);
+    //             // 当玩家不动的时候，return回去，防止其他操作
+    //             return;
+    //         }
+    //         else
+    //             // 否则就切换到行走状态
+    //             stateMachine.ChangeState(walkState);
+    //     }
+    // }
 
 }

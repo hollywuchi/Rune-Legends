@@ -31,27 +31,30 @@ public class PlayerLocomotionState : PlayerGroundState
 
     public override void PhysicsUpdate()
     {
-        base.PhysicsUpdate();
         Run();
+        base.PhysicsUpdate();
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.animator.SetFloat("Speed", Mathf.Abs(player.moveInput.x));
     }
 
 
     private void Run()
     {
-        Vector2 dir = player.inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
 
-        // TODO: 这里的速度设置有点问题，应该是根据输入的大小来调整速度的，而不是直接乘以一个固定的数值。
-        // if (player.inputActions.MoveSystem.Sprint.IsPressed())
-        // {
-        //     player.Speed *= 2;
-        // }
+        if (player.inputActions.MoveSystem.Sprint.IsPressed())
+        {
+            player.moveInput.x *= 2;
+        }
 
-        player.rb.velocity = new Vector2(dir.x * player.Speed * Time.deltaTime, player.rb.velocity.y);
+        // BUG：玩家在停下的时候，仍有速度粘连，导致动画混乱
+        player.animator.SetFloat("Speed", Mathf.Abs(player.moveInput.x));
+
+        player.rb.velocity = new Vector2(player.moveInput.x * player.Speed * Time.deltaTime, player.rb.velocity.y);
+
 
     }
 }
