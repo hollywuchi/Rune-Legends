@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [Header("基本组件")]
     public Rigidbody2D rb;
     public Animator animator;
+    public PoolManager poolManager;
 
     [Header("所有状态机和状态实例")]
     // WORKFLOW:创建一个状态实例
@@ -91,24 +92,8 @@ public class Player : MonoBehaviour
         sprintState.isSprintFinished = true;
     }
 
-    /// <summary>
-    /// 判断玩家行走或者跑步状态
-    /// </summary>
-    // public void ChackMoveState()
-    // {
-    //     // 根据玩家输入判断是否在行走，轻推摇杆为走路，满摇杆为跑步
-    //     if (Mathf.Abs(moveInput.x) < 0.4f)
-    //     {
-    //         if (Mathf.Abs(moveInput.x) < 0.01f && Mathf.Abs(rb.velocity.x) < 0.1f)
-    //         {
-    //             stateMachine.ChangeState(idleState);
-    //             // 当玩家不动的时候，return回去，防止其他操作
-    //             return;
-    //         }
-    //         else
-    //             // 否则就切换到行走状态
-    //             stateMachine.ChangeState(walkState);
-    //     }
-    // }
-
+    public void CreateSprintDust()
+    {
+        poolManager.CreateSprintDust(transform, FacingDirection, ParticalEffectType.UnderDust);
+    }
 }

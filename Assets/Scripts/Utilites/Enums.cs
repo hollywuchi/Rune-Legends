@@ -16,3 +16,8 @@ public enum AreaName
 {
     Forest,Mountain,None
 }
+
+public enum ParticalEffectType
+{
+    SprintDust,UnderDust
+}
