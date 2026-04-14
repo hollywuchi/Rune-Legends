@@ -6,7 +6,6 @@ using UnityEngine.Pool;
 
 public class PoolManager : MonoBehaviour
 {
-    private ObjectPool<GameObject> pool;        // 为了初始化对象池，先创建一个对象池的变量
     public List<GameObject> poolPrefabs;
     // 对象池的列表
     private List<ObjectPool<GameObject>> poolEffectList = new List<ObjectPool<GameObject>>();
@@ -23,6 +22,8 @@ public class PoolManager : MonoBehaviour
         {
             Transform parent = new GameObject(item.name).transform;
             parent.SetParent(transform);
+
+            ObjectPool<GameObject> pool = null;
 
             pool = new ObjectPool<GameObject>(
                 createFunc: () =>
@@ -42,7 +43,8 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    // BUG:在冲刺过程中，两个尘埃特效会同时触发，type疑似失效
+    // 在冲刺过程中，两个尘埃特效会同时触发，type疑似失效
+    // 因为两个对象池相互污染，因为不是临时变量，所以调用的时候，会默认调用最后一个使用的对象池，然后就污染了
     public void CreateSprintDust(Transform playerTran, float dir, ParticalEffectType type)
     {
         var objPool = type switch

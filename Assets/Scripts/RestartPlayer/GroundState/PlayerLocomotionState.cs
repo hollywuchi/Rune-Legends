@@ -16,6 +16,9 @@ public class PlayerLocomotionState : PlayerGroundState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        Run();
+
         if (player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) != player.FacingDirection)
         {
             // 输入方向和面朝方向反了！立刻进入转身状态！
@@ -31,30 +34,20 @@ public class PlayerLocomotionState : PlayerGroundState
 
     public override void PhysicsUpdate()
     {
-        Run();
+        // Run();
         base.PhysicsUpdate();
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.animator.SetFloat("Speed", Mathf.Abs(player.moveInput.x));
+        // BUG：玩家在离开这个状态的时候，动画参数没有办法归零，但是如果强制归零，则会进入其他状态
+        player.animator.SetFloat("InputX", 0);
     }
 
 
     private void Run()
     {
-
-        if (player.inputActions.MoveSystem.Sprint.IsPressed())
-        {
-            player.moveInput.x *= 2;
-        }
-
-        // BUG：玩家在停下的时候，仍有速度粘连，导致动画混乱
-        player.animator.SetFloat("Speed", Mathf.Abs(player.moveInput.x));
-
-        player.rb.velocity = new Vector2(player.moveInput.x * player.Speed * Time.deltaTime, player.rb.velocity.y);
-
-
+        player.rb.velocity = new Vector2(player.moveInput.x * player.Speed, player.rb.velocity.y);
     }
 }

@@ -54,8 +54,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        stateMachine.CurrentState.LogicUpdate();
+        // 先确保获得最新的输入，再来交给状态机逻辑更新
         moveInput = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
+        if (inputActions.MoveSystem.Sprint.IsPressed())
+        {
+            // 修复BUG：修复玩家按住冲刺按键之后的输入堆积问题
+            moveInput.x *= 2;
+        }
+        animator.SetFloat("InputX", Mathf.Abs(moveInput.x));
+        stateMachine.CurrentState.LogicUpdate();
     }
 
     void FixedUpdate()
