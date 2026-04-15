@@ -9,12 +9,13 @@ public class Player : MonoBehaviour
     public InputManager inputActions;
     [Header("参数调整")]
     public float Speed;
-    public float SprintSpeed;
+    public float jumpForce;
 
     [Header("基本组件")]
     public Rigidbody2D rb;
     public Animator animator;
     public PoolManager poolManager;
+    public PhysicsCheck physicsCheck;
 
     [Header("所有状态机和状态实例")]
     // WORKFLOW:创建一个状态实例
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
     public PlayerLocomotionState locomotionState;
     public PlayerTurnState turnState;
     public PlayerSprintState sprintState;
+    public PlayerJumpState jumpState;
     [Header("状态参数")]
     // 角色朝向：1代表右边，-1代表左边
     public int FacingDirection = 1;
@@ -31,11 +33,13 @@ public class Player : MonoBehaviour
     void Awake()
     {
         inputActions = new InputManager();
+        stateMachine = new PlayerStateMachine();
 
         idleState = new PlayerIdleState(this, stateMachine);
         turnState = new PlayerTurnState(this, stateMachine);
         sprintState = new PlayerSprintState(this, stateMachine);
         locomotionState = new PlayerLocomotionState(this, stateMachine);
+        jumpState = new PlayerJumpState(this, stateMachine);
 
         // 别忘了打开新的控制系统
         inputActions.Enable();
@@ -62,6 +66,7 @@ public class Player : MonoBehaviour
             moveInput.x *= 2;
         }
         animator.SetFloat("InputX", Mathf.Abs(moveInput.x));
+        animator.SetBool("IsGround", physicsCheck.IsGround);    
         stateMachine.CurrentState.LogicUpdate();
     }
 

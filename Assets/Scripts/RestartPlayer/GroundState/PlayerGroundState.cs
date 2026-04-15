@@ -9,16 +9,18 @@ public class PlayerGroundState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if (player.inputActions.MoveSystem.Sprint.WasPressedThisFrame())
+        if (player.physicsCheck.IsGround)
         {
-            stateMachine.ChangeState(player.sprintState);
-            return;
-        }
+            if (player.inputActions.MoveSystem.Sprint.WasPressedThisFrame())
+            {
+                stateMachine.ChangeState(player.sprintState);
+                return;
+            }
 
-        if (player.inputActions.MoveSystem.Jump.WasPressedThisFrame())
-        {
-            // stateMachine.ChangeState(player.jumpState)
+            if (player.inputActions.MoveSystem.Jump.WasPressedThisFrame())
+            {
+                stateMachine.ChangeState(player.jumpState);
+            }
         }
 
     }

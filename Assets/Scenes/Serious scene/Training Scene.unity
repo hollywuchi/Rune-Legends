@@ -291,8 +291,7 @@ Transform:
   m_LocalPosition: {x: -29.22, y: -7.67, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 964480553}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &459923746
@@ -495,6 +494,7 @@ GameObject:
   - component: {fileID: 964480553}
   - component: {fileID: 964480552}
   - component: {fileID: 964480551}
+  - component: {fileID: 964480554}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -606,13 +606,33 @@ Transform:
   m_GameObject: {fileID: 964480550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.74, z: 0}
+  m_LocalPosition: {x: -29.22, y: -2.9300003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1646991212}
-  m_Father: {fileID: 360653505}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1818360608 &964480554
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964480550}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 4.74, z: 0}
+  m_TranslationOffset: {x: 0, y: 6.0199995, z: -10}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 0
+  m_AffectTranslationZ: 0
+  m_Active: 1
+  m_IsLocked: 1
+  m_Sources:
+  - sourceTransform: {fileID: 1797461657}
+    weight: 1
 --- !u!1 &1070256464
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +647,7 @@ GameObject:
   - component: {fileID: 1070256470}
   - component: {fileID: 1070256469}
   - component: {fileID: 1070256468}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MainMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3069,6 +3089,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646991212}
   - component: {fileID: 1646991213}
+  - component: {fileID: 1646991214}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -3143,6 +3164,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1818360608 &1646991214
+PositionConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646991211}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: -11.99, z: 10}
+  m_TranslationOffset: {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 0
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 0
+  m_Active: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 1764366552}
+    weight: 1
 --- !u!1 &1728129692
 GameObject:
   m_ObjectHideFlags: 0
@@ -3161,7 +3202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1728129693
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3301,6 +3342,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.0585346, y: 2.2157617}
   m_EdgeRadius: 0
+--- !u!1 &1764366551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1764366552}
+  m_Layer: 0
+  m_Name: Point
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1764366552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764366551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -29.22, y: -14.92, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1797461655
 GameObject:
   m_ObjectHideFlags: 0
@@ -3314,8 +3386,8 @@ GameObject:
   - component: {fileID: 1797461661}
   - component: {fileID: 1797461660}
   - component: {fileID: 1797461658}
-  - component: {fileID: 1797461663}
   - component: {fileID: 1797461662}
+  - component: {fileID: 1797461663}
   m_Layer: 0
   m_Name: //Player
   m_TagString: Untagged
@@ -3496,11 +3568,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 12
-  SprintSpeed: 20
+  jumpForce: 20
   rb: {fileID: 1797461661}
   animator: {fileID: 1797461658}
   poolManager: {fileID: 546500498}
-  stateMachine: {fileID: 1797461663}
+  physicsCheck: {fileID: 1797461663}
   FacingDirection: 1
   moveInput: {x: 0, y: 0}
 --- !u!114 &1797461663
@@ -3512,9 +3584,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1797461655}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4717f960872d591498cdff2d4d753523, type: 3}
+  m_Script: {fileID: 11500000, guid: 98080b0de09dad6449dcb5c2f1950013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Wall: {fileID: 0}
+  Walk: {fileID: 0}
+  Auto: 0
+  PhyRadius: 0.1
+  CheckLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  GroundOffset: {x: 0, y: 0}
+  LeftOffset: {x: -0.31, y: 1.65}
+  rightOffset: {x: 0.36, y: 1.65}
+  IsGround: 0
+  touchLeftWall: 0
+  touchRightWall: 0
 --- !u!1 &1911611766
 GameObject:
   m_ObjectHideFlags: 0
@@ -3567,7 +3652,9 @@ SceneRoots:
   - {fileID: 1911611768}
   - {fileID: 1797461657}
   - {fileID: 1728129694}
+  - {fileID: 964480553}
   - {fileID: 360653505}
   - {fileID: 1612976017}
   - {fileID: 459923752}
   - {fileID: 546500499}
+  - {fileID: 1764366552}

@@ -41,7 +41,6 @@ public class PlayerLocomotionState : PlayerGroundState
     public override void Exit()
     {
         base.Exit();
-        // BUG：玩家在离开这个状态的时候，动画参数没有办法归零，但是如果强制归零，则会进入其他状态
         player.animator.SetFloat("InputX", 0);
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class     PhysicsCheck : MonoBehaviour
+public class PhysicsCheck : MonoBehaviour
 {
     // 地面检测部分
     [Header("物理材质")]
@@ -17,12 +17,12 @@ public class     PhysicsCheck : MonoBehaviour
     public bool IsGround;
     public bool touchLeftWall;
     public bool touchRightWall;
- 
+
     CapsuleCollider2D coll;
-    private void Awake() 
+    private void Awake()
     {
         coll = GetComponent<CapsuleCollider2D>();
-        if(Auto)
+        if (Auto)
         {
             AutoChangeOffset();
         }
@@ -39,10 +39,10 @@ public class     PhysicsCheck : MonoBehaviour
     /// </summary>
     void CheckGround()
     {
-        IsGround = Physics2D.OverlapCircle((Vector2)transform.position + GroundOffset,PhyRadius,CheckLayer);
+        IsGround = Physics2D.OverlapCircle((Vector2)transform.position + GroundOffset, PhyRadius, CheckLayer);
         // 左右墙面的检测
-        touchLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + LeftOffset,PhyRadius,CheckLayer);
-        touchRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset,PhyRadius,CheckLayer);
+        touchLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + LeftOffset, PhyRadius, CheckLayer);
+        touchRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, PhyRadius, CheckLayer);
     }
     // 现在绘制以上的碰撞区域
     // 使用的就是一个辅助的方法，好在Unity帮我们弄好了这些
@@ -52,15 +52,15 @@ public class     PhysicsCheck : MonoBehaviour
         // 甚至还可以更改颜色
         Gizmos.color = Color.yellow;
         // 画一个圆形（因为上面的碰撞是圆形碰撞）(参数同样是圆心与范围)
-        Gizmos.DrawWireSphere((Vector2)transform.position + GroundOffset,PhyRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + LeftOffset,PhyRadius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset,PhyRadius);
-        
+        Gizmos.DrawWireSphere((Vector2)transform.position + GroundOffset, PhyRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + LeftOffset, PhyRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, PhyRadius);
+
     }
     // 这里就是无论什么时候都可以绘制（永久出现）
     // private void OnDrawGizmos() 
     // {
-          
+
     // }
     public void AutoChangeOffset()
     {
