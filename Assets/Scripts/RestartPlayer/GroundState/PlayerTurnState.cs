@@ -15,6 +15,7 @@ public class PlayerTurnState : PlayerGroundState
 
     public override void LogicUpdate()
     {
+        base.LogicUpdate();
         if(player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) == player.FacingDirection)
         {
             stateMachine.ChangeState(player.locomotionState);

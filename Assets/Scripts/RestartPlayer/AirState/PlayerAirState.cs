@@ -15,11 +15,17 @@ public class PlayerAirState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        
+        // if(player.inputActions.MoveSystem.Sprint.WasPressedThisFrame())
+        // {
+        //     stateMachine.ChangeState(player.sprintState);
+        // }   
 
-        if(player.physicsCheck.IsGround)
+        if (player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) != player.FacingDirection)
         {
-            // 这里要添加更高级的判定,比如说土狼时间之类的
+            player.Flip();
         }
+        
     }
 
     public override void Exit()

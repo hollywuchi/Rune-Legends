@@ -631,7 +631,7 @@ PositionConstraint:
   m_Active: 1
   m_IsLocked: 1
   m_Sources:
-  - sourceTransform: {fileID: 1797461657}
+  - sourceTransform: {fileID: 360653505}
     weight: 1
 --- !u!1 &1070256464
 GameObject:
@@ -3285,7 +3285,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 200
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -3296,7 +3296,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1728129696
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3568,7 +3568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 12
-  jumpForce: 20
+  jumpForce: 15
   rb: {fileID: 1797461661}
   animator: {fileID: 1797461658}
   poolManager: {fileID: 546500498}

@@ -33,7 +33,7 @@ public class PlayerSprintState : PlayerState
             else if(!player.physicsCheck.IsGround)
             {
                 player.animator.SetTrigger("Fall");
-                stateMachine.ChangeState(player.jumpState);
+                stateMachine.ChangeState(player.fallState);
             }
             else
             {

@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     public PlayerTurnState turnState;
     public PlayerSprintState sprintState;
     public PlayerJumpState jumpState;
+    public PlayerFallState fallState;
     [Header("状态参数")]
     // 角色朝向：1代表右边，-1代表左边
     public int FacingDirection = 1;
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
         sprintState = new PlayerSprintState(this, stateMachine);
         locomotionState = new PlayerLocomotionState(this, stateMachine);
         jumpState = new PlayerJumpState(this, stateMachine);
+        fallState = new PlayerFallState(this, stateMachine);
 
         // 别忘了打开新的控制系统
         inputActions.Enable();
@@ -67,6 +69,8 @@ public class Player : MonoBehaviour
         }
         animator.SetFloat("InputX", Mathf.Abs(moveInput.x));
         animator.SetBool("IsGround", physicsCheck.IsGround);    
+        animator.SetFloat("VecocityY", Mathf.Clamp(rb.velocity.y, -1f, 1f));
+
         stateMachine.CurrentState.LogicUpdate();
     }
 
