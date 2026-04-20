@@ -5,10 +5,21 @@ using UnityEngine;
 public class PlayerGroundState : PlayerState
 {
     public PlayerGroundState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
-
+    public override void Enter()
+    {
+        base.Enter();
+        player.jumpTime = 0;
+    }
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        
+        if (!player.physicsCheck.IsGround)
+        {
+            stateMachine.ChangeState(player.fallState);
+            return;
+        }
+
         if (player.physicsCheck.IsGround)
         {
             if (player.inputActions.MoveSystem.Sprint.WasPressedThisFrame())

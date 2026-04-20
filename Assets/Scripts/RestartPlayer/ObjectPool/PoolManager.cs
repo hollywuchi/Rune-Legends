@@ -29,7 +29,7 @@ public class PoolManager : MonoBehaviour
                 createFunc: () =>
                 {
                     GameObject obj = Instantiate(item, parent);
-                    obj.GetComponent<Dust>().SetPool(pool);
+                    obj.GetComponent<Effect_Elements>().SetPool(pool);
                     return obj;
                 },
                 actionOnGet: obj => obj.SetActive(true),
@@ -51,6 +51,7 @@ public class PoolManager : MonoBehaviour
         {
             ParticalEffectType.SprintDust => poolEffectList[0],
             ParticalEffectType.UnderDust => poolEffectList[1],
+            ParticalEffectType.AirDust => poolEffectList[2],
             _ => null
         };
         GameObject obj = objPool.Get();

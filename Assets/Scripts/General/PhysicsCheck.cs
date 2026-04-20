@@ -18,10 +18,10 @@ public class PhysicsCheck : MonoBehaviour
     public bool touchLeftWall;
     public bool touchRightWall;
 
-    CapsuleCollider2D coll;
+    BoxCollider2D coll;
     private void Awake()
     {
-        coll = GetComponent<CapsuleCollider2D>();
+        coll = GetComponent<BoxCollider2D>();
         if (Auto)
         {
             AutoChangeOffset();
@@ -30,6 +30,14 @@ public class PhysicsCheck : MonoBehaviour
     void Update()
     {
         CheckGround();
+        if(IsGround)
+        {
+            coll.sharedMaterial = Walk;
+        }
+        else
+        {
+            coll.sharedMaterial = Wall;
+        }
     }
     /// <summary>
     /// 地面检测方法，使用的是，physice2D碰撞检测中的球形碰撞检测

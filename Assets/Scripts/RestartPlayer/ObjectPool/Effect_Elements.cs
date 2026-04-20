@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class Dust : MonoBehaviour
+public class Effect_Elements : MonoBehaviour
 {
     private ObjectPool<GameObject> pool;
 

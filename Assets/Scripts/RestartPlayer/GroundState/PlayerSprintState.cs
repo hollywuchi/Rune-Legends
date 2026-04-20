@@ -11,11 +11,13 @@ public class PlayerSprintState : PlayerState
     {
         base.Enter();
         isSprintFinished = false;
+        player.animator.ResetTrigger("Idle");
+        player.animator.ResetTrigger("Ing");
         player.animator.Play("ToSprint");
         // 生成尘埃特效
         player.poolManager.CreateSprintDust(player.transform, player.FacingDirection, ParticalEffectType.SprintDust);
         // 给予一个初速度
-        player.rb.velocity = new Vector2(player.FacingDirection * player.Speed, player.rb.velocity.y);
+        player.rb.velocity = new Vector2(player.FacingDirection * player.SprintSpeed, player.rb.velocity.y);
         Debug.Log("进入冲刺状态");
     }
 
@@ -30,14 +32,10 @@ public class PlayerSprintState : PlayerState
                 player.animator.SetTrigger("Ing");
                 stateMachine.ChangeState(player.locomotionState);
             }
-            else if(!player.physicsCheck.IsGround)
-            {
-                player.animator.SetTrigger("Fall");
-                stateMachine.ChangeState(player.fallState);
-            }
             else
             {
                 player.animator.SetTrigger("Idle");
+                Debug.Log("这是冲刺传来的Idle信号");
                 stateMachine.ChangeState(player.idleState);
             }
         }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -9,6 +8,7 @@ public class Player : MonoBehaviour
     public InputManager inputActions;
     [Header("参数调整")]
     public float Speed;
+    public float SprintSpeed;
     public float jumpForce;
 
     [Header("基本组件")]
@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     public Animator animator;
     public PoolManager poolManager;
     public PhysicsCheck physicsCheck;
-
     [Header("所有状态机和状态实例")]
     // WORKFLOW:创建一个状态实例
     public PlayerStateMachine stateMachine;
@@ -29,6 +28,8 @@ public class Player : MonoBehaviour
     [Header("状态参数")]
     // 角色朝向：1代表右边，-1代表左边
     public int FacingDirection = 1;
+    // public bool canJump;
+    public float jumpTime;
 
     public Vector2 moveInput;
     void Awake()
