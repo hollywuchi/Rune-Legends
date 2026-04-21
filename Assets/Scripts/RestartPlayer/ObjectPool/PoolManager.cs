@@ -45,7 +45,7 @@ public class PoolManager : MonoBehaviour
 
     // 在冲刺过程中，两个尘埃特效会同时触发，type疑似失效
     // 因为两个对象池相互污染，因为不是临时变量，所以调用的时候，会默认调用最后一个使用的对象池，然后就污染了
-    public void CreateSprintDust(Transform playerTran, float dir, ParticalEffectType type)
+    public void CreateFX(Transform playerTran, float dir, ParticalEffectType type)
     {
         var objPool = type switch
         {

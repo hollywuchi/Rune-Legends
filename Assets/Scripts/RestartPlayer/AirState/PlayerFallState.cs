@@ -22,7 +22,6 @@ public class PlayerFallState : PlayerAirState
     }
     public override void LogicUpdate()
     {
-
         // 土狼时间
         if (coyoteTimer > 0)
         {
@@ -38,12 +37,14 @@ public class PlayerFallState : PlayerAirState
         }
         // 土狼时间要比二段跳优先级高
         base.LogicUpdate();
-        if (player.physicsCheck.IsGround)
+        if (stateMachine.currentState != this) return;
+        player.rb.velocity = new Vector2(player.moveInput.x * player.Speed * 0.5f, player.rb.velocity.y);
+
+        if (player.isGround)
         {
             if (Mathf.Abs(player.moveInput.x) < 0.1f)
             {
                 player.animator.SetTrigger("Idle");
-                Debug.Log("这是PlayerFall传来的Idle信号");
                 stateMachine.ChangeState(player.idleState);
             }
             else

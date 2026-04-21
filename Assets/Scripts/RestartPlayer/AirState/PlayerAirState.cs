@@ -15,8 +15,17 @@ public class PlayerAirState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (Mathf.Abs(player.moveInput.x) <= 1)
-            player.rb.velocity = new Vector2(player.moveInput.x * player.Speed * 0.5f, player.rb.velocity.y);
+        if (player.inputActions.MoveSystem.Sprint.WasPressedThisFrame() && player.canSprint)
+        {
+            stateMachine.ChangeState(player.airSprintState);
+        }
+
+        // if (Mathf.Abs(player.moveInput.x) <= 1)
+        //     player.rb.velocity = new Vector2(player.moveInput.x * player.Speed * 0.5f, player.rb.velocity.y);
+        // else
+        // {
+        //     player.rb.velocity = new Vector2(player.FacingDirection * player.SprintJumpSpeed, player.rb.velocity.y);
+        // }
 
         if (player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) != player.FacingDirection)
         {

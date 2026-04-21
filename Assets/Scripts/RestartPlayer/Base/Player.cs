@@ -10,6 +10,16 @@ public class Player : MonoBehaviour
     public float Speed;
     public float SprintSpeed;
     public float jumpForce;
+    public float SprintJumpSpeed;
+    
+    [Header("状态参数")]
+    // 角色朝向：1代表右边，-1代表左边
+    public int FacingDirection = 1;
+    public bool canSprint;
+    public float jumpTime;
+    public Vector2 moveInput;
+    public bool isGround;
+    public bool isSprintFinished;
 
     [Header("基本组件")]
     public Rigidbody2D rb;
@@ -25,13 +35,8 @@ public class Player : MonoBehaviour
     public PlayerSprintState sprintState;
     public PlayerJumpState jumpState;
     public PlayerFallState fallState;
-    [Header("状态参数")]
-    // 角色朝向：1代表右边，-1代表左边
-    public int FacingDirection = 1;
-    // public bool canJump;
-    public float jumpTime;
+    public PlayerAirSprintState airSprintState;
 
-    public Vector2 moveInput;
     void Awake()
     {
         inputActions = new InputManager();
@@ -43,6 +48,7 @@ public class Player : MonoBehaviour
         locomotionState = new PlayerLocomotionState(this, stateMachine);
         jumpState = new PlayerJumpState(this, stateMachine);
         fallState = new PlayerFallState(this, stateMachine);
+        airSprintState = new PlayerAirSprintState(this, stateMachine);
 
         // 别忘了打开新的控制系统
         inputActions.Enable();
@@ -69,15 +75,16 @@ public class Player : MonoBehaviour
             moveInput.x *= 2;
         }
         animator.SetFloat("InputX", Mathf.Abs(moveInput.x));
-        animator.SetBool("IsGround", physicsCheck.IsGround);    
+        isGround = physicsCheck.IsGround;
+        animator.SetBool("IsGround", isGround);
         animator.SetFloat("VecocityY", Mathf.Clamp(rb.velocity.y, -1f, 1f));
 
-        stateMachine.CurrentState.LogicUpdate();
+        stateMachine.currentState.LogicUpdate();
     }
 
     void FixedUpdate()
     {
-        stateMachine.CurrentState.PhysicsUpdate();
+        stateMachine.currentState.PhysicsUpdate();
     }
 
 
@@ -106,11 +113,11 @@ public class Player : MonoBehaviour
 
     public void SprintFinished()
     {
-        sprintState.isSprintFinished = true;
+        isSprintFinished = true;
     }
 
     public void CreateSprintDust()
     {
-        poolManager.CreateSprintDust(transform, FacingDirection, ParticalEffectType.UnderDust);
+        poolManager.CreateFX(transform, FacingDirection, ParticalEffectType.UnderDust);
     }
 }
