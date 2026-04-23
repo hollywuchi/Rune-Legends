@@ -1,123 +1,111 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using UnityEngine;
-
+using RestartPlayer.HFSM;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
+
     [Header("参数调整")]
     public float Speed;
     public float SprintSpeed;
     public float jumpForce;
     public float SprintJumpSpeed;
-    
-    [Header("状态参数")]
-    // 角色朝向：1代表右边，-1代表左边
-    public int FacingDirection = 1;
-    public bool canSprint;
-    public float jumpTime;
-    public Vector2 moveInput;
-    public bool isGround;
-    public bool isSprintFinished;
 
     [Header("基本组件")]
-    public Rigidbody2D rb;
-    public Animator animator;
     public PoolManager poolManager;
     public PhysicsCheck physicsCheck;
-    [Header("所有状态机和状态实例")]
-    // WORKFLOW:创建一个状态实例
-    public PlayerStateMachine stateMachine;
-    public PlayerIdleState idleState;
-    public PlayerLocomotionState locomotionState;
-    public PlayerTurnState turnState;
-    public PlayerSprintState sprintState;
-    public PlayerJumpState jumpState;
-    public PlayerFallState fallState;
-    public PlayerAirSprintState airSprintState;
+    public PlayerMotor2D motor;
+    public PlayerAnimatorDriver anim;
 
-    void Awake()
+    public PlayerContext ctx;
+    public PlayerStateRegistry stateRegistry;
+    public PlayerStateMachine stateMachine;
+
+    private void Awake()
     {
         inputActions = new InputManager();
-        stateMachine = new PlayerStateMachine();
-
-        idleState = new PlayerIdleState(this, stateMachine);
-        turnState = new PlayerTurnState(this, stateMachine);
-        sprintState = new PlayerSprintState(this, stateMachine);
-        locomotionState = new PlayerLocomotionState(this, stateMachine);
-        jumpState = new PlayerJumpState(this, stateMachine);
-        fallState = new PlayerFallState(this, stateMachine);
-        airSprintState = new PlayerAirSprintState(this, stateMachine);
-
-        // 别忘了打开新的控制系统
         inputActions.Enable();
+
+        if (ctx == null) ctx = new PlayerContext();
+        stateRegistry = new PlayerStateRegistry();
+        stateMachine = new PlayerStateMachine(stateRegistry);
+
+        stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(this, stateMachine, ctx, anim, stateRegistry, motor));
+        stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(this, stateMachine, ctx, anim, stateRegistry, motor));
+        stateRegistry.Register(PlayerStateId.Turn, new PlayerTurnState(this, stateMachine, ctx, anim, stateRegistry, motor));
+        stateRegistry.Register(PlayerStateId.Sprint, new PlayerSprintState(this, stateMachine, ctx, anim, stateRegistry, motor));
+        stateRegistry.Register(PlayerStateId.Jump, new PlayerJumpState(this, stateMachine, ctx, anim, stateRegistry, motor));
+        stateRegistry.Register(PlayerStateId.Fall, new PlayerFallState(this, stateMachine, ctx, anim, stateRegistry, motor));
+        stateRegistry.Register(PlayerStateId.AirSprint, new PlayerAirSprintState(this, stateMachine, ctx, anim, stateRegistry, motor));
     }
 
-    void Start()
+    private void Start()
     {
-        stateMachine.Initialize(idleState);
+        // 初始化朝向（与旧字段FacingDirection一致的职责转移到ctx）
+        ctx.SetFacingDirection(1);
+        stateMachine.Initialize(PlayerStateId.Idle);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         inputActions.Disable();
     }
 
-
-    void Update()
+    private void Update()
     {
-        // 先确保获得最新的输入，再来交给状态机逻辑更新
-        moveInput = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
+        // ====== 采样输入 -> ctx ======
+        var move = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
         if (inputActions.MoveSystem.Sprint.IsPressed())
         {
-            // 修复BUG：修复玩家按住冲刺按键之后的输入堆积问题
-            moveInput.x *= 2;
+            // 保留你原来的“按住冲刺导致输入堆积”的处理（后续建议改成独立 sprint 修饰）
+            move.x *= 2;
         }
-        animator.SetFloat("InputX", Mathf.Abs(moveInput.x));
-        isGround = physicsCheck.IsGround;
-        animator.SetBool("IsGround", isGround);
-        animator.SetFloat("VecocityY", Mathf.Clamp(rb.velocity.y, -1f, 1f));
 
-        stateMachine.currentState.LogicUpdate();
+        ctx.MoveInput = move;
+        ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
+        ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
+        ctx.SprintIsHeld = inputActions.MoveSystem.Sprint.IsPressed();
+
+        // ====== 传感器 -> ctx ======
+        ctx.IsGrounded = physicsCheck.IsGround;
+
+        // ====== 动画参数统一在 Driver 写入 ======
+        anim.SetInputX(Mathf.Abs(ctx.MoveInput.x));
+        anim.SetIsGround(ctx.IsGrounded);
+        anim.SetVelocityY(Mathf.Clamp(motor.Velocity.y, -1f, 1f));
+
+        // ====== 状态机 Tick（统一提交切换）======
+        stateMachine.Tick();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        stateMachine.currentState.PhysicsUpdate();
+        stateMachine.FixedTick();
     }
-
 
     public void Flip()
     {
-        FacingDirection *= -1;
+        ctx.FlipFacing();
         transform.Rotate(0, 180f, 0);
     }
 
-    /// <summary>
-    /// 动画事件：转身动画结束时调用,解决转身动画结束之后，仍然停留在转身状态的bug
-    /// </summary>
+    // 动画事件：转身结束
     public void Animation_TurnFinished()
     {
         Flip();
 
-        if (moveInput.x == 0)
-        {
-            stateMachine.ChangeState(idleState);
-        }
+        if (Mathf.Abs(ctx.MoveInput.x) < 0.01f)
+            stateMachine.RequestChangeState(PlayerStateId.Idle);
         else
-        {
-            stateMachine.ChangeState(locomotionState);
-        }
+            stateMachine.RequestChangeState(PlayerStateId.Locomotion);
     }
 
     public void SprintFinished()
     {
-        isSprintFinished = true;
+        ctx.IsSprintFinished = true;
     }
 
     public void CreateSprintDust()
     {
-        poolManager.CreateFX(transform, FacingDirection, ParticalEffectType.UnderDust);
+        poolManager.CreateFX(transform, ctx.FacingDirection, ParticalEffectType.UnderDust);
     }
 }

@@ -1,46 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
+using RestartPlayer.HFSM;
 using UnityEngine;
 
 public class PlayerSprintState : PlayerGroundState
 {
-    public PlayerSprintState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerSprintState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor) 
+    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
 
     public override void Enter()
     {
         base.Enter();
-        player.isSprintFinished = false;
-        player.animator.ResetTrigger("Idle");
-        player.animator.ResetTrigger("Ing");
-        player.animator.Play("ToSprint");
-        // 生成尘埃特效
-        player.poolManager.CreateFX(player.transform, player.FacingDirection, ParticalEffectType.SprintDust);
-        // 给予一个初速度
-        player.rb.velocity = new Vector2(player.FacingDirection * player.SprintSpeed, player.rb.velocity.y);
+
+        ctx.IsSprintFinished = false;
+
+        anim.ResetCommonTriggers();
+        anim.PlayToSprint();
+
+        player.poolManager.CreateFX(player.transform, ctx.FacingDirection, ParticalEffectType.SprintDust);
+
+        motor.SetVelocityX(ctx.FacingDirection * player.SprintSpeed);
+
         Debug.Log("进入冲刺状态");
     }
 
-    public override void LogicUpdate()
+    public override Transition LogicUpdate()
     {
-        base.LogicUpdate();
-        // 如果当前冲刺动画已经播放完，玩家是否长按或者继续向前移动，如果是则进入移动状态，否则引入idle状态
-        if (player.isSprintFinished)
+        var t = base.LogicUpdate();
+        if (t.HasTarget) return t;
+
+        if (ctx.IsSprintFinished)
         {
-            if (player.inputActions.MoveSystem.Sprint.IsPressed() || Mathf.Abs(player.moveInput.x) > 0.1f)
-            {
-                player.animator.SetTrigger("Ing");
-                stateMachine.ChangeState(player.locomotionState);
-            }
-            else
-            {
-                player.animator.SetTrigger("Idle");
-                stateMachine.ChangeState(player.idleState);
-            }
+            if (ctx.SprintIsHeld || Mathf.Abs(ctx.MoveInput.x) > 0.1f)
+                return new Transition(PlayerStateId.Locomotion);
+
+            return new Transition(PlayerStateId.Idle);
         }
 
-    }
-    public override void Exit()
-    {
-        base.Exit();
+        return Transition.None;
     }
 }

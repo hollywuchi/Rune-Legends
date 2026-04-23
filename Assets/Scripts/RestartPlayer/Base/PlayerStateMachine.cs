@@ -1,25 +1,74 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using RestartPlayer.HFSM;
 
 public class PlayerStateMachine
 {
     public PlayerState currentState { get; private set; }
 
-    // 初始化状态机（游戏开始时调用）
-    private Coroutine currentCoroutine;
-    public void Initialize(PlayerState startingState)
+    private readonly PlayerStateRegistry _registry;
+
+    private PlayerStateId _pendingId = PlayerStateId.None;
+    private bool _isInitialized;
+
+    public PlayerStateMachine(PlayerStateRegistry registry)
     {
+        _registry = registry;
+    }
+
+    public void Initialize(PlayerStateId startingStateId)
+    {
+        var startingState = _registry.Get(startingStateId);
+
         currentState = startingState;
+        _isInitialized = true;
+
         currentState.Enter();
     }
 
-    // 切换状态
-    public void ChangeState(PlayerState newState)
+    /// <summary>
+    /// 状态内部调用：提出切换请求（本帧只接受第一次请求）
+    /// </summary>
+    public void RequestChangeState(PlayerStateId newStateId)
     {
-        currentState.Exit();        // 退出当前状态（比如清除冲刺特效）
-        // StartCoroutine(CurrentState.SwitchAnimator(nextAnimation));  // 实现小动作的动态转换
-        currentState = newState; // 替换状态
-        currentState.Enter();    // 进入新状态（比如播放跳跃动画）
+        if (newStateId == PlayerStateId.None) return;
+        if (_pendingId != PlayerStateId.None) return; // 本帧已有人抢到切换权
+        _pendingId = newStateId;
+    }
+
+    /// <summary>
+    /// Player.Update里调用：先跑逻辑，再统一提交切换
+    /// </summary>
+    public void Tick()
+    {
+        if (!_isInitialized || currentState == null) return;
+
+        _pendingId = PlayerStateId.None;
+
+        // 1) 当前状态提出“意图”
+        var t = currentState.LogicUpdate();
+
+        // 2) 状态内部也可能直接 RequestChangeState（比如动画事件回调）
+        // 统一用 pending 优先（保持你之前“一帧只切一次”的语义）
+        if (_pendingId == PlayerStateId.None && t.HasTarget)
+            _pendingId = t.Target;
+
+        if (_pendingId != PlayerStateId.None)
+            ChangeStateInternal(_pendingId);
+    }
+
+    public void FixedTick()
+    {
+        if (!_isInitialized || currentState == null) return;
+        currentState.PhysicsUpdate();
+    }
+
+    private void ChangeStateInternal(PlayerStateId newStateId)
+    {
+        var newState = _registry.Get(newStateId);
+        if (newState == null) return;
+        if (newState == currentState) return;
+
+        currentState.Exit();
+        currentState = newState;
+        currentState.Enter();
     }
 }

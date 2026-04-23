@@ -1,61 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
+using RestartPlayer.HFSM;
 using UnityEngine;
 
 public class PlayerFallState : PlayerAirState
 {
-    private float coyoteTime = 0.2f;
-    private float coyoteTimer;
-    public PlayerFallState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerFallState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry registry, PlayerMotor2D motor)
+    : base(player, stateMachine, ctx, anim, registry, motor) { }
+
     public override void Enter()
     {
         base.Enter();
-        if (player.jumpTime == 0)
-        {
-            coyoteTimer = coyoteTime;
-        }
-        else
-        {
-            coyoteTimer = 0;
-        }
+
+        // 只有“刚离地且未发生跳跃”的情况下才给土狼时间
+        // 这里用 JumpCount==0 替代你之前的 jumpTime==0
+        ctx.CoyoteTimer = (ctx.JumpCount == 0) ? ctx.CoyoteTime : 0f;
+
         Debug.Log("进入PlayerFall状态");
     }
-    public override void LogicUpdate()
-    {
-        // 土狼时间
-        if (coyoteTimer > 0)
-        {
-            coyoteTimer -= Time.deltaTime;
 
-            if (player.inputActions.MoveSystem.Jump.WasPressedThisFrame())
+    public override Transition LogicUpdate()
+    {
+        // 1) 土狼时间优先级最高：在 base(Air) 处理二段跳前先截获
+        if (ctx.CoyoteTimer > 0f)
+        {
+            ctx.CoyoteTimer -= Time.deltaTime;
+
+            if (ctx.JumpPressedThisFrame)
             {
-                coyoteTimer = 0;
-                stateMachine.ChangeState(player.jumpState);
+                ctx.CoyoteTimer = 0f;
                 Debug.Log("土狼时间！");
-                return;
+                return new Transition(PlayerStateId.Jump);
             }
         }
-        // 土狼时间要比二段跳优先级高
-        base.LogicUpdate();
-        if (stateMachine.currentState != this) return;
-        player.rb.velocity = new Vector2(player.moveInput.x * player.Speed * 0.5f, player.rb.velocity.y);
 
-        if (player.isGround)
+        // 2) 空中通用规则（空冲/翻面/二段跳）
+        var t = base.LogicUpdate();
+        if (t.HasTarget) return t;
+
+        // 3) 空中横移
+        motor.SetVelocityX(ctx.MoveInput.x * player.Speed * 0.5f);
+
+        // 4) 落地 -> Idle/Locomotion
+        if (ctx.IsGrounded)
         {
-            if (Mathf.Abs(player.moveInput.x) < 0.1f)
-            {
-                player.animator.SetTrigger("Idle");
-                stateMachine.ChangeState(player.idleState);
-            }
+            if (Mathf.Abs(ctx.MoveInput.x) < 0.1f)
+                return new Transition(PlayerStateId.Idle);
             else
-            {
-                player.animator.SetTrigger("Ing");
-                stateMachine.ChangeState(player.locomotionState);
-            }
+                return new Transition(PlayerStateId.Locomotion);
         }
-    }
-    public override void Exit()
-    {
-        base.Exit();
+
+        return Transition.None;
     }
 }

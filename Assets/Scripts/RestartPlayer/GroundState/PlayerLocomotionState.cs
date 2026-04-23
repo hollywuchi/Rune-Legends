@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.U2D.Aseprite;
+using RestartPlayer.HFSM;
 using UnityEngine;
 
 public class PlayerLocomotionState : PlayerGroundState
 {
-    public PlayerLocomotionState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerLocomotionState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor)
+    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
 
     public override void Enter()
     {
@@ -13,40 +12,30 @@ public class PlayerLocomotionState : PlayerGroundState
         Debug.Log("进入PlayerLocomotion状态");
     }
 
-    public override void LogicUpdate()
+    public override Transition LogicUpdate()
     {
-        base.LogicUpdate();
+        var t = base.LogicUpdate();
+        if (t.HasTarget) return t;
 
         Run();
 
-        if (player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) != player.FacingDirection)
-        {
-            // 输入方向和面朝方向反了！立刻进入转身状态！
-            stateMachine.ChangeState(player.turnState);
-            return;
-        }
+        if (ctx.MoveInput.x != 0 && Mathf.Sign(ctx.MoveInput.x) != ctx.FacingDirection)
+            return new Transition(PlayerStateId.Turn);
 
-        if (Mathf.Abs(player.moveInput.x) < 0.1f)
-        {
-            stateMachine.ChangeState(player.idleState);
-        }
-    }
+        if (Mathf.Abs(ctx.MoveInput.x) < 0.1f)
+            return new Transition(PlayerStateId.Idle);
 
-    public override void PhysicsUpdate()
-    {
-        // Run();
-        base.PhysicsUpdate();
+        return Transition.None;
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.animator.SetFloat("InputX", 0);
+        anim.SetInputX(0f);
     }
-
 
     private void Run()
     {
-        player.rb.velocity = new Vector2(player.moveInput.x * player.Speed, player.rb.velocity.y);
+        motor.SetVelocityX(ctx.MoveInput.x * player.Speed);
     }
 }

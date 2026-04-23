@@ -1,46 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using RestartPlayer.HFSM;
 using UnityEngine;
 
 public class PlayerAirState : PlayerState
 {
-    public PlayerAirState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerAirState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor) 
+    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
 
-    public override void Enter()
+    public override Transition LogicUpdate()
     {
-        base.Enter();
-    }
+        // 空中冲刺（域内规则）
+        if (ctx.SprintPressedThisFrame && ctx.CanSprint)
+            return new Transition(PlayerStateId.AirSprint);
 
-
-    public override void LogicUpdate()
-    {
-        base.LogicUpdate();
-        if (player.inputActions.MoveSystem.Sprint.WasPressedThisFrame() && player.canSprint)
-        {
-            stateMachine.ChangeState(player.airSprintState);
-        }
-
-        // if (Mathf.Abs(player.moveInput.x) <= 1)
-        //     player.rb.velocity = new Vector2(player.moveInput.x * player.Speed * 0.5f, player.rb.velocity.y);
-        // else
-        // {
-        //     player.rb.velocity = new Vector2(player.FacingDirection * player.SprintJumpSpeed, player.rb.velocity.y);
-        // }
-
-        if (player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) != player.FacingDirection)
-        {
+        // 空中转向（安全：只做朝向，不切状态）
+        if (ctx.MoveInput.x != 0 && Mathf.Sign(ctx.MoveInput.x) != ctx.FacingDirection)
             player.Flip();
-        }
 
-        if (player.inputActions.MoveSystem.Jump.WasPressedThisFrame() && player.jumpTime < 2)
-        {
-            stateMachine.ChangeState(player.jumpState);
-        }
+        // 二段跳（注意：土狼时间在 FallState 里处理优先级，这一步先保持你逻辑）
+        if (ctx.JumpPressedThisFrame && ctx.JumpCount < ctx.MaxJumpCount)
+            return new Transition(PlayerStateId.Jump);
 
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
+        return base.LogicUpdate();
     }
 }

@@ -1,27 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using UnityEditor.U2D.Aseprite;
-using UnityEngine;
+using RestartPlayer.HFSM;
 
 public abstract class PlayerState
 {
     protected Player player;
     protected PlayerStateMachine stateMachine;
+    protected PlayerContext ctx;
+    protected PlayerAnimatorDriver anim;
+    protected PlayerStateRegistry stateRegistry;
+    protected PlayerMotor2D motor;
 
-    /// <summary>
-    /// 构造函数,自动赋值
-    /// </summary>
-    /// <param name="player"></param>
-    /// <param name="stateMachine"></param>
-    public PlayerState(Player player, PlayerStateMachine stateMachine)
+    protected PlayerState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx,
+    PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor)
     {
         this.player = player;
         this.stateMachine = stateMachine;
+        this.ctx = ctx;
+        this.anim = anim;
+        this.stateRegistry = stateRegistry;
+        this.motor = motor;
     }
 
-    public virtual void Enter() { }             // 进入状态的一瞬间执行
-    public virtual void LogicUpdate() { }       // 每一帧执行（Update）
-    public virtual void PhysicsUpdate() { }     // 物理帧执行（FixUpdate)
-    public virtual void Exit() { }              // 离开状态的一瞬间执行
+    public virtual void Enter() { }
+
+    /// <summary>
+    /// 用 Transition 表达“想切到哪个状态”，不直接切。
+    /// </summary>
+    public virtual Transition LogicUpdate() => Transition.None;
+
+    public virtual void PhysicsUpdate() { }
+    public virtual void Exit() { }
+
+    protected void Commit(Transition t)
+    {
+        if (t.HasTarget)
+            stateMachine.RequestChangeState(t.Target);
+    }
 }

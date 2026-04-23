@@ -1,40 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using RestartPlayer.HFSM;
 
 public class PlayerGroundState : PlayerState
 {
-    public PlayerGroundState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerGroundState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor)
+     : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
+
     public override void Enter()
     {
         base.Enter();
-        player.jumpTime = 0;
-        player.canSprint = true;
+        ctx.JumpCount = 0;
+        ctx.CanSprint = true;
+
+        // 落地时土狼时间清零
+        ctx.CoyoteTimer = 0f;
     }
-    public override void LogicUpdate()
+
+    public override Transition LogicUpdate()
     {
-        base.LogicUpdate();
-        
-        if (!player.isGround)
-        {
-            stateMachine.ChangeState(player.fallState);
-            return;
-        }
+        // 先做“域守卫”：离地 -> Fall
+        if (!ctx.IsGrounded)
+            return new Transition(PlayerStateId.Fall);
 
-        if (player.isGround)
-        {
-            if (player.inputActions.MoveSystem.Sprint.WasPressedThisFrame())
-            {
-                stateMachine.ChangeState(player.sprintState);
-                return;
-            }
+        // 地面输入：冲刺、跳
+        if (ctx.SprintPressedThisFrame)
+            return new Transition(PlayerStateId.Sprint);
 
-            if (player.inputActions.MoveSystem.Jump.WasPressedThisFrame())
-            {
-                stateMachine.ChangeState(player.jumpState);
-            }
-        }
+        if (ctx.JumpPressedThisFrame)
+            return new Transition(PlayerStateId.Jump);
 
+        return base.LogicUpdate();
     }
-
 }

@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
+using RestartPlayer.HFSM;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundState
 {
-    public PlayerIdleState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerIdleState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor) 
+    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
 
     public override void Enter()
     {
@@ -13,22 +12,14 @@ public class PlayerIdleState : PlayerGroundState
         Debug.Log("进入Idle状态");
     }
 
-    public override void LogicUpdate()
+    public override Transition LogicUpdate()
     {
-        base.LogicUpdate();  // base因为是继承的PlayerGroundState，地面检测都在其中
-        // if (Mathf.Abs(player.moveInput.x) > 0.3f)
-        //     stateMachine.ChangeState(player.runState);
-        // else if (Mathf.Abs(player.moveInput.x) > 0.1f)
-        //     stateMachine.ChangeState(player.walkState);
+        var t = base.LogicUpdate();
+        if (t.HasTarget) return t;
 
-        if (Mathf.Abs(player.moveInput.x) > 0.1f)
-        {
-            stateMachine.ChangeState(player.locomotionState);
-        }
-    }
+        if (Mathf.Abs(ctx.MoveInput.x) > 0.1f)
+            return new Transition(PlayerStateId.Locomotion);
 
-    public override void Exit()
-    {
-        base.Exit();
+        return Transition.None;
     }
 }

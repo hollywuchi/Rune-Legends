@@ -6067,12 +6067,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1797461657}
+  - component: {fileID: 1797461666}
+  - component: {fileID: 1797461663}
+  - component: {fileID: 1797461665}
+  - component: {fileID: 1797461664}
   - component: {fileID: 1797461656}
   - component: {fileID: 1797461661}
   - component: {fileID: 1797461660}
   - component: {fileID: 1797461658}
-  - component: {fileID: 1797461663}
-  - component: {fileID: 1797461662}
   m_Layer: 0
   m_Name: //Player
   m_TagString: Untagged
@@ -6240,32 +6242,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1797461662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1797461655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51ec63e6259198d48975a256250fe480, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 12
-  SprintSpeed: 30
-  jumpForce: 20
-  SprintJumpSpeed: 20
-  FacingDirection: 1
-  canSprint: 0
-  jumpTime: 0
-  moveInput: {x: 0, y: 0}
-  isGround: 0
-  isSprintFinished: 0
-  rb: {fileID: 1797461661}
-  animator: {fileID: 1797461658}
-  poolManager: {fileID: 546500498}
-  physicsCheck: {fileID: 1797461663}
 --- !u!114 &1797461663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6291,6 +6267,52 @@ MonoBehaviour:
   IsGround: 0
   touchLeftWall: 0
   touchRightWall: 0
+--- !u!114 &1797461664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797461655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c21960a5a565be4ebc276d03b53a518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1797461661}
+--- !u!114 &1797461665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797461655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5567b54ebae01404f81b7a71ff4c0147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1797461658}
+--- !u!114 &1797461666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797461655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9870fcdc5de837f4d96d510172093aec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 12
+  SprintSpeed: 30
+  jumpForce: 20
+  SprintJumpSpeed: 20
+  poolManager: {fileID: 546500498}
+  physicsCheck: {fileID: 1797461663}
+  motor: {fileID: 1797461664}
+  anim: {fileID: 1797461665}
 --- !u!1 &1911611766
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,29 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using RestartPlayer.HFSM;
 using UnityEngine;
 
 public class PlayerTurnState : PlayerGroundState
 {
-    public PlayerTurnState(Player player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerTurnState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor) 
+    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
 
     public override void Enter()
     {
         base.Enter();
-        player.animator.Play("TrickTurn");
+        anim.PlayTrickTurn();
         Debug.Log("进入转身状态");
     }
 
-    public override void LogicUpdate()
+    public override Transition LogicUpdate()
     {
-        base.LogicUpdate();
-        if(player.moveInput.x != 0 && Mathf.Sign(player.moveInput.x) == player.FacingDirection)
-        {
-            stateMachine.ChangeState(player.locomotionState);
-        }
-    }
+        var t = base.LogicUpdate();
+        if (t.HasTarget) return t;
 
-    public override void Exit()
-    {
-        base.Exit();
+        if (ctx.MoveInput.x != 0 && Mathf.Sign(ctx.MoveInput.x) == ctx.FacingDirection)
+            return new Transition(PlayerStateId.Locomotion);
+
+        return Transition.None;
     }
 }
