@@ -3,21 +3,19 @@ using UnityEngine;
 
 public class PlayerSprintState : PlayerGroundState
 {
-    public PlayerSprintState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor) 
-    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
+    public PlayerSprintState(PlayerServices s) : base(s) { }
 
     public override void Enter()
     {
         base.Enter();
 
-        ctx.IsSprintFinished = false;
+        s.ctx.IsSprintFinished = false;
 
-        anim.ResetCommonTriggers();
-        anim.PlayToSprint();
+        s.anim.ResetCommonTriggers();
+        s.anim.PlayToSprint();
 
-        player.poolManager.CreateFX(player.transform, ctx.FacingDirection, ParticalEffectType.SprintDust);
-
-        motor.SetVelocityX(ctx.FacingDirection * player.SprintSpeed);
+        s.fxSpeaker.CreateFX(s.motor.transform,s.ctx.FacingDirection,ParticalEffectType.SprintDust);
+        s.motor.SetVelocityX(s.ctx.FacingDirection * s.config.sprintSpeed);
 
         Debug.Log("进入冲刺状态");
     }
@@ -27,11 +25,14 @@ public class PlayerSprintState : PlayerGroundState
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
 
-        if (ctx.IsSprintFinished)
+        if (s.ctx.IsSprintFinished)
         {
-            if (ctx.SprintIsHeld || Mathf.Abs(ctx.MoveInput.x) > 0.1f)
+            if (s.ctx.SprintIsHeld || Mathf.Abs(s.ctx.MoveInput.x) > 0.1f)
+            {
+                s.anim.TriggerIng();
                 return new Transition(PlayerStateId.Locomotion);
-
+            }
+            s.anim.TriggerIdle();
             return new Transition(PlayerStateId.Idle);
         }
 

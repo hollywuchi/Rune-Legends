@@ -33,7 +33,9 @@ public sealed class PlayerContext
     {
         FacingDirection = dir >= 0 ? 1 : -1;
     }
-
+    /// <summary>
+    /// 翻转朝向，只是数值方面
+    /// </summary>
     public void FlipFacing()
     {
         FacingDirection *= -1;

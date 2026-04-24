@@ -47,7 +47,7 @@ public class PlayerStateMachine
         var t = currentState.LogicUpdate();
 
         // 2) 状态内部也可能直接 RequestChangeState（比如动画事件回调）
-        // 统一用 pending 优先（保持你之前“一帧只切一次”的语义）
+        // 统一用 pending 优先
         if (_pendingId == PlayerStateId.None && t.HasTarget)
             _pendingId = t.Target;
 

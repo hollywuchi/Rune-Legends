@@ -469,6 +469,7 @@ MonoBehaviour:
   - {fileID: 2968737359591195749, guid: 6b67abd07732b304a9082a8b56cc2f81, type: 3}
   - {fileID: 888812997161528700, guid: 3d0c9a053ab6d60479c98c604664edd9, type: 3}
   - {fileID: 3546889572022880827, guid: 131c5f6af0109fa4fa18d7ad8d37d70a, type: 3}
+  fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}
 --- !u!4 &546500499
 Transform:
   m_ObjectHideFlags: 0
@@ -6071,6 +6072,7 @@ GameObject:
   - component: {fileID: 1797461663}
   - component: {fileID: 1797461665}
   - component: {fileID: 1797461664}
+  - component: {fileID: 1797461667}
   - component: {fileID: 1797461656}
   - component: {fileID: 1797461661}
   - component: {fileID: 1797461660}
@@ -6305,14 +6307,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9870fcdc5de837f4d96d510172093aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 12
-  SprintSpeed: 30
-  jumpForce: 20
-  SprintJumpSpeed: 20
-  poolManager: {fileID: 546500498}
+  config: {fileID: 11400000, guid: d0942015eed47b140939030805478dc3, type: 2}
   physicsCheck: {fileID: 1797461663}
   motor: {fileID: 1797461664}
   anim: {fileID: 1797461665}
+  fxSpeaker: {fileID: 1797461667}
+--- !u!114 &1797461667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797461655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3df3fdd6814866e4b94da845a8355672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}
 --- !u!1 &1911611766
 GameObject:
   m_ObjectHideFlags: 0

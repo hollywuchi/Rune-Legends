@@ -3,24 +3,23 @@ using UnityEngine;
 
 public class PlayerAirSprintState : PlayerAirState
 {
-    public PlayerAirSprintState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor) 
-    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
+    public PlayerAirSprintState(PlayerServices s) : base(s) { }
 
     public override void Enter()
     {
         base.Enter();
 
-        anim.ResetCommonTriggers();
-        anim.PlayToSprint();
+        s.anim.ResetCommonTriggers();
+        s.anim.PlayToSprint();
 
-        ctx.CanSprint = false;
-        ctx.IsSprintFinished = false;
+        s.ctx.CanSprint = false;
+        s.ctx.IsSprintFinished = false;
 
-        motor.CaptureOriginalGravity();
-        motor.GravityScale = 0f;
+        s.motor.CaptureOriginalGravity();
+        s.motor.GravityScale = 0f;
 
-        player.poolManager.CreateFX(player.transform, ctx.FacingDirection, ParticalEffectType.AirDust);
-        motor.DashHorizontal(ctx.FacingDirection, player.SprintSpeed);
+        s.fxSpeaker.CreateFX(s.motor.transform,s.ctx.FacingDirection,ParticalEffectType.AirDust);
+        s.motor.DashHorizontal(s.ctx.FacingDirection, s.config.sprintSpeed);
 
         Debug.Log("进入空中冲刺状态");
     }
@@ -28,10 +27,10 @@ public class PlayerAirSprintState : PlayerAirState
     public override Transition LogicUpdate()
     {
         // 空中冲刺期间：允许按跳打断（你的原逻辑）
-        if (ctx.JumpPressedThisFrame)
+        if (s.ctx.JumpPressedThisFrame)
             return new Transition(PlayerStateId.Jump);
 
-        if (ctx.IsSprintFinished)
+        if (s.ctx.IsSprintFinished)
             return new Transition(PlayerStateId.Fall);
 
         return Transition.None;
@@ -40,6 +39,6 @@ public class PlayerAirSprintState : PlayerAirState
     public override void Exit()
     {
         base.Exit();
-        player.motor.RestoreOriginalGravity();
+        s.motor.RestoreOriginalGravity();
     }
 }

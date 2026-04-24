@@ -57,4 +57,11 @@ public sealed class PlayerMotor2D : MonoBehaviour
     {
         rb.velocity = new Vector2(facingDir * dashSpeed, 0f);
     }
+    /// <summary>
+    /// 翻转玩家朝向
+    /// </summary>
+    public void FlipFacing()
+    {
+        rb.transform.Rotate(0, 180f, 0);
+    }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class PlayerFallState : PlayerAirState
 {
-    public PlayerFallState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry registry, PlayerMotor2D motor)
-    : base(player, stateMachine, ctx, anim, registry, motor) { }
+    public PlayerFallState(PlayerServices s) : base(s) { }
 
     public override void Enter()
     {
@@ -12,7 +11,7 @@ public class PlayerFallState : PlayerAirState
 
         // 只有“刚离地且未发生跳跃”的情况下才给土狼时间
         // 这里用 JumpCount==0 替代你之前的 jumpTime==0
-        ctx.CoyoteTimer = (ctx.JumpCount == 0) ? ctx.CoyoteTime : 0f;
+        s.ctx.CoyoteTimer = (s.ctx.JumpCount == 0) ? s.ctx.CoyoteTime : 0f;
 
         Debug.Log("进入PlayerFall状态");
     }
@@ -20,13 +19,13 @@ public class PlayerFallState : PlayerAirState
     public override Transition LogicUpdate()
     {
         // 1) 土狼时间优先级最高：在 base(Air) 处理二段跳前先截获
-        if (ctx.CoyoteTimer > 0f)
+        if (s.ctx.CoyoteTimer > 0f)
         {
-            ctx.CoyoteTimer -= Time.deltaTime;
+            s.ctx.CoyoteTimer -= Time.deltaTime;
 
-            if (ctx.JumpPressedThisFrame)
+            if (s.ctx.JumpPressedThisFrame)
             {
-                ctx.CoyoteTimer = 0f;
+                s.ctx.CoyoteTimer = 0f;
                 Debug.Log("土狼时间！");
                 return new Transition(PlayerStateId.Jump);
             }
@@ -37,15 +36,21 @@ public class PlayerFallState : PlayerAirState
         if (t.HasTarget) return t;
 
         // 3) 空中横移
-        motor.SetVelocityX(ctx.MoveInput.x * player.Speed * 0.5f);
+        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * 0.5f);
 
         // 4) 落地 -> Idle/Locomotion
-        if (ctx.IsGrounded)
+        if (s.ctx.IsGrounded)
         {
-            if (Mathf.Abs(ctx.MoveInput.x) < 0.1f)
+            if (Mathf.Abs(s.ctx.MoveInput.x) < 0.1f)
+            {
+                s.anim.TriggerIdle();
                 return new Transition(PlayerStateId.Idle);
+            }
             else
+            {
+                s.anim.TriggerIng();
                 return new Transition(PlayerStateId.Locomotion);
+            }
         }
 
         return Transition.None;

@@ -2,22 +2,11 @@ using RestartPlayer.HFSM;
 
 public abstract class PlayerState
 {
-    protected Player player;
-    protected PlayerStateMachine stateMachine;
-    protected PlayerContext ctx;
-    protected PlayerAnimatorDriver anim;
-    protected PlayerStateRegistry stateRegistry;
-    protected PlayerMotor2D motor;
+    protected PlayerServices s;
 
-    protected PlayerState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx,
-    PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor)
+    protected PlayerState(PlayerServices s)
     {
-        this.player = player;
-        this.stateMachine = stateMachine;
-        this.ctx = ctx;
-        this.anim = anim;
-        this.stateRegistry = stateRegistry;
-        this.motor = motor;
+        this.s = s;
     }
 
     public virtual void Enter() { }
@@ -33,6 +22,6 @@ public abstract class PlayerState
     protected void Commit(Transition t)
     {
         if (t.HasTarget)
-            stateMachine.RequestChangeState(t.Target);
+            s.stateMachine.RequestChangeState(t.Target);
     }
 }

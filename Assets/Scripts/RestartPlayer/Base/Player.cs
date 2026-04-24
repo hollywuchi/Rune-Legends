@@ -2,20 +2,18 @@ using UnityEngine;
 using RestartPlayer.HFSM;
 public class Player : MonoBehaviour
 {
+    [SerializeField] float JumpCount;
+
     public InputManager inputActions;
 
-    [Header("参数调整")]
-    public float Speed;
-    public float SprintSpeed;
-    public float jumpForce;
-    public float SprintJumpSpeed;
-
     [Header("基本组件")]
-    public PoolManager poolManager;
+    public PlayerConfig config;
     public PhysicsCheck physicsCheck;
     public PlayerMotor2D motor;
     public PlayerAnimatorDriver anim;
+    public PlayerFxSpeaker fxSpeaker;
 
+    public PlayerServices s;
     public PlayerContext ctx;
     public PlayerStateRegistry stateRegistry;
     public PlayerStateMachine stateMachine;
@@ -28,14 +26,15 @@ public class Player : MonoBehaviour
         if (ctx == null) ctx = new PlayerContext();
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
-
-        stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(this, stateMachine, ctx, anim, stateRegistry, motor));
-        stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(this, stateMachine, ctx, anim, stateRegistry, motor));
-        stateRegistry.Register(PlayerStateId.Turn, new PlayerTurnState(this, stateMachine, ctx, anim, stateRegistry, motor));
-        stateRegistry.Register(PlayerStateId.Sprint, new PlayerSprintState(this, stateMachine, ctx, anim, stateRegistry, motor));
-        stateRegistry.Register(PlayerStateId.Jump, new PlayerJumpState(this, stateMachine, ctx, anim, stateRegistry, motor));
-        stateRegistry.Register(PlayerStateId.Fall, new PlayerFallState(this, stateMachine, ctx, anim, stateRegistry, motor));
-        stateRegistry.Register(PlayerStateId.AirSprint, new PlayerAirSprintState(this, stateMachine, ctx, anim, stateRegistry, motor));
+        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker);
+        // WORKFLOW：在这里注册状态
+        stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(s));
+        stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(s));
+        stateRegistry.Register(PlayerStateId.Turn, new PlayerTurnState(s));
+        stateRegistry.Register(PlayerStateId.Sprint, new PlayerSprintState(s));
+        stateRegistry.Register(PlayerStateId.Jump, new PlayerJumpState(s));
+        stateRegistry.Register(PlayerStateId.Fall, new PlayerFallState(s));
+        stateRegistry.Register(PlayerStateId.AirSprint, new PlayerAirSprintState(s));
     }
 
     private void Start()
@@ -52,11 +51,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        JumpCount = ctx.JumpCount;
         // ====== 采样输入 -> ctx ======
         var move = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
         if (inputActions.MoveSystem.Sprint.IsPressed())
         {
-            // 保留你原来的“按住冲刺导致输入堆积”的处理（后续建议改成独立 sprint 修饰）
             move.x *= 2;
         }
 
@@ -82,16 +81,11 @@ public class Player : MonoBehaviour
         stateMachine.FixedTick();
     }
 
-    public void Flip()
-    {
-        ctx.FlipFacing();
-        transform.Rotate(0, 180f, 0);
-    }
-
     // 动画事件：转身结束
     public void Animation_TurnFinished()
     {
-        Flip();
+        ctx.FlipFacing();
+        transform.Rotate(0, 180f, 0);
 
         if (Mathf.Abs(ctx.MoveInput.x) < 0.01f)
             stateMachine.RequestChangeState(PlayerStateId.Idle);
@@ -106,6 +100,6 @@ public class Player : MonoBehaviour
 
     public void CreateSprintDust()
     {
-        poolManager.CreateFX(transform, ctx.FacingDirection, ParticalEffectType.UnderDust);
+        fxSpeaker.CreateFX(motor.transform, ctx.FacingDirection, ParticalEffectType.UnderDust);
     }
 }

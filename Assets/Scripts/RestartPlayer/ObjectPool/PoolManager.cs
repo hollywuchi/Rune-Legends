@@ -1,12 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class PoolManager : MonoBehaviour
 {
+    [Header("特效对象列表")]
     public List<GameObject> poolPrefabs;
+    [Header("事件监听")]
+    public FxEventSO fxEventSO;
     // 对象池的列表
     private List<ObjectPool<GameObject>> poolEffectList = new List<ObjectPool<GameObject>>();
     // private Queue<GameObject> soundQueue = new Queue<GameObject>();     // 队列，当做音效的对象池
@@ -14,6 +15,15 @@ public class PoolManager : MonoBehaviour
     void Awake()
     {
         CreatePool();
+    }
+    void OnEnable()
+    {
+        fxEventSO.FxSpawnEvent += CreateFX;
+    }
+
+    void OnDisable()
+    {
+        fxEventSO.FxSpawnEvent -= CreateFX;
     }
 
     private void CreatePool()

@@ -3,22 +3,21 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerAirState
 {
-    public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerContext ctx, PlayerAnimatorDriver anim, PlayerStateRegistry stateRegistry, PlayerMotor2D motor) 
-    : base(player, stateMachine, ctx, anim, stateRegistry, motor) { }
+    public PlayerJumpState(PlayerServices s) : base(s) { }
 
     public override void Enter()
     {
         // 计数（不再用 jumpTime float）
-        if (ctx.JumpCount >= ctx.MaxJumpCount) return;
-        ctx.JumpCount++;
+        if (s.ctx.JumpCount >= s.ctx.MaxJumpCount) return;
+        s.ctx.JumpCount++;
 
         base.Enter();
 
         // 跳跃起速：由motor负责
-        motor.Jump(player.jumpForce);
+        s.motor.Jump(s.config.jumpForce);
 
-        if (Mathf.Abs(ctx.MoveInput.x) > 1f)
-            anim.CrossFadeToSJump(0.05f);
+        if (Mathf.Abs(s.ctx.MoveInput.x) > 1f)
+            s.anim.CrossFadeToSJump(0.05f);
 
         Debug.Log("进入PlayerJump状态");
     }
@@ -30,10 +29,10 @@ public class PlayerJumpState : PlayerAirState
         if (t.HasTarget) return t;
 
         // 空中横移（叶子状态做细节：你原来是0.5倍率）
-        motor.SetVelocityX(ctx.MoveInput.x * player.Speed * 0.5f);
+        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * 0.5f);
 
         // 上升结束 -> Fall
-        if (motor.Velocity.y < 0)
+        if (s.motor.Velocity.y < 0)
             return new Transition(PlayerStateId.Fall);
 
         return Transition.None;
