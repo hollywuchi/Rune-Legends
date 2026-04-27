@@ -1,9 +1,9 @@
 using RestartPlayer.HFSM;
 using UnityEngine;
 
-public class PlayerIdleState : PlayerGroundState
+public class PlayerJump2State : PlayerJumpState
 {
-    public PlayerIdleState(PlayerServices s) : base(s) { }
+    public PlayerJump2State(PlayerServices s) : base(s) { }
 
     public override void Enter()
     {
@@ -14,9 +14,6 @@ public class PlayerIdleState : PlayerGroundState
     {
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
-
-        if (Mathf.Abs(s.ctx.MoveInput.x) > 0.1f)
-            return new Transition(PlayerStateId.Locomotion);
 
         return Transition.None;
     }

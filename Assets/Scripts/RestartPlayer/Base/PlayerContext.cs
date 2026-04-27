@@ -14,6 +14,7 @@ public sealed class PlayerContext
 
     // ====== 传感器 ======
     public bool IsGrounded { get; set; }
+    public bool IsTouchingWall { get; set; }
 
     // ====== 朝向 ======
     public int FacingDirection { get; private set; } = 1;
@@ -28,6 +29,36 @@ public sealed class PlayerContext
     // ====== 土狼时间（从状态里搬出来）======
     public float CoyoteTime { get; set; } = 0.2f;
     public float CoyoteTimer { get; set; }         // >0 时允许“离地后仍可跳”
+
+    // ====== 跳跃缓冲 ======
+    public float JumpBufferTime { get; set; } = 0.12f;
+    public float JumpBufferTimer { get; set; }     // >0 时允许“预按跳跃”
+
+    // public void JumpBufferTick()
+    // {
+    //     if (JumpPressedThisFrame)
+    //         JumpBufferTimer = JumpBufferTime;
+    //     else
+    //         JumpBufferTimer -= Time.deltaTime;
+
+    //     if (JumpBufferTimer < 0f)
+    //         JumpBufferTimer = 0f;
+    // }
+
+    // public bool HasJumpBuffered => JumpBufferTimer > 0;
+
+    // public bool TryConsumeJumpBuffered()
+    // {
+    //     if (JumpBufferTimer > 0)
+    //     {
+    //         JumpBufferTimer = 0;
+    //         return true;
+    //     }
+
+    //     return false;
+    // }
+
+    // public void ClearJumpBuffer() => JumpBufferTimer = 0;
 
     public void SetFacingDirection(int dir)
     {

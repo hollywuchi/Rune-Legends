@@ -53,12 +53,17 @@ public sealed class PlayerMotor2D : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
 
+    public void WallJump(float jumpForce, int facingDir, float horizontalBoost)
+    {
+        rb.velocity = new Vector2(facingDir * horizontalBoost, jumpForce);
+    }
+
     public void DashHorizontal(int facingDir, float dashSpeed)
     {
         rb.velocity = new Vector2(facingDir * dashSpeed, 0f);
     }
     /// <summary>
-    /// 翻转玩家朝向
+    /// 翻转玩家朝向,物理层面
     /// </summary>
     public void FlipFacing()
     {

@@ -20,8 +20,6 @@ public class PlayerAirSprintState : PlayerAirState
 
         s.fxSpeaker.CreateFX(s.motor.transform,s.ctx.FacingDirection,ParticalEffectType.AirDust);
         s.motor.DashHorizontal(s.ctx.FacingDirection, s.config.sprintSpeed);
-
-        Debug.Log("进入空中冲刺状态");
     }
 
     public override Transition LogicUpdate()

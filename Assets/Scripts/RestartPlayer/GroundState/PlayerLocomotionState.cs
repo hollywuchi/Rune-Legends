@@ -8,7 +8,6 @@ public class PlayerLocomotionState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("进入PlayerLocomotion状态");
     }
 
     public override Transition LogicUpdate()

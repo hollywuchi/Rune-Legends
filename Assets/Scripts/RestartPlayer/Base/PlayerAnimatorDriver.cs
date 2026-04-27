@@ -16,6 +16,7 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 
     public void SetInputX(float absX) => animator.SetFloat("InputX", absX);
     public void SetIsGround(bool isGround) => animator.SetBool("IsGround", isGround);
+    public void SetIsWall(bool isWall) => animator.SetBool("IsWall", isWall);
     public void SetVelocityY(float yClamped) => animator.SetFloat("VecocityY", yClamped);
 
     public void ResetCommonTriggers()

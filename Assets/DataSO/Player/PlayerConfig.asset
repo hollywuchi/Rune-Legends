@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   speed: 12
-  sprintSpeed: 30
+  sprintSpeed: 25
   jumpForce: 20
-  sprintJumpForce: 5
+  wallSlideSpeed: 5
+  wallHorizontalBoost: 10

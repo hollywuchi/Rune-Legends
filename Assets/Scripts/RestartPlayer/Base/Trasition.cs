@@ -5,9 +5,10 @@ namespace RestartPlayer.HFSM
     // 不写filepath：你可以放在 RestartPlayer/HFSM 下
     public enum PlayerStateId
     {
+        // WORKFLOW:在这里添加状态ID
         None = 0,
         Idle, Locomotion, Turn, Sprint,
-        Jump, Fall, AirSprint
+        Jump, Jump2, WallJump, Fall, AirSprint, WallSlide
     }
     /// <summary>
     /// 状态逻辑只“提出转移请求”，由状态机统一执行。

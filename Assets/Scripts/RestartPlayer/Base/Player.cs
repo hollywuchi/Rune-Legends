@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.Jump, new PlayerJumpState(s));
         stateRegistry.Register(PlayerStateId.Fall, new PlayerFallState(s));
         stateRegistry.Register(PlayerStateId.AirSprint, new PlayerAirSprintState(s));
+        stateRegistry.Register(PlayerStateId.Jump2, new PlayerJump2State(s));
+        stateRegistry.Register(PlayerStateId.WallSlide, new PlayerWallSlideState(s));
+        stateRegistry.Register(PlayerStateId.WallJump, new PlayerWallJumpState(s));
     }
 
     private void Start()
@@ -64,12 +67,15 @@ public class Player : MonoBehaviour
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
         ctx.SprintIsHeld = inputActions.MoveSystem.Sprint.IsPressed();
 
+
         // ====== 传感器 -> ctx ======
         ctx.IsGrounded = physicsCheck.IsGround;
+        ctx.IsTouchingWall = (physicsCheck.touchLeftWall || physicsCheck.touchRightWall) && ctx.MoveInput != Vector2.zero;
 
         // ====== 动画参数统一在 Driver 写入 ======
         anim.SetInputX(Mathf.Abs(ctx.MoveInput.x));
         anim.SetIsGround(ctx.IsGrounded);
+        anim.SetIsWall(ctx.IsTouchingWall);
         anim.SetVelocityY(Mathf.Clamp(motor.Velocity.y, -1f, 1f));
 
         // ====== 状态机 Tick（统一提交切换）======

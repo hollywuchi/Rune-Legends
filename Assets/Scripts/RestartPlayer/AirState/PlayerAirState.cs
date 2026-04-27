@@ -18,10 +18,11 @@ public class PlayerAirState : PlayerState
             s.motor.FlipFacing();
         }
 
-        // BUG：在这个状态下，会有很严重的吞按键问题（因为这个状态的持续时间很短，玩家很难在它存在的这一帧按键）
-        // 二段跳（注意：土狼时间在 FallState 里处理优先级，这一步先保持你逻辑）
+        // 二段跳
         if (s.ctx.JumpPressedThisFrame && s.ctx.JumpCount < s.ctx.MaxJumpCount)
-            return new Transition(PlayerStateId.Jump);
+        {
+            return new Transition(PlayerStateId.Jump2);
+        }
 
         return base.LogicUpdate();
     }

@@ -1,3 +1,4 @@
+using UnityEngine;
 using RestartPlayer.HFSM;
 
 public class PlayerGroundState : PlayerState
@@ -24,7 +25,7 @@ public class PlayerGroundState : PlayerState
         if (s.ctx.SprintPressedThisFrame)
             return new Transition(PlayerStateId.Sprint);
 
-        if (s.ctx.JumpPressedThisFrame)
+        if (s.ctx.JumpPressedThisFrame && s.ctx.JumpBufferTime < 2)
             return new Transition(PlayerStateId.Jump);
 
         return base.LogicUpdate();

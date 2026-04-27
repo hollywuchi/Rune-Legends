@@ -17,7 +17,6 @@ public class PlayerSprintState : PlayerGroundState
         s.fxSpeaker.CreateFX(s.motor.transform,s.ctx.FacingDirection,ParticalEffectType.SprintDust);
         s.motor.SetVelocityX(s.ctx.FacingDirection * s.config.sprintSpeed);
 
-        Debug.Log("进入冲刺状态");
     }
 
     public override Transition LogicUpdate()

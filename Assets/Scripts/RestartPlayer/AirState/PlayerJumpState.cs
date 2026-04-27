@@ -7,11 +7,8 @@ public class PlayerJumpState : PlayerAirState
 
     public override void Enter()
     {
-        // 计数（不再用 jumpTime float）
-        if (s.ctx.JumpCount >= s.ctx.MaxJumpCount) return;
-        s.ctx.JumpCount++;
-
         base.Enter();
+        s.ctx.JumpCount++;
 
         // 跳跃起速：由motor负责
         s.motor.Jump(s.config.jumpForce);
@@ -19,7 +16,6 @@ public class PlayerJumpState : PlayerAirState
         if (Mathf.Abs(s.ctx.MoveInput.x) > 1f)
             s.anim.CrossFadeToSJump(0.05f);
 
-        Debug.Log("进入PlayerJump状态");
     }
 
     public override Transition LogicUpdate()

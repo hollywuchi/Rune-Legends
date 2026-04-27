@@ -9,7 +9,6 @@ public class PlayerTurnState : PlayerGroundState
     {
         base.Enter();
         s.anim.PlayTrickTurn();
-        Debug.Log("进入转身状态");
     }
 
     public override Transition LogicUpdate()

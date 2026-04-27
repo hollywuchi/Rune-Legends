@@ -117,6 +117,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""test"",
+                    ""type"": ""Button"",
+                    ""id"": ""ecc1ae7f-51d0-4a4a-a896-fd4f1805b349"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9aaaf91e-9665-4fb7-b192-2d016d5c2ff5"",
+                    ""path"": ""<XInputController>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""test"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -817,6 +837,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_MoveSystem_WalkOrRun = m_MoveSystem.FindAction("WalkOrRun", throwIfNotFound: true);
         m_MoveSystem_Jump = m_MoveSystem.FindAction("Jump", throwIfNotFound: true);
         m_MoveSystem_Sprint = m_MoveSystem.FindAction("Sprint", throwIfNotFound: true);
+        m_MoveSystem_test = m_MoveSystem.FindAction("test", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -913,6 +934,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_MoveSystem_WalkOrRun;
     private readonly InputAction m_MoveSystem_Jump;
     private readonly InputAction m_MoveSystem_Sprint;
+    private readonly InputAction m_MoveSystem_test;
     /// <summary>
     /// Provides access to input actions defined in input action map "MoveSystem".
     /// </summary>
@@ -936,6 +958,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "MoveSystem/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_MoveSystem_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "MoveSystem/test".
+        /// </summary>
+        public InputAction @test => m_Wrapper.m_MoveSystem_test;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -971,6 +997,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @test.started += instance.OnTest;
+            @test.performed += instance.OnTest;
+            @test.canceled += instance.OnTest;
         }
 
         /// <summary>
@@ -991,6 +1020,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @test.started -= instance.OnTest;
+            @test.performed -= instance.OnTest;
+            @test.canceled -= instance.OnTest;
         }
 
         /// <summary>
@@ -1312,6 +1344,13 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "test" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTest(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

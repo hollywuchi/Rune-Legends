@@ -13,7 +13,6 @@ public class PlayerFallState : PlayerAirState
         // 这里用 JumpCount==0 替代你之前的 jumpTime==0
         s.ctx.CoyoteTimer = (s.ctx.JumpCount == 0) ? s.ctx.CoyoteTime : 0f;
 
-        Debug.Log("进入PlayerFall状态");
     }
 
     public override Transition LogicUpdate()
@@ -26,7 +25,6 @@ public class PlayerFallState : PlayerAirState
             if (s.ctx.JumpPressedThisFrame)
             {
                 s.ctx.CoyoteTimer = 0f;
-                Debug.Log("土狼时间！");
                 return new Transition(PlayerStateId.Jump);
             }
         }
@@ -35,10 +33,14 @@ public class PlayerFallState : PlayerAirState
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
 
-        // 3) 空中横移
+        // 3) 碰墙且有横向输入 -> WallSlide
+        if (s.ctx.IsTouchingWall && s.ctx.MoveInput.x != 0)
+            return new Transition(PlayerStateId.WallSlide);
+
+        // 4) 空中横移
         s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * 0.5f);
 
-        // 4) 落地 -> Idle/Locomotion
+        // 5) 落地 -> Idle/Locomotion
         if (s.ctx.IsGrounded)
         {
             if (Mathf.Abs(s.ctx.MoveInput.x) < 0.1f)
