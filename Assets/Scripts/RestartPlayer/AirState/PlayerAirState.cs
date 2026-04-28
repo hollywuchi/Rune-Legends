@@ -12,14 +12,14 @@ public class PlayerAirState : PlayerState
             return new Transition(PlayerStateId.AirSprint);
 
         // 空中转向（安全：只做朝向，不切状态）
-        if (s.ctx.MoveInput.x != 0 && Mathf.Sign(s.ctx.MoveInput.x) != s.ctx.FacingDirection)
+        if (s.ctx.MoveInput.x != 0 && Mathf.Sign(s.ctx.MoveInput.x) != s.ctx.FacingDirection && !s.ctx.IsTouchingWall)
         {
             s.ctx.FlipFacing();
             s.motor.FlipFacing();
         }
 
         // 二段跳
-        if (s.ctx.JumpPressedThisFrame && s.ctx.JumpCount < s.ctx.MaxJumpCount)
+        if (s.ctx.JumpPressedThisFrame && s.ctx.JumpCount < s.ctx.MaxJumpCount && !s.ctx.IsTouchingWall)
         {
             return new Transition(PlayerStateId.Jump2);
         }

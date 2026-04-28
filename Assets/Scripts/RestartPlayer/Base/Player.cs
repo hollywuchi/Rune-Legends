@@ -2,9 +2,8 @@ using UnityEngine;
 using RestartPlayer.HFSM;
 public class Player : MonoBehaviour
 {
-    [SerializeField] float JumpCount;
-
     public InputManager inputActions;
+    public Vector2 moveinput;
 
     [Header("基本组件")]
     public PlayerConfig config;
@@ -17,6 +16,7 @@ public class Player : MonoBehaviour
     public PlayerContext ctx;
     public PlayerStateRegistry stateRegistry;
     public PlayerStateMachine stateMachine;
+    public PlayerInputGate inputGate;
 
     private void Awake()
     {
@@ -26,7 +26,8 @@ public class Player : MonoBehaviour
         if (ctx == null) ctx = new PlayerContext();
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
-        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker);
+        inputGate = new PlayerInputGate();
+        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate);
         // WORKFLOW：在这里注册状态
         stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(s));
         stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(s));
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.Jump2, new PlayerJump2State(s));
         stateRegistry.Register(PlayerStateId.WallSlide, new PlayerWallSlideState(s));
         stateRegistry.Register(PlayerStateId.WallJump, new PlayerWallJumpState(s));
+        stateRegistry.Register(PlayerStateId.Climb, new PlayerClimbState(s));
     }
 
     private void Start()
@@ -54,7 +56,9 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        JumpCount = ctx.JumpCount;
+
+        inputGate.Tick(Time.deltaTime); // 更新输入冻结计时器
+
         // ====== 采样输入 -> ctx ======
         var move = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
         if (inputActions.MoveSystem.Sprint.IsPressed())
@@ -62,7 +66,10 @@ public class Player : MonoBehaviour
             move.x *= 2;
         }
 
-        ctx.MoveInput = move;
+        // ctx.MoveInput = move;
+        ctx.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
+        moveinput = ctx.MoveInput;
+        // TODO：需要进一步测试与调参数
         ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
         ctx.SprintIsHeld = inputActions.MoveSystem.Sprint.IsPressed();
@@ -70,7 +77,10 @@ public class Player : MonoBehaviour
 
         // ====== 传感器 -> ctx ======
         ctx.IsGrounded = physicsCheck.IsGround;
-        ctx.IsTouchingWall = (physicsCheck.touchLeftWall || physicsCheck.touchRightWall) && ctx.MoveInput != Vector2.zero;
+        ctx.IsTouchingLeftWall = physicsCheck.touchLeftWall;
+        ctx.IsTouchingRightWall = physicsCheck.touchRightWall;
+        ctx.IsTouchingTopLeftWall = physicsCheck.touchLeftTopWall;
+        ctx.IsTouchingTopRightWall = physicsCheck.touchRightTopWall;
 
         // ====== 动画参数统一在 Driver 写入 ======
         anim.SetInputX(Mathf.Abs(ctx.MoveInput.x));

@@ -13,10 +13,14 @@ public class PhysicsCheck : MonoBehaviour
     public Vector2 GroundOffset;
     public Vector2 LeftOffset;
     public Vector2 rightOffset;
+    public Vector2 leftTopOffset;
+    public Vector2 rightTopOffset;
     [Header("状态")]
     public bool IsGround;
     public bool touchLeftWall;
     public bool touchRightWall;
+    public bool touchLeftTopWall;
+    public bool touchRightTopWall;
 
     BoxCollider2D coll;
     private void Awake()
@@ -30,7 +34,7 @@ public class PhysicsCheck : MonoBehaviour
     void Update()
     {
         CheckGround();
-        if(IsGround)
+        if (IsGround)
         {
             coll.sharedMaterial = Walk;
         }
@@ -51,6 +55,8 @@ public class PhysicsCheck : MonoBehaviour
         // 左右墙面的检测
         touchLeftWall = Physics2D.OverlapCircle((Vector2)transform.position + LeftOffset, PhyRadius, CheckLayer);
         touchRightWall = Physics2D.OverlapCircle((Vector2)transform.position + rightOffset, PhyRadius, CheckLayer);
+        touchRightTopWall = Physics2D.OverlapCircle((Vector2)transform.position + rightTopOffset, PhyRadius, CheckLayer);
+        touchLeftTopWall = Physics2D.OverlapCircle((Vector2)transform.position + leftTopOffset, PhyRadius, CheckLayer);
     }
     // 现在绘制以上的碰撞区域
     // 使用的就是一个辅助的方法，好在Unity帮我们弄好了这些
@@ -63,6 +69,8 @@ public class PhysicsCheck : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position + GroundOffset, PhyRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + LeftOffset, PhyRadius);
         Gizmos.DrawWireSphere((Vector2)transform.position + rightOffset, PhyRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + leftTopOffset, PhyRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + rightTopOffset, PhyRadius);
 
     }
     // 这里就是无论什么时候都可以绘制（永久出现）

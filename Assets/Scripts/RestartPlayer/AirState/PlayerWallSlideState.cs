@@ -12,6 +12,7 @@ public class PlayerWallSlideState : PlayerAirState
         base.Enter();
         s.motor.FlipFacing();
         s.ctx.JumpCount = 0; // 重置跳跃计数，允许玩家在墙上进行多段跳跃
+        Debug.Log("进入WallSlide状态");
     }
 
     public override Transition LogicUpdate()
@@ -21,12 +22,13 @@ public class PlayerWallSlideState : PlayerAirState
 
         WallSlide();
 
+        if (s.ctx.IsTouchingWall && !s.ctx.IsTouchingTopWall)
+            return new Transition(PlayerStateId.Climb);
         if (s.ctx.JumpPressedThisFrame)
-        // BUG：没有办法进入WallJump状态，原因是 JumpPressedThisFrame 在 PlayerJumpState 的 Enter 里被重置了
             return new Transition(PlayerStateId.WallJump);
         if (s.ctx.IsGrounded)
             return new Transition(PlayerStateId.Idle);
-        if (s.ctx.MoveInput == Vector2.zero || !s.ctx.IsTouchingWall)
+        if (!s.ctx.IsTouchingWall)
             return new Transition(PlayerStateId.Fall);
 
         return Transition.None;
@@ -35,10 +37,9 @@ public class PlayerWallSlideState : PlayerAirState
     {
         base.Exit();
         s.motor.FlipFacing();
+        Debug.Log("退出WallSlide状态");
     }
 
-    private void WallSlide()
-    {
-        s.motor.SetVelocityY(-s.config.wallSlideSpeed);
-    }
+    private void WallSlide() => s.motor.SetVelocityY(-s.config.wallSlideSpeed);
+
 }

@@ -53,9 +53,14 @@ public sealed class PlayerMotor2D : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
 
+    // public void WallJump(float jumpForce, int facingDir, float horizontalBoost)
+    // {
+    //     rb.velocity = new Vector2(facingDir * horizontalBoost, jumpForce);
+    // }
+
     public void WallJump(float jumpForce, int facingDir, float horizontalBoost)
     {
-        rb.velocity = new Vector2(facingDir * horizontalBoost, jumpForce);
+        rb.AddForce(new Vector2(facingDir * horizontalBoost, jumpForce), ForceMode2D.Impulse);
     }
 
     public void DashHorizontal(int facingDir, float dashSpeed)

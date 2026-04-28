@@ -7,6 +7,7 @@ public class PlayerConfig : ScriptableObject
     public float speed;
     public float sprintSpeed;
     public float jumpForce;
+    public float wallJumpForce;
     public float wallSlideSpeed;
     public float wallHorizontalBoost;
     
