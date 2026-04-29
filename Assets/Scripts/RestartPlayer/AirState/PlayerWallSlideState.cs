@@ -12,7 +12,6 @@ public class PlayerWallSlideState : PlayerAirState
         base.Enter();
         s.motor.FlipFacing();
         s.ctx.JumpCount = 0; // 重置跳跃计数，允许玩家在墙上进行多段跳跃
-        Debug.Log("进入WallSlide状态");
     }
 
     public override Transition LogicUpdate()
@@ -37,7 +36,6 @@ public class PlayerWallSlideState : PlayerAirState
     {
         base.Exit();
         s.motor.FlipFacing();
-        Debug.Log("退出WallSlide状态");
     }
 
     private void WallSlide() => s.motor.SetVelocityY(-s.config.wallSlideSpeed);

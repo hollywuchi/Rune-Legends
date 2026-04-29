@@ -53,11 +53,6 @@ public sealed class PlayerMotor2D : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
 
-    // public void WallJump(float jumpForce, int facingDir, float horizontalBoost)
-    // {
-    //     rb.velocity = new Vector2(facingDir * horizontalBoost, jumpForce);
-    // }
-
     public void WallJump(float jumpForce, int facingDir, float horizontalBoost)
     {
         rb.AddForce(new Vector2(facingDir * horizontalBoost, jumpForce), ForceMode2D.Impulse);
@@ -73,5 +68,19 @@ public sealed class PlayerMotor2D : MonoBehaviour
     public void FlipFacing()
     {
         rb.transform.Rotate(0, 180f, 0);
+    }
+
+    public void Teleport(Vector2 position)
+    {
+        rb.position = position;
+    }
+
+    public void SwtichInterpolate(bool enable)
+    {
+        rb.interpolation = enable switch
+        {
+            true => RigidbodyInterpolation2D.Interpolate,
+            false => RigidbodyInterpolation2D.None,
+        };
     }
 }

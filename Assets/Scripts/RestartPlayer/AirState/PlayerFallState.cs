@@ -12,7 +12,6 @@ public class PlayerFallState : PlayerAirState
         // 只有“刚离地且未发生跳跃”的情况下才给土狼时间
         // 这里用 JumpCount==0 替代你之前的 jumpTime==0
         s.ctx.CoyoteTimer = (s.ctx.JumpCount == 0) ? s.ctx.CoyoteTime : 0f;
-        Debug.Log("进入Fall状态");
     }
 
     public override Transition LogicUpdate()

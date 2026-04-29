@@ -1,9 +1,11 @@
 using UnityEngine;
 using RestartPlayer.HFSM;
+using System;
+using System.Collections;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
-    public Vector2 moveinput;
+    // private Transform telePoint => GetComponent<Transform>().Find("ClimbPoint");
 
     [Header("基本组件")]
     public PlayerConfig config;
@@ -68,7 +70,6 @@ public class Player : MonoBehaviour
 
         // ctx.MoveInput = move;
         ctx.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
-        moveinput = ctx.MoveInput;
         // TODO：需要进一步测试与调参数
         ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
@@ -118,4 +119,12 @@ public class Player : MonoBehaviour
     {
         fxSpeaker.CreateFX(motor.transform, ctx.FacingDirection, ParticalEffectType.UnderDust);
     }
+
+    public IEnumerator Teleport_AfterClimb()
+    {
+        motor.Teleport(transform.position + new Vector3(ctx.FacingDirection * 1.372f, 2.67f, 0)); // 这里直接上移1单位，避免攀爬点设置不准引发的bug
+        yield return new WaitForSeconds(0.01f); // 等待0.1秒，确保位置更新后再播放落地动画
+        anim.PlayLand();
+    }
+
 }

@@ -27,9 +27,12 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 
     public void TriggerIdle() => animator.SetTrigger("Idle");
     public void TriggerIng() => animator.SetTrigger("Ing");
+    public void TriggerClimb() => animator.SetTrigger("Climb");
+    public void TriggerCanLand() => animator.SetTrigger("CanLand");
 
     public void PlayToSprint() => animator.Play("ToSprint");
     public void PlayTrickTurn() => animator.Play("TrickTurn");
+    public void PlayLand() => animator.Play("Land", 0, 0);
 
     public void CrossFadeToSJump(float duration = 0.05f) => animator.CrossFade("ToSJump", duration);
 }
