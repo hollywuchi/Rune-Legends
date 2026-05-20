@@ -30,6 +30,15 @@ public sealed class PlayerContext
     public bool CanSprint { get; set; } = true;
     public bool IsSprintFinished { get; set; }
 
+    // ====== 攻击系统 ======
+    public bool AttackPressedThisFrame { get; set; }
+    public int AttackComboIndex { get; set; }          // 当前连招段数: 0=无, 1=第一段, 2=第二段, 3=第三段
+    public int MaxComboCount { get; set; } = 3;        // 最大连招段数
+    public bool IsAttacking { get; set; }              // 是否正在攻击
+    public bool AttackAnimFinished { get; set; }       // 攻击动画是否完成
+    public bool CanCombo { get; set; }                 // 是否可以连招
+    public float ComboWindowTimer { get; set; }        // 连招窗口计时器
+
     // ====== 土狼时间（从状态里搬出来）======
     public float CoyoteTime { get; set; } = 0.2f;
     public float CoyoteTimer { get; set; }         // >0 时允许“离地后仍可跳”
@@ -44,5 +53,30 @@ public sealed class PlayerContext
     public void FlipFacing()
     {
         FacingDirection *= -1;
+    }
+
+    /// <summary>
+    /// 重置攻击状态
+    /// </summary>
+    public void ResetAttackState()
+    {
+        AttackComboIndex = 0;
+        IsAttacking = false;
+        AttackAnimFinished = false;
+        CanCombo = false;
+        ComboWindowTimer = 0f;
+    }
+
+    /// <summary>
+    /// 进入下一段连招
+    /// </summary>
+    public void AdvanceCombo()
+    {
+        AttackComboIndex++;
+        if (AttackComboIndex > MaxComboCount)
+            AttackComboIndex = 1;
+        AttackAnimFinished = false;
+        CanCombo = false;
+        ComboWindowTimer = 0f;
     }
 }

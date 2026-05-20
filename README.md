@@ -25,7 +25,12 @@
     * [x] 扒墙
     * [ ] 登墙跳
 * [ ] **休息状态**
-* [ ] **攻击状态**
+* [x] **攻击状态** ✨新增
+    * [x] 基础攻击（三段连招）
+    * [x] 连招窗口系统
+    * [x] 攻击判定框
+    * [x] 伤害倍率系统
+    * [x] 攻击位移补偿
 * [ ] **防御状态**
 * [ ] **各种技能**
 
@@ -48,10 +53,12 @@
   >   * 空中冲刺状态
   >   * 扒墙状态
   >   * 登墙跳状态?
-  > * 攻击状态
-  >   * 各种技能开发中……
-  > * 防御状态(大状态)
-  > * 受伤/死亡状态(大状态) 
+   > * 攻击状态（大状态）
+   >   * 第一段攻击
+   >   * 第二段攻击
+   >   * 第三段攻击（终结技）
+   > * 防御状态(大状态)
+   > * 受伤/死亡状态(大状态) 
 
 
   ~~更加健壮的移动状态机：动画使用BlindTree，并使用InputSystem中的输入监听，来达到行走与跑步的丝滑转换，使用了动画状态机之后，已经丝滑到了不可思议的地步~~
@@ -121,3 +128,86 @@ public void Tick()
     }
 ```
 * 之后进入新的状态。这就是一轮状态转换。
+
+---
+
+## 攻击系统设计说明
+
+### 架构概述
+攻击系统基于现有的HFSM状态机架构实现，包含三段连招系统。
+
+### 核心组件
+
+#### 1. 状态类
+- `PlayerAttackState`: 攻击状态基类，管理通用攻击逻辑
+- `PlayerAttackCombo1State`: 第一段攻击
+- `PlayerAttackCombo2State`: 第二段攻击（伤害1.2倍）
+- `PlayerAttackCombo3State`: 第三段终结技（伤害1.5倍）
+
+#### 2. 数据类
+- `PlayerContext`: 扩展了攻击相关数据
+  - `AttackPressedThisFrame`: 攻击输入
+  - `AttackComboIndex`: 当前连招段数
+  - `IsAttacking`: 是否正在攻击
+  - `CanCombo`: 是否可以连招
+
+#### 3. 配置类
+- `PlayerConfig`: 扩展了攻击参数
+  - `attackComboWindow`: 连招窗口时间
+  - `attackDamage`: 基础攻击伤害
+  - `comboXDamageMultiplier`: 各段伤害倍率
+  - `comboXMoveDistance`: 各段位移距离
+
+#### 4. 检测组件
+- `AttackHitbox`: 攻击判定框组件
+  - 通过动画事件启用/禁用
+  - 检测敌人并计算伤害
+  - 支持击退效果
+
+### 连招流程
+```
+玩家按下攻击键(J/鼠标左键)
+    ↓
+PlayerGroundState检测输入 → 转换到AttackCombo1State
+    ↓
+播放攻击动画 + 应用位移
+    ↓
+动画事件: 打开连招窗口
+    ↓
+玩家再次按下攻击键 → 转换到AttackCombo2State
+    ↓
+重复直到第三段
+    ↓
+动画结束 → 返回Idle状态
+```
+
+### 动画事件配置
+需要在Animator Controller中配置以下动画事件：
+1. `Animation_AttackFinished`: 攻击动画结束
+2. `Animation_ComboWindowOpen`: 连招窗口打开
+3. `Animation_ComboWindowClose`: 连招窗口关闭
+
+### 使用方法
+
+#### 1. 添加AttackHitbox组件
+在玩家武器对象上添加`AttackHitbox`组件，配置：
+- `hitLayers`: 可攻击的层级
+- `hitboxOffset`: 判定框偏移
+- `hitboxSize`: 判定框大小
+
+#### 2. 配置PlayerConfig
+在ScriptableObject中设置攻击参数：
+- `attackComboWindow`: 连招窗口（推荐0.4-0.6秒）
+- `attackDamage`: 基础伤害
+- 各段伤害倍率和位移距离
+
+#### 3. 设置Animator Controller
+创建以下动画状态：
+- `Attack1`: 第一段攻击动画
+- `Attack2`: 第二段攻击动画  
+- `Attack3`: 第三段攻击动画
+
+添加参数：
+- `AttackCombo` (Integer): 连招段数
+- `IsAttacking` (Bool): 是否攻击中
+- `Attack` (Trigger): 攻击触发器

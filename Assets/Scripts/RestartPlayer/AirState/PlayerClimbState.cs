@@ -25,7 +25,7 @@ public class PlayerClimbState : PlayerAirState
         // 播放动画
         s.anim.TriggerClimb();
 
-        // TODO：理想状态：
+        // 理想状态：
         // 1) 先播放攀爬动画，动画事件在关键帧调用 Teleport_AfterClimb()，确保动画完整播放且位置正确
         // 2) Teleport_AfterClimb() 内部调用 motor.Teleport()
 
@@ -37,7 +37,6 @@ public class PlayerClimbState : PlayerAirState
         if (t.HasTarget) return t;
 
         // 和Fall状态一样的转换
-        // BUG：状态转换太快，导致动画都没有播放完
         if (s.ctx.IsGrounded)
         {
             if (Mathf.Abs(s.ctx.MoveInput.x) < 0.1f)

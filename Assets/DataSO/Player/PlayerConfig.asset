@@ -18,3 +18,11 @@ MonoBehaviour:
   wallJumpForce: 25
   wallSlideSpeed: 5
   wallHorizontalBoost: 20
+  attackComboWindow: 0.6
+  attackMoveDistance: 0.5
+  attackCooldown: 0.1
+  attackDamage: 1
+  attackKnockbackForce: 5
+  combo1DamageMultiplier: 1
+  combo2DamageMultiplier: 1.2
+  combo3DamageMultiplier: 1.5

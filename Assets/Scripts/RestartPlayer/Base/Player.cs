@@ -2,6 +2,7 @@ using UnityEngine;
 using RestartPlayer.HFSM;
 using System;
 using System.Collections;
+using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -42,6 +43,10 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.WallSlide, new PlayerWallSlideState(s));
         stateRegistry.Register(PlayerStateId.WallJump, new PlayerWallJumpState(s));
         stateRegistry.Register(PlayerStateId.Climb, new PlayerClimbState(s));
+        
+        stateRegistry.Register(PlayerStateId.AttackCombo1, new PlayerAttackCombo1State(s));
+        stateRegistry.Register(PlayerStateId.AttackCombo2, new PlayerAttackCombo2State(s));
+        stateRegistry.Register(PlayerStateId.AttackCombo3, new PlayerAttackCombo3State(s));
     }
 
     private void Start()
@@ -70,10 +75,13 @@ public class Player : MonoBehaviour
 
         // ctx.MoveInput = move;
         ctx.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
-        // TODO：需要进一步测试与调参数
+
         ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
         ctx.SprintIsHeld = inputActions.MoveSystem.Sprint.IsPressed();
+        
+        // 攻击输入采样（使用J键或鼠标左键）
+        ctx.AttackPressedThisFrame = inputActions.AttackSystem.Attack.WasPressedThisFrame();
 
 
         // ====== 传感器 -> ctx ======
@@ -125,6 +133,31 @@ public class Player : MonoBehaviour
         motor.Teleport(transform.position + new Vector3(ctx.FacingDirection * 1.372f, 2.67f, 0)); // 这里直接上移1单位，避免攀爬点设置不准引发的bug
         yield return new WaitForSeconds(0.01f); // 等待0.1秒，确保位置更新后再播放落地动画
         anim.PlayLand();
+    }
+
+    // ====== 攻击动画事件回调 ======
+    public void Animation_AttackFinished()
+    {
+        var attackState = stateMachine.currentState as PlayerAttackState;
+        attackState?.OnAttackAnimFinished();
+    }
+
+    public void Animation_ComboWindowOpen()
+    {
+        var attackState = stateMachine.currentState as PlayerAttackState;
+        attackState?.OnComboWindowOpen();
+    }
+
+    public void Animation_ComboWindowClose()
+    {
+        var attackState = stateMachine.currentState as PlayerAttackState;
+        attackState?.OnComboWindowClose();
+    }
+
+    public void Animation_Move(float distance)
+    {
+        var attackState = stateMachine.currentState as PlayerAttackState;
+        attackState?.ApplyAttackMove(distance);
     }
 
 }

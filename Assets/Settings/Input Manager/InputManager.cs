@@ -117,15 +117,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""test"",
-                    ""type"": ""Button"",
-                    ""id"": ""ecc1ae7f-51d0-4a4a-a896-fd4f1805b349"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -238,15 +229,54 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
+                }
+            ]
+        },
+        {
+            ""name"": ""AttackSystem"",
+            ""id"": ""a72f42f4-a055-4418-9241-ba579bdd7cfb"",
+            ""actions"": [
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e620a70-2992-446c-b178-87a52f5fab55"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""9aaaf91e-9665-4fb7-b192-2d016d5c2ff5"",
-                    ""path"": ""<XInputController>/buttonEast"",
+                    ""id"": ""78e3e5df-1f9b-4310-a17d-7f06388f2ae6"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""test"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a498b2c1-9216-4647-abb7-82c0f5a4d10e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd23aea2-d62b-4fd8-9cf5-47d7e685f61c"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -837,7 +867,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_MoveSystem_WalkOrRun = m_MoveSystem.FindAction("WalkOrRun", throwIfNotFound: true);
         m_MoveSystem_Jump = m_MoveSystem.FindAction("Jump", throwIfNotFound: true);
         m_MoveSystem_Sprint = m_MoveSystem.FindAction("Sprint", throwIfNotFound: true);
-        m_MoveSystem_test = m_MoveSystem.FindAction("test", throwIfNotFound: true);
+        // AttackSystem
+        m_AttackSystem = asset.FindActionMap("AttackSystem", throwIfNotFound: true);
+        m_AttackSystem_Attack = m_AttackSystem.FindAction("Attack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -855,6 +887,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     ~@InputManager()
     {
         UnityEngine.Debug.Assert(!m_MoveSystem.enabled, "This will cause a leak and performance issues, InputManager.MoveSystem.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_AttackSystem.enabled, "This will cause a leak and performance issues, InputManager.AttackSystem.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputManager.UI.Disable() has not been called.");
     }
 
@@ -934,7 +967,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_MoveSystem_WalkOrRun;
     private readonly InputAction m_MoveSystem_Jump;
     private readonly InputAction m_MoveSystem_Sprint;
-    private readonly InputAction m_MoveSystem_test;
     /// <summary>
     /// Provides access to input actions defined in input action map "MoveSystem".
     /// </summary>
@@ -958,10 +990,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "MoveSystem/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_MoveSystem_Sprint;
-        /// <summary>
-        /// Provides access to the underlying input action "MoveSystem/test".
-        /// </summary>
-        public InputAction @test => m_Wrapper.m_MoveSystem_test;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -997,9 +1025,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @test.started += instance.OnTest;
-            @test.performed += instance.OnTest;
-            @test.canceled += instance.OnTest;
         }
 
         /// <summary>
@@ -1020,9 +1045,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @test.started -= instance.OnTest;
-            @test.performed -= instance.OnTest;
-            @test.canceled -= instance.OnTest;
         }
 
         /// <summary>
@@ -1056,6 +1078,102 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="MoveSystemActions" /> instance referencing this action map.
     /// </summary>
     public MoveSystemActions @MoveSystem => new MoveSystemActions(this);
+
+    // AttackSystem
+    private readonly InputActionMap m_AttackSystem;
+    private List<IAttackSystemActions> m_AttackSystemActionsCallbackInterfaces = new List<IAttackSystemActions>();
+    private readonly InputAction m_AttackSystem_Attack;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "AttackSystem".
+    /// </summary>
+    public struct AttackSystemActions
+    {
+        private @InputManager m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public AttackSystemActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "AttackSystem/Attack".
+        /// </summary>
+        public InputAction @Attack => m_Wrapper.m_AttackSystem_Attack;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_AttackSystem; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="AttackSystemActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(AttackSystemActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="AttackSystemActions" />
+        public void AddCallbacks(IAttackSystemActions instance)
+        {
+            if (instance == null || m_Wrapper.m_AttackSystemActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AttackSystemActionsCallbackInterfaces.Add(instance);
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="AttackSystemActions" />
+        private void UnregisterCallbacks(IAttackSystemActions instance)
+        {
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="AttackSystemActions.UnregisterCallbacks(IAttackSystemActions)" />.
+        /// </summary>
+        /// <seealso cref="AttackSystemActions.UnregisterCallbacks(IAttackSystemActions)" />
+        public void RemoveCallbacks(IAttackSystemActions instance)
+        {
+            if (m_Wrapper.m_AttackSystemActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="AttackSystemActions.AddCallbacks(IAttackSystemActions)" />
+        /// <seealso cref="AttackSystemActions.RemoveCallbacks(IAttackSystemActions)" />
+        /// <seealso cref="AttackSystemActions.UnregisterCallbacks(IAttackSystemActions)" />
+        public void SetCallbacks(IAttackSystemActions instance)
+        {
+            foreach (var item in m_Wrapper.m_AttackSystemActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_AttackSystemActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="AttackSystemActions" /> instance referencing this action map.
+    /// </summary>
+    public AttackSystemActions @AttackSystem => new AttackSystemActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1344,13 +1462,21 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AttackSystem" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="AttackSystemActions.AddCallbacks(IAttackSystemActions)" />
+    /// <seealso cref="AttackSystemActions.RemoveCallbacks(IAttackSystemActions)" />
+    public interface IAttackSystemActions
+    {
         /// <summary>
-        /// Method invoked when associated input action "test" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnTest(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -8,7 +8,8 @@ namespace RestartPlayer.HFSM
         // WORKFLOW:在这里添加状态ID
         None = 0,
         Idle, Locomotion, Turn, Sprint,
-        Jump, Jump2, WallJump, Fall, AirSprint, WallSlide, Climb
+        Jump, Jump2, WallJump, Fall, AirSprint, WallSlide, Climb,
+        Attack, AttackCombo1, AttackCombo2, AttackCombo3
     }
     /// <summary>
     /// 状态逻辑只“提出转移请求”，由状态机统一执行。

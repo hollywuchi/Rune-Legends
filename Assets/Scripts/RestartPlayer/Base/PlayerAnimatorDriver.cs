@@ -28,11 +28,20 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void TriggerIdle() => animator.SetTrigger("Idle");
     public void TriggerIng() => animator.SetTrigger("Ing");
     public void TriggerClimb() => animator.SetTrigger("Climb");
-    public void TriggerCanLand() => animator.SetTrigger("CanLand");
+    // public void TriggerCanLand() => animator.SetTrigger("CanLand");
 
     public void PlayToSprint() => animator.Play("ToSprint");
     public void PlayTrickTurn() => animator.Play("TrickTurn");
     public void PlayLand() => animator.Play("Land", 0, 0);
 
     public void CrossFadeToSJump(float duration = 0.05f) => animator.CrossFade("ToSJump", duration);
+
+    // ====== 攻击动画 ======
+    public void SetAttackCombo(int comboIndex) => animator.SetInteger("AttackCombo", comboIndex);
+    public void TriggerAttack() => animator.SetTrigger("Attack");
+    public void SetIsAttacking(bool isAttacking) => animator.SetBool("IsAttacking", isAttacking);
+    
+    // public void PlayAttackCombo1() => animator.Play("Atk1", 0, 0);
+    // public void PlayAttackCombo2() => animator.Play("Atk2", 0, 0);
+    // public void PlayAttackCombo3() => animator.Play("Atk3", 0, 0);
 }

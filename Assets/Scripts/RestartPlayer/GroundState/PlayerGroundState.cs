@@ -1,4 +1,3 @@
-using UnityEngine;
 using RestartPlayer.HFSM;
 
 public class PlayerGroundState : PlayerState
@@ -17,9 +16,13 @@ public class PlayerGroundState : PlayerState
 
     public override Transition LogicUpdate()
     {
-        // 先做“域守卫”：离地 -> Fall
+        // 先做"域守卫"：离地 -> Fall
         if (!s.ctx.IsGrounded)
             return new Transition(PlayerStateId.Fall);
+
+        // 攻击输入检测（优先级最高）
+        if (s.ctx.AttackPressedThisFrame && !s.ctx.IsAttacking)
+            return new Transition(PlayerStateId.AttackCombo1);
 
         // 地面输入：冲刺、跳
         if (s.ctx.SprintPressedThisFrame)
@@ -30,4 +33,21 @@ public class PlayerGroundState : PlayerState
 
         return base.LogicUpdate();
     }
+
+
+    // public override Transition LogicUpdate()
+    // {
+    //     // 先做“域守卫”：离地 -> Fall
+    //     if (!s.ctx.IsGrounded)
+    //         return new Transition(PlayerStateId.Fall);
+
+    //     // 地面输入：冲刺、跳
+    //     if (s.ctx.SprintPressedThisFrame)
+    //         return new Transition(PlayerStateId.Sprint);
+
+    //     if (s.ctx.JumpPressedThisFrame)
+    //         return new Transition(PlayerStateId.Jump);
+
+    //     return base.LogicUpdate();
+    // }
 }
