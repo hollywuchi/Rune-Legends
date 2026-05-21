@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,7 +7,10 @@ public class Character : MonoBehaviour, ISaveable
    #region 参数部分
    [Header("事件监听")]
    public VoidSo NewGameEvent;
+   [Header("事件广播")]
+   public FxEventSO fxEventSO;   
    [Header("基本属性")]
+   public Vector3 fxOffset;   //特效偏移
    //总血量    
    public float maxHealth;
    //当前血量
@@ -17,21 +21,23 @@ public class Character : MonoBehaviour, ISaveable
    public bool invincible;
 
    public UnityEvent<Character> OnHealthChange;
-   public UnityEvent<Transform> Hurt;
+   public UnityEvent Hurt;
    public UnityEvent Death;
    #endregion
    private void OnEnable()
    {
       NewGameEvent.OnEventRaised += NewGame;
+      Hurt.AddListener(_CreateFX);
    }
-
 
    private void OnDisable()
    {
       NewGameEvent.OnEventRaised -= NewGame;
-      ISaveable saveable = this;
-      saveable.UnRegisterSaveData();
+      Hurt.RemoveListener(_CreateFX);
+      // ISaveable saveable = this;
+      // saveable.UnRegisterSaveData();
    }
+
    private void NewGame()
    {
       CurrentHealth = maxHealth;
@@ -39,8 +45,8 @@ public class Character : MonoBehaviour, ISaveable
    private void Start()
    {
       NewGame();
-      ISaveable saveable = this;
-      saveable.RegisterSaveData();
+      // ISaveable saveable = this;
+      // saveable.RegisterSaveData();
    }
    private void Update()
    {
@@ -77,7 +83,7 @@ public class Character : MonoBehaviour, ISaveable
          CurrentHealth -= attacker.Damage;
          //先无敌比较好
          invincibleTimer();
-         Hurt?.Invoke(attacker.transform);
+         Hurt?.Invoke();
       }
       else
       {
@@ -88,6 +94,15 @@ public class Character : MonoBehaviour, ISaveable
       OnHealthChange?.Invoke(this);
    }
 
+   public void _CreateFX()
+   {
+      if (tag == null) return;
+
+      if (tag == "Enemy" && fxEventSO != null)
+         fxEventSO.RaiseFxEvent(transform.position + fxOffset, transform.localScale.x, ParticalEffectType.Hit);
+      // if( tag == "Player")
+         // fxSpeaker.CreateFX(transform, transform.position.x, ParticalEffectType.Hit);
+   }
    /// <summary>
    /// 无敌时间判断
    /// </summary>

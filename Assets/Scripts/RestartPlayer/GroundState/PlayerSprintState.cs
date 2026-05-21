@@ -14,7 +14,7 @@ public class PlayerSprintState : PlayerGroundState
         s.anim.ResetCommonTriggers();
         s.anim.PlayToSprint();
 
-        s.fxSpeaker.CreateFX(s.motor.transform,s.ctx.FacingDirection,ParticalEffectType.SprintDust);
+        s.fxSpeaker.CreateFX(s.motor.transform.position,s.ctx.FacingDirection,ParticalEffectType.SprintDust);
         s.motor.SetVelocityX(s.ctx.FacingDirection * s.config.sprintSpeed);
 
     }

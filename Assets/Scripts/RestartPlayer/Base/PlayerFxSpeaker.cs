@@ -4,8 +4,8 @@ public class PlayerFxSpeaker : MonoBehaviour
 {
     [SerializeField] private FxEventSO fxEventSO;
 
-    public void CreateFX(Transform trans, float dir, ParticalEffectType type)
+    public void CreateFX(Vector3 pos, float dir, ParticalEffectType type)
     {
-        fxEventSO.RaiseFxEvent(trans, dir, type);
+        fxEventSO.RaiseFxEvent(pos, dir, type);
     }
 }

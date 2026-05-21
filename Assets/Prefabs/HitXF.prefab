@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9147310636435975256}
   - component: {fileID: 8432917398588901462}
   - component: {fileID: 4300702369258232005}
+  - component: {fileID: -6053665269429586716}
   m_Layer: 0
   m_Name: HitXF
   m_TagString: Untagged
@@ -48,7 +49,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4889,3 +4890,15 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-6053665269429586716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282349737056120975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0e80aefcceaea48b849a4b1eace6af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

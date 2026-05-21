@@ -125,7 +125,7 @@ public class Player : MonoBehaviour
 
     public void CreateSprintDust()
     {
-        fxSpeaker.CreateFX(motor.transform, ctx.FacingDirection, ParticalEffectType.UnderDust);
+        fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.UnderDust);
     }
 
     public IEnumerator Teleport_AfterClimb()

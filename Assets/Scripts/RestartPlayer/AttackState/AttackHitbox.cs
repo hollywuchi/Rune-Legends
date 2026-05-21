@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-// TODO：将攻击伤害计算跑通
-// TODO：添加打击反馈
 /// <summary>
 /// 攻击判定框组件，挂载到武器或攻击判定区域
 /// 通过动画事件启用/禁用，检测敌人并造成伤害
@@ -15,9 +13,9 @@ public class AttackHitbox : MonoBehaviour
     public float knockbackForce = 5f;
     public LayerMask hitLayers;
 
-    [Header("判定区域")]
-    public Vector2 hitboxOffset = new Vector2(1f, 0f);
-    public Vector2 hitboxSize = new Vector2(1.5f, 1f);
+    // [Header("判定区域")]
+    // public Vector2 hitboxOffset = new Vector2(1f, 0f);
+    // public Vector2 hitboxSize = new Vector2(1.5f, 1f);
 
     [Header("事件")]
     public UnityEvent<Transform> OnHitTarget;
@@ -40,42 +38,42 @@ public class AttackHitbox : MonoBehaviour
     /// <summary>
     /// 启用攻击判定（动画事件调用）
     /// </summary>
-    public void EnableHitbox()
-    {
-        hasHitThisAttack = false;
-        gameObject.SetActive(true);
-    }
+    // public void EnableHitbox()
+    // {
+    //     hasHitThisAttack = false;
+    //     gameObject.SetActive(true);
+    // }
 
     /// <summary>
     /// 禁用攻击判定（动画事件调用）
     /// </summary>
-    public void DisableHitbox()
-    {
-        gameObject.SetActive(false);
-    }
+    // public void DisableHitbox()
+    // {
+    //     gameObject.SetActive(false);
+    // }
 
     private void Update()
     {
         if (hasHitThisAttack) return;
 
         // 检测敌人
-        Collider2D[] hits = Physics2D.OverlapBoxAll(
-            (Vector2)transform.position + hitboxOffset * GetFacingDirection(),
-            hitboxSize,
-            0f,
-            hitLayers
-        );
+        // Collider2D[] hits = Physics2D.OverlapBoxAll(
+        //     (Vector2)transform.position + hitboxOffset * GetFacingDirection(),
+        //     hitboxSize,
+        //     0f,
+        //     hitLayers
+        // );
 
-        foreach (var hit in hits)
-        {
-            if (hit.CompareTag("Enemy"))
-            {
-                hasHitThisAttack = true;
-                ApplyDamage(hit);
-                OnHitTarget?.Invoke(hit.transform);
-                break;
-            }
-        }
+        // foreach (var hit in hits)
+        // {
+        //     if (hit.CompareTag("Enemy"))
+        //     {
+        //         hasHitThisAttack = true;
+        //         ApplyDamage(hit);
+        //         OnHitTarget?.Invoke(hit.transform);
+        //         break;
+        //     }
+        // }
     }
 
     /// <summary>
@@ -131,15 +129,15 @@ public class AttackHitbox : MonoBehaviour
         return ctx != null ? ctx.FacingDirection : 1;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        int dir = ctx != null ? ctx.FacingDirection : 1;
-        Gizmos.DrawWireCube(
-            (Vector2)transform.position + hitboxOffset * dir,
-            hitboxSize
-        );
-    }
+    // private void OnDrawGizmosSelected()
+    // {
+    //     Gizmos.color = Color.red;
+    //     int dir = ctx != null ? ctx.FacingDirection : 1;
+    //     Gizmos.DrawWireCube(
+    //         (Vector2)transform.position + hitboxOffset * dir,
+    //         hitboxSize
+    //     );
+    // }
 }
 
 /// <summary>

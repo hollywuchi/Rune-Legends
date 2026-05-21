@@ -18,7 +18,7 @@ public class PlayerAirSprintState : PlayerAirState
         s.motor.CaptureOriginalGravity();
         s.motor.GravityScale = 0f;
 
-        s.fxSpeaker.CreateFX(s.motor.transform,s.ctx.FacingDirection,ParticalEffectType.AirDust);
+        s.fxSpeaker.CreateFX(s.motor.transform.position,s.ctx.FacingDirection,ParticalEffectType.AirDust);
         s.motor.DashHorizontal(s.ctx.FacingDirection, s.config.sprintSpeed);
     }
 
