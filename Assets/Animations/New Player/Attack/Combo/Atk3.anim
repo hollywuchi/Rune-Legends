@@ -203,6 +203,20 @@ AnimationClip:
     floatParameter: 1
     intParameter: 0
     messageOptions: 0
+  - time: 0.4
+    functionName: Animation_ComboWindowOpen
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.8
+    functionName: Animation_ComboWindowClose
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.93333334
     functionName: Animation_AttackFinished
     data: 

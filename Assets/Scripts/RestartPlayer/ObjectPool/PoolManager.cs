@@ -66,6 +66,8 @@ public class PoolManager : MonoBehaviour
             ParticalEffectType.Hit => poolEffectList[3],
             _ => null
         };
+        if (objPool == null) return;
+        
         GameObject obj = objPool.Get();
         obj.transform.position = playerTran;
         obj.transform.localScale = new Vector3(obj.transform.localScale.x * dir, obj.transform.localScale.y, obj.transform.localScale.z);

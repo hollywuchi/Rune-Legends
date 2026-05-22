@@ -12,6 +12,7 @@ public class PlayerAttackCombo1State : PlayerAttackState
     {
         base.Enter();
         s.ctx.AttackComboIndex = 1;
+        s.ctx.CanCombo = false;
         s.anim.SetAttackCombo(1);
         s.anim.SetIsAttacking(true);
         s.anim.TriggerAttack();

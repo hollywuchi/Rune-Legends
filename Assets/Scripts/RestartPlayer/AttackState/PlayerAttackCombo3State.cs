@@ -12,6 +12,7 @@ public class PlayerAttackCombo3State : PlayerAttackState
     {
         base.Enter();
         s.ctx.AttackComboIndex = 3;
+        s.ctx.CanCombo = false;
         s.anim.SetAttackCombo(3);
         s.anim.SetIsAttacking(true);
         s.anim.TriggerAttack();
@@ -20,8 +21,7 @@ public class PlayerAttackCombo3State : PlayerAttackState
 
     protected override Transition GetNextComboTransition()
     {
-        // 第三段后不能继续连招，等待动画结束
-        return Transition.None;
+        return new Transition(PlayerStateId.AttackCombo1);
     }
 
     public override void Exit()

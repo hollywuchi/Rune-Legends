@@ -20,6 +20,10 @@ public class Character : MonoBehaviour, ISaveable
    float invincibleCounter;
    public bool invincible;
 
+   // 击退相关
+   private Attack currentAttacker;
+   private Rigidbody2D rb;
+
    public UnityEvent<Character> OnHealthChange;
    public UnityEvent Hurt;
    public UnityEvent Death;
@@ -28,12 +32,15 @@ public class Character : MonoBehaviour, ISaveable
    {
       NewGameEvent.OnEventRaised += NewGame;
       Hurt.AddListener(_CreateFX);
+      Hurt.AddListener(KnockBack);
+       // ISaveable saveable = this;
+       // saveable.RegisterSaveData();
    }
 
    private void OnDisable()
    {
       NewGameEvent.OnEventRaised -= NewGame;
-      Hurt.RemoveListener(_CreateFX);
+      Hurt.RemoveAllListeners();
       // ISaveable saveable = this;
       // saveable.UnRegisterSaveData();
    }
@@ -44,9 +51,8 @@ public class Character : MonoBehaviour, ISaveable
    }
    private void Start()
    {
+      rb = GetComponent<Rigidbody2D>();
       NewGame();
-      // ISaveable saveable = this;
-      // saveable.RegisterSaveData();
    }
    private void Update()
    {
@@ -77,6 +83,8 @@ public class Character : MonoBehaviour, ISaveable
    {
       if (invincible)
          return;
+      // 保存攻击者引用用于击退
+      currentAttacker = attacker;
       // 判断当前人物还有没有剩余的血量，没有的话也不用进行判断了，省点性能
       if (CurrentHealth - attacker.Damage > 0)
       {
@@ -94,14 +102,27 @@ public class Character : MonoBehaviour, ISaveable
       OnHealthChange?.Invoke(this);
    }
 
-   public void _CreateFX()
+   private void _CreateFX()
    {
       if (tag == null) return;
 
       if (tag == "Enemy" && fxEventSO != null)
+      {
          fxEventSO.RaiseFxEvent(transform.position + fxOffset, transform.localScale.x, ParticalEffectType.Hit);
+      }
       // if( tag == "Player")
          // fxSpeaker.CreateFX(transform, transform.position.x, ParticalEffectType.Hit);
+   }
+   private void KnockBack()
+   {
+      if (currentAttacker == null || rb == null) return;
+      
+      // 计算击退方向：从攻击者指向被攻击者
+      Vector2 knockbackDir = (transform.position - currentAttacker.transform.position).normalized;
+      
+      // 应用击退力
+      rb.velocity = Vector2.zero;
+      rb.AddForce(knockbackDir * currentAttacker.knockbackForce, ForceMode2D.Impulse);
    }
    /// <summary>
    /// 无敌时间判断

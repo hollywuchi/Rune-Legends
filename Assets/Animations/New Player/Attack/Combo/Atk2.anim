@@ -179,7 +179,7 @@ AnimationClip:
     floatParameter: 0.4
     intParameter: 0
     messageOptions: 0
-  - time: 0.13333334
+  - time: 0.2
     functionName: Animation_ComboWindowOpen
     data: 
     objectReferenceParameter: {fileID: 0}
