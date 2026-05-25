@@ -9,8 +9,6 @@ public class PlayerClimbState : PlayerAirState
     {
         base.Enter();
 
-        Debug.Log("进入攀爬状态");
-
         // 冻结重力
         s.motor.CaptureOriginalGravity();
         s.motor.GravityScale = 0f;

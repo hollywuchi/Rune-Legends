@@ -9,6 +9,10 @@ public class PlayerAttackState : PlayerState
     protected float attackTimer;
     protected float comboWindowTimer;
     protected bool isAnimFinished;
+    
+    // 自动连招窗口配置
+    protected virtual float ComboWindowDelay => 0.2f;  // 连招窗口打开延迟（秒）
+    protected virtual float ComboWindowDuration => 0.5f; // 连招窗口持续时间（秒）
 
     public PlayerAttackState(PlayerServices s) : base(s) { }
 
@@ -17,6 +21,7 @@ public class PlayerAttackState : PlayerState
         base.Enter();
         s.ctx.IsAttacking = true;
         s.ctx.AttackAnimFinished = false;
+        s.ctx.CanCombo = false;
         isAnimFinished = false;
         attackTimer = 0f;
         comboWindowTimer = 0f;

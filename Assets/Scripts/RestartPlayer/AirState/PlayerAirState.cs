@@ -7,6 +7,10 @@ public class PlayerAirState : PlayerState
 
     public override Transition LogicUpdate()
     {
+        // 空中攻击（优先级最高）
+        if (s.ctx.AttackPressedThisFrame && !s.ctx.IsAttacking)
+            return new Transition(PlayerStateId.AirAttack);
+
         // 空中冲刺（域内规则）
         if (s.ctx.SprintPressedThisFrame && s.ctx.CanSprint)
             return new Transition(PlayerStateId.AirSprint);

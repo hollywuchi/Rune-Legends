@@ -423,7 +423,7 @@ MonoBehaviour:
   Damage: 1
   attackRange: 0
   attackRate: 0
-  knockbackForce: 5
+  knockbackForce: 8
   knockbackDuration: 0.2
 --- !u!1 &360653500
 GameObject:
@@ -6609,9 +6609,9 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.025704384, y: 1.3198333}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.172}
-    oldSize: {x: 4, y: 4}
+    border: {x: 2.6875, y: 0.875, z: 0, w: 0}
+    pivot: {x: 0.448, y: 0.218}
+    oldSize: {x: 6, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -15,8 +15,6 @@ public class PlayerWallJumpState : PlayerAirState
         s.inputGate.Freeze(0.1f);
         // TODO：可以添加特效
 
-        Debug.Log("进入WallJump状态");
-
     }
 
     public override Transition LogicUpdate()

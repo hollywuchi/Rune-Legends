@@ -9,7 +9,8 @@ namespace RestartPlayer.HFSM
         None = 0,
         Idle, Locomotion, Turn, Sprint,
         Jump, Jump2, WallJump, Fall, AirSprint, WallSlide, Climb,
-        Attack, AttackCombo1, AttackCombo2, AttackCombo3
+        Attack, AttackCombo1, AttackCombo2, AttackCombo3,
+        AirAttack
     }
     /// <summary>
     /// 状态逻辑只“提出转移请求”，由状态机统一执行。

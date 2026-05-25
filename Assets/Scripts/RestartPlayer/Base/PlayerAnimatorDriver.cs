@@ -33,6 +33,7 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void PlayToSprint() => animator.Play("ToSprint");
     public void PlayTrickTurn() => animator.Play("TrickTurn");
     public void PlayLand() => animator.Play("Land", 0, 0);
+    public void PlayIdle() => animator.Play("Idle", 0, 0);
 
     public void CrossFadeToSJump(float duration = 0.05f) => animator.CrossFade("ToSJump", duration);
 
@@ -40,7 +41,8 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void SetAttackCombo(int comboIndex) => animator.SetInteger("AttackCombo", comboIndex);
     public void TriggerAttack() => animator.SetTrigger("Attack");
     public void SetIsAttacking(bool isAttacking) => animator.SetBool("IsAttacking", isAttacking);
-    
+    // public void SetIsAirAttacking(bool isAirAttacking) => animator.SetBool("IsAirAttack", isAirAttacking);
+    public void InterruptAnim(string animName) => animator.CrossFadeInFixedTime(animName, 0.1f, 2);
     // public void PlayAttackCombo1() => animator.Play("Atk1", 0, 0);
     // public void PlayAttackCombo2() => animator.Play("Atk2", 0, 0);
     // public void PlayAttackCombo3() => animator.Play("Atk3", 0, 0);

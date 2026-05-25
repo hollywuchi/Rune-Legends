@@ -70,6 +70,6 @@ public class PoolManager : MonoBehaviour
         
         GameObject obj = objPool.Get();
         obj.transform.position = playerTran;
-        obj.transform.localScale = new Vector3(obj.transform.localScale.x * dir, obj.transform.localScale.y, obj.transform.localScale.z);
+        obj.transform.localScale = new Vector3(dir, obj.transform.localScale.y, obj.transform.localScale.z);
     }
 }

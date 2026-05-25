@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.AttackCombo1, new PlayerAttackCombo1State(s));
         stateRegistry.Register(PlayerStateId.AttackCombo2, new PlayerAttackCombo2State(s));
         stateRegistry.Register(PlayerStateId.AttackCombo3, new PlayerAttackCombo3State(s));
+        stateRegistry.Register(PlayerStateId.AirAttack, new PlayerAirAttackState(s));
     }
 
     private void Start()
@@ -158,6 +159,13 @@ public class Player : MonoBehaviour
     {
         var attackState = stateMachine.currentState as PlayerAttackState;
         attackState?.ApplyAttackMove(distance);
+    }
+
+    // ====== 空中攻击动画事件回调 ======
+    public void Animation_AirAttackFinished()
+    {
+        var airAttackState = stateMachine.currentState as PlayerAirAttackState;
+        airAttackState?.OnAirAttackAnimFinished();
     }
 
 }

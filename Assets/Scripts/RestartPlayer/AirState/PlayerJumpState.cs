@@ -28,7 +28,7 @@ public class PlayerJumpState : PlayerAirState
         s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * 0.5f);
 
         // 上升结束 -> Fall
-        if (s.motor.Velocity.y < 0)
+        if (s.motor.Velocity.y < 0 && !s.ctx.IsAttacking)
             return new Transition(PlayerStateId.Fall);
 
         return Transition.None;
