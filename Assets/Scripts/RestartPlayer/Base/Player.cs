@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
         inputGate = new PlayerInputGate();
         s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate);
         // WORKFLOW：在这里注册状态
+        
+        // 普通动作状态
         stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(s));
         stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(s));
         stateRegistry.Register(PlayerStateId.Turn, new PlayerTurnState(s));
@@ -43,11 +45,14 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.WallSlide, new PlayerWallSlideState(s));
         stateRegistry.Register(PlayerStateId.WallJump, new PlayerWallJumpState(s));
         stateRegistry.Register(PlayerStateId.Climb, new PlayerClimbState(s));
-        
+
+        // 攻击动作状态
         stateRegistry.Register(PlayerStateId.AttackCombo1, new PlayerAttackCombo1State(s));
         stateRegistry.Register(PlayerStateId.AttackCombo2, new PlayerAttackCombo2State(s));
         stateRegistry.Register(PlayerStateId.AttackCombo3, new PlayerAttackCombo3State(s));
         stateRegistry.Register(PlayerStateId.AirAttack, new PlayerAirAttackState(s));
+        stateRegistry.Register(PlayerStateId.AirDownAttack, new PlayerAirDownAttackState(s));
+        stateRegistry.Register(PlayerStateId.AirUpAttack, new PlayerAirUpAttackState(s));
     }
 
     private void Start()
@@ -80,9 +85,11 @@ public class Player : MonoBehaviour
         ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
         ctx.SprintIsHeld = inputActions.MoveSystem.Sprint.IsPressed();
-        
-        // 攻击输入采样（使用J键或鼠标左键）
+
+        // 攻击输入采样
         ctx.AttackPressedThisFrame = inputActions.AttackSystem.Attack.WasPressedThisFrame();
+        ctx.UpAttackPressedThisFrame = inputActions.AttackSystem.UpAttack.WasPressedThisFrame();
+        ctx.DownAttackPressedThisFrame = inputActions.AttackSystem.DownAttack.WasPressedThisFrame();
 
 
         // ====== 传感器 -> ctx ======
@@ -119,10 +126,10 @@ public class Player : MonoBehaviour
             stateMachine.RequestChangeState(PlayerStateId.Locomotion);
     }
 
-    public void SprintFinished()
-    {
-        ctx.IsSprintFinished = true;
-    }
+    // public void SprintFinished()
+    // {
+    //     ctx.IsSprintFinished = true;
+    // }
 
     public void CreateSprintDust()
     {
@@ -136,11 +143,36 @@ public class Player : MonoBehaviour
         anim.PlayLand();
     }
 
-    // ====== 攻击动画事件回调 ======
-    public void Animation_AttackFinished()
+    /// <summary>
+    /// 统一方法，动画完成后调用
+    /// </summary>
+    public void Animation_Callback()
     {
-        var attackState = stateMachine.currentState as PlayerAttackState;
-        attackState?.OnAttackAnimFinished();
+        var state = stateMachine.currentState;
+
+        if (state == null) return;
+
+        switch (state)
+        {
+            case PlayerAttackState attackState:
+                attackState.OnAttackAnimFinished();
+                break;
+            case PlayerAirAttackState airAttackState:
+                airAttackState.OnAirAttackAnimFinished();
+                break;
+            case PlayerAirDownAttackState downAttackState:
+                downAttackState.OnAirDownAttackAnimFinished();
+                break;
+            case PlayerAirUpAttackState upAttackState:
+                upAttackState.OnAirUpAttackAnimFinished();
+                break;
+            case PlayerSprintState:
+            case PlayerAirSprintState:
+                ctx.IsSprintFinished = true;
+                break;
+            default:
+                break;
+        }
     }
 
     public void Animation_ComboWindowOpen()
@@ -160,12 +192,4 @@ public class Player : MonoBehaviour
         var attackState = stateMachine.currentState as PlayerAttackState;
         attackState?.ApplyAttackMove(distance);
     }
-
-    // ====== 空中攻击动画事件回调 ======
-    public void Animation_AirAttackFinished()
-    {
-        var airAttackState = stateMachine.currentState as PlayerAirAttackState;
-        airAttackState?.OnAirAttackAnimFinished();
-    }
-
 }

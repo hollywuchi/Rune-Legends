@@ -2,19 +2,18 @@ using RestartPlayer.HFSM;
 using UnityEngine;
 
 /// <summary>
-/// 空中攻击状态
-/// 继承PlayerAirState，复用空中状态的通用逻辑
-/// 攻击结束后直接进入降落状态（Fall）
+/// 空中上劈攻击状态
+/// - 攻击时给予上升初速度
+/// - 攻击期间重力降低（悬停效果）
+/// - 攻击结束进入降落状态
 /// </summary>
-public class PlayerAirAttackState : PlayerAirState
+public class PlayerAirUpAttackState : PlayerAirState
 {
     private bool isAnimFinished;
     
-    // 空中攻击配置
-    private const float GravityScale = 2f;        // 攻击时重力（缓慢下落）
-    // private const float HorizontalDeceleration = 0.8f; // 水平减速系数
-
-    public PlayerAirAttackState(PlayerServices s) : base(s) { }
+    // 上劈配置
+    private const float UpGravityScale = 2f;         // 上劈时重力（悬停效果）
+    public PlayerAirUpAttackState(PlayerServices s) : base(s) { }
 
     public override void Enter()
     {
@@ -23,18 +22,21 @@ public class PlayerAirAttackState : PlayerAirState
 
         // 设置攻击状态
         s.ctx.IsAttacking = true;
+        s.ctx.IsUpAttacking = true;
+        s.anim.SetIsUpAttacking(true);
         s.anim.SetIsAttacking(true);
-        s.anim.TriggerAttack();
 
-        // 保存原始重力并设置攻击时重力
+        // 保存原始重力并设置上劈重力
         s.motor.CaptureOriginalGravity();
-        s.motor.GravityScale = GravityScale;
+        s.motor.GravityScale = UpGravityScale;
+
+        // 水平速度归零
+        s.motor.SetVelocityX(0f);
 
     }
 
     public override Transition LogicUpdate()
     {
-        base.LogicUpdate();
 
         // 攻击时间结束或动画完成，进入降落状态
         if (isAnimFinished)
@@ -49,14 +51,13 @@ public class PlayerAirAttackState : PlayerAirState
             return new Transition(PlayerStateId.Idle);
         }
 
-        // 注意：不调用base.LogicUpdate()，因为空中攻击时不应该触发二段跳、空中冲刺等
         return Transition.None;
     }
 
     public override void PhysicsUpdate()
     {
-        // 空中攻击时保持轻微水平移动
-        s.motor.SetVelocityX(s.motor.Velocity.x * 0.95f);
+        // 上劈时水平移动受限
+        s.motor.SetVelocityX(s.motor.Velocity.x * 0.8f);
     }
 
     public override void Exit()
@@ -68,15 +69,15 @@ public class PlayerAirAttackState : PlayerAirState
         
         // 清除攻击状态
         s.ctx.IsAttacking = false;
+        s.ctx.IsUpAttacking = false;
+        s.anim.SetIsUpAttacking(false);
         s.anim.SetIsAttacking(false);
-
-        // s.anim.InterruptAnim("Idle");
     }
 
     /// <summary>
-    /// 动画事件回调：空中攻击动画完成
+    /// 动画事件回调：上劈动画完成
     /// </summary>
-    public void OnAirAttackAnimFinished()
+    public void OnAirUpAttackAnimFinished()
     {
         isAnimFinished = true;
     }

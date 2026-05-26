@@ -194,7 +194,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.4
-    functionName: Animation_AttackFinished
+    functionName: Animation_Callback
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 9870fcdc5de837f4d96d510172093aec, type: 3}
     floatParameter: 0

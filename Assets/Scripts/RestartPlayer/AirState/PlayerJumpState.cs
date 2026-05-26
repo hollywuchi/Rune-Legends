@@ -16,6 +16,7 @@ public class PlayerJumpState : PlayerAirState
         if (Mathf.Abs(s.ctx.MoveInput.x) > 1f)
             s.anim.CrossFadeToSJump(0.05f);
 
+
     }
 
     public override Transition LogicUpdate()

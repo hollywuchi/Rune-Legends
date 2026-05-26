@@ -32,12 +32,19 @@ public sealed class PlayerContext
 
     // ====== 攻击系统 ======
     public bool AttackPressedThisFrame { get; set; }
+    public bool UpAttackPressedThisFrame { get; set; }
+    public bool DownAttackPressedThisFrame { get; set; }
     public int AttackComboIndex { get; set; }          // 当前连招段数: 0=无, 1=第一段, 2=第二段, 3=第三段
     public int MaxComboCount { get; set; } = 3;        // 最大连招段数
     public bool IsAttacking { get; set; }              // 是否正在攻击
     public bool AttackAnimFinished { get; set; }       // 攻击动画是否完成
     public bool CanCombo { get; set; }                 // 是否可以连招
     public float ComboWindowTimer { get; set; }        // 连招窗口计时器
+    
+    // ====== 空中攻击方向 ======
+    public bool IsDownAttacking { get; set; }          // 是否正在下劈
+    public bool IsUpAttacking { get; set; }            // 是否正在上劈
+    public bool DownAttackBounced { get; set; }        // 下劈是否已弹跳
 
     // ====== 土狼时间（从状态里搬出来）======
     public float CoyoteTime { get; set; } = 0.2f;
@@ -65,6 +72,9 @@ public sealed class PlayerContext
         AttackAnimFinished = false;
         CanCombo = false;
         ComboWindowTimer = 0f;
+        IsDownAttacking = false;
+        IsUpAttacking = false;
+        DownAttackBounced = false;
     }
 
     /// <summary>
