@@ -11,6 +11,7 @@ public sealed class PlayerServices
     public PlayerMotor2D motor;
     public PlayerFxSpeaker fxSpeaker;
     public PlayerInputGate inputGate;
+    public Character character;
 
     
     public PlayerServices(
@@ -21,7 +22,8 @@ public sealed class PlayerServices
         PlayerStateRegistry stateRegistry,
         PlayerMotor2D motor,
         PlayerFxSpeaker fxSpeaker,
-        PlayerInputGate inputGate)
+        PlayerInputGate inputGate,
+        Character character)
     {
         // this.player = player;
         this.config = config;
@@ -32,5 +34,6 @@ public sealed class PlayerServices
         this.motor = motor;
         this.fxSpeaker = fxSpeaker;
         this.inputGate = inputGate;
+        this.character = character;
     }
 }

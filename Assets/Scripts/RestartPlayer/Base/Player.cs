@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public PlayerMotor2D motor;
     public PlayerAnimatorDriver anim;
     public PlayerFxSpeaker fxSpeaker;
+    public Character character;
 
     public PlayerServices s;
     public PlayerContext ctx;
@@ -26,11 +27,12 @@ public class Player : MonoBehaviour
         inputActions = new InputManager();
         inputActions.Enable();
 
+        character = GetComponent<Character>();
         if (ctx == null) ctx = new PlayerContext();
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();
-        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate);
+        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate, character);
         // WORKFLOW：在这里注册状态
         
         // 普通动作状态
@@ -53,6 +55,9 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.AirAttack, new PlayerAirAttackState(s));
         stateRegistry.Register(PlayerStateId.AirDownAttack, new PlayerAirDownAttackState(s));
         stateRegistry.Register(PlayerStateId.AirUpAttack, new PlayerAirUpAttackState(s));
+        
+        // 技能状态
+        stateRegistry.Register(PlayerStateId.Heal, new PlayerHealState(s));
     }
 
     private void Start()
@@ -91,8 +96,14 @@ public class Player : MonoBehaviour
         ctx.UpAttackPressedThisFrame = inputActions.AttackSystem.UpAttack.WasPressedThisFrame();
         ctx.DownAttackPressedThisFrame = inputActions.AttackSystem.DownAttack.WasPressedThisFrame();
 
+        // 技能输入采样
+        ctx.SkillPressedThisFrame = inputActions.SkillSystem.Heal.WasPressedThisFrame();
+        ctx.IsHoldingSkill = inputActions.SkillSystem.Heal.IsPressed();
+        ctx.SkillPerformedThisFrame = inputActions.SkillSystem.Heal.WasPerformedThisFrame();
+
 
         // ====== 传感器 -> ctx ======
+        ctx.CurrentFocus = character.currentFocus;
         ctx.IsGrounded = physicsCheck.IsGround;
         ctx.IsTouchingLeftWall = physicsCheck.touchLeftWall;
         ctx.IsTouchingRightWall = physicsCheck.touchRightWall;
@@ -165,6 +176,9 @@ public class Player : MonoBehaviour
                 break;
             case PlayerAirUpAttackState upAttackState:
                 upAttackState.OnAirUpAttackAnimFinished();
+                break;
+            case PlayerHealState healState:
+                healState.OnHealAnimFinished();
                 break;
             case PlayerSprintState:
             case PlayerAirSprintState:

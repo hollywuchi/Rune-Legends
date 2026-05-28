@@ -223,6 +223,8 @@ MonoBehaviour:
   attackRate: 0
   knockbackForce: 5
   knockbackDuration: 0.2
+  canGainFocus: 1
+  focusGain: 7
 --- !u!1 &298288379
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +328,8 @@ MonoBehaviour:
   attackRate: 0
   knockbackForce: 5
   knockbackDuration: 0.2
+  canGainFocus: 1
+  focusGain: 7
 --- !u!1 &348546388
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +429,8 @@ MonoBehaviour:
   attackRate: 0
   knockbackForce: 8
   knockbackDuration: 0.2
+  canGainFocus: 1
+  focusGain: 7
 --- !u!1 &360653500
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +795,8 @@ MonoBehaviour:
   attackRate: 0
   knockbackForce: 8
   knockbackDuration: 0.2
+  canGainFocus: 1
+  focusGain: 7
 --- !u!60 &491672921
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -941,6 +949,8 @@ MonoBehaviour:
   attackRate: 0
   knockbackForce: 8
   knockbackDuration: 0.2
+  canGainFocus: 1
+  focusGain: 7
 --- !u!60 &593304855
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -1044,6 +1054,8 @@ MonoBehaviour:
   attackRate: 0
   knockbackForce: 8
   knockbackDuration: 0.2
+  canGainFocus: 1
+  focusGain: 7
 --- !u!60 &866578351
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6380,6 +6392,8 @@ MonoBehaviour:
   attackRate: 0
   knockbackForce: 8
   knockbackDuration: 0.2
+  canGainFocus: 1
+  focusGain: 7
 --- !u!60 &1423653303
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6425,14 +6439,14 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.42622566, y: -0.39621735}
-      - {x: -0.19050598, y: -0.5389743}
+      - {x: -0.17936134, y: -0.58355284}
       - {x: -1.1795406, y: 0.1324749}
       - {x: -1.1265717, y: 1.7970114}
-      - {x: -1.8425751, y: 1.8327136}
-      - {x: -1.6340942, y: -0.28339577}
-      - {x: -0.4192257, y: -1.1514235}
-      - {x: 0.7195511, y: -0.5921011}
-      - {x: 1.116869, y: 1.2325039}
+      - {x: -1.9888325, y: 1.8390727}
+      - {x: -1.923006, y: -0.4760027}
+      - {x: -0.35235596, y: -1.5359163}
+      - {x: 1.0433998, y: -0.84707355}
+      - {x: 1.1861706, y: 1.3225956}
   m_UseDelaunayMesh: 0
 --- !u!114 &1423653304
 MonoBehaviour:
@@ -6831,6 +6845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
   fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}
+  config: {fileID: 0}
   fxOffset: {x: 0, y: 1.2, z: 0}
   maxHealth: 9999
   CurrentHealth: 0
@@ -6909,7 +6924,7 @@ GameObject:
   - component: {fileID: 1797461669}
   m_Layer: 7
   m_Name: //Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7174,6 +7189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
   fxEventSO: {fileID: 0}
+  config: {fileID: 11400000, guid: d0942015eed47b140939030805478dc3, type: 2}
   fxOffset: {x: 0, y: 0, z: 0}
   maxHealth: 3
   CurrentHealth: 0

@@ -40,7 +40,7 @@ public sealed class PlayerContext
     public bool AttackAnimFinished { get; set; }       // 攻击动画是否完成
     public bool CanCombo { get; set; }                 // 是否可以连招
     public float ComboWindowTimer { get; set; }        // 连招窗口计时器
-    
+
     // ====== 空中攻击方向 ======
     public bool IsDownAttacking { get; set; }          // 是否正在下劈
     public bool IsUpAttacking { get; set; }            // 是否正在上劈
@@ -48,7 +48,20 @@ public sealed class PlayerContext
 
     // ====== 土狼时间（从状态里搬出来）======
     public float CoyoteTime { get; set; } = 0.2f;
-    public float CoyoteTimer { get; set; }         // >0 时允许“离地后仍可跳”
+    public float CoyoteTimer { get; set; }         // >0 时允许"离地后仍可跳"
+
+    // ====== 技能输入 ======
+    public bool SkillPressedThisFrame { get; set; }     // 刚开始按下
+    public bool IsHoldingSkill { get; set; }            // 持续按着
+    public bool SkillPerformedThisFrame { get; set; }   // 技能动作被执行
+
+    // ====== 专注系统 ======
+    public float CurrentFocus { get; set; }
+    public float MaxFocus { get; set; } = 50;
+
+    // ====== 治愈状态 ======
+    public bool IsHealing { get; set; }
+    public bool HealAnimFinished { get; set; }
 
     public void SetFacingDirection(int dir)
     {

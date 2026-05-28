@@ -45,4 +45,7 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void InterruptAnim(string animName) => animator.CrossFadeInFixedTime(animName, 0.1f, 2);
     public void SetIsUpAttacking(bool isUpAttacking) => animator.SetBool("IsUpAttacking", isUpAttacking);
     public void SetIsDownAttacking(bool isDownAttacking) => animator.SetBool("IsDownAttacking", isDownAttacking);
+
+    // ====== 治愈动画 ======
+    public void SetIsHealing(bool isHealing) => animator.SetBool("IsHealing", isHealing);
 }

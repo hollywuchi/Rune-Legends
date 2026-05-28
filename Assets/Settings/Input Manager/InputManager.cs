@@ -433,6 +433,34 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""SkillSystem"",
+            ""id"": ""ab9b6dc3-a692-41bb-b54f-9eadcc6788c6"",
+            ""actions"": [
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a8a0ad7-f09f-4794-a3c7-c7a2e2821eb5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""95c49b51-658d-4eca-9789-2b493e9257b6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": ""Hold(duration=1.4)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""UI"",
             ""id"": ""2a477996-9775-4e31-abde-4f6c3f68d855"",
             ""actions"": [
@@ -1022,6 +1050,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_AttackSystem_Attack = m_AttackSystem.FindAction("Attack", throwIfNotFound: true);
         m_AttackSystem_UpAttack = m_AttackSystem.FindAction("UpAttack", throwIfNotFound: true);
         m_AttackSystem_DownAttack = m_AttackSystem.FindAction("DownAttack", throwIfNotFound: true);
+        // SkillSystem
+        m_SkillSystem = asset.FindActionMap("SkillSystem", throwIfNotFound: true);
+        m_SkillSystem_Heal = m_SkillSystem.FindAction("Heal", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1040,6 +1071,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     {
         UnityEngine.Debug.Assert(!m_MoveSystem.enabled, "This will cause a leak and performance issues, InputManager.MoveSystem.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_AttackSystem.enabled, "This will cause a leak and performance issues, InputManager.AttackSystem.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SkillSystem.enabled, "This will cause a leak and performance issues, InputManager.SkillSystem.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputManager.UI.Disable() has not been called.");
     }
 
@@ -1348,6 +1380,102 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="AttackSystemActions" /> instance referencing this action map.
     /// </summary>
     public AttackSystemActions @AttackSystem => new AttackSystemActions(this);
+
+    // SkillSystem
+    private readonly InputActionMap m_SkillSystem;
+    private List<ISkillSystemActions> m_SkillSystemActionsCallbackInterfaces = new List<ISkillSystemActions>();
+    private readonly InputAction m_SkillSystem_Heal;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "SkillSystem".
+    /// </summary>
+    public struct SkillSystemActions
+    {
+        private @InputManager m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public SkillSystemActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "SkillSystem/Heal".
+        /// </summary>
+        public InputAction @Heal => m_Wrapper.m_SkillSystem_Heal;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_SkillSystem; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="SkillSystemActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(SkillSystemActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="SkillSystemActions" />
+        public void AddCallbacks(ISkillSystemActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SkillSystemActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SkillSystemActionsCallbackInterfaces.Add(instance);
+            @Heal.started += instance.OnHeal;
+            @Heal.performed += instance.OnHeal;
+            @Heal.canceled += instance.OnHeal;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="SkillSystemActions" />
+        private void UnregisterCallbacks(ISkillSystemActions instance)
+        {
+            @Heal.started -= instance.OnHeal;
+            @Heal.performed -= instance.OnHeal;
+            @Heal.canceled -= instance.OnHeal;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SkillSystemActions.UnregisterCallbacks(ISkillSystemActions)" />.
+        /// </summary>
+        /// <seealso cref="SkillSystemActions.UnregisterCallbacks(ISkillSystemActions)" />
+        public void RemoveCallbacks(ISkillSystemActions instance)
+        {
+            if (m_Wrapper.m_SkillSystemActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="SkillSystemActions.AddCallbacks(ISkillSystemActions)" />
+        /// <seealso cref="SkillSystemActions.RemoveCallbacks(ISkillSystemActions)" />
+        /// <seealso cref="SkillSystemActions.UnregisterCallbacks(ISkillSystemActions)" />
+        public void SetCallbacks(ISkillSystemActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SkillSystemActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SkillSystemActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="SkillSystemActions" /> instance referencing this action map.
+    /// </summary>
+    public SkillSystemActions @SkillSystem => new SkillSystemActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -1665,6 +1793,21 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDownAttack(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SkillSystem" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="SkillSystemActions.AddCallbacks(ISkillSystemActions)" />
+    /// <seealso cref="SkillSystemActions.RemoveCallbacks(ISkillSystemActions)" />
+    public interface ISkillSystemActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Heal" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHeal(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

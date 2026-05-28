@@ -1,4 +1,5 @@
 using RestartPlayer.HFSM;
+using UnityEngine;
 
 public class PlayerGroundState : PlayerState
 {
@@ -23,6 +24,13 @@ public class PlayerGroundState : PlayerState
         // 攻击输入检测（优先级最高）
         if (s.ctx.AttackPressedThisFrame && !s.ctx.IsAttacking)
             return new Transition(PlayerStateId.AttackCombo1);
+
+        // 治愈技能输入检测
+        if (s.ctx.SkillPressedThisFrame && !s.ctx.IsHealing && !s.ctx.IsAttacking
+            && s.ctx.CurrentFocus >= s.config.maxFocus)
+        {
+            return new Transition(PlayerStateId.Heal);
+        }
 
         // 地面输入：冲刺、跳
         if (s.ctx.SprintPressedThisFrame)

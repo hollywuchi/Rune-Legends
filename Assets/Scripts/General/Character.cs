@@ -8,7 +8,9 @@ public class Character : MonoBehaviour, ISaveable
    [Header("事件监听")]
    public VoidSo NewGameEvent;
    [Header("事件广播")]
-   public FxEventSO fxEventSO;   
+   public FxEventSO fxEventSO;
+   [Header("属性模板")]
+   public PlayerConfig config;
    [Header("基本属性")]
    public Vector3 fxOffset;   //特效偏移
    //总血量    
@@ -24,6 +26,8 @@ public class Character : MonoBehaviour, ISaveable
    private Attack currentAttacker;
    private Rigidbody2D rb;
 
+   // 专注系统
+   public float currentFocus;
    public UnityEvent<Character> OnHealthChange;
    public UnityEvent Hurt;
    public UnityEvent Death;
@@ -33,8 +37,8 @@ public class Character : MonoBehaviour, ISaveable
       NewGameEvent.OnEventRaised += NewGame;
       Hurt.AddListener(_CreateFX);
       Hurt.AddListener(KnockBack);
-       // ISaveable saveable = this;
-       // saveable.RegisterSaveData();
+      // ISaveable saveable = this;
+      // saveable.RegisterSaveData();
    }
 
    private void OnDisable()
@@ -48,6 +52,7 @@ public class Character : MonoBehaviour, ISaveable
    private void NewGame()
    {
       CurrentHealth = maxHealth;
+      currentFocus = 0;
    }
    private void Start()
    {
@@ -83,6 +88,14 @@ public class Character : MonoBehaviour, ISaveable
    {
       if (invincible)
          return;
+
+      // REVIEW:双份的打断治愈状态
+      // var player = GetComponent<Player>();
+      // if (player != null && player.ctx.IsHealing)
+      // {
+      //    player.ctx.IsHealing = false;
+      // }
+
       // 保存攻击者引用用于击退
       currentAttacker = attacker;
       // 判断当前人物还有没有剩余的血量，没有的话也不用进行判断了，省点性能
@@ -102,6 +115,14 @@ public class Character : MonoBehaviour, ISaveable
       OnHealthChange?.Invoke(this);
    }
 
+   /// <summary>
+   /// 获得专注值
+   /// </summary>
+   public void GainFocus(float amount)
+   {
+      currentFocus = Mathf.Min(currentFocus + amount, config.maxFocus);
+   }
+
    private void _CreateFX()
    {
       if (tag == null) return;
@@ -111,15 +132,15 @@ public class Character : MonoBehaviour, ISaveable
          fxEventSO.RaiseFxEvent(transform.position + fxOffset, transform.localScale.x, ParticalEffectType.Hit);
       }
       // if( tag == "Player")
-         // fxSpeaker.CreateFX(transform, transform.position.x, ParticalEffectType.Hit);
+      // fxSpeaker.CreateFX(transform, transform.position.x, ParticalEffectType.Hit);
    }
    private void KnockBack()
    {
       if (currentAttacker == null || rb == null) return;
-      
+
       // 计算击退方向：从攻击者指向被攻击者
       Vector2 knockbackDir = (transform.position - currentAttacker.transform.position).normalized;
-      
+
       // 应用击退力
       rb.velocity = Vector2.zero;
       rb.AddForce(knockbackDir * currentAttacker.knockbackForce, ForceMode2D.Impulse);

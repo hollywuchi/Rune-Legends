@@ -347,6 +347,34 @@
             ]
         },
         {
+            "name": "SkillSystem",
+            "id": "ab9b6dc3-a692-41bb-b54f-9eadcc6788c6",
+            "actions": [
+                {
+                    "name": "Heal",
+                    "type": "Button",
+                    "id": "7a8a0ad7-f09f-4794-a3c7-c7a2e2821eb5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "95c49b51-658d-4eca-9789-2b493e9257b6",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Hold(duration=1.4)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "UI",
             "id": "2a477996-9775-4e31-abde-4f6c3f68d855",
             "actions": [

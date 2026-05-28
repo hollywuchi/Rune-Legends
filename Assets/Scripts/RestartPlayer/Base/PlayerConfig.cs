@@ -3,6 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Player/PlayerConfig", order = 1)]
 public class PlayerConfig : ScriptableObject
 {
+    [Header("基本属性")]
+    public float maxHealth;
+    public float maxFocus;
+    public float healAmount;
+
     [Header("移动参数")]
     public float speed;
     public float sprintSpeed;
@@ -22,9 +27,5 @@ public class PlayerConfig : ScriptableObject
     public float combo1DamageMultiplier = 1.0f;  // 第一段伤害倍率
     public float combo2DamageMultiplier = 1.2f;  // 第二段伤害倍率
     public float combo3DamageMultiplier = 1.5f;  // 第三段伤害倍率
-    
-    // [Header("连招位移")]
-    // public float combo1MoveDistance = 0.3f;       // 第一段位移
-    // public float combo2MoveDistance = 0.4f;       // 第二段位移
-    // public float combo3MoveDistance = 0.8f;       // 第三段位移（更大）
+
 }
