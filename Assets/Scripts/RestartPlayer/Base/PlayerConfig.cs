@@ -28,4 +28,9 @@ public class PlayerConfig : ScriptableObject
     public float combo2DamageMultiplier = 1.2f;  // 第二段伤害倍率
     public float combo3DamageMultiplier = 1.5f;  // 第三段伤害倍率
 
+    [Header("霹雳一闪参数")]
+    public float lightCutFocusCost = 20f;           // 专注值消耗
+    public float lightCutDashDistance = 5.0f;       // 冲刺距离
+    public float lightCutDashSpeed = 20.0f;         // 冲刺速度
+
 }

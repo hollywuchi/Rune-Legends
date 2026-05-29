@@ -358,6 +358,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LightCut",
+                    "type": "Button",
+                    "id": "7a0189a0-38bb-4477-84b8-8e7e9b61c1d9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -369,6 +378,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3483974-19a7-41ff-8e2d-01712b8ae3db",
+                    "path": "<Keyboard>/f",
+                    "interactions": "Hold(duration=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LightCut",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

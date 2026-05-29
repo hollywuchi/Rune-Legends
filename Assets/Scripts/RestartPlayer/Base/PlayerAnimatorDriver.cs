@@ -48,4 +48,8 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 
     // ====== 治愈动画 ======
     public void SetIsHealing(bool isHealing) => animator.SetBool("IsHealing", isHealing);
+
+    // ====== 霹雳一闪动画 ======
+    public void SetIsCharging(bool isCharging) => animator.SetBool("IsCharging", isCharging);
+    public void SetToCharging() => animator.SetTrigger("ToCharging");
 }

@@ -62,6 +62,20 @@ public sealed class PlayerMotor2D : MonoBehaviour
     {
         rb.velocity = new Vector2(facingDir * dashSpeed, 0f);
     }
+    public void LightCutDash(int facingDir, float cutForce)
+    {
+        rb.AddForce(new Vector3(facingDir * cutForce, 0f), ForceMode2D.Impulse);
+    }
+
+    /// <summary>
+    /// 忽略玩家和目标层的碰撞
+    /// </summary>
+    /// <param name="layer"></param>
+    /// <param name="ignore"></param>
+    public void IgnorePlayerCollision(int layer, bool ignore)
+    {
+        Physics2D.IgnoreLayerCollision(gameObject.layer, layer, ignore);
+    }
     /// <summary>
     /// 翻转玩家朝向,物理层面
     /// </summary>

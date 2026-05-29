@@ -444,6 +444,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LightCut"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a0189a0-38bb-4477-84b8-8e7e9b61c1d9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -455,6 +464,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c3483974-19a7-41ff-8e2d-01712b8ae3db"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": ""Hold(duration=2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LightCut"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1053,6 +1073,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         // SkillSystem
         m_SkillSystem = asset.FindActionMap("SkillSystem", throwIfNotFound: true);
         m_SkillSystem_Heal = m_SkillSystem.FindAction("Heal", throwIfNotFound: true);
+        m_SkillSystem_LightCut = m_SkillSystem.FindAction("LightCut", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1385,6 +1406,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_SkillSystem;
     private List<ISkillSystemActions> m_SkillSystemActionsCallbackInterfaces = new List<ISkillSystemActions>();
     private readonly InputAction m_SkillSystem_Heal;
+    private readonly InputAction m_SkillSystem_LightCut;
     /// <summary>
     /// Provides access to input actions defined in input action map "SkillSystem".
     /// </summary>
@@ -1400,6 +1422,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "SkillSystem/Heal".
         /// </summary>
         public InputAction @Heal => m_Wrapper.m_SkillSystem_Heal;
+        /// <summary>
+        /// Provides access to the underlying input action "SkillSystem/LightCut".
+        /// </summary>
+        public InputAction @LightCut => m_Wrapper.m_SkillSystem_LightCut;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1429,6 +1455,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Heal.started += instance.OnHeal;
             @Heal.performed += instance.OnHeal;
             @Heal.canceled += instance.OnHeal;
+            @LightCut.started += instance.OnLightCut;
+            @LightCut.performed += instance.OnLightCut;
+            @LightCut.canceled += instance.OnLightCut;
         }
 
         /// <summary>
@@ -1443,6 +1472,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Heal.started -= instance.OnHeal;
             @Heal.performed -= instance.OnHeal;
             @Heal.canceled -= instance.OnHeal;
+            @LightCut.started -= instance.OnLightCut;
+            @LightCut.performed -= instance.OnLightCut;
+            @LightCut.canceled -= instance.OnLightCut;
         }
 
         /// <summary>
@@ -1808,6 +1840,13 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnHeal(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LightCut" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLightCut(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

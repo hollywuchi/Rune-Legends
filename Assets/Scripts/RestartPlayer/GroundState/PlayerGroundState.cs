@@ -32,6 +32,13 @@ public class PlayerGroundState : PlayerState
             return new Transition(PlayerStateId.Heal);
         }
 
+        // 霹雳一闪技能输入检测
+        if (s.ctx.LightCutPressedThisFrame && !s.ctx.IsHealing && !s.ctx.IsAttacking
+            && s.ctx.CurrentFocus >= s.config.lightCutFocusCost)
+        {
+            return new Transition(PlayerStateId.LightCut);
+        }
+
         // 地面输入：冲刺、跳
         if (s.ctx.SprintPressedThisFrame)
             return new Transition(PlayerStateId.Sprint);

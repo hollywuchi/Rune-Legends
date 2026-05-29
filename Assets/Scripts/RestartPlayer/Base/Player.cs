@@ -1,8 +1,6 @@
 using UnityEngine;
 using RestartPlayer.HFSM;
-using System;
 using System.Collections;
-using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -27,14 +25,15 @@ public class Player : MonoBehaviour
         inputActions = new InputManager();
         inputActions.Enable();
 
+        // ====== 服务容器初始化 ======
         character = GetComponent<Character>();
         if (ctx == null) ctx = new PlayerContext();
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();
         s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate, character);
-        // WORKFLOW：在这里注册状态
         
+        // WORKFLOW：在这里注册状态
         // 普通动作状态
         stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(s));
         stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(s));
@@ -58,12 +57,16 @@ public class Player : MonoBehaviour
         
         // 技能状态
         stateRegistry.Register(PlayerStateId.Heal, new PlayerHealState(s));
+        stateRegistry.Register(PlayerStateId.LightCut, new PlayerLightCutState(s));
     }
 
     private void Start()
     {
         // 初始化朝向（与旧字段FacingDirection一致的职责转移到ctx）
         ctx.SetFacingDirection(1);
+        ctx.playerLayer = LayerMask.NameToLayer("Player");
+        ctx.enemyLayer = LayerMask.NameToLayer("Enemy");
+        Debug.Log(ctx.playerLayer + " " + ctx.enemyLayer);
         stateMachine.Initialize(PlayerStateId.Idle);
     }
 
@@ -96,11 +99,15 @@ public class Player : MonoBehaviour
         ctx.UpAttackPressedThisFrame = inputActions.AttackSystem.UpAttack.WasPressedThisFrame();
         ctx.DownAttackPressedThisFrame = inputActions.AttackSystem.DownAttack.WasPressedThisFrame();
 
-        // 技能输入采样
+        // 治疗技能输入采样
         ctx.SkillPressedThisFrame = inputActions.SkillSystem.Heal.WasPressedThisFrame();
         ctx.IsHoldingSkill = inputActions.SkillSystem.Heal.IsPressed();
         ctx.SkillPerformedThisFrame = inputActions.SkillSystem.Heal.WasPerformedThisFrame();
 
+        // 霹雳一闪技能输入采样
+        ctx.LightCutPressedThisFrame = inputActions.SkillSystem.LightCut.WasPressedThisFrame();
+        ctx.IsHoldingLightCut = inputActions.SkillSystem.LightCut.IsPressed();
+        ctx.LightCutPerformedThisFrame = inputActions.SkillSystem.LightCut.WasPerformedThisFrame();
 
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;
@@ -180,6 +187,9 @@ public class Player : MonoBehaviour
             case PlayerHealState healState:
                 healState.OnHealAnimFinished();
                 break;
+            case PlayerLightCutState lightCutState:
+                lightCutState.OnLightCutAnimFinished();
+                break;
             case PlayerSprintState:
             case PlayerAirSprintState:
                 ctx.IsSprintFinished = true;
@@ -201,9 +211,27 @@ public class Player : MonoBehaviour
         attackState?.OnComboWindowClose();
     }
 
+    /// <summary>
+    /// 动画事件：霹雳一闪启动动画完成
+    /// </summary>
+    // public void Animation_LightCutStartupFinished()
+    // {
+    //     var lightCutState = stateMachine.currentState as PlayerLightCutState;
+    //     lightCutState?.OnStartupFinished();
+    // }
+
     public void Animation_Move(float distance)
     {
         var attackState = stateMachine.currentState as PlayerAttackState;
         attackState?.ApplyAttackMove(distance);
+    }
+    /// <summary>
+    /// 为霹雳一闪提供的动画事件回调：执行冲刺移动
+    /// </summary>
+    /// <param name="cutForce"></param>
+    public void Animation_LightCutMove(float cutForce)
+    {
+        var lightCutState = stateMachine.currentState as PlayerLightCutState;
+        lightCutState?.LightCutMove(cutForce);
     }
 }

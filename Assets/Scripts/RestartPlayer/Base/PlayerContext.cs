@@ -12,6 +12,10 @@ public sealed class PlayerContext
     public bool SprintPressedThisFrame { get; set; }
     public bool SprintIsHeld { get; set; }
 
+    // ====== 图层信息 ======
+    public int playerLayer { get; set; }
+    public int enemyLayer { get; set; }
+
     // ====== 传感器 ======
     public bool IsGrounded { get; set; }
     public bool IsTouchingLeftWall { get; set; }
@@ -61,7 +65,13 @@ public sealed class PlayerContext
 
     // ====== 治愈状态 ======
     public bool IsHealing { get; set; }
-    public bool HealAnimFinished { get; set; }
+
+    // ====== 霹雳一闪状态 ======
+    public bool IsLightCutCharging { get; set; }       // 是否正在蓄力霹雳一闪
+    public bool IsLightCutting { get; set; }       // 是否正在执行霹雳一闪冲刺
+    public bool LightCutPressedThisFrame { get; set; }      // 刚开始按下 => 开始播放第一段动画
+    public bool IsHoldingLightCut { get; set; }             // 持续按着 => 维持蓄力状态，播放第二段动画
+    public bool LightCutPerformedThisFrame { get; set; }    // 蓄力蓄满 => 进行提示，可以松开按键
 
     public void SetFacingDirection(int dir)
     {

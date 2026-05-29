@@ -10,11 +10,7 @@ public class PlayerAirState : PlayerState
         // 空中上劈攻击,这里使用地面检测来简单的区分上劈和空中上劈
         if (s.ctx.UpAttackPressedThisFrame && !s.ctx.IsAttacking)
         {
-            // TODO:之后在这里写普通上劈
-            // if (s.ctx.IsGrounded)
-            //     return new Transition(PlayerStateId.UpAttack);
-            // else
-                return new Transition(PlayerStateId.AirUpAttack);
+            return new Transition(PlayerStateId.AirUpAttack);
         }
 
         // 空中下劈攻击
