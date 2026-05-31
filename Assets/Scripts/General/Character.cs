@@ -27,7 +27,7 @@ public class Character : MonoBehaviour, ISaveable
    private Rigidbody2D rb;
 
    // 专注系统
-   public float currentFocus;
+   public float currentFocus = 1231231;
    public UnityEvent<Character> OnHealthChange;
    public UnityEvent Hurt;
    public UnityEvent Death;

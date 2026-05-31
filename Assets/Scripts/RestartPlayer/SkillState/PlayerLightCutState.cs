@@ -7,7 +7,7 @@ using UnityEngine;
 /// 消耗专注值
 /// </summary>
 /// TODO：蓄力完成与冲刺过程中的特效
-/// TODO：蓄力打断
+/// TODO：蓄力完成提示
 public class PlayerLightCutState : PlayerState
 {
     private bool isAnimFinished;
@@ -45,11 +45,20 @@ public class PlayerLightCutState : PlayerState
             return new Transition(PlayerStateId.Idle);
         }
 
+
         // 蓄力阶段：松开按键则释放技能
-        if (!s.ctx.IsHoldingLightCut && !s.ctx.IsLightCutting)
+        if (!s.ctx.IsHoldingLightCut && !s.ctx.IsLightCutting && s.ctx.LightCutPerformedThisFrame)
         {
             ReleaseLightCut();
             s.ctx.IsLightCutting = true;
+        }
+
+        // 打断条件：在蓄力阶段（未冲刺），松开按键，且蓄力未完成
+        if (!s.ctx.IsHoldingLightCut && !s.ctx.IsLightCutting && !s.ctx.LightCutPerformedThisFrame)
+        {
+            // BUG:状态和动画正常，粒子特效出现问题
+            s.anim.SetExitCharging();
+            return new Transition(PlayerStateId.Idle);
         }
 
         // 离地则中断
@@ -74,8 +83,10 @@ public class PlayerLightCutState : PlayerState
     {
         base.Exit();
         s.ctx.IsLightCutCharging = false;
-        s.ctx.IsAttacking = false;
-        s.motor.IgnorePlayerCollision(s.ctx.enemyLayer, false); // 冲刺期间无敌
+        s.ctx.LightCutPerformedThisFrame = false;
+        s.ctx.IsLightCutting = false;
+        s.ctx.IsHoldingLightCut = false;
+        s.motor.IgnorePlayerCollision(s.ctx.enemyLayer, false);
     }
 
     /// <summary>
@@ -86,38 +97,15 @@ public class PlayerLightCutState : PlayerState
         s.anim.SetIsCharging(false);
 
         s.ctx.IsLightCutCharging = false;
+        s.ctx.LightCutPerformedThisFrame = false;
         s.motor.IgnorePlayerCollision(s.ctx.enemyLayer, true); // 冲刺期间无敌
 
         // 消耗专注值
         s.character.currentFocus -= s.config.lightCutFocusCost;
         s.ctx.CurrentFocus = s.character.currentFocus;
         // s.character.OnHealthChange?.Invoke(s.character);
-
-        // 激活攻击判定
-        // s.ctx.IsAttacking = true;
-        // s.anim.SetIsAttacking(true);
-
-        // TODO：设置冲刺无敌
-        // s.character.invincibleTimer();
-
     }
 
-    /// <summary>
-    /// 进入蓄力阶段（由动画事件调用）
-    /// </summary>
-    // public void OnStartupFinished()
-    // {
-    //     if (currentPhase == Phase.Startup)
-    //     {
-    //         currentPhase = Phase.Charging;
-    //         s.anim.SetIsCharging(true);
-    //         Debug.Log("霹雳一闪 - 进入蓄力阶段");
-    //     }
-    // }
-
-    /// <summary>
-    /// 动画事件回调：技能动画完成
-    /// </summary>
     public void OnLightCutAnimFinished()
     {
         isAnimFinished = true;

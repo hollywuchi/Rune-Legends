@@ -997,6 +997,7 @@ MonoBehaviour:
   - {fileID: 888812997161528700, guid: 3d0c9a053ab6d60479c98c604664edd9, type: 3}
   - {fileID: 3546889572022880827, guid: 131c5f6af0109fa4fa18d7ad8d37d70a, type: 3}
   - {fileID: 282349737056120975, guid: c3770bf487f5ee549b31ab113bc2409c, type: 3}
+  - {fileID: 5800961769809529248, guid: 98f26e2b5398d4749a123d7e76902c21, type: 3}
   fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}
 --- !u!4 &546500499
 Transform:

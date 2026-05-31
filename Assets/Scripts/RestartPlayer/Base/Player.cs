@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();
         s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate, character);
-        
+
         // WORKFLOW：在这里注册状态
         // 普通动作状态
         stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(s));
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.AirAttack, new PlayerAirAttackState(s));
         stateRegistry.Register(PlayerStateId.AirDownAttack, new PlayerAirDownAttackState(s));
         stateRegistry.Register(PlayerStateId.AirUpAttack, new PlayerAirUpAttackState(s));
-        
+
         // 技能状态
         stateRegistry.Register(PlayerStateId.Heal, new PlayerHealState(s));
         stateRegistry.Register(PlayerStateId.LightCut, new PlayerLightCutState(s));
@@ -66,7 +66,6 @@ public class Player : MonoBehaviour
         ctx.SetFacingDirection(1);
         ctx.playerLayer = LayerMask.NameToLayer("Player");
         ctx.enemyLayer = LayerMask.NameToLayer("Enemy");
-        Debug.Log(ctx.playerLayer + " " + ctx.enemyLayer);
         stateMachine.Initialize(PlayerStateId.Idle);
     }
 
@@ -107,7 +106,8 @@ public class Player : MonoBehaviour
         // 霹雳一闪技能输入采样
         ctx.LightCutPressedThisFrame = inputActions.SkillSystem.LightCut.WasPressedThisFrame();
         ctx.IsHoldingLightCut = inputActions.SkillSystem.LightCut.IsPressed();
-        ctx.LightCutPerformedThisFrame = inputActions.SkillSystem.LightCut.WasPerformedThisFrame();
+        inputActions.SkillSystem.LightCut.performed += _ctx => ctx.LightCutPerformedThisFrame = true;
+        // print(ctx.IsHoldingLightCut + " " + ctx.LightCutPerformedThisFrame);
 
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;
@@ -152,6 +152,10 @@ public class Player : MonoBehaviour
     public void CreateSprintDust()
     {
         fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.UnderDust);
+    }
+    public void CreateChargingFX()
+    {
+        fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.Charging);
     }
 
     public IEnumerator Teleport_AfterClimb()

@@ -64,6 +64,7 @@ public class PoolManager : MonoBehaviour
             ParticalEffectType.UnderDust => poolEffectList[1],
             ParticalEffectType.AirDust => poolEffectList[2],
             ParticalEffectType.Hit => poolEffectList[3],
+            ParticalEffectType.Charging => poolEffectList[4],
             _ => null
         };
         if (objPool == null) return;

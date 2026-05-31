@@ -51,5 +51,6 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 
     // ====== 霹雳一闪动画 ======
     public void SetIsCharging(bool isCharging) => animator.SetBool("IsCharging", isCharging);
+    public void SetExitCharging() => animator.SetTrigger("ExitCharging");
     public void SetToCharging() => animator.SetTrigger("ToCharging");
 }

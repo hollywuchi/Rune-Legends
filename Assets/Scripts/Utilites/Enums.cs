@@ -19,5 +19,5 @@ public enum AreaName
 
 public enum ParticalEffectType
 {
-    SprintDust,UnderDust,AirDust,Hit
+    SprintDust,UnderDust,AirDust,Hit,Charging
 }

@@ -471,7 +471,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c3483974-19a7-41ff-8e2d-01712b8ae3db"",
                     ""path"": ""<Keyboard>/f"",
-                    ""interactions"": ""Hold(duration=2)"",
+                    ""interactions"": ""Hold(duration=2.5)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LightCut"",
