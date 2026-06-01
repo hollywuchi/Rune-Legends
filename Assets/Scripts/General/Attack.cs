@@ -20,10 +20,15 @@ public class Attack : MonoBehaviour
       Character character = other.GetComponent<Character>();
       if (character != null)
       {
-         character.TakeDamage(this);
-
          Character playerCharacter = GetComponentInParent<Character>();
-         if (playerCharacter != null) playerCharacter.GainFocus(focusGain);
+         if (playerCharacter != null)
+         {
+            Damage = 1;
+            playerCharacter.GainFocus(focusGain);
+            Damage += (int)(playerCharacter.attackBuffStack * playerCharacter.attackBuffMultiplier);
+         }
+
+         character.TakeDamage(this);
       }
    }
 }

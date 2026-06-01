@@ -39,6 +39,14 @@ public class PlayerGroundState : PlayerState
             return new Transition(PlayerStateId.LightCut);
         }
 
+        // 攻击力Buff技能输入检测
+        if (s.ctx.LightCrownPressedThisFrame && !s.ctx.IsBuffing && !s.ctx.IsAttacking
+            && s.ctx.CurrentFocus >= s.config.LightCrownFocusCost
+            && s.character.attackBuffStack < s.config.maxAttackBuffStack)
+        {
+            return new Transition(PlayerStateId.LightCrown);
+        }
+
         // 地面输入：冲刺、跳
         if (s.ctx.SprintPressedThisFrame)
             return new Transition(PlayerStateId.Sprint);

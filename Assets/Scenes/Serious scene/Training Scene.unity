@@ -6968,6 +6968,9 @@ MonoBehaviour:
   invincibleTime: 0
   invincible: 0
   currentFocus: 0
+  attackBuffStack: 0
+  maxAttackBuffStack: 3
+  attackBuffMultiplier: 2
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -7314,6 +7317,9 @@ MonoBehaviour:
   invincibleTime: 0.8
   invincible: 0
   currentFocus: 50
+  attackBuffStack: 0
+  maxAttackBuffStack: 3
+  attackBuffMultiplier: 2
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []

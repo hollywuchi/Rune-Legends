@@ -53,4 +53,7 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void SetIsCharging(bool isCharging) => animator.SetBool("IsCharging", isCharging);
     public void SetExitCharging() => animator.SetTrigger("ExitCharging");
     public void SetToCharging() => animator.SetTrigger("ToCharging");
+
+    // ====== 攻击力Buff动画 ======
+    public void SetIsLightCrown(bool LightCrown) => animator.SetBool("IsLightCrown", LightCrown);
 }

@@ -5480,3 +5480,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f0e80aefcceaea48b849a4b1eace6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}

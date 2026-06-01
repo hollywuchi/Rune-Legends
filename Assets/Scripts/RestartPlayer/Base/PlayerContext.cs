@@ -73,6 +73,12 @@ public sealed class PlayerContext
     public bool IsHoldingLightCut { get; set; }             // 持续按着 => 维持蓄力状态，播放第二段动画
     public bool LightCutPerformedThisFrame { get; set; }    // 蓄力蓄满 => 进行提示，可以松开按键
 
+    // ====== 攻击力Buff技能 ======
+    public bool LightCrownPressedThisFrame { get; set; }    // 刚开始按下
+    public bool IsHoldingLightCrown { get; set; }           // 持续按着
+    public bool LightCrownPerformedThisFrame { get; set; }  // Buff动作被执行
+    public bool IsBuffing { get; set; }                     // 是否正在施加Buff
+
     public void SetFacingDirection(int dir)
     {
         FacingDirection = dir >= 0 ? 1 : -1;

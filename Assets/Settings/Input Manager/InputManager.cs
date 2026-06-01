@@ -453,6 +453,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LightCrown"",
+                    ""type"": ""Button"",
+                    ""id"": ""48d77045-0698-4824-9155-946731191a08"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -475,6 +484,28 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LightCut"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d1976f6-b7af-4600-99dc-19443d93178b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LightCrown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e0685c9-acb4-4e5a-b714-59736362ea02"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Hold(duration=1.4)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LightCrown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1074,6 +1105,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_SkillSystem = asset.FindActionMap("SkillSystem", throwIfNotFound: true);
         m_SkillSystem_Heal = m_SkillSystem.FindAction("Heal", throwIfNotFound: true);
         m_SkillSystem_LightCut = m_SkillSystem.FindAction("LightCut", throwIfNotFound: true);
+        m_SkillSystem_LightCrown = m_SkillSystem.FindAction("LightCrown", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1407,6 +1439,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private List<ISkillSystemActions> m_SkillSystemActionsCallbackInterfaces = new List<ISkillSystemActions>();
     private readonly InputAction m_SkillSystem_Heal;
     private readonly InputAction m_SkillSystem_LightCut;
+    private readonly InputAction m_SkillSystem_LightCrown;
     /// <summary>
     /// Provides access to input actions defined in input action map "SkillSystem".
     /// </summary>
@@ -1426,6 +1459,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "SkillSystem/LightCut".
         /// </summary>
         public InputAction @LightCut => m_Wrapper.m_SkillSystem_LightCut;
+        /// <summary>
+        /// Provides access to the underlying input action "SkillSystem/LightCrown".
+        /// </summary>
+        public InputAction @LightCrown => m_Wrapper.m_SkillSystem_LightCrown;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1458,6 +1495,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @LightCut.started += instance.OnLightCut;
             @LightCut.performed += instance.OnLightCut;
             @LightCut.canceled += instance.OnLightCut;
+            @LightCrown.started += instance.OnLightCrown;
+            @LightCrown.performed += instance.OnLightCrown;
+            @LightCrown.canceled += instance.OnLightCrown;
         }
 
         /// <summary>
@@ -1475,6 +1515,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @LightCut.started -= instance.OnLightCut;
             @LightCut.performed -= instance.OnLightCut;
             @LightCut.canceled -= instance.OnLightCut;
+            @LightCrown.started -= instance.OnLightCrown;
+            @LightCrown.performed -= instance.OnLightCrown;
+            @LightCrown.canceled -= instance.OnLightCrown;
         }
 
         /// <summary>
@@ -1847,6 +1890,13 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLightCut(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LightCrown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLightCrown(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

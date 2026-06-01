@@ -367,6 +367,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LightCrown",
+                    "type": "Button",
+                    "id": "48d77045-0698-4824-9155-946731191a08",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -389,6 +398,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "LightCut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d1976f6-b7af-4600-99dc-19443d93178b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LightCrown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e0685c9-acb4-4e5a-b714-59736362ea02",
+                    "path": "<Keyboard>/r",
+                    "interactions": "Hold(duration=1.4)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LightCrown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

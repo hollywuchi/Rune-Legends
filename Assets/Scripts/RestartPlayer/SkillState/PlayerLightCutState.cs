@@ -6,8 +6,6 @@ using UnityEngine;
 /// 按住技能键蓄力，松开后向前冲刺并造成伤害
 /// 消耗专注值
 /// </summary>
-/// TODO：蓄力完成与冲刺过程中的特效
-/// TODO：蓄力完成提示
 public class PlayerLightCutState : PlayerState
 {
     private bool isAnimFinished;
@@ -56,7 +54,7 @@ public class PlayerLightCutState : PlayerState
         // 打断条件：在蓄力阶段（未冲刺），松开按键，且蓄力未完成
         if (!s.ctx.IsHoldingLightCut && !s.ctx.IsLightCutting && !s.ctx.LightCutPerformedThisFrame)
         {
-            // BUG:状态和动画正常，粒子特效出现问题
+            s.fxSpeaker.ReliseFX();
             s.anim.SetExitCharging();
             return new Transition(PlayerStateId.Idle);
         }

@@ -27,7 +27,13 @@ public class Character : MonoBehaviour, ISaveable
    private Rigidbody2D rb;
 
    // 专注系统
-   public float currentFocus = 1231231;
+   public float currentFocus;
+
+   // 攻击力Buff系统
+   public int attackBuffStack = 0;           // 当前攻击力Buff层数
+   public int maxAttackBuffStack = 3;        // 最大叠加层数
+   public float attackBuffMultiplier = 2.0f; // 每层伤害倍率
+
    public UnityEvent<Character> OnHealthChange;
    public UnityEvent Hurt;
    public UnityEvent Death;
@@ -102,6 +108,7 @@ public class Character : MonoBehaviour, ISaveable
       if (CurrentHealth - attacker.Damage > 0)
       {
          CurrentHealth -= attacker.Damage;
+
          //先无敌比较好
          invincibleTimer();
          Hurt?.Invoke();
@@ -156,6 +163,7 @@ public class Character : MonoBehaviour, ISaveable
          invincibleCounter = invincibleTime;
       }
    }
+
    #region 数据保存部分
    public DataDefination GetSaveID() //方便调用方法才用的
    {

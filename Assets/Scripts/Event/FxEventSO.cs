@@ -10,4 +10,10 @@ public class FxEventSO : ScriptableObject
         FxSpawnEvent?.Invoke(trans, dir, type);
     }
 
+    public UnityAction ReliseFxEvent;
+    public void RaiseReliseFxEvent()
+    {
+        ReliseFxEvent?.Invoke();
+    }
+
 }

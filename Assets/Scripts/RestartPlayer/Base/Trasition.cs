@@ -12,7 +12,8 @@ namespace RestartPlayer.HFSM
         Attack, AttackCombo1, AttackCombo2, AttackCombo3, UpAttack,
         AirAttack, AirDownAttack, AirUpAttack,
         Heal,
-        LightCut
+        LightCut,
+        LightCrown
     }
     /// <summary>
     /// 状态逻辑只“提出转移请求”，由状态机统一执行。

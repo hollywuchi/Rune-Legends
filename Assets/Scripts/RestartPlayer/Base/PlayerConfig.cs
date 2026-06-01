@@ -33,4 +33,9 @@ public class PlayerConfig : ScriptableObject
     public float lightCutDashDistance = 5.0f;       // 冲刺距离
     public float lightCutDashSpeed = 20.0f;         // 冲刺速度
 
+    [Header("攻击力Buff参数")]
+    public float LightCrownFocusCost = 30f;         // 专注值消耗
+    public int maxAttackBuffStack = 3;              // 最大叠加层数
+    public float attackBuffMultiplier = 2.0f;       // 每层伤害倍率
+
 }

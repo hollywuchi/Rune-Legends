@@ -8,4 +8,9 @@ public class PlayerFxSpeaker : MonoBehaviour
     {
         fxEventSO.RaiseFxEvent(pos, dir, type);
     }
+
+    public void ReliseFX()
+    {
+        fxEventSO.RaiseReliseFxEvent();
+    }
 }

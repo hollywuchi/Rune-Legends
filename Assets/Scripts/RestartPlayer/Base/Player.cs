@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
         // 技能状态
         stateRegistry.Register(PlayerStateId.Heal, new PlayerHealState(s));
         stateRegistry.Register(PlayerStateId.LightCut, new PlayerLightCutState(s));
+        stateRegistry.Register(PlayerStateId.LightCrown, new PlayerLightCrownState(s));
     }
 
     private void Start()
@@ -107,7 +108,11 @@ public class Player : MonoBehaviour
         ctx.LightCutPressedThisFrame = inputActions.SkillSystem.LightCut.WasPressedThisFrame();
         ctx.IsHoldingLightCut = inputActions.SkillSystem.LightCut.IsPressed();
         inputActions.SkillSystem.LightCut.performed += _ctx => ctx.LightCutPerformedThisFrame = true;
-        // print(ctx.IsHoldingLightCut + " " + ctx.LightCutPerformedThisFrame);
+
+        // 攻击力Buff技能输入采样
+        ctx.LightCrownPressedThisFrame = inputActions.SkillSystem.LightCrown.WasPressedThisFrame();
+        ctx.IsHoldingLightCrown = inputActions.SkillSystem.LightCrown.IsPressed();
+        ctx.LightCrownPerformedThisFrame = inputActions.SkillSystem.LightCrown.WasPerformedThisFrame();
 
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;
@@ -193,6 +198,9 @@ public class Player : MonoBehaviour
                 break;
             case PlayerLightCutState lightCutState:
                 lightCutState.OnLightCutAnimFinished();
+                break;
+            case PlayerLightCrownState buffState:
+                buffState.OnBuffAnimFinished();
                 break;
             case PlayerSprintState:
             case PlayerAirSprintState:
