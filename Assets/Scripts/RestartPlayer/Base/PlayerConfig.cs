@@ -38,4 +38,7 @@ public class PlayerConfig : ScriptableObject
     public int maxAttackBuffStack = 3;              // 最大叠加层数
     public float attackBuffMultiplier = 2.0f;       // 每层伤害倍率
 
+    [Header("受伤参数")]
+    public float hurtFreezeDuration = 0.3f;         // 受伤冻结时间
+
 }

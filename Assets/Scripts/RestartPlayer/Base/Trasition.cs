@@ -13,7 +13,8 @@ namespace RestartPlayer.HFSM
         AirAttack, AirDownAttack, AirUpAttack,
         Heal,
         LightCut,
-        LightCrown
+        LightCrown,
+        Hurt
     }
     /// <summary>
     /// 状态逻辑只“提出转移请求”，由状态机统一执行。

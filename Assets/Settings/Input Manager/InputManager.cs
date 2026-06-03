@@ -462,6 +462,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ActivePoint"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb120351-ce39-43d6-9476-e5f91252da90"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -489,9 +498,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1d1976f6-b7af-4600-99dc-19443d93178b"",
-                    ""path"": """",
-                    ""interactions"": """",
+                    ""id"": ""2e0685c9-acb4-4e5a-b714-59736362ea02"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Hold(duration=1.4)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LightCrown"",
@@ -500,12 +509,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2e0685c9-acb4-4e5a-b714-59736362ea02"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": ""Hold(duration=1.4)"",
+                    ""id"": ""07540e6b-abaa-4ccd-ae11-ac0671dd4321"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": ""Hold(duration=3)"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LightCrown"",
+                    ""action"": ""ActivePoint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1106,6 +1115,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_SkillSystem_Heal = m_SkillSystem.FindAction("Heal", throwIfNotFound: true);
         m_SkillSystem_LightCut = m_SkillSystem.FindAction("LightCut", throwIfNotFound: true);
         m_SkillSystem_LightCrown = m_SkillSystem.FindAction("LightCrown", throwIfNotFound: true);
+        m_SkillSystem_ActivePoint = m_SkillSystem.FindAction("ActivePoint", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1440,6 +1450,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_SkillSystem_Heal;
     private readonly InputAction m_SkillSystem_LightCut;
     private readonly InputAction m_SkillSystem_LightCrown;
+    private readonly InputAction m_SkillSystem_ActivePoint;
     /// <summary>
     /// Provides access to input actions defined in input action map "SkillSystem".
     /// </summary>
@@ -1463,6 +1474,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "SkillSystem/LightCrown".
         /// </summary>
         public InputAction @LightCrown => m_Wrapper.m_SkillSystem_LightCrown;
+        /// <summary>
+        /// Provides access to the underlying input action "SkillSystem/ActivePoint".
+        /// </summary>
+        public InputAction @ActivePoint => m_Wrapper.m_SkillSystem_ActivePoint;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1498,6 +1513,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @LightCrown.started += instance.OnLightCrown;
             @LightCrown.performed += instance.OnLightCrown;
             @LightCrown.canceled += instance.OnLightCrown;
+            @ActivePoint.started += instance.OnActivePoint;
+            @ActivePoint.performed += instance.OnActivePoint;
+            @ActivePoint.canceled += instance.OnActivePoint;
         }
 
         /// <summary>
@@ -1518,6 +1536,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @LightCrown.started -= instance.OnLightCrown;
             @LightCrown.performed -= instance.OnLightCrown;
             @LightCrown.canceled -= instance.OnLightCrown;
+            @ActivePoint.started -= instance.OnActivePoint;
+            @ActivePoint.performed -= instance.OnActivePoint;
+            @ActivePoint.canceled -= instance.OnActivePoint;
         }
 
         /// <summary>
@@ -1897,6 +1918,13 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLightCrown(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ActivePoint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnActivePoint(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -33,6 +33,13 @@ public class PlayerHealState : PlayerState
 
     public override Transition LogicUpdate()
     {
+        // 受伤状态检查（优先级最高）
+        if (s.ctx.IsHurt)
+        {
+            // 受伤打断治愈，返回受伤状态
+            return new Transition(PlayerStateId.Hurt);
+        }
+
         // 动画完成，恢复血量
         if (s.ctx.SkillPerformedThisFrame)
         {

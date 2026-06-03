@@ -1,6 +1,7 @@
 using UnityEngine;
 using RestartPlayer.HFSM;
 using System.Collections;
+using UnityEngine.InputSystem.XR.Haptics;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -54,6 +55,9 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.AirAttack, new PlayerAirAttackState(s));
         stateRegistry.Register(PlayerStateId.AirDownAttack, new PlayerAirDownAttackState(s));
         stateRegistry.Register(PlayerStateId.AirUpAttack, new PlayerAirUpAttackState(s));
+        
+        // 受伤状态
+        stateRegistry.Register(PlayerStateId.Hurt, new PlayerHurtState(s));
 
         // 技能状态
         stateRegistry.Register(PlayerStateId.Heal, new PlayerHealState(s));
@@ -89,6 +93,8 @@ public class Player : MonoBehaviour
 
         // ctx.MoveInput = move;
         ctx.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
+        if (ctx.IsHurt) inputActions.Disable(); // 受伤时禁用输入系统
+        else inputActions.Enable(); // 恢复输入系统
 
         ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
@@ -113,6 +119,11 @@ public class Player : MonoBehaviour
         ctx.LightCrownPressedThisFrame = inputActions.SkillSystem.LightCrown.WasPressedThisFrame();
         ctx.IsHoldingLightCrown = inputActions.SkillSystem.LightCrown.IsPressed();
         ctx.LightCrownPerformedThisFrame = inputActions.SkillSystem.LightCrown.WasPerformedThisFrame();
+
+        // 激活存档点按键采样
+        ctx.ActivatePressedThisFrame = inputActions.SkillSystem.ActivePoint.WasPressedThisFrame();
+        ctx.IsHoldingActivate = inputActions.SkillSystem.ActivePoint.IsPressed();
+        ctx.ActivatePerformedThisFrame = inputActions.SkillSystem.ActivePoint.WasPerformedThisFrame();
 
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;
@@ -149,10 +160,6 @@ public class Player : MonoBehaviour
             stateMachine.RequestChangeState(PlayerStateId.Locomotion);
     }
 
-    // public void SprintFinished()
-    // {
-    //     ctx.IsSprintFinished = true;
-    // }
 
     public void CreateSprintDust()
     {
@@ -223,14 +230,11 @@ public class Player : MonoBehaviour
         attackState?.OnComboWindowClose();
     }
 
-    /// <summary>
-    /// 动画事件：霹雳一闪启动动画完成
-    /// </summary>
-    // public void Animation_LightCutStartupFinished()
-    // {
-    //     var lightCutState = stateMachine.currentState as PlayerLightCutState;
-    //     lightCutState?.OnStartupFinished();
-    // }
+    public void PlayerHurt()
+    {
+        if(stateMachine.currentState is PlayerHurtState) return; // 已经在受伤状态了就别重复请求了
+        ctx.IsHurt = true;
+    }
 
     public void Animation_Move(float distance)
     {

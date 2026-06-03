@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,8 +11,9 @@ public class Character : MonoBehaviour, ISaveable
    public FxEventSO fxEventSO;
    [Header("属性模板")]
    public PlayerConfig config;
-   [Header("基本属性")]
-   public Vector3 fxOffset;   //特效偏移
+
+   private SpriteRenderer spriteRenderer;
+
    //总血量    
    public float maxHealth;
    //当前血量
@@ -21,6 +22,8 @@ public class Character : MonoBehaviour, ISaveable
    public float invincibleTime;
    float invincibleCounter;
    public bool invincible;
+
+   public Vector3 fxOffset;  // 特效偏移位置
 
    // 击退相关
    private Attack currentAttacker;
@@ -31,7 +34,7 @@ public class Character : MonoBehaviour, ISaveable
 
    // 攻击力Buff系统
    public int attackBuffStack = 0;           // 当前攻击力Buff层数
-   public int maxAttackBuffStack = 3;        // 最大叠加层数
+   private int maxAttackBuffStack = 3;        // 最大叠加层数
    public float attackBuffMultiplier = 2.0f; // 每层伤害倍率
 
    public UnityEvent<Character> OnHealthChange;
@@ -40,6 +43,7 @@ public class Character : MonoBehaviour, ISaveable
    #endregion
    private void OnEnable()
    {
+      spriteRenderer = GetComponent<SpriteRenderer>();
       NewGameEvent.OnEventRaised += NewGame;
       Hurt.AddListener(_CreateFX);
       Hurt.AddListener(KnockBack);
@@ -95,13 +99,6 @@ public class Character : MonoBehaviour, ISaveable
       if (invincible)
          return;
 
-      // REVIEW:双份的打断治愈状态
-      // var player = GetComponent<Player>();
-      // if (player != null && player.ctx.IsHealing)
-      // {
-      //    player.ctx.IsHealing = false;
-      // }
-
       // 保存攻击者引用用于击退
       currentAttacker = attacker;
       // 判断当前人物还有没有剩余的血量，没有的话也不用进行判断了，省点性能
@@ -138,7 +135,10 @@ public class Character : MonoBehaviour, ISaveable
       {
          fxEventSO.RaiseFxEvent(transform.position + fxOffset, transform.localScale.x, ParticalEffectType.Hit);
       }
-      // if( tag == "Player")
+      if (tag == "Player")
+      {
+         StartCoroutine(ColorPrompt());
+      }
       // fxSpeaker.CreateFX(transform, transform.position.x, ParticalEffectType.Hit);
    }
    private void KnockBack()
@@ -162,6 +162,22 @@ public class Character : MonoBehaviour, ISaveable
          invincible = true;
          invincibleCounter = invincibleTime;
       }
+   }
+
+   private IEnumerator ColorPrompt()
+   {
+      if (spriteRenderer == null) yield break;
+
+      Color color = new Color(1, 0.5f, 0.5f, 0.5f); // 半透明红色
+      while (invincible)
+      {
+         spriteRenderer.color = color; // 受伤时变红
+         yield return new WaitForSeconds(0.1f);
+         spriteRenderer.color = Color.white; // 恢复原色
+         yield return new WaitForSeconds(0.1f);
+      }
+      spriteRenderer.color = Color.white; // 确保恢复原色
+
    }
 
    #region 数据保存部分

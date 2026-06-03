@@ -21,7 +21,7 @@ public class Attack : MonoBehaviour
       if (character != null)
       {
          Character playerCharacter = GetComponentInParent<Character>();
-         if (playerCharacter != null)
+         if (playerCharacter != null && CompareTag("Player"))
          {
             Damage = 1;
             playerCharacter.GainFocus(focusGain);

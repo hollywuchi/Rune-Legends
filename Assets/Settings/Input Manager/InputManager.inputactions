@@ -376,6 +376,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ActivePoint",
+                    "type": "Button",
+                    "id": "cb120351-ce39-43d6-9476-e5f91252da90",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -403,9 +412,9 @@
                 },
                 {
                     "name": "",
-                    "id": "1d1976f6-b7af-4600-99dc-19443d93178b",
-                    "path": "",
-                    "interactions": "",
+                    "id": "2e0685c9-acb4-4e5a-b714-59736362ea02",
+                    "path": "<Keyboard>/r",
+                    "interactions": "Hold(duration=1.4)",
                     "processors": "",
                     "groups": "",
                     "action": "LightCrown",
@@ -414,12 +423,12 @@
                 },
                 {
                     "name": "",
-                    "id": "2e0685c9-acb4-4e5a-b714-59736362ea02",
-                    "path": "<Keyboard>/r",
-                    "interactions": "Hold(duration=1.4)",
+                    "id": "07540e6b-abaa-4ccd-ae11-ac0671dd4321",
+                    "path": "<Keyboard>/s",
+                    "interactions": "Hold(duration=3)",
                     "processors": "",
                     "groups": "",
-                    "action": "LightCrown",
+                    "action": "ActivePoint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

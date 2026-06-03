@@ -56,4 +56,7 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 
     // ====== 攻击力Buff动画 ======
     public void SetIsLightCrown(bool LightCrown) => animator.SetBool("IsLightCrown", LightCrown);
+
+    // ===== 受伤动画 ======
+    public void TriggerHurt() => animator.SetTrigger("Hurt");
 }

@@ -35,6 +35,13 @@ public class PlayerAttackState : PlayerState
 
     public override Transition LogicUpdate()
     {
+        // 受伤状态检查（优先级最高）
+        if (s.ctx.IsHurt)
+        {
+            // 受伤打断攻击，返回受伤状态
+            return new Transition(PlayerStateId.Hurt);
+        }
+
         attackTimer += Time.deltaTime;
 
         // 检测连招输入

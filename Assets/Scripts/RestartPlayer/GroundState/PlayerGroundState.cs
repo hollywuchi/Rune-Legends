@@ -17,6 +17,12 @@ public class PlayerGroundState : PlayerState
 
     public override Transition LogicUpdate()
     {
+        base.LogicUpdate(); // 先调用基类的逻辑更新，处理受伤状态
+
+        // 受伤状态检查（优先级最高）
+        // if (s.ctx.IsHurt)
+        //     return Transition.None;
+
         // 先做"域守卫"：离地 -> Fall
         if (!s.ctx.IsGrounded)
             return new Transition(PlayerStateId.Fall);

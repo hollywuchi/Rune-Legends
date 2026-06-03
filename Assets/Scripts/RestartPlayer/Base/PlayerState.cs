@@ -1,4 +1,5 @@
 using RestartPlayer.HFSM;
+using UnityEngine;
 
 public abstract class PlayerState
 {
@@ -14,7 +15,14 @@ public abstract class PlayerState
     /// <summary>
     /// 用 Transition 表达“想切到哪个状态”，不直接切。
     /// </summary>
-    public virtual Transition LogicUpdate() => Transition.None;
+    public virtual Transition LogicUpdate() 
+    {
+        if(s.ctx.IsHurt)
+        {
+            return new Transition(PlayerStateId.Hurt);
+        }
+        return Transition.None;
+    }
 
     public virtual void PhysicsUpdate() { }
     public virtual void Exit() { }

@@ -7,6 +7,11 @@ public class PlayerAirState : PlayerState
 
     public override Transition LogicUpdate()
     {
+        base.LogicUpdate(); // 先调用基类的逻辑更新，处理受伤状态
+        // 受伤状态检查（优先级最高）
+        // if (s.ctx.IsHurt)
+        //     return Transition.None;
+
         // 空中上劈攻击,这里使用地面检测来简单的区分上劈和空中上劈
         if (s.ctx.UpAttackPressedThisFrame && !s.ctx.IsAttacking)
         {

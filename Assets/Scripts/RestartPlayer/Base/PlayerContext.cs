@@ -79,6 +79,15 @@ public sealed class PlayerContext
     public bool LightCrownPerformedThisFrame { get; set; }  // Buff动作被执行
     public bool IsBuffing { get; set; }                     // 是否正在施加Buff
 
+    // ====== 受伤状态 ======
+    public bool IsHurt { get; set; }  // 是否正在受伤
+
+    // ===== 激活状态 =====
+    public bool IsActivating { get; set; }  // 是否处于激活状态
+    public bool ActivatePressedThisFrame { get; set; }  // 刚开始按下激活键
+    public bool IsHoldingActivate { get; set; }  // 持续按着激活键
+    public bool ActivatePerformedThisFrame { get; set; }  // 激活动作被执行
+
     public void SetFacingDirection(int dir)
     {
         FacingDirection = dir >= 0 ? 1 : -1;

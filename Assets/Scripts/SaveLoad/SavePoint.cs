@@ -14,7 +14,7 @@ public class SavePoint : MonoBehaviour, IInteractable
     private void OnEnable()
     {
         NowSprite.sprite = isDone ? lightSprite : darkSprite;
-        Light.SetActive(isDone);
+        // Light.SetActive(isDone);
     }
 
     public void TriggerAction()
