@@ -19,9 +19,8 @@ public class PlayerGroundState : PlayerState
     {
         base.LogicUpdate(); // 先调用基类的逻辑更新，处理受伤状态
 
-        // 受伤状态检查（优先级最高）
-        // if (s.ctx.IsHurt)
-        //     return Transition.None;
+        if (s.ctx.CanRest && s.ctx.RestPressedThisFrame)
+            return new Transition(PlayerStateId.Rest);
 
         // 先做"域守卫"：离地 -> Fall
         if (!s.ctx.IsGrounded)

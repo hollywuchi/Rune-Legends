@@ -9,6 +9,8 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
+    private const int RestLayerIndex = 3;
+
     private void Reset()
     {
         animator = GetComponent<Animator>();
@@ -59,4 +61,26 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 
     // ===== 受伤动画 ======
     public void TriggerHurt() => animator.SetTrigger("Hurt");
+
+    // ===== 休息动画 ======
+    public void PlayToRest() => animator.Play("ToRest", RestLayerIndex, 0f);
+    public void PlayResting() => animator.Play("Resting", RestLayerIndex, 0f);
+    public void PlayToSleep() => animator.Play("ToSleep", RestLayerIndex, 0f);
+    public void PlaySleeping() => animator.Play("Sleeping", RestLayerIndex, 0f);
+    public void PlayBreakRest() => animator.Play("BreakRest", RestLayerIndex, 0f);
+
+    public bool IsStateFinished(string stateName, int layerIndex)
+    {
+        if (animator.IsInTransition(layerIndex)) return false;
+
+        var state = animator.GetCurrentAnimatorStateInfo(layerIndex);
+        return state.IsName(stateName) && state.normalizedTime >= 1f;
+    }
+
+    public bool IsPlayingState(string stateName, int layerIndex)
+    {
+        var current = animator.GetCurrentAnimatorStateInfo(layerIndex);
+        var next = animator.GetNextAnimatorStateInfo(layerIndex);
+        return current.IsName(stateName) || (animator.IsInTransition(layerIndex) && next.IsName(stateName));
+    }
 }

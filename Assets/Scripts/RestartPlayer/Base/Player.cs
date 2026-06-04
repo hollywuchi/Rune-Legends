@@ -63,6 +63,9 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.Heal, new PlayerHealState(s));
         stateRegistry.Register(PlayerStateId.LightCut, new PlayerLightCutState(s));
         stateRegistry.Register(PlayerStateId.LightCrown, new PlayerLightCrownState(s));
+
+        // 休息状态
+        stateRegistry.Register(PlayerStateId.Rest, new PlayerRestState(s));
     }
 
     private void Start()
@@ -124,6 +127,9 @@ public class Player : MonoBehaviour
         ctx.ActivatePressedThisFrame = inputActions.SkillSystem.ActivePoint.WasPressedThisFrame();
         ctx.IsHoldingActivate = inputActions.SkillSystem.ActivePoint.IsPressed();
         ctx.ActivatePerformedThisFrame = inputActions.SkillSystem.ActivePoint.WasPerformedThisFrame();
+
+        // 休息按键采样
+        ctx.RestPressedThisFrame = inputActions.MoveSystem.Rest.WasPressedThisFrame();
 
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;

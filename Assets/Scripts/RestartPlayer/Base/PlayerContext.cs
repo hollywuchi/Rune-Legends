@@ -83,10 +83,13 @@ public sealed class PlayerContext
     public bool IsHurt { get; set; }  // 是否正在受伤
 
     // ===== 激活状态 =====
-    public bool IsActivating { get; set; }  // 是否处于激活状态
     public bool ActivatePressedThisFrame { get; set; }  // 刚开始按下激活键
     public bool IsHoldingActivate { get; set; }  // 持续按着激活键
     public bool ActivatePerformedThisFrame { get; set; }  // 激活动作被执行
+
+    // ===== 休息状态 =====
+    public bool CanRest { get; set; }  // 是否可以休息
+    public bool RestPressedThisFrame { get; set; }  // 按下休息键
 
     public void SetFacingDirection(int dir)
     {

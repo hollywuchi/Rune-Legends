@@ -117,6 +117,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rest"",
+                    ""type"": ""Button"",
+                    ""id"": ""73c33073-0db4-40c4-8722-e82c2d1123cd"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""381a9bed-f940-42e1-8b72-777f12915758"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1105,6 +1125,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_MoveSystem_WalkOrRun = m_MoveSystem.FindAction("WalkOrRun", throwIfNotFound: true);
         m_MoveSystem_Jump = m_MoveSystem.FindAction("Jump", throwIfNotFound: true);
         m_MoveSystem_Sprint = m_MoveSystem.FindAction("Sprint", throwIfNotFound: true);
+        m_MoveSystem_Rest = m_MoveSystem.FindAction("Rest", throwIfNotFound: true);
         // AttackSystem
         m_AttackSystem = asset.FindActionMap("AttackSystem", throwIfNotFound: true);
         m_AttackSystem_Attack = m_AttackSystem.FindAction("Attack", throwIfNotFound: true);
@@ -1214,6 +1235,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_MoveSystem_WalkOrRun;
     private readonly InputAction m_MoveSystem_Jump;
     private readonly InputAction m_MoveSystem_Sprint;
+    private readonly InputAction m_MoveSystem_Rest;
     /// <summary>
     /// Provides access to input actions defined in input action map "MoveSystem".
     /// </summary>
@@ -1237,6 +1259,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "MoveSystem/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_MoveSystem_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "MoveSystem/Rest".
+        /// </summary>
+        public InputAction @Rest => m_Wrapper.m_MoveSystem_Rest;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1272,6 +1298,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Rest.started += instance.OnRest;
+            @Rest.performed += instance.OnRest;
+            @Rest.canceled += instance.OnRest;
         }
 
         /// <summary>
@@ -1292,6 +1321,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Rest.started -= instance.OnRest;
+            @Rest.performed -= instance.OnRest;
+            @Rest.canceled -= instance.OnRest;
         }
 
         /// <summary>
@@ -1860,6 +1892,13 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Rest" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRest(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AttackSystem" which allows adding and removing callbacks.

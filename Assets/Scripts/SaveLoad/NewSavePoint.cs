@@ -1,15 +1,23 @@
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 public class NewSavePoint : MonoBehaviour
 {
     public SpriteRenderer lightSprite;
     public Animator anim;
+    public AnimationClip animClip;
 
-    public bool isActivated = false;
+    Vector3 pos;
+    Vector3 targetPos;
 
-    // FIXME：-- 玩家激活动画完成之后无法退出
-    // FIXME：-- 玩家激活动画之后，亮起的标志无法持续
+    public bool isActivated;
+
+    void Awake()
+    {
+        pos = lightSprite.transform.position;
+        targetPos = pos + new Vector3(0, 0.3f, 0);
+    }
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -17,39 +25,35 @@ public class NewSavePoint : MonoBehaviour
             PlayerContext context = collision.GetComponent<Player>().ctx;
             if (context == null) return;
 
-            if (!context.IsActivating && context.ActivatePressedThisFrame)
+            if (!isActivated && !DOTween.IsTweening(lightSprite) && context.IsHoldingActivate)
             {
-                print("准备激活");
                 anim.SetBool("IsActivating", true);
-                StartCoroutine(ChangeColor(3f)); // 1秒内变为透明
-                context.IsActivating = true;
-                isActivated = true;
+
+                // 1. 颜色线性渐变（SetEase(Ease.Linear) 确保绝对线性）
+                lightSprite.DOColor(new Color(1, 1, 1, 1), animClip.length * 0.9f).SetEase(Ease.Linear);
+
+                // 2. 位置线性移动，并在结束时触发回调
+                lightSprite.transform.DOMove(pos + new Vector3(0, 0.3f, 0), animClip.length * 0.9f)
+                    .SetEase(Ease.Linear)
+                    .OnComplete(() =>
+                    {
+                        anim.SetBool("IsActivating", false);
+                        isActivated = true;
+                    });
             }
 
-            else if (!context.IsHoldingActivate)
+            // 玩家松开按键的打断逻辑
+            if (DOTween.IsTweening(lightSprite) && !context.IsHoldingActivate)
             {
+                lightSprite.DOKill(); // 杀死动画
+                lightSprite.color = new Color(1, 1, 1, 0);
+                lightSprite.transform.position = pos;
                 anim.SetBool("IsActivating", false);
-                lightSprite.color = new Color(1, 1, 1, 0); // 恢复原色
-                context.IsActivating = false;
                 isActivated = false;
             }
-
-        }
-    }
-
-    private IEnumerator ChangeColor(float duration)
-    {
-        float elapsed = 0f;
-        Color initialColor = lightSprite.color;
-        Color targetColor = new Color(1, 1, 1, 1);
-
-        while (elapsed < duration)
-        {
-            lightSprite.color = Color.Lerp(initialColor, targetColor, elapsed / duration);
-            elapsed += Time.deltaTime;
-            yield return null;
+            context.CanRest = isActivated;
         }
 
-        lightSprite.color = targetColor;
     }
 }
+
