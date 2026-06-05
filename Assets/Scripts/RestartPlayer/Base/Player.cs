@@ -1,7 +1,8 @@
 using UnityEngine;
 using RestartPlayer.HFSM;
 using System.Collections;
-using UnityEngine.InputSystem.XR.Haptics;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -55,9 +56,9 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.AirAttack, new PlayerAirAttackState(s));
         stateRegistry.Register(PlayerStateId.AirDownAttack, new PlayerAirDownAttackState(s));
         stateRegistry.Register(PlayerStateId.AirUpAttack, new PlayerAirUpAttackState(s));
-        
-        // 受伤状态
+
         stateRegistry.Register(PlayerStateId.Hurt, new PlayerHurtState(s));
+        stateRegistry.Register(PlayerStateId.Death, new PlayerDeathState(s));
 
         // 技能状态
         stateRegistry.Register(PlayerStateId.Heal, new PlayerHealState(s));
@@ -86,6 +87,10 @@ public class Player : MonoBehaviour
     {
 
         inputGate.Tick(Time.deltaTime); // 更新输入冻结计时器
+        if (inputGate.IsFrozen)
+            inputActions.Disable(); // 冻结时禁用输入系统
+        else
+            inputActions.Enable(); // 非冻结时启用输入系统
 
         // ====== 采样输入 -> ctx ======
         var move = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
@@ -96,8 +101,8 @@ public class Player : MonoBehaviour
 
         // ctx.MoveInput = move;
         ctx.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
-        if (ctx.IsHurt) inputActions.Disable(); // 受伤时禁用输入系统
-        else inputActions.Enable(); // 恢复输入系统
+        // if (ctx.IsHurt) inputActions.Disable(); // 受伤时禁用输入系统
+        // else inputActions.Enable(); // 恢复输入系统
 
         ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
@@ -130,6 +135,9 @@ public class Player : MonoBehaviour
 
         // 休息按键采样
         ctx.RestPressedThisFrame = inputActions.MoveSystem.Rest.WasPressedThisFrame();
+
+        // 复活按键采样
+        ctx.ResurrectPressedThisFrame = inputActions.MoveSystem.Resurrect.WasPressedThisFrame();
 
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;
@@ -238,8 +246,14 @@ public class Player : MonoBehaviour
 
     public void PlayerHurt()
     {
-        if(stateMachine.currentState is PlayerHurtState) return; // 已经在受伤状态了就别重复请求了
+        if (stateMachine.currentState is PlayerHurtState) return; // 已经在受伤状态了就别重复请求了
         ctx.IsHurt = true;
+    }
+
+    public void PlayerDeath()
+    {
+        if (stateMachine.currentState is PlayerDeathState) return;
+        ctx.IsDead = true;
     }
 
     public void Animation_Move(float distance)

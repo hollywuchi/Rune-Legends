@@ -5,37 +5,37 @@ using UnityEngine.Events;
 public class Character : MonoBehaviour, ISaveable
 {
    #region 参数部分
+   [Header("生命值与无敌时间")]
+   public float maxHealth;
+   //当前血量
+   public float CurrentHealth;
+   public float invincibleTime;
+   float invincibleCounter;
+   public bool invincible;
+   [Header("当前存档点")]
+   public Vector3 resurrectPoint;  // 当前复活点位置
+
+   [Header("特效偏移值")]
+   public Vector3 fxOffset;  // 特效偏移位置
+
    [Header("事件监听")]
    public VoidSo NewGameEvent;
    [Header("事件广播")]
    public FxEventSO fxEventSO;
    [Header("属性模板")]
    public PlayerConfig config;
+   [Header("专注值系统")]
+   public float currentFocus;
+   [Header("攻击力buff系统")]
+   public int attackBuffStack = 0;           // 当前攻击力Buff层数
+   private int maxAttackBuffStack = 3;        // 最大叠加层数
+   public float attackBuffMultiplier = 2.0f; // 每层伤害倍率
 
    private SpriteRenderer spriteRenderer;
-
-   //总血量    
-   public float maxHealth;
-   //当前血量
-   public float CurrentHealth;
-   // 无敌时间
-   public float invincibleTime;
-   float invincibleCounter;
-   public bool invincible;
-
-   public Vector3 fxOffset;  // 特效偏移位置
 
    // 击退相关
    private Attack currentAttacker;
    private Rigidbody2D rb;
-
-   // 专注系统
-   public float currentFocus;
-
-   // 攻击力Buff系统
-   public int attackBuffStack = 0;           // 当前攻击力Buff层数
-   private int maxAttackBuffStack = 3;        // 最大叠加层数
-   public float attackBuffMultiplier = 2.0f; // 每层伤害倍率
 
    public UnityEvent<Character> OnHealthChange;
    public UnityEvent Hurt;
@@ -116,6 +116,16 @@ public class Character : MonoBehaviour, ISaveable
          CurrentHealth = 0;
          Death?.Invoke();
       }
+      OnHealthChange?.Invoke(this);
+   }
+
+   /// <summary>
+   /// 复活！！！
+   /// </summary>
+   public void Resurrect()
+   {
+      CurrentHealth = maxHealth;
+
       OnHealthChange?.Invoke(this);
    }
 

@@ -9,11 +9,25 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
-    private const int RestLayerIndex = 3;
-
     private void Reset()
     {
         animator = GetComponent<Animator>();
+    }
+
+    /// <summary>
+    /// 获取动画片段的时长
+    /// </summary>
+    /// <param name="animName">动画片段名称</param>
+    /// <returns></returns>
+    public float GetAnimationLength(string animName)
+    {
+        var clips = animator.runtimeAnimatorController.animationClips;
+        foreach (var clip in clips)
+        {
+            if (clip.name == animName)
+                return clip.length;
+        }
+        return 0f;
     }
 
     public void SetInputX(float absX) => animator.SetFloat("InputX", absX);
@@ -63,24 +77,11 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void TriggerHurt() => animator.SetTrigger("Hurt");
 
     // ===== 休息动画 ======
-    public void PlayToRest() => animator.Play("ToRest", RestLayerIndex, 0f);
-    public void PlayResting() => animator.Play("Resting", RestLayerIndex, 0f);
-    public void PlayToSleep() => animator.Play("ToSleep", RestLayerIndex, 0f);
-    public void PlaySleeping() => animator.Play("Sleeping", RestLayerIndex, 0f);
-    public void PlayBreakRest() => animator.Play("BreakRest", RestLayerIndex, 0f);
+    public void SetIsResting() => animator.SetTrigger("IsResting");
 
-    public bool IsStateFinished(string stateName, int layerIndex)
-    {
-        if (animator.IsInTransition(layerIndex)) return false;
+    public void SetIsSleeping() => animator.SetTrigger("IsSleeping");
+    public void PlayBreakRest() => animator.Play("BreakRest", 3, 0f);
 
-        var state = animator.GetCurrentAnimatorStateInfo(layerIndex);
-        return state.IsName(stateName) && state.normalizedTime >= 1f;
-    }
-
-    public bool IsPlayingState(string stateName, int layerIndex)
-    {
-        var current = animator.GetCurrentAnimatorStateInfo(layerIndex);
-        var next = animator.GetNextAnimatorStateInfo(layerIndex);
-        return current.IsName(stateName) || (animator.IsInTransition(layerIndex) && next.IsName(stateName));
-    }
+    // ===== 死亡动画 ======
+    public void TriggerDeath() => animator.SetTrigger("Death");
 }

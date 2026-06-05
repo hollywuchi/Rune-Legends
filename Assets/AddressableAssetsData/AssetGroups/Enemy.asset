@@ -17,11 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 2b46ac742a1cddf4184e6fc8cd04fd8c
   m_SerializeEntries:
-  - m_GUID: 6005cc81e81ee7a438d4b23aa5f247ac
-    m_Address: Boar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3cd8e29579ea3df478ee838ea0f179dd
     m_Address: Shadow
     m_ReadOnly: 0

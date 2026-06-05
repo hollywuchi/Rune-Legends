@@ -27,7 +27,6 @@ public class PlayerHurtState : PlayerState
         // 设置计时器
         hurtTimer = s.config.hurtFreezeDuration;
         
-        Debug.Log("进入受伤状态");
     }
 
     public override Transition LogicUpdate()
@@ -48,6 +47,5 @@ public class PlayerHurtState : PlayerState
     {
         base.Exit();
         s.ctx.IsHurt = false;
-        Debug.Log("退出受伤状态");
     }
 }

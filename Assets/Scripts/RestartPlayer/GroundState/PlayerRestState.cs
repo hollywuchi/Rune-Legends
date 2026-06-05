@@ -1,21 +1,10 @@
 using RestartPlayer.HFSM;
 using UnityEngine;
 
-// REVIEW:玩家休息状态
 public class PlayerRestState : PlayerGroundState
 {
     private const float SleepDelaySeconds = 3f;
 
-    private enum RestPhase
-    {
-        EnteringRest,
-        Resting,
-        EnteringSleep,
-        Sleeping,
-        Breaking
-    }
-
-    private RestPhase currentPhase;
     private float restIdleTimer;
 
     public PlayerRestState(PlayerServices s) : base(s) { }
@@ -28,66 +17,26 @@ public class PlayerRestState : PlayerGroundState
         s.character.currentFocus = s.config.maxFocus;
         s.ctx.CurrentFocus = s.config.maxFocus;
         s.character.OnHealthChange?.Invoke(s.character);
+        s.character.resurrectPoint = s.ctx.ResurrectPoint;
 
         restIdleTimer = 0f;
-        currentPhase = RestPhase.EnteringRest;
 
         s.motor.SetVelocity(Vector2.zero);
-        s.anim.PlayToRest();
+        s.anim.SetIsResting();
+
     }
 
     public override Transition LogicUpdate()
     {
-        if (s.ctx.IsHurt)
-            return new Transition(PlayerStateId.Hurt);
-
-        if (!s.ctx.IsGrounded)
-            return new Transition(PlayerStateId.Fall);
-
-        s.motor.SetVelocityX(0f);
-
-        if (currentPhase == RestPhase.Breaking)
+        if (HasAnyInput() && restIdleTimer > 1f)
         {
-            if (!s.anim.IsPlayingState("BreakRest", 3) || s.anim.IsStateFinished("BreakRest", 3))
-                return new Transition(PlayerStateId.Idle);
-
-            return Transition.None;
+            return new Transition(PlayerStateId.Idle);
         }
 
-        if (HasAnyInput())
+        restIdleTimer += Time.deltaTime;
+        if (restIdleTimer >= SleepDelaySeconds)
         {
-            currentPhase = RestPhase.Breaking;
-            s.anim.PlayBreakRest();
-            return Transition.None;
-        }
-
-        switch (currentPhase)
-        {
-            case RestPhase.EnteringRest:
-                if (s.anim.IsPlayingState("Resting", 3) || s.anim.IsStateFinished("ToRest", 3))
-                {
-                    currentPhase = RestPhase.Resting;
-                }
-                break;
-
-            case RestPhase.Resting:
-                restIdleTimer += Time.deltaTime;
-                if (restIdleTimer >= SleepDelaySeconds)
-                {
-                    currentPhase = RestPhase.EnteringSleep;
-                    s.anim.PlayToSleep();
-                }
-                break;
-
-            case RestPhase.EnteringSleep:
-                if (s.anim.IsPlayingState("Sleeping", 3) || s.anim.IsStateFinished("ToSleep", 3))
-                {
-                    currentPhase = RestPhase.Sleeping;
-                }
-                break;
-
-            case RestPhase.Sleeping:
-                break;
+            s.anim.SetIsSleeping();
         }
 
         return Transition.None;
@@ -96,7 +45,8 @@ public class PlayerRestState : PlayerGroundState
     public override void Exit()
     {
         restIdleTimer = 0f;
-        currentPhase = RestPhase.EnteringRest;
+        s.anim.PlayBreakRest();
+        s.inputGate.Freeze(s.anim.GetAnimationLength("BreakRest"));
         base.Exit();
     }
 
@@ -107,12 +57,8 @@ public class PlayerRestState : PlayerGroundState
             || s.ctx.JumpPressedThisFrame
             || s.ctx.SprintPressedThisFrame
             || s.ctx.AttackPressedThisFrame
-            || s.ctx.UpAttackPressedThisFrame
-            || s.ctx.DownAttackPressedThisFrame
             || s.ctx.SkillPressedThisFrame
             || s.ctx.LightCutPressedThisFrame
-            || s.ctx.LightCrownPressedThisFrame
-            || s.ctx.ActivatePressedThisFrame
-            || s.ctx.RestPressedThisFrame;
+            || s.ctx.LightCrownPressedThisFrame;
     }
 }

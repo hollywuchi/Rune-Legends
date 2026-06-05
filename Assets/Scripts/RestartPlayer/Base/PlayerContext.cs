@@ -91,6 +91,11 @@ public sealed class PlayerContext
     public bool CanRest { get; set; }  // 是否可以休息
     public bool RestPressedThisFrame { get; set; }  // 按下休息键
 
+    // ===== 死亡状态 =====
+    public bool IsDead { get; set; }
+    public bool ResurrectPressedThisFrame { get; set; }
+    public Vector3 ResurrectPoint { get; set; }  // 复活点位置
+
     public void SetFacingDirection(int dir)
     {
         FacingDirection = dir >= 0 ? 1 : -1;

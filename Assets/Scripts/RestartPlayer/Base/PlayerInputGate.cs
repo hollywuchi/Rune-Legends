@@ -14,8 +14,7 @@ public sealed class PlayerInputGate
     /// </summary>
     public void Freeze(float duration)
     {
-        if (duration <= 0f) return;
-        _freezeTimer = Mathf.Max(_freezeTimer, duration);
+        _freezeTimer = Mathf.Max(0, duration);
     }
 
     public void Tick(float dt)

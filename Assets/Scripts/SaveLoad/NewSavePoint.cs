@@ -11,6 +11,8 @@ public class NewSavePoint : MonoBehaviour
     Vector3 pos;
     Vector3 targetPos;
 
+    public Vector3 ResurrectPoint;  // 复活点位置
+
     public bool isActivated;
 
     void Awake()
@@ -39,6 +41,7 @@ public class NewSavePoint : MonoBehaviour
                     {
                         anim.SetBool("IsActivating", false);
                         isActivated = true;
+                        context.ResurrectPoint = ResurrectPoint;
                     });
             }
 
