@@ -26,7 +26,6 @@ public class PlayerHealState : PlayerState
 
         // 停止移动
         s.motor.SetVelocityX(0);
-        s.inputGate.Freeze(0.2f);
 
         Debug.Log("进入治愈状态");
     }

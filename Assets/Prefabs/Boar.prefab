@@ -17,7 +17,8 @@ GameObject:
   - component: {fileID: 8058016676131371059}
   - component: {fileID: 4307856741855292901}
   - component: {fileID: 628007738895788787}
-  m_Layer: 8
+  - component: {fileID: 7011633285706574056}
+  m_Layer: 7
   m_Name: Boar
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -32,7 +33,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2276866995619117826}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -77.06, y: -6.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -135,6 +136,7 @@ MonoBehaviour:
   CurrentHealth: 0
   invincibleTime: 0.1
   invincible: 0
+  resurrectPoint: {x: 0, y: 0, z: 0}
   fxOffset: {x: 0, y: 0, z: 0}
   NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
   fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}
@@ -142,6 +144,7 @@ MonoBehaviour:
   currentFocus: 0
   attackBuffStack: 0
   attackBuffMultiplier: 2
+  postureSystem: {fileID: 0}
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -239,6 +242,7 @@ MonoBehaviour:
   IsWait: 0
   Ishurt: 0
   IsDeath: 0
+  postureSystem: {fileID: 0}
 --- !u!114 &8058016676131371059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +338,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5310822, y: 1.4981823}
   m_EdgeRadius: 0
+--- !u!114 &7011633285706574056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276866995619117826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4471a96c4a29d4189e1667b7a6108e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPosture: 100
+  postureRecoveryRate: 15
+  postureRecoveryDelay: 1.5
+  postureBrokenDuration: 1.5
+  currentPosture: 0
+  isBroken: 0
+  recoveryTimer: 0
+  OnPostureBroken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostureRecovered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7927632410948088524
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +374,7 @@ GameObject:
   - component: {fileID: 6189077725288181467}
   - component: {fileID: 3280450591488355904}
   - component: {fileID: 5032985955673431833}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

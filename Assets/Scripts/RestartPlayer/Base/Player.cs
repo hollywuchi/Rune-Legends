@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public PlayerFxSpeaker fxSpeaker;
     public Character character;
 
+    [Header("事件引用")]
+    public VoidSo cameraShakeEvent;
+
     public PlayerServices s;
     public PlayerContext ctx;
     public PlayerStateRegistry stateRegistry;
@@ -33,7 +36,7 @@ public class Player : MonoBehaviour
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();
-        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate, character);
+        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate, character, cameraShakeEvent);
 
         // WORKFLOW：在这里注册状态
         // 普通动作状态
@@ -65,6 +68,12 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.LightCut, new PlayerLightCutState(s));
         stateRegistry.Register(PlayerStateId.LightCrown, new PlayerLightCrownState(s));
 
+        // 格挡状态
+        // REVIEW：格挡系统 - 注册格挡、弹反、破防状态
+        stateRegistry.Register(PlayerStateId.Block, new PlayerBlockState(s));
+        stateRegistry.Register(PlayerStateId.Parry, new PlayerParryState(s));
+        stateRegistry.Register(PlayerStateId.PostureBroken, new PlayerPostureBrokenState(s));
+
         // 休息状态
         stateRegistry.Register(PlayerStateId.Rest, new PlayerRestState(s));
     }
@@ -88,7 +97,12 @@ public class Player : MonoBehaviour
 
         inputGate.Tick(Time.deltaTime); // 更新输入冻结计时器
         if (inputGate.IsFrozen)
-            inputActions.Disable(); // 冻结时禁用输入系统
+        {
+            inputActions.MoveSystem.Disable();
+            inputActions.AttackSystem.Disable();
+            inputActions.SkillSystem.Disable();
+            inputActions.MoveSystem.Rest.Disable();
+        }
         else
             inputActions.Enable(); // 非冻结时启用输入系统
 
@@ -128,6 +142,11 @@ public class Player : MonoBehaviour
         ctx.IsHoldingLightCrown = inputActions.SkillSystem.LightCrown.IsPressed();
         ctx.LightCrownPerformedThisFrame = inputActions.SkillSystem.LightCrown.WasPerformedThisFrame();
 
+        // REVIEW：格挡系统 - 格挡输入采样
+        // 格挡输入采样
+        ctx.BlockIsHeld = inputActions.AttackSystem.Block.IsPressed();
+        ctx.BlockPressedThisFrame = inputActions.AttackSystem.Block.WasPressedThisFrame();
+
         // 激活存档点按键采样
         ctx.ActivatePressedThisFrame = inputActions.SkillSystem.ActivePoint.WasPressedThisFrame();
         ctx.IsHoldingActivate = inputActions.SkillSystem.ActivePoint.IsPressed();
@@ -137,7 +156,7 @@ public class Player : MonoBehaviour
         ctx.RestPressedThisFrame = inputActions.MoveSystem.Rest.WasPressedThisFrame();
 
         // 复活按键采样
-        ctx.ResurrectPressedThisFrame = inputActions.MoveSystem.Resurrect.WasPressedThisFrame();
+        ctx.ResurrectPressedThisFrame = inputActions.ResurrectSystem.Resurrect.WasPressedThisFrame();
 
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;
@@ -146,6 +165,15 @@ public class Player : MonoBehaviour
         ctx.IsTouchingRightWall = physicsCheck.touchRightWall;
         ctx.IsTouchingTopLeftWall = physicsCheck.touchLeftTopWall;
         ctx.IsTouchingTopRightWall = physicsCheck.touchRightTopWall;
+
+        // REVIEW：格挡系统 - 架势系统同步到上下文
+        // 架势系统同步
+        if (character.postureSystem != null)
+        {
+            ctx.CurrentPosture = character.postureSystem.currentPosture;
+            ctx.MaxPosture = character.postureSystem.maxPosture;
+            ctx.IsPostureBroken = character.postureSystem.isBroken;
+        }
 
         // ====== 动画参数统一在 Driver 写入 ======
         anim.SetInputX(Mathf.Abs(ctx.MoveInput.x));
@@ -254,6 +282,24 @@ public class Player : MonoBehaviour
     {
         if (stateMachine.currentState is PlayerDeathState) return;
         ctx.IsDead = true;
+    }
+
+    // REVIEW：格挡系统 - 格挡动画事件回调
+    public void Animation_BlockHit()
+    {
+        var blockState = stateMachine.currentState as PlayerBlockState;
+        blockState?.OnBlocked(false);
+    }
+
+    public void Animation_ParrySuccess()
+    {
+        var blockState = stateMachine.currentState as PlayerBlockState;
+        blockState?.OnBlocked(true);
+    }
+
+    public void Animation_PostureBroken()
+    {
+        // 破防动画完成回调
     }
 
     public void Animation_Move(float distance)

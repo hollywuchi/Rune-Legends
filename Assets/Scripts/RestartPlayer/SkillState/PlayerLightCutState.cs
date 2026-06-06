@@ -30,7 +30,6 @@ public class PlayerLightCutState : PlayerState
         s.motor.SetVelocityX(0);
 
         // 冻结移动输入
-        s.inputGate.Freeze(0.2f);
         s.anim.SetToCharging();
         s.anim.SetIsCharging(true);
     }

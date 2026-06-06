@@ -36,6 +36,16 @@ public class Enemy : MonoBehaviour
     public bool Ishurt;
     public bool IsDeath;
 
+    [Header("架势系统")]
+    public PostureSystem postureSystem;  // 架势系统组件引用
+
+    // REVIEW：格挡系统 - 敌人被格挡/弹反反应参数
+    [Header("被格挡反应参数")]
+    public float parryRecoilForce = 8f;          // 弹反后退力
+    public float blockRecoilForce = 3f;          // 格挡后退力
+    public float parryStaggerDuration = 0.8f;    // 弹反硬直时间
+    public float blockStaggerDuration = 0.3f;    // 格挡硬直时间
+
     // 现在的状态
     BaseState currnetState;
     protected BaseState patrolState;
@@ -141,6 +151,64 @@ public class Enemy : MonoBehaviour
         
         rb.velocity = new Vector2(0,rb.velocity.y);
         anim.SetBool("Death",IsDeath);
+    }
+
+    /// <summary>
+    /// 架势破碎处理（被弹反多次后触发）
+    /// </summary>
+    public void OnPostureBroken()
+    {
+        Ishurt = true;
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        anim.SetTrigger("hurt");
+        StartCoroutine(PostureBrokenRecovery());
+    }
+
+    private IEnumerator PostureBrokenRecovery()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Ishurt = false;
+        if (postureSystem != null)
+        {
+            postureSystem.ResetPosture();
+        }
+    }
+
+    // REVIEW：格挡系统 - 被玩家格挡/弹反时的反应
+    /// <summary>
+    /// 被玩家格挡/弹反时的反应：停止移动 + 后退 + 硬直
+    /// </summary>
+    public void OnBlockedByPlayer(bool isParry, Transform playerTransform)
+    {
+        // 立即停止移动
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        
+        // 设置受伤状态（阻止 Move() 调用）
+        Ishurt = true;
+        
+        // 计算后退方向（远离玩家）
+        Vector2 recoilDir = (transform.position - playerTransform.position).normalized;
+        
+        if (isParry)
+        {
+            // 弹反：大后退 + 长硬直
+            rb.AddForce(recoilDir * parryRecoilForce, ForceMode2D.Impulse);
+            anim.SetTrigger("hurt");
+            StartCoroutine(BlockedRecovery(parryStaggerDuration));
+        }
+        else
+        {
+            // 普通格挡：小后退 + 短硬直
+            rb.AddForce(recoilDir * blockRecoilForce, ForceMode2D.Impulse);
+            anim.SetTrigger("hurt");
+            StartCoroutine(BlockedRecovery(blockStaggerDuration));
+        }
+    }
+
+    private IEnumerator BlockedRecovery(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Ishurt = false;
     }
 
     public void DestoryAnimation()

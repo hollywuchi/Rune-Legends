@@ -12,19 +12,20 @@ public class NewSavePoint : MonoBehaviour
     Vector3 targetPos;
 
     public Vector3 ResurrectPoint;  // 复活点位置
-
+    private PlayerContext context;
     public bool isActivated;
 
     void Awake()
     {
         pos = lightSprite.transform.position;
         targetPos = pos + new Vector3(0, 0.3f, 0);
+        ResurrectPoint = GameObject.FindGameObjectWithTag("ResurrectPoint").transform.position;
     }
     void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerContext context = collision.GetComponent<Player>().ctx;
+            context = collision.GetComponent<Player>().ctx;
             if (context == null) return;
 
             if (!isActivated && !DOTween.IsTweening(lightSprite) && context.IsHoldingActivate)
@@ -56,7 +57,15 @@ public class NewSavePoint : MonoBehaviour
             }
             context.CanRest = isActivated;
         }
+    }
 
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (context == null) return;
+            context.CanRest = false;
+        }
     }
 }
 

@@ -9,6 +9,8 @@ TagManager:
   - Interactable
   - Camera
   - Enemy
+  - Attack
+  - ResurrectPoint
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - Player
   - Enemy
+  - Player
   - Attack
   - 
   - 

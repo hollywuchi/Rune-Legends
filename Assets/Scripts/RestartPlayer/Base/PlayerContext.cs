@@ -96,6 +96,20 @@ public sealed class PlayerContext
     public bool ResurrectPressedThisFrame { get; set; }
     public Vector3 ResurrectPoint { get; set; }  // 复活点位置
 
+    // REVIEW：格挡系统 - 格挡与架势状态字段
+    // ===== 格挡系统 =====
+    public bool BlockIsHeld { get; set; }           // 是否按住格挡键
+    public bool BlockPressedThisFrame { get; set; } // 本帧按下格挡键
+
+    // ===== 架势系统 =====
+    public float CurrentPosture { get; set; }       // 当前架势值
+    public float MaxPosture { get; set; } = 100f;   // 最大架势值
+    public bool IsPostureBroken { get; set; }       // 是否已破防
+    public float PostureBrokenTimer { get; set; }   // 破防硬直计时器
+    public float PostureRecoveryTimer { get; set; } // 架势恢复延迟计时器
+    public bool IsBlocking { get; set; }            // 是否正在格挡状态
+    public bool IsParrying { get; set; }            // 是否正在弹反状态
+
     public void SetFacingDirection(int dir)
     {
         FacingDirection = dir >= 0 ? 1 : -1;

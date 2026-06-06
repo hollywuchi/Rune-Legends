@@ -126,15 +126,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Resurrect"",
-                    ""type"": ""Button"",
-                    ""id"": ""f39c15d0-ceba-44e9-a104-6d1c58175aec"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,17 +249,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Rest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""90be2fcf-b862-4eca-b4f7-ece684058926"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Resurrect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -298,6 +278,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""name"": ""DownAttack"",
                     ""type"": ""Button"",
                     ""id"": ""80cb4200-9f56-4d11-bcb0-041a15eaf7d0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Block"",
+                    ""type"": ""Button"",
+                    ""id"": ""4fd849a9-2004-41c4-a3f9-253f23917735"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -469,6 +458,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""DownAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""58e8895c-7c2d-43cd-8a5e-42ca9f6ec51c"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Block"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1075,6 +1075,34 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""ResurrectSystem"",
+            ""id"": ""8468fd59-a6c6-4b1a-8eea-2122e7b4454f"",
+            ""actions"": [
+                {
+                    ""name"": ""Resurrect"",
+                    ""type"": ""Button"",
+                    ""id"": ""a444d6c5-5d72-4034-9daf-a09eec5d6f8f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e826ec97-2080-4237-be1d-a136d67c66d2"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Resurrect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -1146,12 +1174,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_MoveSystem_Jump = m_MoveSystem.FindAction("Jump", throwIfNotFound: true);
         m_MoveSystem_Sprint = m_MoveSystem.FindAction("Sprint", throwIfNotFound: true);
         m_MoveSystem_Rest = m_MoveSystem.FindAction("Rest", throwIfNotFound: true);
-        m_MoveSystem_Resurrect = m_MoveSystem.FindAction("Resurrect", throwIfNotFound: true);
         // AttackSystem
         m_AttackSystem = asset.FindActionMap("AttackSystem", throwIfNotFound: true);
         m_AttackSystem_Attack = m_AttackSystem.FindAction("Attack", throwIfNotFound: true);
         m_AttackSystem_UpAttack = m_AttackSystem.FindAction("UpAttack", throwIfNotFound: true);
         m_AttackSystem_DownAttack = m_AttackSystem.FindAction("DownAttack", throwIfNotFound: true);
+        m_AttackSystem_Block = m_AttackSystem.FindAction("Block", throwIfNotFound: true);
         // SkillSystem
         m_SkillSystem = asset.FindActionMap("SkillSystem", throwIfNotFound: true);
         m_SkillSystem_Heal = m_SkillSystem.FindAction("Heal", throwIfNotFound: true);
@@ -1170,6 +1198,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // ResurrectSystem
+        m_ResurrectSystem = asset.FindActionMap("ResurrectSystem", throwIfNotFound: true);
+        m_ResurrectSystem_Resurrect = m_ResurrectSystem.FindAction("Resurrect", throwIfNotFound: true);
     }
 
     ~@InputManager()
@@ -1178,6 +1209,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_AttackSystem.enabled, "This will cause a leak and performance issues, InputManager.AttackSystem.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_SkillSystem.enabled, "This will cause a leak and performance issues, InputManager.SkillSystem.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputManager.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_ResurrectSystem.enabled, "This will cause a leak and performance issues, InputManager.ResurrectSystem.Disable() has not been called.");
     }
 
     /// <summary>
@@ -1257,7 +1289,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_MoveSystem_Jump;
     private readonly InputAction m_MoveSystem_Sprint;
     private readonly InputAction m_MoveSystem_Rest;
-    private readonly InputAction m_MoveSystem_Resurrect;
     /// <summary>
     /// Provides access to input actions defined in input action map "MoveSystem".
     /// </summary>
@@ -1285,10 +1316,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "MoveSystem/Rest".
         /// </summary>
         public InputAction @Rest => m_Wrapper.m_MoveSystem_Rest;
-        /// <summary>
-        /// Provides access to the underlying input action "MoveSystem/Resurrect".
-        /// </summary>
-        public InputAction @Resurrect => m_Wrapper.m_MoveSystem_Resurrect;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1327,9 +1354,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Rest.started += instance.OnRest;
             @Rest.performed += instance.OnRest;
             @Rest.canceled += instance.OnRest;
-            @Resurrect.started += instance.OnResurrect;
-            @Resurrect.performed += instance.OnResurrect;
-            @Resurrect.canceled += instance.OnResurrect;
         }
 
         /// <summary>
@@ -1353,9 +1377,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @Rest.started -= instance.OnRest;
             @Rest.performed -= instance.OnRest;
             @Rest.canceled -= instance.OnRest;
-            @Resurrect.started -= instance.OnResurrect;
-            @Resurrect.performed -= instance.OnResurrect;
-            @Resurrect.canceled -= instance.OnResurrect;
         }
 
         /// <summary>
@@ -1396,6 +1417,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_AttackSystem_Attack;
     private readonly InputAction m_AttackSystem_UpAttack;
     private readonly InputAction m_AttackSystem_DownAttack;
+    private readonly InputAction m_AttackSystem_Block;
     /// <summary>
     /// Provides access to input actions defined in input action map "AttackSystem".
     /// </summary>
@@ -1419,6 +1441,10 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "AttackSystem/DownAttack".
         /// </summary>
         public InputAction @DownAttack => m_Wrapper.m_AttackSystem_DownAttack;
+        /// <summary>
+        /// Provides access to the underlying input action "AttackSystem/Block".
+        /// </summary>
+        public InputAction @Block => m_Wrapper.m_AttackSystem_Block;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1454,6 +1480,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @DownAttack.started += instance.OnDownAttack;
             @DownAttack.performed += instance.OnDownAttack;
             @DownAttack.canceled += instance.OnDownAttack;
+            @Block.started += instance.OnBlock;
+            @Block.performed += instance.OnBlock;
+            @Block.canceled += instance.OnBlock;
         }
 
         /// <summary>
@@ -1474,6 +1503,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @DownAttack.started -= instance.OnDownAttack;
             @DownAttack.performed -= instance.OnDownAttack;
             @DownAttack.canceled -= instance.OnDownAttack;
+            @Block.started -= instance.OnBlock;
+            @Block.performed -= instance.OnBlock;
+            @Block.canceled -= instance.OnBlock;
         }
 
         /// <summary>
@@ -1831,6 +1863,102 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // ResurrectSystem
+    private readonly InputActionMap m_ResurrectSystem;
+    private List<IResurrectSystemActions> m_ResurrectSystemActionsCallbackInterfaces = new List<IResurrectSystemActions>();
+    private readonly InputAction m_ResurrectSystem_Resurrect;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "ResurrectSystem".
+    /// </summary>
+    public struct ResurrectSystemActions
+    {
+        private @InputManager m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public ResurrectSystemActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "ResurrectSystem/Resurrect".
+        /// </summary>
+        public InputAction @Resurrect => m_Wrapper.m_ResurrectSystem_Resurrect;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_ResurrectSystem; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="ResurrectSystemActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(ResurrectSystemActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="ResurrectSystemActions" />
+        public void AddCallbacks(IResurrectSystemActions instance)
+        {
+            if (instance == null || m_Wrapper.m_ResurrectSystemActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ResurrectSystemActionsCallbackInterfaces.Add(instance);
+            @Resurrect.started += instance.OnResurrect;
+            @Resurrect.performed += instance.OnResurrect;
+            @Resurrect.canceled += instance.OnResurrect;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="ResurrectSystemActions" />
+        private void UnregisterCallbacks(IResurrectSystemActions instance)
+        {
+            @Resurrect.started -= instance.OnResurrect;
+            @Resurrect.performed -= instance.OnResurrect;
+            @Resurrect.canceled -= instance.OnResurrect;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="ResurrectSystemActions.UnregisterCallbacks(IResurrectSystemActions)" />.
+        /// </summary>
+        /// <seealso cref="ResurrectSystemActions.UnregisterCallbacks(IResurrectSystemActions)" />
+        public void RemoveCallbacks(IResurrectSystemActions instance)
+        {
+            if (m_Wrapper.m_ResurrectSystemActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="ResurrectSystemActions.AddCallbacks(IResurrectSystemActions)" />
+        /// <seealso cref="ResurrectSystemActions.RemoveCallbacks(IResurrectSystemActions)" />
+        /// <seealso cref="ResurrectSystemActions.UnregisterCallbacks(IResurrectSystemActions)" />
+        public void SetCallbacks(IResurrectSystemActions instance)
+        {
+            foreach (var item in m_Wrapper.m_ResurrectSystemActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_ResurrectSystemActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="ResurrectSystemActions" /> instance referencing this action map.
+    /// </summary>
+    public ResurrectSystemActions @ResurrectSystem => new ResurrectSystemActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1931,13 +2059,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRest(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Resurrect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnResurrect(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "AttackSystem" which allows adding and removing callbacks.
@@ -1967,6 +2088,13 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDownAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Block" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBlock(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SkillSystem" which allows adding and removing callbacks.
@@ -2081,5 +2209,20 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "ResurrectSystem" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="ResurrectSystemActions.AddCallbacks(IResurrectSystemActions)" />
+    /// <seealso cref="ResurrectSystemActions.RemoveCallbacks(IResurrectSystemActions)" />
+    public interface IResurrectSystemActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Resurrect" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnResurrect(InputAction.CallbackContext context);
     }
 }

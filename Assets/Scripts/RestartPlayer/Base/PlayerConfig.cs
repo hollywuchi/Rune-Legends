@@ -41,4 +41,19 @@ public class PlayerConfig : ScriptableObject
     [Header("受伤参数")]
     public float hurtFreezeDuration = 0.3f;         // 受伤冻结时间
 
+    // REVIEW：格挡系统 - 格挡架势参数
+    [Header("格挡架势参数")]
+    public float maxPosture = 100f;                 // 最大架势值
+    public float postureRecoveryRate = 15f;         // 架势恢复速率（每秒）
+    public float postureRecoveryDelay = 1.5f;       // 受击后恢复延迟
+    public float blockDamageReduction = 0.8f;       // 格挡减伤比例（80%减伤）
+    public float blockPostureDamage = 15f;          // 被格挡时受到的架势伤害
+    public float parryWindowDuration = 0.12f;       // 弹反窗口时长（秒）
+    public float parryPostureDamageToEnemy = 30f;   // 弹反对敌人架势伤害
+    public float parryPostureRecovery = 20f;        // 弹反恢复自身架势值
+    public float postureBrokenDuration = 1.5f;      // 破防硬直持续时间
+    public float hitStopDuration = 0.05f;           // 弹反Hit Stop时长
+    public float parryScreenShakeIntensity = 0.3f;  // 弹反屏幕震动强度
+    public float parryScreenShakeDuration = 0.15f;  // 弹反屏幕震动时长
+
 }

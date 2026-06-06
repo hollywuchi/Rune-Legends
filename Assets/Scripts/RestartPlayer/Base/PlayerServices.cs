@@ -12,6 +12,8 @@ public sealed class PlayerServices
     public PlayerFxSpeaker fxSpeaker;
     public PlayerInputGate inputGate;
     public Character character;
+    // REVIEW：格挡系统 - 屏幕震动事件引用（用于弹反反馈）
+    public VoidSo cameraShakeEvent;
 
     
     public PlayerServices(
@@ -23,7 +25,8 @@ public sealed class PlayerServices
         PlayerMotor2D motor,
         PlayerFxSpeaker fxSpeaker,
         PlayerInputGate inputGate,
-        Character character)
+        Character character,
+        VoidSo cameraShakeEvent = null)
     {
         // this.player = player;
         this.config = config;
@@ -35,5 +38,6 @@ public sealed class PlayerServices
         this.fxSpeaker = fxSpeaker;
         this.inputGate = inputGate;
         this.character = character;
+        this.cameraShakeEvent = cameraShakeEvent;
     }
 }

@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 37520017}
   m_Layer: 9
   m_Name: LightCut
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 112273954}
   m_Layer: 9
   m_Name: Atk1
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 298288382}
   m_Layer: 9
   m_Name: Atk2
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 348546391}
   m_Layer: 9
   m_Name: Atk3
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -711,7 +711,7 @@ Transform:
   m_GameObject: {fileID: 360653500}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.66, y: -7.6900005, z: -10}
+  m_LocalPosition: {x: -69.39, y: -4.91, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -852,7 +852,7 @@ Transform:
   m_GameObject: {fileID: 459923746}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.66, y: -7.6900005, z: -10}
+  m_LocalPosition: {x: -69.39, y: -4.91, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -872,7 +872,7 @@ GameObject:
   - component: {fileID: 491672920}
   m_Layer: 9
   m_Name: AirAtk2
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1027,7 +1027,7 @@ GameObject:
   - component: {fileID: 593304854}
   m_Layer: 9
   m_Name: AirUpAtk
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 866578350}
   m_Layer: 9
   m_Name: AirAtk1
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1234,7 +1234,7 @@ GameObject:
   - component: {fileID: 943610746}
   m_Layer: 7
   m_Name: RestPoint
-  m_TagString: Untagged
+  m_TagString: ResurrectPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1248,7 +1248,7 @@ Transform:
   m_GameObject: {fileID: 943610745}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.12, y: -0.06, z: 0}
+  m_LocalPosition: {x: 3.12, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1377,7 +1377,7 @@ Transform:
   m_GameObject: {fileID: 964480550}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.66, y: -2.9300003, z: -10}
+  m_LocalPosition: {x: -69.39, y: -2.9300003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1415,7 +1415,7 @@ GameObject:
   - component: {fileID: 1066947224}
   m_Layer: 7
   m_Name: AttackArea
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6502,7 +6502,7 @@ GameObject:
   - component: {fileID: 1423653304}
   m_Layer: 9
   m_Name: AirDownAtk
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6872,7 +6872,7 @@ PositionConstraint:
   serializedVersion: 2
   m_Weight: 1
   m_TranslationAtRest: {x: 0, y: -11.99, z: 10}
-  m_TranslationOffset: {x: 1.5599995, y: 0, z: 0}
+  m_TranslationOffset: {x: -40.17, y: 0, z: 0}
   m_AffectTranslationX: 0
   m_AffectTranslationY: 1
   m_AffectTranslationZ: 0
@@ -6881,6 +6881,75 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 1764366552}
     weight: 1
+--- !u!1001 &1704026373
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2276866995619117826, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_Name
+      value: Boar
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339646154441836149, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: Hurt.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1797461657}
+    - target: {fileID: 7011633285706574056, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: maxPosture
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7011633285706574056, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: postureRecoveryRate
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -77.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
 --- !u!1 &1728129692
 GameObject:
   m_ObjectHideFlags: 0
@@ -7079,6 +7148,7 @@ MonoBehaviour:
   CurrentHealth: 0
   invincibleTime: 0
   invincible: 0
+  resurrectPoint: {x: 0, y: 0, z: 0}
   fxOffset: {x: 0, y: 0.43, z: 0}
   NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
   fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}
@@ -7086,6 +7156,7 @@ MonoBehaviour:
   currentFocus: 0
   attackBuffStack: 0
   attackBuffMultiplier: 2
+  postureSystem: {fileID: 0}
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -7256,7 +7327,7 @@ MonoBehaviour:
   lightSprite: {fileID: 1536766985}
   anim: {fileID: 1797461658}
   animClip: {fileID: 7400000, guid: 4d39dfd9729f96045a637247bd597aea, type: 2}
-  SavePoints: {x: 0, y: 0, z: 0}
+  ResurrectPoint: {x: 0, y: 0, z: 0}
   isActivated: 0
 --- !u!1 &1764366551
 GameObject:
@@ -7308,6 +7379,7 @@ GameObject:
   - component: {fileID: 1797461660}
   - component: {fileID: 1797461658}
   - component: {fileID: 1797461669}
+  - component: {fileID: 1797461670}
   m_Layer: 7
   m_Name: //Player
   m_TagString: Player
@@ -7376,7 +7448,7 @@ Transform:
   m_GameObject: {fileID: 1797461655}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.66, y: -8.97, z: 0}
+  m_LocalPosition: {x: -69.39, y: -6.19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7439,7 +7511,7 @@ BoxCollider2D:
   m_Offset: {x: 0.025704384, y: 1.3198333}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.016}
+    pivot: {x: 0.5, y: 0.172}
     oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -7549,6 +7621,7 @@ MonoBehaviour:
   anim: {fileID: 1797461665}
   fxSpeaker: {fileID: 1797461667}
   character: {fileID: 1797461669}
+  cameraShakeEvent: {fileID: 0}
 --- !u!114 &1797461667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7574,10 +7647,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4390f5b0f5c7f6549b3da84407be10af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 22
+  maxHealth: 1
   CurrentHealth: 0
   invincibleTime: 0.8
   invincible: 0
+  resurrectPoint: {x: 0, y: 0, z: 0}
   fxOffset: {x: 0, y: 0, z: 0}
   NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
   fxEventSO: {fileID: 0}
@@ -7585,6 +7659,7 @@ MonoBehaviour:
   currentFocus: 50
   attackBuffStack: 0
   attackBuffMultiplier: 2
+  postureSystem: {fileID: 0}
   OnHealthChange:
     m_PersistentCalls:
       m_Calls: []
@@ -7618,6 +7693,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1797461670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797461655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee4471a96c4a29d4189e1667b7a6108e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPosture: 100
+  postureRecoveryRate: 15
+  postureRecoveryDelay: 1.5
+  currentPosture: 0
+  isBroken: 0
+  recoveryTimer: 0
+  OnPostureBroken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostureRecovered:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1911611766
 GameObject:
   m_ObjectHideFlags: 0
@@ -7758,7 +7857,7 @@ GameObject:
   - component: {fileID: 2065592215}
   - component: {fileID: 2065592217}
   - component: {fileID: 2065592218}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7844,67 +7943,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3678398, y: 1.5870047}
   m_EdgeRadius: 0
---- !u!1001 &4015801296037709828
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2276866995619117826, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_Name
-      value: Boar
-      objectReference: {fileID: 0}
-    - target: {fileID: 2339646154441836149, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: Hurt.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 1797461657}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -77.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -7919,4 +7957,4 @@ SceneRoots:
   - {fileID: 546500499}
   - {fileID: 1764366552}
   - {fileID: 1756246366}
-  - {fileID: 4015801296037709828}
+  - {fileID: 1704026373}

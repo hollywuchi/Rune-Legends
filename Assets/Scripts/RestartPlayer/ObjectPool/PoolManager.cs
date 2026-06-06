@@ -58,6 +58,7 @@ public class PoolManager : MonoBehaviour
     // 因为两个对象池相互污染，因为不是临时变量，所以调用的时候，会默认调用最后一个使用的对象池，然后就污染了
     public void CreateFX(Vector3 playerTran, float dir, ParticalEffectType type)
     {
+        // REVIEW：格挡系统 - 新增 ParrySpark 对象池映射（index 5）
         var objPool = type switch
         {
             ParticalEffectType.SprintDust => poolEffectList[0],
@@ -65,6 +66,7 @@ public class PoolManager : MonoBehaviour
             ParticalEffectType.AirDust => poolEffectList[2],
             ParticalEffectType.Hit => poolEffectList[3],
             ParticalEffectType.Charging => poolEffectList[4],
+            ParticalEffectType.ParrySpark => poolEffectList[5],
             _ => null
         };
         if (objPool == null) return;

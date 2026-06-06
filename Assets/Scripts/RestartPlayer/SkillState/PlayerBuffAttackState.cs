@@ -37,9 +37,7 @@ public class PlayerLightCrownState : PlayerState
 
         // 停止移动
         s.motor.SetVelocityX(0);
-        s.inputGate.Freeze(0.2f);
 
-        Debug.Log("进入攻击力Buff状态");
     }
 
     public override Transition LogicUpdate()
@@ -61,14 +59,12 @@ public class PlayerLightCrownState : PlayerState
         if (s.ctx.LightCrownPerformedThisFrame)
         {
             ApplyBuff();
-            Debug.Log("攻击力Buff施加完成");
             if (isAnimFinished)
                 return new Transition(PlayerStateId.Idle);
         }
         // 松开按键，取消Buff
         else if (!s.ctx.IsHoldingLightCrown)
         {
-            Debug.Log("Buff被取消");
             return new Transition(PlayerStateId.Idle);
         }
 

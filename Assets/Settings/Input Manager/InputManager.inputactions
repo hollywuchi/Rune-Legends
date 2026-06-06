@@ -40,15 +40,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Resurrect",
-                    "type": "Button",
-                    "id": "f39c15d0-ceba-44e9-a104-6d1c58175aec",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -172,17 +163,6 @@
                     "action": "Rest",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "90be2fcf-b862-4eca-b4f7-ece684058926",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Resurrect",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
@@ -212,6 +192,15 @@
                     "name": "DownAttack",
                     "type": "Button",
                     "id": "80cb4200-9f56-4d11-bcb0-041a15eaf7d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Block",
+                    "type": "Button",
+                    "id": "4fd849a9-2004-41c4-a3f9-253f23917735",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -383,6 +372,17 @@
                     "action": "DownAttack",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "58e8895c-7c2d-43cd-8a5e-42ca9f6ec51c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -985,6 +985,34 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "ResurrectSystem",
+            "id": "8468fd59-a6c6-4b1a-8eea-2122e7b4454f",
+            "actions": [
+                {
+                    "name": "Resurrect",
+                    "type": "Button",
+                    "id": "a444d6c5-5d72-4034-9daf-a09eec5d6f8f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e826ec97-2080-4237-be1d-a136d67c66d2",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Resurrect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

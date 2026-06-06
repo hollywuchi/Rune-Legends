@@ -13,6 +13,8 @@ namespace RestartPlayer.HFSM
         AirAttack, AirDownAttack, AirUpAttack,
         Heal, LightCut, LightCrown, Hurt,
         Death,
+        // REVIEW：格挡系统 - 新增格挡相关状态ID
+        Block, Parry, PostureBroken,
     }
     /// <summary>
     /// 状态逻辑只“提出转移请求”，由状态机统一执行。
