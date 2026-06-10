@@ -26,9 +26,8 @@ public class PlayerGroundState : PlayerState
         if (!s.ctx.IsGrounded)
             return new Transition(PlayerStateId.Fall);
 
-        // REVIEW：格挡系统 - 格挡输入检测（优先级最高）
-        // 格挡输入检测（优先级最高）
-        if (s.ctx.BlockIsHeld && s.ctx.IsGrounded)
+        // 格挡输入检测：点按即可进入格挡状态
+        if (s.ctx.BlockPressedThisFrame && s.ctx.IsGrounded && !s.ctx.IsPostureBroken)
             return new Transition(PlayerStateId.Block);
 
         // 攻击输入检测

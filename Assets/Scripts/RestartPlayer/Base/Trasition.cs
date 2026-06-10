@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace RestartPlayer.HFSM
 {
-    // 不写filepath：你可以放在 RestartPlayer/HFSM 下
     public enum PlayerStateId
     {
         // WORKFLOW:在这里添加状态ID
@@ -13,7 +12,6 @@ namespace RestartPlayer.HFSM
         AirAttack, AirDownAttack, AirUpAttack,
         Heal, LightCut, LightCrown, Hurt,
         Death,
-        // REVIEW：格挡系统 - 新增格挡相关状态ID
         Block, Parry, PostureBroken,
     }
     /// <summary>

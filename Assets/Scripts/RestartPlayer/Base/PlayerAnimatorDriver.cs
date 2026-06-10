@@ -76,13 +76,10 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     // ===== 受伤动画 ======
     public void TriggerHurt() => animator.SetTrigger("Hurt");
 
-    // REVIEW：格挡系统 - 格挡动画控制方法
     // ===== 格挡动画 ======
+    public void TriggerBlock() => animator.SetTrigger("Block");
     public void SetIsBlocking(bool isBlocking) => animator.SetBool("IsBlocking", isBlocking);
-    public void TriggerBlockHit() => animator.SetTrigger("BlockHit");
-    public void TriggerParrySuccess() => animator.SetTrigger("ParrySuccess");
-    public void TriggerPostureBroken() => animator.SetTrigger("PostureBroken");
-
+    public void SetIsBroken(bool isBroken) => animator.SetBool("IsBroken", isBroken);
     // ===== 休息动画 ======
     public void SetIsResting() => animator.SetTrigger("IsResting");
     public void SetIsSleeping() => animator.SetTrigger("IsSleeping");

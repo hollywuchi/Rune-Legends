@@ -8,8 +8,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Rigidbody2D rb;
-    [HideInInspector]public PhysicsCheck physicsCheck;
-    [HideInInspector]public Animator anim;
+    [HideInInspector] public PhysicsCheck physicsCheck;
+    [HideInInspector] public Animator anim;
 
     [Header("基本参数")]
     public float NormalSpeed;
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     public float WaitTime;
     public float WaitTimeCounter;
     public float LostTime;
-    public float LostTimeCounter;   
+    public float LostTimeCounter;
     [Header("状态")]
     public bool IsWait;
     public bool Ishurt;
@@ -39,12 +39,12 @@ public class Enemy : MonoBehaviour
     [Header("架势系统")]
     public PostureSystem postureSystem;  // 架势系统组件引用
 
-    // REVIEW：格挡系统 - 敌人被格挡/弹反反应参数
     [Header("被格挡反应参数")]
+    public bool isBlocked;                       // 是否被格挡/弹反
     public float parryRecoilForce = 8f;          // 弹反后退力
-    public float blockRecoilForce = 3f;          // 格挡后退力
+    public float blockRecoilForce = 5f;          // 格挡后退力
     public float parryStaggerDuration = 0.8f;    // 弹反硬直时间
-    public float blockStaggerDuration = 0.3f;    // 格挡硬直时间
+    public float blockStaggerDuration = 0.5f;    // 格挡硬直时间
 
     // 现在的状态
     BaseState currnetState;
@@ -53,33 +53,34 @@ public class Enemy : MonoBehaviour
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();    
+        anim = GetComponent<Animator>();
         physicsCheck = GetComponent<PhysicsCheck>();
+        postureSystem = GetComponent<PostureSystem>();
         CurrentSpeed = NormalSpeed;
         WaitTimeCounter = WaitTime;
-    }   
-    private void OnEnable() 
+    }
+    private void OnEnable()
     {
         // 现在的状态转换为巡逻状态
         currnetState = patrolState;
-        currnetState.OnEnter(this);    
+        currnetState.OnEnter(this);
     }
-    private void Update() 
+    private void Update()
     {
-        dir = new Vector3(-transform.localScale.x,0,0);
-        
+        dir = new Vector3(-transform.localScale.x, 0, 0);
+
         currnetState.LogicUpdate();
         TimeCount();
     }
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
-        if(!Ishurt && !IsDeath && !IsWait)
+        if (!Ishurt && !IsDeath && !IsWait && !isBlocked)
             Move();
         currnetState.PhysicsUpdate();
     }
-    private void OnDisable() 
+    private void OnDisable()
     {
-        currnetState.OnExit();    
+        currnetState.OnExit();
     }
 
     /// <summary>
@@ -87,7 +88,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public virtual void Move()
     {
-        rb.velocity = new Vector3(CurrentSpeed * dir.x * Time.deltaTime,rb.velocity.y,0);
+        rb.velocity = new Vector3(CurrentSpeed * dir.x * Time.deltaTime, rb.velocity.y, 0);
     }
 
     /// <summary>
@@ -95,21 +96,21 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void TimeCount()
     {
-        if(IsWait)
+        if (IsWait)
         {
             WaitTimeCounter -= Time.deltaTime;
-            if(WaitTimeCounter <= 0)
+            if (WaitTimeCounter <= 0)
             {
                 IsWait = false;
                 WaitTimeCounter = WaitTime;
-                transform.localScale = new Vector3(dir.x,1,1);
+                transform.localScale = new Vector3(dir.x, 1, 1);
                 physicsCheck.GroundOffset.x *= transform.localScale.x;
             }
         }
-        if(!FindPlayer())
+        if (!FindPlayer())
         {
-            LostTimeCounter -=Time.deltaTime;
-            if(LostTimeCounter <= 0)
+            LostTimeCounter -= Time.deltaTime;
+            if (LostTimeCounter <= 0)
                 LostTimeCounter = 0;
         }
         else
@@ -124,23 +125,24 @@ public class Enemy : MonoBehaviour
     /// <param name="Attacker"></param>
     public void OnTakeDamage(Transform Attacker)
     {
+        if (postureSystem.isBroken) return;
         attacker = Attacker;
-        if(attacker.transform.position.x - transform.position.x < 0)
-            transform.localScale = new Vector3(1,1,1);
-        if(attacker.transform.position.x - transform.position.x > 0)
-            transform.localScale = new Vector3(-1,1,1);
+        if (attacker.transform.position.x - transform.position.x < 0)
+            transform.localScale = new Vector3(1, 1, 1);
+        if (attacker.transform.position.x - transform.position.x > 0)
+            transform.localScale = new Vector3(-1, 1, 1);
 
         Ishurt = true;
         anim.SetTrigger("hurt");
-        Vector2 dir = new Vector2(transform.position.x - attacker.transform.position.x,0).normalized;
-        rb.velocity = new Vector2(0,rb.velocity.y);
+        Vector2 dir = new Vector2(transform.position.x - attacker.transform.position.x, 0).normalized;
+        rb.velocity = new Vector2(0, rb.velocity.y);
         StartCoroutine(WaitAttack(dir));
 
     }
 
     IEnumerator WaitAttack(Vector2 dir)
     {
-        rb.AddForce(dir * Backforce,ForceMode2D.Impulse);
+        rb.AddForce(dir * Backforce, ForceMode2D.Impulse);
         yield return new WaitForSeconds(0.5f);
         Ishurt = false;
     }
@@ -148,9 +150,9 @@ public class Enemy : MonoBehaviour
     public void OnDie()
     {
         IsDeath = true;
-        
-        rb.velocity = new Vector2(0,rb.velocity.y);
-        anim.SetBool("Death",IsDeath);
+
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        anim.SetBool("Death", IsDeath);
     }
 
     /// <summary>
@@ -161,34 +163,31 @@ public class Enemy : MonoBehaviour
         Ishurt = true;
         rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetTrigger("hurt");
+        anim.SetBool("isBroken", true);
         StartCoroutine(PostureBrokenRecovery());
     }
 
     private IEnumerator PostureBrokenRecovery()
     {
-        yield return new WaitForSeconds(1.5f);
+        if (postureSystem == null) yield break;
+        Debug.Log("进入破防硬直");
+        yield return new WaitUntil(() => postureSystem.isBroken == false);
+        anim.SetBool("isBroken", false);
         Ishurt = false;
-        if (postureSystem != null)
-        {
-            postureSystem.ResetPosture();
-        }
     }
 
-    // REVIEW：格挡系统 - 被玩家格挡/弹反时的反应
     /// <summary>
     /// 被玩家格挡/弹反时的反应：停止移动 + 后退 + 硬直
     /// </summary>
     public void OnBlockedByPlayer(bool isParry, Transform playerTransform)
     {
+        isBlocked = true;
         // 立即停止移动
         rb.velocity = new Vector2(0, rb.velocity.y);
-        
-        // 设置受伤状态（阻止 Move() 调用）
-        Ishurt = true;
-        
+
         // 计算后退方向（远离玩家）
         Vector2 recoilDir = (transform.position - playerTransform.position).normalized;
-        
+
         if (isParry)
         {
             // 弹反：大后退 + 长硬直
@@ -208,7 +207,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator BlockedRecovery(float duration)
     {
         yield return new WaitForSeconds(duration);
-        Ishurt = false;
+        isBlocked = false;
     }
 
     public void DestoryAnimation()
@@ -223,8 +222,7 @@ public class Enemy : MonoBehaviour
     public bool FindPlayer()
     {
         // 一个新的盒装检测器：参数有很多（原点，盒子的大小，盒子角度，向什么方向投射，形状的最大距离，检测的碰撞器）
-        return Physics2D.BoxCast((Vector2)transform.position + CheckOffset,CheckSize,0,dir,CheckDistance,AttackLayer);
-        // 作为一个bool值返回（本质上是返回的一个类型信息）
+        return Physics2D.BoxCast((Vector2)transform.position + CheckOffset, CheckSize, 0, dir, CheckDistance, AttackLayer);
     }
     /// <summary>
     /// 状态的检测和转换
@@ -239,7 +237,7 @@ public class Enemy : MonoBehaviour
         {
             NPCstate.Patrol => patrolState,
             NPCstate.Chase => chaseState,
-            _=>null
+            _ => null
         };
         currnetState.OnExit();
         currnetState = newState;
@@ -247,9 +245,9 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void OnDrawGizmosSelected() 
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + (Vector3)CheckOffset + new Vector3( CheckDistance * -transform.localScale.x,0),1f);    
+        Gizmos.DrawWireSphere(transform.position + (Vector3)CheckOffset + new Vector3(CheckDistance * -transform.localScale.x, 0), 1f);
     }
 }

@@ -13,7 +13,7 @@ public class PostureSystem : MonoBehaviour
     public float postureRecoveryDelay = 1.5f;   // 破防后持续时间，期间无法增加架势值
     // public float postureBrokenDuration = 1.5f;  // 破防持续时间
 
-    [HideInInspector] public float currentPosture;  // 当前的架势值
+    public float currentPosture;  // 当前的架势值
     [HideInInspector] public bool isBroken;         // 是否处于破防状态
     [HideInInspector] public float recoveryTimer;   // 恢复计时器
 
@@ -29,7 +29,7 @@ public class PostureSystem : MonoBehaviour
 
     private void Update()
     {
-        if (isBroken) return;
+        if (!isBroken) return;
 
         if (currentPosture > 0f)
         {
@@ -37,7 +37,11 @@ public class PostureSystem : MonoBehaviour
             if (recoveryTimer <= 0f)
             {
                 currentPosture -= postureRecoveryRate * Time.deltaTime;
-                if (currentPosture < 0f) currentPosture = 0f;
+                if (currentPosture < 0f) 
+                {
+                    currentPosture = 0f;
+                    ResetPosture();
+                }
             }
         }
     }
@@ -90,8 +94,8 @@ public class PostureSystem : MonoBehaviour
     /// <summary>
     /// 获取架势比例（0-1）
     /// </summary>
-    public float GetPostureRatio()
-    {
-        return currentPosture / maxPosture;
-    }
+    // public float GetPostureRatio()
+    // {
+    //     return currentPosture / maxPosture;
+    // }
 }

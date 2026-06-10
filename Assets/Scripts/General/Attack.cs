@@ -80,25 +80,27 @@ public class Attack : MonoBehaviour
 
          // 通知格挡状态弹反成功
          blockState.OnBlocked(true);
-         
+
          // 通知敌人被弹反
          enemy?.OnBlockedByPlayer(true, targetCharacter.transform);
       }
       else
       {
-         // 普通格挡
-         // 对目标造成减伤
-         targetCharacter.TakeBlockedDamage(this, targetCharacter.config.blockDamageReduction);
-
-         // 对目标造成架势伤害
+         // 普通格挡，不对目标造成伤害，但是对目标造成架势伤害
          if (targetCharacter.postureSystem != null)
          {
             targetCharacter.postureSystem.AddPosture(targetCharacter.config.blockPostureDamage);
          }
 
+         // 同时也会对自己造成架势伤害
+         if (attackerCharacter != null && attackerCharacter.postureSystem != null)
+         {
+            attackerCharacter.postureSystem.AddPosture(targetCharacter.config.parryPostureDamageToSelf);
+         }
+
          // 通知格挡状态普通格挡
          blockState.OnBlocked(false);
-         
+
          // 通知敌人被格挡
          enemy?.OnBlockedByPlayer(false, targetCharacter.transform);
       }

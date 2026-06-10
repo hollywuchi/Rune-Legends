@@ -29,3 +29,22 @@ MonoBehaviour:
   combo1DamageMultiplier: 1
   combo2DamageMultiplier: 1.2
   combo3DamageMultiplier: 1.5
+  lightCutFocusCost: 20
+  lightCutDashDistance: 5
+  lightCutDashSpeed: 20
+  LightCrownFocusCost: 30
+  maxAttackBuffStack: 3
+  attackBuffMultiplier: 2
+  hurtFreezeDuration: 0.3
+  maxPosture: 100
+  postureRecoveryRate: 15
+  postureRecoveryDelay: 1.5
+  parryWindowDuration: 0.12
+  parryPostureDamageToEnemy: 30
+  parryPostureDamageToSelf: 10
+  blockPostureDamage: 15
+  parryPostureRecovery: 20
+  postureBrokenDuration: 2
+  hitStopDuration: 0.05
+  parryScreenShakeIntensity: 0.3
+  parryScreenShakeDuration: 0.15

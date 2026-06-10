@@ -13,9 +13,10 @@ public class BoarChaseState : BaseState
     
     public override void LogicUpdate()
     {
-        if(CurrentEnemy.LostTimeCounter <= 0)
+        if(CurrentEnemy.LostTimeCounter <= 0 || CurrentEnemy.isBlocked)
         {
             CurrentEnemy.SwitchState(NPCstate.Patrol);
+            CurrentEnemy.LostTimeCounter = 0;
             CurrentEnemy.CurrentSpeed = CurrentEnemy.NormalSpeed;
         }
 

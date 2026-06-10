@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3134700455384577837}
   - component: {fileID: 2171370903426632806}
   - component: {fileID: 2339646154441836149}
-  - component: {fileID: 225634326194786055}
   - component: {fileID: 423076850329469447}
   - component: {fileID: 8058016676131371059}
   - component: {fileID: 4307856741855292901}
@@ -190,25 +189,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &225634326194786055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2276866995619117826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d4f9e76ca6ad8845884ef49a272720b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Damage: 1
-  attackRange: 0
-  attackRate: 0
-  knockbackForce: 5
-  knockbackDuration: 0.2
-  canGainFocus: 0
-  focusGain: 7.5
 --- !u!114 &423076850329469447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +214,7 @@ MonoBehaviour:
   CheckDistance: 4.5
   AttackLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
   WaitTime: 2
   WaitTimeCounter: 0
   LostTime: 3
@@ -243,6 +223,11 @@ MonoBehaviour:
   Ishurt: 0
   IsDeath: 0
   postureSystem: {fileID: 0}
+  isBlocked: 0
+  parryRecoilForce: 8
+  blockRecoilForce: 3
+  parryStaggerDuration: 0.8
+  blockStaggerDuration: 0.3
 --- !u!114 &8058016676131371059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,16 +335,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee4471a96c4a29d4189e1667b7a6108e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPosture: 100
-  postureRecoveryRate: 15
+  maxPosture: 50
+  postureRecoveryRate: 10
   postureRecoveryDelay: 1.5
-  postureBrokenDuration: 1.5
   currentPosture: 0
   isBroken: 0
   recoveryTimer: 0
   OnPostureBroken:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 423076850329469447}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: OnPostureBroken
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnPostureRecovered:
     m_PersistentCalls:
       m_Calls: []
@@ -376,7 +372,7 @@ GameObject:
   - component: {fileID: 5032985955673431833}
   m_Layer: 7
   m_Name: Attack
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

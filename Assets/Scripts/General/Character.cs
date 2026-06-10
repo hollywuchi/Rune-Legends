@@ -31,7 +31,6 @@ public class Character : MonoBehaviour, ISaveable
    private int maxAttackBuffStack = 3;        // 最大叠加层数
    public float attackBuffMultiplier = 2.0f; // 每层伤害倍率
 
-   // REVIEW：格挡系统 - 架势系统组件引用
    [Header("架势系统")]
    public PostureSystem postureSystem;  // 架势系统组件引用
 
@@ -51,6 +50,7 @@ public class Character : MonoBehaviour, ISaveable
       NewGameEvent.OnEventRaised += NewGame;
       Hurt.AddListener(_CreateFX);
       Hurt.AddListener(KnockBack);
+      postureSystem = GetComponent<PostureSystem>();
       // ISaveable saveable = this;
       // saveable.RegisterSaveData();
    }
@@ -102,7 +102,6 @@ public class Character : MonoBehaviour, ISaveable
    {
       if (invincible)
          return;
-
       // 保存攻击者引用用于击退
       currentAttacker = attacker;
       // 判断当前人物还有没有剩余的血量，没有的话也不用进行判断了，省点性能
@@ -127,27 +126,27 @@ public class Character : MonoBehaviour, ISaveable
    // REVIEW：格挡系统 - 被格挡时的伤害处理（减伤 + 架势伤害）
    /// 被格挡时的伤害处理（减伤 + 架势伤害）
    /// </summary>
-   public void TakeBlockedDamage(Attack attacker, float damageReduction)
-   {
-      if (invincible) return;
+   // public void TakeBlockedDamage(Attack attacker, float damageReduction)
+   // {
+   //    if (invincible) return;
 
-      currentAttacker = attacker;
+   //    currentAttacker = attacker;
 
-      // 计算减伤后的伤害
-      int reducedDamage = Mathf.Max(1, Mathf.RoundToInt(attacker.Damage * (1f - damageReduction)));
+   //    // 计算减伤后的伤害
+   //    int reducedDamage = Mathf.Max(1, Mathf.RoundToInt(attacker.Damage * (1f - damageReduction)));
 
-      if (CurrentHealth - reducedDamage > 0)
-      {
-         CurrentHealth -= reducedDamage;
-         invincibleTimer();
-      }
-      else
-      {
-         CurrentHealth = 0;
-         Death?.Invoke();
-      }
-      OnHealthChange?.Invoke(this);
-   }
+   //    if (CurrentHealth - reducedDamage > 0)
+   //    {
+   //       CurrentHealth -= reducedDamage;
+   //       invincibleTimer();
+   //    }
+   //    else
+   //    {
+   //       CurrentHealth = 0;
+   //       Death?.Invoke();
+   //    }
+   //    OnHealthChange?.Invoke(this);
+   // }
 
    /// <summary>
    /// 复活！！！

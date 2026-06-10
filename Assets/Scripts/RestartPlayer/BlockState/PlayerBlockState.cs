@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 public class PlayerBlockState : PlayerState
 {
-    private float parryWindowTimer;
     private bool isInParryWindow;
     private bool blockHitAnimPlayed;
+    private bool isAnimFinished;
 
     public PlayerBlockState(PlayerServices s) : base(s) { }
 
@@ -17,12 +17,12 @@ public class PlayerBlockState : PlayerState
         base.Enter();
         s.ctx.IsBlocking = true;
         s.anim.SetIsBlocking(true);
+        s.anim.TriggerBlock();
         s.motor.SetVelocityX(0f);
+        s.ctx.isParry = false;
 
-        parryWindowTimer = 0f;
-        isInParryWindow = true;
         blockHitAnimPlayed = false;
-        Debug.Log("进入格挡状态，弹反窗口开启");
+        // Debug.Log("进入格挡状态，弹反窗口开启");
     }
 
     public override Transition LogicUpdate()
@@ -30,27 +30,23 @@ public class PlayerBlockState : PlayerState
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
 
+        if (s.ctx.isParry && isInParryWindow)
+        {
+            return new Transition(PlayerStateId.Parry);
+        }
         // 架势破碎判定
         if (s.ctx.IsPostureBroken)
             return new Transition(PlayerStateId.PostureBroken);
 
         // 松开格挡键 -> 退出格挡
-        if (!s.ctx.BlockIsHeld)
+        if (!s.ctx.BlockIsHeld && isAnimFinished)
             return new Transition(PlayerStateId.Idle);
 
         // 离地 -> 退出格挡
         if (!s.ctx.IsGrounded)
             return new Transition(PlayerStateId.Fall);
 
-        // 弹反窗口计时
-        if (isInParryWindow)
-        {
-            parryWindowTimer += Time.deltaTime;
-            if (parryWindowTimer >= s.config.parryWindowDuration)
-            {
-                isInParryWindow = false;
-            }
-        }
+
 
         return Transition.None;
     }
@@ -63,8 +59,9 @@ public class PlayerBlockState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsBlocking = false;
         s.anim.SetIsBlocking(false);
+        s.ctx.IsBlocking = false;
+        // Debug.Log("退出格挡状态，弹反窗口关闭");
     }
 
     /// <summary>
@@ -75,6 +72,16 @@ public class PlayerBlockState : PlayerState
         return isInParryWindow;
     }
 
+    public void SetParryWindow(bool isActive)
+    {
+        isInParryWindow = isActive;
+    }
+
+    public void OnBlockAnimFinished()
+    {
+        isAnimFinished = true;
+    }
+
     /// <summary>
     /// 被攻击命中时调用（由 Attack.cs 触发）
     /// </summary>
@@ -82,17 +89,62 @@ public class PlayerBlockState : PlayerState
     {
         if (isParry)
         {
-            // 弹反成功 -> 切换到弹反状态
-            s.stateMachine.RequestChangeState(PlayerStateId.Parry);
+            s.ctx.isParry = isParry;
+            // TODO：播放弹反粒子
         }
         else
         {
-            // 普通格挡 -> 播放格挡受击动画
+            // TODO：播放普通粒子
             if (!blockHitAnimPlayed)
             {
-                s.anim.TriggerBlockHit();
-                blockHitAnimPlayed = true;
+                // s.anim.TriggerBlockHit();
+                // blockHitAnimPlayed = true;
             }
         }
     }
+
+    // public void HandleBlockInteraction(Character attackerCharacter, Enemy enemy)
+    // {
+    //     if (IsInParryWindow())
+    //     {
+    //         Debug.Log("完美格挡！");
+    //         // 弹反成功！
+    //         // 对攻击者造成架势伤害
+    //         if (attackerCharacter != null && attackerCharacter.postureSystem != null)
+    //         {
+    //             attackerCharacter.postureSystem.AddPosture(s.character.config.parryPostureDamageToEnemy);
+    //         }
+
+    //         // 减少目标自身架势值
+    //         if (s.character.postureSystem != null)
+    //         {
+    //             s.character.postureSystem.ReducePosture(s.character.config.parryPostureRecovery);
+    //         }
+
+    //         // 通知格挡状态弹反成功
+    //         OnBlocked(true);
+
+    //         // 通知敌人被弹反
+    //         enemy?.OnBlockedByPlayer(true, s.character.transform);
+    //     }
+    //     else
+    //     {
+    //         // 普通格挡
+    //         // TODO:伤害判定对目标造成减伤
+    //         // targetCharacter.TakeBlockedDamage(this, targetCharacter.config.blockDamageReduction);
+
+    //         // 对目标造成架势伤害
+    //         if (s.character.postureSystem != null)
+    //         {
+    //             s.character.postureSystem.AddPosture(s.character.config.blockPostureDamage);
+    //         }
+
+    //         // 通知格挡状态普通格挡
+    //         OnBlocked(false);
+
+    //         // 通知敌人被格挡
+    //         enemy?.OnBlockedByPlayer(false, s.character.transform);
+    //     }
+    // }
+
 }

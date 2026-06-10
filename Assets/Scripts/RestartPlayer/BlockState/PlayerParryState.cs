@@ -17,10 +17,10 @@ public class PlayerParryState : PlayerState
         s.ctx.IsParrying = true;
 
         // 播放弹反动画
-        s.anim.TriggerParrySuccess();
+        // s.anim.TriggerParrySuccess();
 
         // 触发弹反特效
-        s.fxSpeaker.CreateFX(s.motor.transform.position, s.ctx.FacingDirection, ParticalEffectType.ParrySpark);
+        // s.fxSpeaker.CreateFX(s.motor.transform.position, s.ctx.FacingDirection, ParticalEffectType.ParrySpark);
 
         // 触发屏幕震动
         s.cameraShakeEvent?.RaiseEvent();
@@ -35,6 +35,8 @@ public class PlayerParryState : PlayerState
 
         // 冻结输入
         s.inputGate.Freeze(ParryDuration);
+
+        Debug.Log("完美格挡！");
     }
 
     public override Transition LogicUpdate()

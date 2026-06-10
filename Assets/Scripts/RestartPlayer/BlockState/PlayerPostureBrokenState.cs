@@ -13,10 +13,9 @@ public class PlayerPostureBrokenState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        s.ctx.IsPostureBroken = true;
 
         // 播放破防动画
-        s.anim.TriggerPostureBroken();
+        // s.anim.TriggerPostureBroken();
 
         // 停止移动
         s.motor.SetVelocityX(0f);
@@ -25,6 +24,8 @@ public class PlayerPostureBrokenState : PlayerState
         s.inputGate.Freeze(s.config.postureBrokenDuration);
 
         brokenTimer = 0f;
+        s.anim.SetIsBroken(true);
+        s.anim.TriggerHurt();
     }
 
     public override Transition LogicUpdate()
@@ -45,6 +46,6 @@ public class PlayerPostureBrokenState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsPostureBroken = false;
+        s.anim.SetIsBroken(false);
     }
 }

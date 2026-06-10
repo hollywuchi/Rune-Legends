@@ -69,7 +69,6 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.LightCrown, new PlayerLightCrownState(s));
 
         // 格挡状态
-        // REVIEW：格挡系统 - 注册格挡、弹反、破防状态
         stateRegistry.Register(PlayerStateId.Block, new PlayerBlockState(s));
         stateRegistry.Register(PlayerStateId.Parry, new PlayerParryState(s));
         stateRegistry.Register(PlayerStateId.PostureBroken, new PlayerPostureBrokenState(s));
@@ -142,7 +141,6 @@ public class Player : MonoBehaviour
         ctx.IsHoldingLightCrown = inputActions.SkillSystem.LightCrown.IsPressed();
         ctx.LightCrownPerformedThisFrame = inputActions.SkillSystem.LightCrown.WasPerformedThisFrame();
 
-        // REVIEW：格挡系统 - 格挡输入采样
         // 格挡输入采样
         ctx.BlockIsHeld = inputActions.AttackSystem.Block.IsPressed();
         ctx.BlockPressedThisFrame = inputActions.AttackSystem.Block.WasPressedThisFrame();
@@ -166,7 +164,6 @@ public class Player : MonoBehaviour
         ctx.IsTouchingTopLeftWall = physicsCheck.touchLeftTopWall;
         ctx.IsTouchingTopRightWall = physicsCheck.touchRightTopWall;
 
-        // REVIEW：格挡系统 - 架势系统同步到上下文
         // 架势系统同步
         if (character.postureSystem != null)
         {
@@ -251,6 +248,9 @@ public class Player : MonoBehaviour
             case PlayerLightCrownState buffState:
                 buffState.OnBuffAnimFinished();
                 break;
+            case PlayerBlockState blockState:
+                blockState.OnBlockAnimFinished();
+                break;
             case PlayerSprintState:
             case PlayerAirSprintState:
                 ctx.IsSprintFinished = true;
@@ -284,22 +284,16 @@ public class Player : MonoBehaviour
         ctx.IsDead = true;
     }
 
-    // REVIEW：格挡系统 - 格挡动画事件回调
-    public void Animation_BlockHit()
+    public void Animation_ParryWindowOff()
     {
         var blockState = stateMachine.currentState as PlayerBlockState;
-        blockState?.OnBlocked(false);
+        blockState?.SetParryWindow(false);
     }
 
-    public void Animation_ParrySuccess()
+    public void Animation_ParryWindowOn()
     {
         var blockState = stateMachine.currentState as PlayerBlockState;
-        blockState?.OnBlocked(true);
-    }
-
-    public void Animation_PostureBroken()
-    {
-        // 破防动画完成回调
+        blockState?.SetParryWindow(true);
     }
 
     public void Animation_Move(float distance)

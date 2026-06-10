@@ -96,10 +96,10 @@ public sealed class PlayerContext
     public bool ResurrectPressedThisFrame { get; set; }
     public Vector3 ResurrectPoint { get; set; }  // 复活点位置
 
-    // REVIEW：格挡系统 - 格挡与架势状态字段
     // ===== 格挡系统 =====
     public bool BlockIsHeld { get; set; }           // 是否按住格挡键
     public bool BlockPressedThisFrame { get; set; } // 本帧按下格挡键
+    public bool isParry { get; set; }                 // 是否在弹反状态
 
     // ===== 架势系统 =====
     public float CurrentPosture { get; set; }       // 当前架势值
