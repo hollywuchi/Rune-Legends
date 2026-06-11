@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   maxFocus: 50
-  healAmount: 0
+  healAmount: 1
   speed: 12
   sprintSpeed: 25
   jumpForce: 20

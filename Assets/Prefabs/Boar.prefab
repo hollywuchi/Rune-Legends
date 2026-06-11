@@ -149,19 +149,7 @@ MonoBehaviour:
       m_Calls: []
   Hurt:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 423076850329469447}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: OnTakeDamage
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   Death:
     m_PersistentCalls:
       m_Calls:
@@ -222,7 +210,7 @@ MonoBehaviour:
   IsWait: 0
   Ishurt: 0
   IsDeath: 0
-  postureSystem: {fileID: 0}
+  postureSystem: {fileID: 7011633285706574056}
   isBlocked: 0
   parryRecoilForce: 8
   blockRecoilForce: 3

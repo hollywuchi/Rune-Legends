@@ -108,7 +108,7 @@ public class PlayerLightCutState : PlayerState
         // 消耗专注值
         s.character.currentFocus -= s.config.lightCutFocusCost;
         s.ctx.CurrentFocus = s.character.currentFocus;
-        // s.character.OnHealthChange?.Invoke(s.character);
+        s.character.OnFocusChange?.Invoke(s.character);
     }
 
     public void OnLightCutAnimFinished()

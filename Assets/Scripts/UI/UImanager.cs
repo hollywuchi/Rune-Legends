@@ -37,6 +37,7 @@ public class UImanager : MonoBehaviour
     private void OnEnable()
     {
         HealthEvent.OnEvenetRaised += HealthChange;
+        HealthEvent.OnEvenetRaised += PowerChange;
         SceneLoadEvent.LoadRequestEvent += checkMenu;
         LoadDataEvent.OnEventRaised += LoadData;
         GameOverEvent.OnEventRaised += GameOver;
@@ -49,6 +50,7 @@ public class UImanager : MonoBehaviour
     private void OnDisable()
     {
         HealthEvent.OnEvenetRaised -= HealthChange;
+        HealthEvent.OnEvenetRaised -= PowerChange;
         SceneLoadEvent.LoadRequestEvent -= checkMenu;
         LoadDataEvent.OnEventRaised -= LoadData;
         GameOverEvent.OnEventRaised -= GameOver;
@@ -97,5 +99,11 @@ public class UImanager : MonoBehaviour
     {
         var persent = character.CurrentHealth / character.maxHealth;
         bar.ChangeHealth(persent);
+    }
+
+    private void PowerChange(Character character)
+    {
+        var persent = character.currentFocus / character.config.maxFocus;
+        bar.ChangePower(persent);
     }
 }

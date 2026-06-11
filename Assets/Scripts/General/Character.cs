@@ -41,6 +41,7 @@ public class Character : MonoBehaviour, ISaveable
    private Rigidbody2D rb;
 
    public UnityEvent<Character> OnHealthChange;
+   public UnityEvent<Character> OnFocusChange;
    public UnityEvent Hurt;
    public UnityEvent Death;
    #endregion
@@ -164,6 +165,7 @@ public class Character : MonoBehaviour, ISaveable
    public void GainFocus(float amount)
    {
       currentFocus = Mathf.Min(currentFocus + amount, config.maxFocus);
+      OnFocusChange?.Invoke(this);
    }
 
    private void _CreateFX()

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Enemy
+  m_Name: InputManager
   m_EditorClassIdentifier: 
-  m_GroupName: Enemy
+  m_GroupName: InputManager
   m_Data:
     m_SerializedData: []
-  m_GUID: 2b46ac742a1cddf4184e6fc8cd04fd8c
+  m_GUID: 254f90f411005c9459e698d23fe287eb
   m_SerializeEntries:
-  - m_GUID: 3cd8e29579ea3df478ee838ea0f179dd
-    m_Address: Shadow
+  - m_GUID: d2833d54903cfcc41a849fc4cc449d00
+    m_Address: InputManager
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,5 +26,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 3de8e03f60058284bb07df13a9392601, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 928dccf5563efff42b0c59a9c608128a, type: 2}
-    - {fileID: 11400000, guid: 50a618c849f3c8f4d8519a8a082ce0e9, type: 2}
+    - {fileID: 11400000, guid: 74f57cbc969a1504abb2d8d9e29acd55, type: 2}
+    - {fileID: 11400000, guid: 0d51765be938c9040b1f1c0d10b262af, type: 2}

@@ -43,13 +43,11 @@ public class PlayerHealState : PlayerState
         if (s.ctx.SkillPerformedThisFrame)
         {
             HealPlayer();
-            Debug.Log("治愈完成，恢复血量");
             if (isAnimFinished)
                 return new Transition(PlayerStateId.Idle);
         }
         else if (!s.ctx.IsHoldingSkill)
         {
-            Debug.Log("治疗被取消");
             return new Transition(PlayerStateId.Idle);
         }
 

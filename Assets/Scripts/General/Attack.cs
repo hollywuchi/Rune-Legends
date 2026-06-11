@@ -39,6 +39,11 @@ public class Attack : MonoBehaviour
          {
             // 普通伤害
             character.TakeDamage(this);
+            if(character.CompareTag("Enemy"))
+            {
+               Enemy enemy = other.GetComponent<Enemy>();
+               enemy?.OnTakeDamage(transform);
+            }
          }
       }
    }

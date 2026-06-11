@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: PhysicsMaterials
+  m_EditorClassIdentifier: 
+  m_GroupName: PhysicsMaterials
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 08a13f789c1951240ac26fbe72ec96c3
+  m_SerializeEntries:
+  - m_GUID: 55e506ed79d8c1e498f7a6c73f538eb6
+    m_Address: Player_Physics_Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b24f56e555b5d9d4a9e4ae7a93fb9957
+    m_Address: Player_Physics_HasDrug
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3de8e03f60058284bb07df13a9392601, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6d4bc92bda0a80e4084fe8f2b090b2c0, type: 2}
+    - {fileID: 11400000, guid: 7c72fffd310d9804d94ff2d733cde5c6, type: 2}

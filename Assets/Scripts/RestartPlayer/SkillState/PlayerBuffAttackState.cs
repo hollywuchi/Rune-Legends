@@ -102,6 +102,7 @@ public class PlayerLightCrownState : PlayerState
         // 消耗专注值
         s.character.currentFocus -= s.config.LightCrownFocusCost;
         s.ctx.CurrentFocus = s.character.currentFocus;
+        s.character.OnFocusChange?.Invoke(s.character);
 
         // 增加Buff层数
         s.character.attackBuffStack = Mathf.Min(

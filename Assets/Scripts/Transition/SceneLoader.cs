@@ -135,7 +135,7 @@ public class SceneLoader : MonoBehaviour, ISaveable
         }
         isLoading = false;
 
-        if (currentLoadedScene.sceneType == SceneType.loaction)
+        if (currentLoadedScene.sceneType == SceneType.Location)
             SceneAfterEvnet.RaiseEvent();//场景加载完成之后将事件触发广播出去
     }
 
