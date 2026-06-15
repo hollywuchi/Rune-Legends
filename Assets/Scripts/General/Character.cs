@@ -52,6 +52,8 @@ public class Character : MonoBehaviour, ISaveable
       Hurt.AddListener(_CreateFX);
       Hurt.AddListener(KnockBack);
       postureSystem = GetComponent<PostureSystem>();
+      
+      // NOTICE:存档系统已被关闭
       // ISaveable saveable = this;
       // saveable.RegisterSaveData();
    }

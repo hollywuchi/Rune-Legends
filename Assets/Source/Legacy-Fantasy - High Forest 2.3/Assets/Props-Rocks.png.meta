@@ -2135,9 +2135,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 132
-        y: 241
+        y: 256
         width: 44
-        height: 61
+        height: 46
       alignment: 9
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2194,7 +2194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Props-Rocks_25
+      name: Rock_Menu
       rect:
         serializedVersion: 2
         x: 132
@@ -2256,6 +2256,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Button_Rock1
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 241
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a936e75a73291fe4cb34ad69615d17c0
+      internalID: 927758703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_Rock2
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 241
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 189d569fbf428fd4faab069afbfda47c
+      internalID: 1488835490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -2267,6 +2309,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Button_Rock1: 927758703
+      Button_Rock2: 1488835490
       Props-Rocks_0: 2105580133
       Props-Rocks_1: 507899959
       Props-Rocks_10: -1195010452
@@ -2288,7 +2332,6 @@ TextureImporter:
       Props-Rocks_22: -1857160859
       Props-Rocks_23: -638454931
       Props-Rocks_24: 350771302
-      Props-Rocks_25: 621827952
       Props-Rocks_26: -986277315
       Props-Rocks_27: 1950274485
       Props-Rocks_28: 86162062
@@ -2368,6 +2411,7 @@ TextureImporter:
       Props-Rocks_97: -634985321
       Props-Rocks_98: 460047302
       Props-Rocks_99: 1070706912
+      Rock_Menu: 621827952
       code_dislight: 184573750
       code_light: -1593532129
   mipmapLimitGroupName: 

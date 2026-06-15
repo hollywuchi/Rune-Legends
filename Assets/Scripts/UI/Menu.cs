@@ -10,7 +10,7 @@ public class Menu : MonoBehaviour
     private void OnEnable() 
     {
         // 默认选中第一个按钮
-        EventSystem.current.SetSelectedGameObject(NewGameButton);    
+        EventSystem.current.SetSelectedGameObject(NewGameButton);       
     }
     public void ExitGame()
     {

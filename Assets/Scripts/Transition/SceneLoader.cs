@@ -42,8 +42,18 @@ public class SceneLoader : MonoBehaviour, ISaveable
     {
         // Initialization();    
         SceneLoadEventSO.RaiseLoadRequestEvent(menuScene, menuPosition, true);
-        ISaveable saveable = this;
-        saveable.RegisterSaveData();
+        // NOTICE：存档系统已被关闭
+        // ISaveable saveable = this;
+        // saveable.RegisterSaveData();
+    }
+
+    void Update()
+    {
+        if (currentLoadedScene != null && currentLoadedScene == menuScene)
+        {
+            Player player = playerPos.GetComponent<Player>();
+            player.inputActions.Disable();
+        }
     }
     private void OnEnable()
     {
@@ -59,8 +69,9 @@ public class SceneLoader : MonoBehaviour, ISaveable
         NewGameEvent.OnEventRaised -= Initialization;
         BackToMenuEvent.OnEventRaised -= BackToMenu;
 
-        ISaveable saveable = this;
-        saveable.UnRegisterSaveData();
+        // NOTICE：存档系统已被关闭
+        // ISaveable saveable = this;
+        // saveable.UnRegisterSaveData();
     }
 
 
@@ -126,9 +137,9 @@ public class SceneLoader : MonoBehaviour, ISaveable
         currentLoadedScene = SceneToLoad;//改变当前场景（理论上）
         playerPos.position = Newplayerpos;//传送玩家
         playerPos.gameObject.SetActive(true);//玩家可视化
-        // 再次强制注册玩家
-        ISaveable saveable = playerPos.gameObject.GetComponent<Character>();
-        saveable.RegisterSaveData();
+        // NOTICE:再次强制注册玩家
+        // ISaveable saveable = playerPos.gameObject.GetComponent<Character>();
+        // saveable.RegisterSaveData();
         if (FadeScreen)
         {
             fadeEvent.FadeOut(fadeduration);//淡出界面

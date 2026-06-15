@@ -3,7 +3,7 @@ guid: f28b8213defa3104a906125e2189f55c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -94,7 +94,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Server
+    buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2626e2e673df02f479744c7fcc718742
-      internalID: -1461403990
+      spriteID: 7581fb33fce60f141b9afcef7cbac86b
+      internalID: -1344235162
       vertices: []
       indices: 
       edges: []
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94a9163063ea24f4cab4d27e56cbc671
-      internalID: -934829206
+      spriteID: 5435d8d2eea50e84b8ea9a9fff738910
+      internalID: -538696201
       vertices: []
       indices: 
       edges: []
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f5b6760e912f954e873bb56d2db8c47
-      internalID: 2069269202
+      spriteID: da189b2ad8c33aa4ca80b0cdc3c5e26d
+      internalID: 1528437828
       vertices: []
       indices: 
       edges: []
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bedc45e0ae61c9f4bb0d2ce84fb5199e
-      internalID: -703430842
+      spriteID: 5f528550357d3f84bb77e8b999b9147e
+      internalID: 119421588
       vertices: []
       indices: 
       edges: []
@@ -208,8 +208,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f81895c2ad42b04db51969217ff0f9d
-      internalID: -631774163
+      spriteID: 5285120ac0ef7d84095b800c5c217745
+      internalID: -642768768
       vertices: []
       indices: 
       edges: []
@@ -229,8 +229,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57239a4f49458e64aa8de4d5f3b92cbd
-      internalID: 875315888
+      spriteID: 6f827333d8f8ce3458424e11125e5084
+      internalID: -345038837
       vertices: []
       indices: 
       edges: []
@@ -250,8 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc64ecd7d9eb8b1418070396bdf3a3a2
-      internalID: -1980166668
+      spriteID: 1974e3ca5c49f7a498cfd37515bb8558
+      internalID: -1386312404
       vertices: []
       indices: 
       edges: []
@@ -271,8 +271,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b14c99af69fba374c88de7b78abcc0ab
-      internalID: 1405075021
+      spriteID: fef4f81a62067214580bbbbb433e4230
+      internalID: -847466048
       vertices: []
       indices: 
       edges: []
@@ -292,8 +292,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 879295553d5800b41b38ac56ab279039
-      internalID: -281000740
+      spriteID: 8b5482bc06a018347a913b37d3fd0e43
+      internalID: -1093700402
       vertices: []
       indices: 
       edges: []
@@ -313,8 +313,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8005bf9cf35ca3340ad50c51846d59b8
-      internalID: 1058931719
+      spriteID: ce5165f125607274da089d2db4a2ee8e
+      internalID: -1892403724
       vertices: []
       indices: 
       edges: []
@@ -334,8 +334,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4960084b4f617b744bb111589731506d
-      internalID: 822051917
+      spriteID: 050a29f1d6bfdf44b9669d560304ffdc
+      internalID: -1292502934
       vertices: []
       indices: 
       edges: []
@@ -355,8 +355,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b49c3e1ca760be4698444cd723e534a
-      internalID: -743608385
+      spriteID: 1e297b83222a0fc4f9fc4db4d64d6f90
+      internalID: -1042606207
       vertices: []
       indices: 
       edges: []
@@ -376,8 +376,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a144640fd82719c4692daf7f473b0c32
-      internalID: -1485359243
+      spriteID: b4f27173f7c641942aa5e28bff9aa94e
+      internalID: -1720937131
       vertices: []
       indices: 
       edges: []
@@ -397,8 +397,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d41a75c571fe3644bfa6725575c0455
-      internalID: -518965974
+      spriteID: cec11a8fd5273f04ea827f82505925cf
+      internalID: 583897506
       vertices: []
       indices: 
       edges: []
@@ -418,8 +418,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cbe4d339b1ff9b44283a03f8b6d226f1
-      internalID: -1094342530
+      spriteID: 3d5e42ffbacb6f74fad5b1ae52b4716a
+      internalID: -1498716990
       vertices: []
       indices: 
       edges: []
@@ -439,14 +439,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d21faa4971995854ea8142774f962c33
-      internalID: 1522836284
+      spriteID: 52986ce51e3b3ce408023120a01979c3
+      internalID: 45875722
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Keyboard Letters and Symbols_16
+      name: A
       rect:
         serializedVersion: 2
         x: 1
@@ -460,8 +460,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3b7ed2b18e1ed24c82a42c2c75dc9f1
-      internalID: -2009507613
+      spriteID: d23e81993c6329847a0d40841cbc042f
+      internalID: -1658790496
       vertices: []
       indices: 
       edges: []
@@ -481,8 +481,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7320c56bdfa47c3409c03ef9207714c5
-      internalID: -1972899884
+      spriteID: fd2a9795c624c6348a1c1329fe0f6447
+      internalID: 195450032
       vertices: []
       indices: 
       edges: []
@@ -502,14 +502,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 208fadf53f0416b48abb5aead3a8d06d
-      internalID: -931031708
+      spriteID: 8683a228cbb8d14448a3c58d06088b81
+      internalID: 1470349568
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Keyboard Letters and Symbols_19
+      name: D
       rect:
         serializedVersion: 2
         x: 49
@@ -523,8 +523,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c7fa1772594f9e45aa2935e928bbb70
-      internalID: 984136934
+      spriteID: be3877d501f4ff341ac1144d264a9e4d
+      internalID: -2051809464
       vertices: []
       indices: 
       edges: []
@@ -544,14 +544,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1f932f0b24a9874f9cf047d49bd4a3d
-      internalID: 509412128
+      spriteID: 94c72443b0cb3bc43949209d34a3af4e
+      internalID: 1396344818
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Keyboard Letters and Symbols_21
+      name: F
       rect:
         serializedVersion: 2
         x: 81
@@ -565,8 +565,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b19d342c8eb2d144b16ad65f520f49a
-      internalID: 1578132719
+      spriteID: b95ff8ffa588b5048bee6818b5d7a48a
+      internalID: -688637698
       vertices: []
       indices: 
       edges: []
@@ -586,8 +586,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef6ee8bfdd97eed42b500f2f2a59cab7
-      internalID: -642378677
+      spriteID: a083729e4c9e9d248bca24d4fa44b5e5
+      internalID: 1303629073
       vertices: []
       indices: 
       edges: []
@@ -607,8 +607,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56e5f09513306dc41a800fa865a1981b
-      internalID: 1667888107
+      spriteID: c6d8eb58f752815478ae41b4a49b8637
+      internalID: -1201373718
       vertices: []
       indices: 
       edges: []
@@ -628,8 +628,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d71f687dc52c9c6489b3338327161f7f
-      internalID: 1284300023
+      spriteID: e477a278ae0a8ad4295313c28d6868e2
+      internalID: 1270260286
       vertices: []
       indices: 
       edges: []
@@ -649,8 +649,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 265dba7aff2d38748a6edc0fd816d69e
-      internalID: 1616106584
+      spriteID: 4c7940c9f5298d547bd8ab8b52287adb
+      internalID: -859048547
       vertices: []
       indices: 
       edges: []
@@ -670,8 +670,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39cb143d615e0b54083818c73bf4f416
-      internalID: -1174983238
+      spriteID: 141f5818eab020a43afc59c16ae0c4d9
+      internalID: -551348878
       vertices: []
       indices: 
       edges: []
@@ -691,8 +691,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9ffdc421a54e44543a2bf8741940c2b4
-      internalID: 1874220929
+      spriteID: 055679fc603ecdc46824f23bf2561a93
+      internalID: 1501677719
       vertices: []
       indices: 
       edges: []
@@ -712,8 +712,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f8e9ce7c9dfc684194c52c12c55ee5d
-      internalID: -1644861173
+      spriteID: 0e5fe5ec897b22442a7d72c3d46a7291
+      internalID: 1279395775
       vertices: []
       indices: 
       edges: []
@@ -733,8 +733,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7b48ebdb67d6aa45911d5ed5778e1a8
-      internalID: -1351405531
+      spriteID: 0776353db5565ff4180f7ebd43b3d939
+      internalID: 767240482
       vertices: []
       indices: 
       edges: []
@@ -754,8 +754,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b403b5f2dab65cc478e161ff6dcf73e7
-      internalID: -583284849
+      spriteID: 97cb748470c6fc04fad1dd55a447b908
+      internalID: 275367515
       vertices: []
       indices: 
       edges: []
@@ -775,8 +775,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 487ff296a1d6865469961be6c9b0bb87
-      internalID: 12028636
+      spriteID: 32bbaaa999b376640b4cf16c9b570c36
+      internalID: -515388729
       vertices: []
       indices: 
       edges: []
@@ -796,14 +796,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 950b028989f195646b73888c0d568918
-      internalID: -316707373
+      spriteID: 8e10342b15e048d4c954a65498726f8e
+      internalID: -696761076
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Keyboard Letters and Symbols_33
+      name: R
       rect:
         serializedVersion: 2
         x: 17
@@ -817,14 +817,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d10dc2f81543d944a9436b5ca8422668
-      internalID: 1269380960
+      spriteID: a8a54bc91540dc440bb794c347a874c8
+      internalID: -1446907985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Keyboard Letters and Symbols_34
+      name: S
       rect:
         serializedVersion: 2
         x: 33
@@ -838,8 +838,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 698c3e0f8446a564598aa009ede615c3
-      internalID: -244735599
+      spriteID: f0d71e7d1d3f3ef40bc4d8fc0b5122ce
+      internalID: -1239693662
       vertices: []
       indices: 
       edges: []
@@ -859,8 +859,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 42d64fb916cf3bb4db25ea8bb5f9b67c
-      internalID: -268824633
+      spriteID: 9ab09fbde2bba6a45b8facd45455d26a
+      internalID: 1657584391
       vertices: []
       indices: 
       edges: []
@@ -880,8 +880,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 038b4704b6c7fd44287487efcf9b0d46
-      internalID: 138158533
+      spriteID: 7032e8a69c5a97646b0488c72526531e
+      internalID: -1195629570
       vertices: []
       indices: 
       edges: []
@@ -901,14 +901,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8aa2c1fe4ae1404297ce1d498b25439
-      internalID: 741036378
+      spriteID: f47ee00820359e542a0016dcbf9689fb
+      internalID: -2019859304
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Keyboard Letters and Symbols_38
+      name: W
       rect:
         serializedVersion: 2
         x: 97
@@ -922,8 +922,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df5bfc8ae5e159d4eb8d79472b7ac246
-      internalID: -871665133
+      spriteID: 585b397971fa126498ee53911df4f91f
+      internalID: 828949434
       vertices: []
       indices: 
       edges: []
@@ -943,8 +943,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8eb8fc3dfc9622f46830b030a143631f
-      internalID: -202137053
+      spriteID: 6ba8f20b68235944ab424cfa2031258f
+      internalID: -461809032
       vertices: []
       indices: 
       edges: []
@@ -964,8 +964,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f724875646c5a60439de1f3465f9d4a7
-      internalID: -525226738
+      spriteID: f80eae7ed6c28b840a4eaa4bba98bcb6
+      internalID: 487089493
       vertices: []
       indices: 
       edges: []
@@ -985,8 +985,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08d9c1a017460c44d9093b14b040cf9b
-      internalID: 839082411
+      spriteID: 07977f029bef7a349868a9924b8e6968
+      internalID: 1891478520
       vertices: []
       indices: 
       edges: []
@@ -1006,8 +1006,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8778b0aca059d44439d8a28e60212510
-      internalID: -872887389
+      spriteID: a97db6bbec7ebc44384380bac7d56dac
+      internalID: 167169759
       vertices: []
       indices: 
       edges: []
@@ -1027,8 +1027,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cba4575aa58dc5e42b4e5c3958e905ad
-      internalID: -1533396487
+      spriteID: 1fa7a29a0451d5b43b8fef8145220936
+      internalID: 2108026550
       vertices: []
       indices: 
       edges: []
@@ -1048,8 +1048,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1200e9721c729b146812c144a32bad8c
-      internalID: 790986504
+      spriteID: 0bb4a575ee201174fb5a10512ba3e40b
+      internalID: -606205737
       vertices: []
       indices: 
       edges: []
@@ -1069,8 +1069,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd6cb94fb4a861d40963f050978648a4
-      internalID: 193523825
+      spriteID: 0658b79bbb28e734fb02ec5c01b9aa35
+      internalID: 1332996912
       vertices: []
       indices: 
       edges: []
@@ -1090,8 +1090,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96a4db641b587c441ac97ea9da6cbd9a
-      internalID: 1874123292
+      spriteID: a9be948e92447c641b77f557a1930485
+      internalID: 968707116
       vertices: []
       indices: 
       edges: []
@@ -1111,8 +1111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c33223d204b88345b07d4fc7c0a9447
-      internalID: 1814071122
+      spriteID: 425615ee2413a7b42a4e62bc5d3ce9aa
+      internalID: 1850024409
       vertices: []
       indices: 
       edges: []
@@ -1132,8 +1132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7b0d80e9f5c1c042aa57d8b69f9ae6b
-      internalID: 62465164
+      spriteID: d8cb3bd175d8a85478ab8c910238793b
+      internalID: -1439206579
       vertices: []
       indices: 
       edges: []
@@ -1153,8 +1153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8de01a99fa66f754da580c598e5fd3ba
-      internalID: -1043408794
+      spriteID: aed5b493f4d993440aeced4651318fe0
+      internalID: -1348983232
       vertices: []
       indices: 
       edges: []
@@ -1174,8 +1174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 545e58f24202a7446b4d3e9e2a61332e
-      internalID: -638030647
+      spriteID: 473fb4cf480fd4342960b733994f6919
+      internalID: -162733
       vertices: []
       indices: 
       edges: []
@@ -1195,8 +1195,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d7b0776a87494141b71a053ef4f5c34
-      internalID: -337585364
+      spriteID: 44de4cf37fc47834c88818fc25bb1ee9
+      internalID: 1536464253
       vertices: []
       indices: 
       edges: []
@@ -1216,8 +1216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c448740e2ef2a54b84a0f7f36680503
-      internalID: -40206144
+      spriteID: cfd9cd0f0fc2c61489abb14356c50482
+      internalID: 1835034593
       vertices: []
       indices: 
       edges: []
@@ -1237,8 +1237,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16d5cd65d2de46449af64265bf5247bc
-      internalID: 1641223854
+      spriteID: 928ed5933e9944d459bd72bdb7531046
+      internalID: -1063496300
       vertices: []
       indices: 
       edges: []
@@ -1258,8 +1258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e37b9519c5fd2345af83c28c0781a59
-      internalID: -1368782966
+      spriteID: 52c7bc5f44cc48a418211ba8beda3863
+      internalID: -885192053
       vertices: []
       indices: 
       edges: []
@@ -1279,8 +1279,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4190333b354eeb347a332064b08cc686
-      internalID: -1601732905
+      spriteID: 708e7c7dfa4fb1c49bd24db868f12a04
+      internalID: -2009091137
       vertices: []
       indices: 
       edges: []
@@ -1300,8 +1300,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2996a746953143e439c2fffccb692230
-      internalID: -775939832
+      spriteID: e8a471db18ebc0a4ea7c84981c96eff2
+      internalID: -151355040
       vertices: []
       indices: 
       edges: []
@@ -1321,8 +1321,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbe70f292b27994499e0ea083610ca87
-      internalID: 1438234343
+      spriteID: 5c54a4c582954044994e603a935c4cc7
+      internalID: -631901403
       vertices: []
       indices: 
       edges: []
@@ -1342,8 +1342,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13c9427936011134896e6cc226bf9336
-      internalID: -1689884572
+      spriteID: e2bde8933706d6541b036c242c9860b5
+      internalID: -1248459694
       vertices: []
       indices: 
       edges: []
@@ -1363,8 +1363,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 451e60ab803abea43bbbb43549ada88c
-      internalID: 1517999287
+      spriteID: 3a7c2b17f3420324fadf7b2aad71f07c
+      internalID: -168091503
       vertices: []
       indices: 
       edges: []
@@ -1384,8 +1384,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a84d21b91882c64da8b4ab584a5455e
-      internalID: 1531066147
+      spriteID: db044a0fd77ad5a498ef83dd4989ecce
+      internalID: 1947736813
       vertices: []
       indices: 
       edges: []
@@ -1405,8 +1405,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6d453fa25e35ea44927a30363221db1
-      internalID: -1518903261
+      spriteID: c56c1f2e3201e064789edf6ca56ea903
+      internalID: 753524526
       vertices: []
       indices: 
       edges: []
@@ -1426,8 +1426,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d6b671079c48fa4aa508df9084dee03
-      internalID: 1772973268
+      spriteID: bfbbb293752fc4b46921d5f07b9b1d80
+      internalID: 1005435121
       vertices: []
       indices: 
       edges: []
@@ -1447,8 +1447,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e900642a03e95845a57ae82602edf7c
-      internalID: 370607349
+      spriteID: 9e18fb7af2b45e640a859d6c1a26db25
+      internalID: 1825766091
       vertices: []
       indices: 
       edges: []
@@ -1468,8 +1468,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fb07b4f8b093f344af1312a5263725f
-      internalID: -1368746364
+      spriteID: 6155d7bd1239e734c96724222a3d26a7
+      internalID: -2028191679
       vertices: []
       indices: 
       edges: []
@@ -1489,8 +1489,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c99af5da4d1782e4587d7c3b372dd425
-      internalID: 404266058
+      spriteID: 90c38a6a002bbbe4c9cb6850155a807a
+      internalID: 1133011544
       vertices: []
       indices: 
       edges: []
@@ -1510,8 +1510,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6c98cadd74aaf8409823ca0ff56eff0
-      internalID: 686886427
+      spriteID: 19ffcb777d102354dbb9f9c9e5ff1966
+      internalID: 1370514669
       vertices: []
       indices: 
       edges: []
@@ -1531,8 +1531,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7873fa319feb0f4c85e3e19d2715d5a
-      internalID: -1058156260
+      spriteID: a4e7f75b4e7813246b7bb0e64cf5f875
+      internalID: 368321980
       vertices: []
       indices: 
       edges: []
@@ -1552,8 +1552,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d61444713099de4d8f5958f00d10b1a
-      internalID: 1928409760
+      spriteID: f452a15313e275d459f67011f2f15274
+      internalID: 442386364
       vertices: []
       indices: 
       edges: []
@@ -1573,8 +1573,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ccf9b7d6ae49234db77898b039455a5
-      internalID: 492737471
+      spriteID: 7cf07c3118f357148b388b2911110560
+      internalID: -1957482253
       vertices: []
       indices: 
       edges: []
@@ -1594,8 +1594,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9236dad31f3345f4a913689d5a32854f
-      internalID: -966142317
+      spriteID: 7db57339cd66b9d41a844cab462a8fc3
+      internalID: 2027443974
       vertices: []
       indices: 
       edges: []
@@ -1615,8 +1615,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e6519c7df944584eb8de9152814678d
-      internalID: 542700707
+      spriteID: 694468e5d6b33cf43852e050e66ed067
+      internalID: -1036696022
       vertices: []
       indices: 
       edges: []
@@ -1636,8 +1636,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 785b6f540a347c44ca5c6d3fbd77ac98
-      internalID: 667744556
+      spriteID: 9ad9b823ee0aae9458f8fe569e440018
+      internalID: -1742614629
       vertices: []
       indices: 
       edges: []
@@ -1657,14 +1657,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3acc78fe7357fa746a24bbfb3f51d59e
-      internalID: -922235283
+      spriteID: ae6e3f6e9db9d564aa008bb880d1cc45
+      internalID: 1787689305
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: E_shadow
+      name: Keyboard Letters and Symbols_74
       rect:
         serializedVersion: 2
         x: 65
@@ -1678,8 +1678,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07196e028c1123a47aa6e03ff95d79bd
-      internalID: 1131457196
+      spriteID: 5a3d713291ae68747b2d11649dae3f0b
+      internalID: -1068350406
       vertices: []
       indices: 
       edges: []
@@ -1699,8 +1699,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e185161f2f73724eacccbf19c7977ac
-      internalID: 617025620
+      spriteID: 28e9a091209f8ae4f83220dd703fee66
+      internalID: 685352012
       vertices: []
       indices: 
       edges: []
@@ -1720,8 +1720,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9985e86c5a44744590910746fadf9a7
-      internalID: 1912869463
+      spriteID: a4f5d653e834be74b9330c0d3f712b98
+      internalID: -490796568
       vertices: []
       indices: 
       edges: []
@@ -1741,8 +1741,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 974a376cbd1e2c140a6e86b653995197
-      internalID: 1708031803
+      spriteID: fc8951ec260c772438f25c5f19956010
+      internalID: 1130065031
       vertices: []
       indices: 
       edges: []
@@ -1762,8 +1762,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b126da4605a5b674eb9aec278e8438f3
-      internalID: -1955579855
+      spriteID: d7bde42d25e831647a4b304cc2b6cd7e
+      internalID: 1697064996
       vertices: []
       indices: 
       edges: []
@@ -1783,8 +1783,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe329ab538e2d504b8f52335866215b7
-      internalID: 589615047
+      spriteID: dc97b4f27ff79e54294df87c9d3425c7
+      internalID: -1904331299
       vertices: []
       indices: 
       edges: []
@@ -1804,8 +1804,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d16d7ed5d51c2d84da677c8e0018939a
-      internalID: -1244987355
+      spriteID: 16d337d5af517a148a7ca17202943fc6
+      internalID: 125887239
       vertices: []
       indices: 
       edges: []
@@ -1825,8 +1825,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1bb1be63ec75021498bb538657faa53d
-      internalID: -1487164941
+      spriteID: 4675c9b797521e24397678a2c9f6a01f
+      internalID: 1519318606
       vertices: []
       indices: 
       edges: []
@@ -1846,8 +1846,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9feff8bb966396b47ad4af6c68f57c89
-      internalID: -16391367
+      spriteID: f6d4eadeb6c083149b1f71472fdbf35b
+      internalID: -1903941969
       vertices: []
       indices: 
       edges: []
@@ -1867,8 +1867,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69a57b78b8b869947bb99290e8eed855
-      internalID: -564779424
+      spriteID: 20901b91aaa34fa4bb9342b3c70b0ea1
+      internalID: 1911692083
       vertices: []
       indices: 
       edges: []
@@ -1888,8 +1888,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d20cfd4948bb7004aa6882b304194cb8
-      internalID: 2020219943
+      spriteID: b7c61bae297f4a645af7583792a4f67a
+      internalID: 295374421
       vertices: []
       indices: 
       edges: []
@@ -1909,8 +1909,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9899f3b95e223f84d90b3967daf1df7e
-      internalID: 1543392324
+      spriteID: 66d14d96c69883b4d85593d1e18e37c7
+      internalID: 1195498101
       vertices: []
       indices: 
       edges: []
@@ -1930,8 +1930,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1728766eadbc63f4596d71b7187e5fb5
-      internalID: -179827625
+      spriteID: 0f1e9f5fd6109e34ab691e285692a553
+      internalID: 433672258
       vertices: []
       indices: 
       edges: []
@@ -1951,8 +1951,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 160acea37bda49c428b9e62a666e1348
-      internalID: 1889036086
+      spriteID: 34521e812bdf71a40b6efdbd30b9d445
+      internalID: -2021500050
       vertices: []
       indices: 
       edges: []
@@ -1972,8 +1972,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94167442714cb2b428ed57b09d2ec9cf
-      internalID: 1524050945
+      spriteID: 4d22a4918d208dd4ea13431be1fe0110
+      internalID: -1900179004
       vertices: []
       indices: 
       edges: []
@@ -1993,8 +1993,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f6eeb1bacea9a346bb4e4a80a22fcd6
-      internalID: 642032185
+      spriteID: bcb3e4c9de092ad4da207ba05d9988bb
+      internalID: -172332162
       vertices: []
       indices: 
       edges: []
@@ -2014,8 +2014,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a71497dd346dbb4784f12514d42560e
-      internalID: -436758277
+      spriteID: 33ed7fb9f90eb0c43b1305d3ccc4baf8
+      internalID: 1613503443
       vertices: []
       indices: 
       edges: []
@@ -2035,8 +2035,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11dfd4db798024f469f4e6f831bc371b
-      internalID: 1065801943
+      spriteID: 104bc5e69f61cdb47ae91603ed545fe8
+      internalID: 232582713
       vertices: []
       indices: 
       edges: []
@@ -2056,8 +2056,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3bf035acd84618d4c96a6b66cde71b66
-      internalID: -1867130966
+      spriteID: 2fb4ce8310354c745bd912eac3cb3e8b
+      internalID: 1072170894
       vertices: []
       indices: 
       edges: []
@@ -2077,8 +2077,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ead4cccf7c78b424fafcd5d9ee075985
-      internalID: -1503469660
+      spriteID: bd3befefe9d840a439a0c3f0872022b6
+      internalID: 889941758
       vertices: []
       indices: 
       edges: []
@@ -2098,8 +2098,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d213cfb45f732548ad7a731118fb7be
-      internalID: -5264956
+      spriteID: 0c1b743f4b14ec146b73986e073ff7d2
+      internalID: -1247021222
       vertices: []
       indices: 
       edges: []
@@ -2119,8 +2119,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5cf838f6c1944694da82ea978521c2d0
-      internalID: -1476522340
+      spriteID: a448cb6a1f5e28a4d90253860f2b900a
+      internalID: -175585550
       vertices: []
       indices: 
       edges: []
@@ -2140,8 +2140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4caa57c6d77cb924bb3369045f1683fc
-      internalID: -912855677
+      spriteID: 972168eb6854bef4f855afe93e15f90c
+      internalID: -1081684789
       vertices: []
       indices: 
       edges: []
@@ -2161,8 +2161,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67665a01fb1ca804aa9e87d72b332716
-      internalID: -1659049975
+      spriteID: 8427eb7cbc3a4dd459191de230825847
+      internalID: -1751390743
       vertices: []
       indices: 
       edges: []
@@ -2182,8 +2182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 777dec4000e3f0441aae27fa1f1a528b
-      internalID: 632658087
+      spriteID: 81e10b7923ec8df41a98c4ee0fe444b9
+      internalID: -498936393
       vertices: []
       indices: 
       edges: []
@@ -2203,8 +2203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d9a60af92ae8254099fcc2e2d71a2e5
-      internalID: 148312976
+      spriteID: c5dbfff38f4573a4cb20a77405f80a3f
+      internalID: -61075256
       vertices: []
       indices: 
       edges: []
@@ -2224,8 +2224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 240675cfe79672740bb25474c691efc6
-      internalID: 757563768
+      spriteID: 9a14eb52cff74c943a2ae89a495f1558
+      internalID: 864955882
       vertices: []
       indices: 
       edges: []
@@ -2245,8 +2245,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 39f6881505703934bb874225cfcb9ea2
-      internalID: 1435161276
+      spriteID: d34b48902074fdc49b80b2ad757f2c3b
+      internalID: -92995847
       vertices: []
       indices: 
       edges: []
@@ -2266,8 +2266,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af4beb38cf7b3c749a90056393f6ed26
-      internalID: 423694186
+      spriteID: 352ef5422b2e6d4469cea0cca4438413
+      internalID: 643926433
       vertices: []
       indices: 
       edges: []
@@ -2287,8 +2287,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 720929c0c0c7306439a6644f0b2fb6e5
-      internalID: 689065352
+      spriteID: 03ec95356d8b50845b8d233797646fe9
+      internalID: 996730598
       vertices: []
       indices: 
       edges: []
@@ -2308,8 +2308,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d09a233f34ec0ed4886d549423a2f73f
-      internalID: -709265968
+      spriteID: 0369a771db88eb240b06bc8ad1fc6a72
+      internalID: -750146536
       vertices: []
       indices: 
       edges: []
@@ -2329,8 +2329,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f92638cc12c2309459bca65e3007ad70
-      internalID: 555414928
+      spriteID: 0534e40a8b406c342bac74115810ef36
+      internalID: -1338586249
       vertices: []
       indices: 
       edges: []
@@ -2350,8 +2350,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6946bf5e3c43924aa86b61cd9443927
-      internalID: -2002497325
+      spriteID: a1ddc0e88201dcb4680ec0fda093f1f4
+      internalID: 995086382
       vertices: []
       indices: 
       edges: []
@@ -2371,8 +2371,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d21f41672e6b57b4b9308150dd8822b4
-      internalID: 701790585
+      spriteID: e4a08f9dd16868a44ac010585c7a1e4a
+      internalID: 777713930
       vertices: []
       indices: 
       edges: []
@@ -2388,114 +2388,114 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      E: 509412128
-      E_shadow: 1131457196
-      Keyboard Letters and Symbols_0: -1461403990
-      Keyboard Letters and Symbols_1: -934829206
-      Keyboard Letters and Symbols_10: 822051917
-      Keyboard Letters and Symbols_100: 757563768
-      Keyboard Letters and Symbols_101: 1435161276
-      Keyboard Letters and Symbols_102: 423694186
-      Keyboard Letters and Symbols_103: 689065352
-      Keyboard Letters and Symbols_104: -709265968
-      Keyboard Letters and Symbols_105: 555414928
-      Keyboard Letters and Symbols_106: -2002497325
-      Keyboard Letters and Symbols_107: 701790585
-      Keyboard Letters and Symbols_11: -743608385
-      Keyboard Letters and Symbols_12: -1485359243
-      Keyboard Letters and Symbols_13: -518965974
-      Keyboard Letters and Symbols_14: -1094342530
-      Keyboard Letters and Symbols_15: 1522836284
-      Keyboard Letters and Symbols_16: -2009507613
-      Keyboard Letters and Symbols_17: -1972899884
-      Keyboard Letters and Symbols_18: -931031708
-      Keyboard Letters and Symbols_19: 984136934
-      Keyboard Letters and Symbols_2: 2069269202
-      Keyboard Letters and Symbols_21: 1578132719
-      Keyboard Letters and Symbols_22: -642378677
-      Keyboard Letters and Symbols_23: 1667888107
-      Keyboard Letters and Symbols_24: 1284300023
-      Keyboard Letters and Symbols_25: 1616106584
-      Keyboard Letters and Symbols_26: -1174983238
-      Keyboard Letters and Symbols_27: 1874220929
-      Keyboard Letters and Symbols_28: -1644861173
-      Keyboard Letters and Symbols_29: -1351405531
-      Keyboard Letters and Symbols_3: -703430842
-      Keyboard Letters and Symbols_30: -583284849
-      Keyboard Letters and Symbols_31: 12028636
-      Keyboard Letters and Symbols_32: -316707373
-      Keyboard Letters and Symbols_33: 1269380960
-      Keyboard Letters and Symbols_34: -244735599
-      Keyboard Letters and Symbols_35: -268824633
-      Keyboard Letters and Symbols_36: 138158533
-      Keyboard Letters and Symbols_37: 741036378
-      Keyboard Letters and Symbols_38: -871665133
-      Keyboard Letters and Symbols_39: -202137053
-      Keyboard Letters and Symbols_4: -631774163
-      Keyboard Letters and Symbols_40: -525226738
-      Keyboard Letters and Symbols_41: 839082411
-      Keyboard Letters and Symbols_42: -872887389
-      Keyboard Letters and Symbols_43: -1533396487
-      Keyboard Letters and Symbols_44: 790986504
-      Keyboard Letters and Symbols_45: 193523825
-      Keyboard Letters and Symbols_46: 1874123292
-      Keyboard Letters and Symbols_47: 1814071122
-      Keyboard Letters and Symbols_48: 62465164
-      Keyboard Letters and Symbols_49: -1043408794
-      Keyboard Letters and Symbols_5: 875315888
-      Keyboard Letters and Symbols_50: -638030647
-      Keyboard Letters and Symbols_51: -337585364
-      Keyboard Letters and Symbols_52: -40206144
-      Keyboard Letters and Symbols_53: 1641223854
-      Keyboard Letters and Symbols_54: -1368782966
-      Keyboard Letters and Symbols_55: -1601732905
-      Keyboard Letters and Symbols_56: -775939832
-      Keyboard Letters and Symbols_57: 1438234343
-      Keyboard Letters and Symbols_58: -1689884572
-      Keyboard Letters and Symbols_59: 1517999287
-      Keyboard Letters and Symbols_6: -1980166668
-      Keyboard Letters and Symbols_60: 1531066147
-      Keyboard Letters and Symbols_61: -1518903261
-      Keyboard Letters and Symbols_62: 1772973268
-      Keyboard Letters and Symbols_63: 370607349
-      Keyboard Letters and Symbols_64: -1368746364
-      Keyboard Letters and Symbols_65: 404266058
-      Keyboard Letters and Symbols_66: 686886427
-      Keyboard Letters and Symbols_67: -1058156260
-      Keyboard Letters and Symbols_68: 1928409760
-      Keyboard Letters and Symbols_69: 492737471
-      Keyboard Letters and Symbols_7: 1405075021
-      Keyboard Letters and Symbols_70: -966142317
-      Keyboard Letters and Symbols_71: 542700707
-      Keyboard Letters and Symbols_72: 667744556
-      Keyboard Letters and Symbols_73: -922235283
-      Keyboard Letters and Symbols_75: 617025620
-      Keyboard Letters and Symbols_76: 1912869463
-      Keyboard Letters and Symbols_77: 1708031803
-      Keyboard Letters and Symbols_78: -1955579855
-      Keyboard Letters and Symbols_79: 589615047
-      Keyboard Letters and Symbols_8: -281000740
-      Keyboard Letters and Symbols_80: -1244987355
-      Keyboard Letters and Symbols_81: -1487164941
-      Keyboard Letters and Symbols_82: -16391367
-      Keyboard Letters and Symbols_83: -564779424
-      Keyboard Letters and Symbols_84: 2020219943
-      Keyboard Letters and Symbols_85: 1543392324
-      Keyboard Letters and Symbols_86: -179827625
-      Keyboard Letters and Symbols_87: 1889036086
-      Keyboard Letters and Symbols_88: 1524050945
-      Keyboard Letters and Symbols_89: 642032185
-      Keyboard Letters and Symbols_9: 1058931719
-      Keyboard Letters and Symbols_90: -436758277
-      Keyboard Letters and Symbols_91: 1065801943
-      Keyboard Letters and Symbols_92: -1867130966
-      Keyboard Letters and Symbols_93: -1503469660
-      Keyboard Letters and Symbols_94: -5264956
-      Keyboard Letters and Symbols_95: -1476522340
-      Keyboard Letters and Symbols_96: -912855677
-      Keyboard Letters and Symbols_97: -1659049975
-      Keyboard Letters and Symbols_98: 632658087
-      Keyboard Letters and Symbols_99: 148312976
+      A: -1658790496
+      D: -2051809464
+      E: 1396344818
+      F: -688637698
+      Keyboard Letters and Symbols_0: -1344235162
+      Keyboard Letters and Symbols_1: -538696201
+      Keyboard Letters and Symbols_10: -1292502934
+      Keyboard Letters and Symbols_100: 864955882
+      Keyboard Letters and Symbols_101: -92995847
+      Keyboard Letters and Symbols_102: 643926433
+      Keyboard Letters and Symbols_103: 996730598
+      Keyboard Letters and Symbols_104: -750146536
+      Keyboard Letters and Symbols_105: -1338586249
+      Keyboard Letters and Symbols_106: 995086382
+      Keyboard Letters and Symbols_107: 777713930
+      Keyboard Letters and Symbols_11: -1042606207
+      Keyboard Letters and Symbols_12: -1720937131
+      Keyboard Letters and Symbols_13: 583897506
+      Keyboard Letters and Symbols_14: -1498716990
+      Keyboard Letters and Symbols_15: 45875722
+      Keyboard Letters and Symbols_17: 195450032
+      Keyboard Letters and Symbols_18: 1470349568
+      Keyboard Letters and Symbols_2: 1528437828
+      Keyboard Letters and Symbols_22: 1303629073
+      Keyboard Letters and Symbols_23: -1201373718
+      Keyboard Letters and Symbols_24: 1270260286
+      Keyboard Letters and Symbols_25: -859048547
+      Keyboard Letters and Symbols_26: -551348878
+      Keyboard Letters and Symbols_27: 1501677719
+      Keyboard Letters and Symbols_28: 1279395775
+      Keyboard Letters and Symbols_29: 767240482
+      Keyboard Letters and Symbols_3: 119421588
+      Keyboard Letters and Symbols_30: 275367515
+      Keyboard Letters and Symbols_31: -515388729
+      Keyboard Letters and Symbols_32: -696761076
+      Keyboard Letters and Symbols_35: 1657584391
+      Keyboard Letters and Symbols_36: -1195629570
+      Keyboard Letters and Symbols_37: -2019859304
+      Keyboard Letters and Symbols_39: -461809032
+      Keyboard Letters and Symbols_4: -642768768
+      Keyboard Letters and Symbols_40: 487089493
+      Keyboard Letters and Symbols_41: 1891478520
+      Keyboard Letters and Symbols_42: 167169759
+      Keyboard Letters and Symbols_43: 2108026550
+      Keyboard Letters and Symbols_44: -606205737
+      Keyboard Letters and Symbols_45: 1332996912
+      Keyboard Letters and Symbols_46: 968707116
+      Keyboard Letters and Symbols_47: 1850024409
+      Keyboard Letters and Symbols_48: -1439206579
+      Keyboard Letters and Symbols_49: -1348983232
+      Keyboard Letters and Symbols_5: -345038837
+      Keyboard Letters and Symbols_50: -162733
+      Keyboard Letters and Symbols_51: 1536464253
+      Keyboard Letters and Symbols_52: 1835034593
+      Keyboard Letters and Symbols_53: -1063496300
+      Keyboard Letters and Symbols_54: -885192053
+      Keyboard Letters and Symbols_55: -2009091137
+      Keyboard Letters and Symbols_56: -151355040
+      Keyboard Letters and Symbols_57: -631901403
+      Keyboard Letters and Symbols_58: -1248459694
+      Keyboard Letters and Symbols_59: -168091503
+      Keyboard Letters and Symbols_6: -1386312404
+      Keyboard Letters and Symbols_60: 1947736813
+      Keyboard Letters and Symbols_61: 753524526
+      Keyboard Letters and Symbols_62: 1005435121
+      Keyboard Letters and Symbols_63: 1825766091
+      Keyboard Letters and Symbols_64: -2028191679
+      Keyboard Letters and Symbols_65: 1133011544
+      Keyboard Letters and Symbols_66: 1370514669
+      Keyboard Letters and Symbols_67: 368321980
+      Keyboard Letters and Symbols_68: 442386364
+      Keyboard Letters and Symbols_69: -1957482253
+      Keyboard Letters and Symbols_7: -847466048
+      Keyboard Letters and Symbols_70: 2027443974
+      Keyboard Letters and Symbols_71: -1036696022
+      Keyboard Letters and Symbols_72: -1742614629
+      Keyboard Letters and Symbols_73: 1787689305
+      Keyboard Letters and Symbols_74: -1068350406
+      Keyboard Letters and Symbols_75: 685352012
+      Keyboard Letters and Symbols_76: -490796568
+      Keyboard Letters and Symbols_77: 1130065031
+      Keyboard Letters and Symbols_78: 1697064996
+      Keyboard Letters and Symbols_79: -1904331299
+      Keyboard Letters and Symbols_8: -1093700402
+      Keyboard Letters and Symbols_80: 125887239
+      Keyboard Letters and Symbols_81: 1519318606
+      Keyboard Letters and Symbols_82: -1903941969
+      Keyboard Letters and Symbols_83: 1911692083
+      Keyboard Letters and Symbols_84: 295374421
+      Keyboard Letters and Symbols_85: 1195498101
+      Keyboard Letters and Symbols_86: 433672258
+      Keyboard Letters and Symbols_87: -2021500050
+      Keyboard Letters and Symbols_88: -1900179004
+      Keyboard Letters and Symbols_89: -172332162
+      Keyboard Letters and Symbols_9: -1892403724
+      Keyboard Letters and Symbols_90: 1613503443
+      Keyboard Letters and Symbols_91: 232582713
+      Keyboard Letters and Symbols_92: 1072170894
+      Keyboard Letters and Symbols_93: 889941758
+      Keyboard Letters and Symbols_94: -1247021222
+      Keyboard Letters and Symbols_95: -175585550
+      Keyboard Letters and Symbols_96: -1081684789
+      Keyboard Letters and Symbols_97: -1751390743
+      Keyboard Letters and Symbols_98: -498936393
+      Keyboard Letters and Symbols_99: -61075256
+      R: -1446907985
+      S: -1239693662
+      W: 828949434
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

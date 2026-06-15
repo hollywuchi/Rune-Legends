@@ -20,6 +20,7 @@ public class UImanager : MonoBehaviour
     [Header("事件广播")]
     public VoidSo PauseEvnet;
     [Header("组件")]
+    public UIAnimations UIanim;
     public GameObject GameOverPanle;
     public GameObject RestartBut;
     public GameObject mobleTouch;
@@ -67,8 +68,11 @@ public class UImanager : MonoBehaviour
     {
         if (PauseMenu.activeInHierarchy)     //*activeInHierarchy判断是否为开启状态,可以做到简单的逻辑门
         {
-            PauseMenu.SetActive(false);
-            Time.timeScale = 1;             //开始游戏
+            UIanim.PlayExitAnimation(() =>
+            {
+                PauseMenu.SetActive(false);
+                Time.timeScale = 1;
+            });    //播放退出动画，动画结束后关闭菜单
         }
         else
         {

@@ -30,6 +30,7 @@ public class NewSavePoint : MonoBehaviour
 
             if (!isActivated && !DOTween.IsTweening(lightSprite) && context.IsHoldingActivate)
             {
+                anim = collision.GetComponent<Animator>();
                 anim.SetBool("IsActivating", true);
 
                 // 1. 颜色线性渐变（SetEase(Ease.Linear) 确保绝对线性）

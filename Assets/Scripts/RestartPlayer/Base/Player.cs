@@ -3,6 +3,7 @@ using RestartPlayer.HFSM;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -18,7 +19,6 @@ public class Player : MonoBehaviour
 
     [Header("事件引用")]
     public VoidSo cameraShakeEvent;
-
     public PlayerServices s;
     public PlayerContext ctx;
     public PlayerStateRegistry stateRegistry;
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
     {
 
         inputGate.Tick(Time.deltaTime); // 更新输入冻结计时器
-        if (inputGate.IsFrozen)
+        if (inputGate.IsFrozen || SceneManager.GetSceneByName("Menu").isLoaded)
         {
             inputActions.MoveSystem.Disable();
             inputActions.AttackSystem.Disable();
