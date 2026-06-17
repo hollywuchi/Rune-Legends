@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.SceneManagement;
+using System;
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -19,6 +20,8 @@ public class Player : MonoBehaviour
 
     [Header("事件引用")]
     public VoidSo cameraShakeEvent;
+    public VoidSo NewGameEvent;
+    public CharacterEventSo HealthChangeEvent;
     public PlayerServices s;
     public PlayerContext ctx;
     public PlayerStateRegistry stateRegistry;
@@ -76,6 +79,10 @@ public class Player : MonoBehaviour
         // 休息状态
         stateRegistry.Register(PlayerStateId.Rest, new PlayerRestState(s));
     }
+    void OnEnable()
+    {
+        NewGameEvent.OnEventRaised += NewGame;
+    }
 
     private void Start()
     {
@@ -89,6 +96,7 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         inputActions.Disable();
+        NewGameEvent.OnEventRaised -= NewGame;
     }
 
     private void Update()
@@ -114,8 +122,6 @@ public class Player : MonoBehaviour
 
         // ctx.MoveInput = move;
         ctx.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
-        // if (ctx.IsHurt) inputActions.Disable(); // 受伤时禁用输入系统
-        // else inputActions.Enable(); // 恢复输入系统
 
         ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
         ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
@@ -153,9 +159,6 @@ public class Player : MonoBehaviour
         // 休息按键采样
         ctx.RestPressedThisFrame = inputActions.MoveSystem.Rest.WasPressedThisFrame();
 
-        // 复活按键采样
-        ctx.ResurrectPressedThisFrame = inputActions.ResurrectSystem.Resurrect.WasPressedThisFrame();
-
         // ====== 传感器 -> ctx ======
         ctx.CurrentFocus = character.currentFocus;
         ctx.IsGrounded = physicsCheck.IsGround;
@@ -185,6 +188,24 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         stateMachine.FixedTick();
+    }
+
+    private void NewGame()
+    {
+        // 新游戏注册方法，用于重置玩家的各项数值
+        ctx.Reset();
+        inputActions.Enable();
+        stateMachine.currentState.Exit();
+        HealthChangeEvent.RaisedEvent(character);
+        stateMachine.Initialize(PlayerStateId.Idle);
+    }
+
+    /// <summary>
+    /// 复活按钮事件
+    /// </summary>
+    public void Resurrect()
+    {
+        ctx.CanResurrect = true;
     }
 
     // 动画事件：转身结束
@@ -259,6 +280,7 @@ public class Player : MonoBehaviour
                 break;
         }
     }
+    
 
     public void Animation_ComboWindowOpen()
     {

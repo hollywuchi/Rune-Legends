@@ -47,14 +47,14 @@ public class SceneLoader : MonoBehaviour, ISaveable
         // saveable.RegisterSaveData();
     }
 
-    void Update()
-    {
-        if (currentLoadedScene != null && currentLoadedScene == menuScene)
-        {
-            Player player = playerPos.GetComponent<Player>();
-            player.inputActions.Disable();
-        }
-    }
+    // void Update()
+    // {
+    //     if (currentLoadedScene != null && currentLoadedScene == menuScene)
+    //     {
+    //         Player player = playerPos.GetComponent<Player>();
+    //         player.inputActions.Disable();
+    //     }
+    // }
     private void OnEnable()
     {
 

@@ -94,7 +94,7 @@ public class UIAnimations : MonoBehaviour
         }
 
         // 阶段 3: 整体透明度淡入
-        currentSequence.Insert(0.6f, uiCanvasGroup.DOFade(1f, 0.4f));
+        currentSequence.Insert(0f, uiCanvasGroup.DOFade(1f, 0.4f));
 
         // 动画结束回调
         currentSequence.OnComplete(() =>

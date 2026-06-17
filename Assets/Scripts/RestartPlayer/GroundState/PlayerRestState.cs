@@ -12,7 +12,6 @@ public class PlayerRestState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-
         s.character.CurrentHealth = s.character.maxHealth;
         s.character.currentFocus = s.config.maxFocus;
         s.ctx.CurrentFocus = s.config.maxFocus;
@@ -53,7 +52,7 @@ public class PlayerRestState : PlayerGroundState
     private bool HasAnyInput()
     {
         return Mathf.Abs(s.ctx.MoveInput.x) > 0.1f
-            || Mathf.Abs(s.ctx.MoveInput.y) > 0.1f
+            // || Mathf.Abs(s.ctx.MoveInput.y) > 0.1f
             || s.ctx.JumpPressedThisFrame
             || s.ctx.SprintPressedThisFrame
             || s.ctx.AttackPressedThisFrame

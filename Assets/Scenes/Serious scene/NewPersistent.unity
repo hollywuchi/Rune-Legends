@@ -2591,6 +2591,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1797461666}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Resurrect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &469712579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7599,7 +7611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1788917213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8002,6 +8014,8 @@ MonoBehaviour:
   fxSpeaker: {fileID: 1797461667}
   character: {fileID: 1797461669}
   cameraShakeEvent: {fileID: 0}
+  NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
+  HealthChangeEvent: {fileID: 11400000, guid: f603189666a995e4c8219fd107e9fca1, type: 2}
 --- !u!114 &1797461667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8031,7 +8045,7 @@ MonoBehaviour:
   CurrentHealth: 0
   invincibleTime: 0.8
   invincible: 0
-  resurrectPoint: {x: 0, y: 0, z: 0}
+  resurrectPoint: {x: -27.66, y: -8.91, z: 0}
   fxOffset: {x: 0, y: 0, z: 0}
   NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
   fxEventSO: {fileID: 0}
@@ -8091,6 +8105,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1797461666}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: PlayerDeath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000, guid: 0d9948d98603faa43a7f3c761c112d2d, type: 2}
+        m_TargetAssemblyTypeName: VoidSo, Assembly-CSharp
+        m_MethodName: RaiseEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

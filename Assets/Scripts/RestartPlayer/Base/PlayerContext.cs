@@ -93,7 +93,7 @@ public sealed class PlayerContext
 
     // ===== 死亡状态 =====
     public bool IsDead { get; set; }
-    public bool ResurrectPressedThisFrame { get; set; }
+    public bool CanResurrect { get; set; }
     public Vector3 ResurrectPoint { get; set; }  // 复活点位置
 
     // ===== 格挡系统 =====
@@ -137,16 +137,72 @@ public sealed class PlayerContext
         DownAttackBounced = false;
     }
 
-    /// <summary>
-    /// 进入下一段连招
-    /// </summary>
-    public void AdvanceCombo()
+    public void Reset()
     {
-        AttackComboIndex++;
-        if (AttackComboIndex > MaxComboCount)
-            AttackComboIndex = 1;
-        AttackAnimFinished = false;
-        CanCombo = false;
-        ComboWindowTimer = 0f;
+        // 重置所有状态为初始值
+        MoveInput = Vector2.zero;
+        JumpPressedThisFrame = false;
+        SprintPressedThisFrame = false;
+        SprintIsHeld = false;
+
+        IsGrounded = false;
+        IsTouchingLeftWall = false;
+        IsTouchingRightWall = false;
+        IsTouchingTopLeftWall = false;
+        IsTouchingTopRightWall = false;
+
+        FacingDirection = 1;
+
+        JumpCount = 0;
+
+        CanSprint = true;
+        IsSprintFinished = false;
+
+        ResetAttackState();
+
+        CoyoteTimer = 0f;
+
+        SkillPressedThisFrame = false;
+        IsHoldingSkill = false;
+        SkillPerformedThisFrame = false;
+
+        CurrentFocus = 0f;
+
+        IsHealing = false;
+
+        IsLightCutCharging = false;
+        IsLightCutting = false;
+        LightCutPressedThisFrame = false;
+        IsHoldingLightCut = false;
+        LightCutPerformedThisFrame = false;
+
+        LightCrownPressedThisFrame = false;
+        IsHoldingLightCrown = false;
+        LightCrownPerformedThisFrame = false;
+        IsBuffing = false;
+
+        IsHurt = false;
+
+        ActivatePressedThisFrame = false;
+        IsHoldingActivate = false;
+        ActivatePerformedThisFrame = false;
+
+        CanRest = false;
+        RestPressedThisFrame = false;
+
+        IsDead = false;
+        CanResurrect = false;
     }
+    // /// <summary>
+    // /// 进入下一段连招
+    // /// </summary>
+    // public void AdvanceCombo()
+    // {
+    //     AttackComboIndex++;
+    //     if (AttackComboIndex > MaxComboCount)
+    //         AttackComboIndex = 1;
+    //     AttackAnimFinished = false;
+    //     CanCombo = false;
+    //     ComboWindowTimer = 0f;
+    // }
 }

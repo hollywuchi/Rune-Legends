@@ -96,6 +96,7 @@ public class UImanager : MonoBehaviour
     {
         isMenu = SceneLoaded.sceneType == SceneType.Menu;
         bar.gameObject.SetActive(!isMenu);
+        SettingButton.gameObject.SetActive(!isMenu);
     }
 
 

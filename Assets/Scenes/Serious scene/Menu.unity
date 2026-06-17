@@ -2100,7 +2100,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 314}
-  m_SizeDelta: {x: 691.4019, y: 260.9823}
+  m_SizeDelta: {x: 1110.3379, y: 260.9823}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &697246401
 MonoBehaviour:
@@ -2122,7 +2122,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u52C7\u58EB\u4F20\u8BF4"
+  m_text: "\u7B26\u6587\u4F20\u8BF4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79cfaaecce54f77478c12bef6d2de6aa, type: 2}
   m_sharedMaterial: {fileID: 7611518489337046930, guid: 79cfaaecce54f77478c12bef6d2de6aa, type: 2}
@@ -2149,8 +2149,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 212.2
-  m_fontSizeBase: 212.2
+  m_fontSize: 212
+  m_fontSizeBase: 212
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2159,7 +2159,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 28.77
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2927,7 +2927,7 @@ Transform:
   m_GameObject: {fileID: 1013732746}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.02, y: 10.2, z: 0}
+  m_LocalPosition: {x: -4.32, y: 10.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

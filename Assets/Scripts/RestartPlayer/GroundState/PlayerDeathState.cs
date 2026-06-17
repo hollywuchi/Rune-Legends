@@ -15,13 +15,12 @@ public class PlayerDeathState : PlayerState
         s.inputGate.Freeze(99999);
         s.character.attackBuffStack = 0;
 
-        Debug.Log("进入死亡状态");
     }
 
     public override Transition LogicUpdate()
     {
         // 死亡动画播完后切到休息状态
-        if (s.ctx.ResurrectPressedThisFrame)
+        if (s.ctx.CanResurrect)
         {
             Resurrect();
             return new Transition(PlayerStateId.Rest);
@@ -32,14 +31,16 @@ public class PlayerDeathState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsDead = false;
+        s.inputGate.Freeze(0.5f);
         Debug.Log("退出死亡状态");
+        s.ctx.IsDead = false;
     }
 
     public void Resurrect()
     {
-        s.character.resurrectPoint = s.ctx.ResurrectPoint; // 更新角色的复活点位置,防止玩家没休息就直接打boss了
+        s.character.resurrectPoint = s.ctx.ResurrectPoint;
         s.character.Resurrect();
+        s.ctx.CanResurrect = false;
         s.anim.TriggerResurrect();
         s.inputGate.Freeze(0.5f);
     }
