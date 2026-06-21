@@ -57,8 +57,6 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void SetAttackCombo(int comboIndex) => animator.SetInteger("AttackCombo", comboIndex);
     public void TriggerAttack() => animator.SetTrigger("Attack");
     public void SetIsAttacking(bool isAttacking) => animator.SetBool("IsAttacking", isAttacking);
-    // public void SetIsAirAttacking(bool isAirAttacking) => animator.SetBool("IsAirAttack", isAirAttacking);
-    public void InterruptAnim(string animName) => animator.CrossFadeInFixedTime(animName, 0.1f, 2);
     public void SetIsUpAttacking(bool isUpAttacking) => animator.SetBool("IsUpAttacking", isUpAttacking);
     public void SetIsDownAttacking(bool isDownAttacking) => animator.SetBool("IsDownAttacking", isDownAttacking);
 

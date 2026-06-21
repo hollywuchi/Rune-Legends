@@ -163,6 +163,17 @@
                     "action": "Rest",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "41ae1895-3ff9-4110-b163-49e9ed67d43f",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -383,6 +394,17 @@
                     "action": "Block",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d90f0d1-20f4-4cd8-9e39-ddbfdf41c982",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Block",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -441,6 +463,17 @@
                 },
                 {
                     "name": "",
+                    "id": "d099a3d8-0999-43bf-9b4f-d7932cfc340b",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c3483974-19a7-41ff-8e2d-01712b8ae3db",
                     "path": "<Keyboard>/f",
                     "interactions": "Hold(duration=2.5)",
@@ -452,8 +485,19 @@
                 },
                 {
                     "name": "",
+                    "id": "e3f0a2f8-fe02-4d08-893e-33723dd45f53",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LightCut",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2e0685c9-acb4-4e5a-b714-59736362ea02",
-                    "path": "<Keyboard>/r",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "Hold(duration=1.4)",
                     "processors": "",
                     "groups": "",
@@ -464,7 +508,7 @@
                 {
                     "name": "",
                     "id": "07540e6b-abaa-4ccd-ae11-ac0671dd4321",
-                    "path": "<Keyboard>/s",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "Hold(duration=3)",
                     "processors": "",
                     "groups": "",

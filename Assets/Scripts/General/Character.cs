@@ -126,32 +126,6 @@ public class Character : MonoBehaviour, ISaveable
    }
 
    /// <summary>
-   // REVIEW：格挡系统 - 被格挡时的伤害处理（减伤 + 架势伤害）
-   /// 被格挡时的伤害处理（减伤 + 架势伤害）
-   /// </summary>
-   // public void TakeBlockedDamage(Attack attacker, float damageReduction)
-   // {
-   //    if (invincible) return;
-
-   //    currentAttacker = attacker;
-
-   //    // 计算减伤后的伤害
-   //    int reducedDamage = Mathf.Max(1, Mathf.RoundToInt(attacker.Damage * (1f - damageReduction)));
-
-   //    if (CurrentHealth - reducedDamage > 0)
-   //    {
-   //       CurrentHealth -= reducedDamage;
-   //       invincibleTimer();
-   //    }
-   //    else
-   //    {
-   //       CurrentHealth = 0;
-   //       Death?.Invoke();
-   //    }
-   //    OnHealthChange?.Invoke(this);
-   // }
-
-   /// <summary>
    /// 复活！！！
    /// </summary>
    public void Resurrect()

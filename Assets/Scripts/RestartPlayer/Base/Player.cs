@@ -1,10 +1,10 @@
 using UnityEngine;
 using RestartPlayer.HFSM;
 using System.Collections;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 using UnityEngine.SceneManagement;
-using System;
+
+// TODO：继续做UI适配
+// TODO：完善UI逻辑，最起码可以退出游戏
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -324,7 +324,7 @@ public class Player : MonoBehaviour
         attackState?.ApplyAttackMove(distance);
     }
     /// <summary>
-    /// 为霹雳一闪提供的动画事件回调：执行冲刺移动
+    /// 为流光闪击提供的动画事件回调：执行冲刺移动
     /// </summary>
     /// <param name="cutForce"></param>
     public void Animation_LightCutMove(float cutForce)

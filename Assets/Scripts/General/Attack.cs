@@ -4,15 +4,11 @@ public class Attack : MonoBehaviour
 {
    [Header("攻击参数")]
    public int Damage = 1;
-   public float attackRange;
-   public float attackRate;
 
    [Header("击退参数")]
    public float knockbackForce = 5f;
-   public float knockbackDuration = 0.2f;
 
    [Header("专注获取")]
-   public bool canGainFocus = true;  // 是否可以获得专注值
    public float focusGain = 7.5f;         // 获得专注值
 
    private void OnTriggerEnter2D(Collider2D other)
@@ -62,7 +58,6 @@ public class Attack : MonoBehaviour
       return null;
    }
 
-   // REVIEW：格挡系统 - 处理格挡交互：判断弹反或普通格挡，并通知敌人
    private void HandleBlockInteraction(Character targetCharacter, PlayerBlockState blockState, Character attackerCharacter)
    {
       // 获取敌人组件（Attack collider 是 Enemy 的子物体）

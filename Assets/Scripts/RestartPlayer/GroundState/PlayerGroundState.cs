@@ -22,7 +22,6 @@ public class PlayerGroundState : PlayerState
         if (s.ctx.CanRest && s.ctx.RestPressedThisFrame)
             return new Transition(PlayerStateId.Rest);
 
-        // 先做"域守卫"：离地 -> Fall
         if (!s.ctx.IsGrounded)
             return new Transition(PlayerStateId.Fall);
 

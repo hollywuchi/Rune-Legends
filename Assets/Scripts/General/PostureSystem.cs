@@ -11,7 +11,6 @@ public class PostureSystem : MonoBehaviour
     public float maxPosture = 100f;
     public float postureRecoveryRate = 15f;     // 每秒减去的架势值
     public float postureRecoveryDelay = 1.5f;   // 破防后持续时间，期间无法增加架势值
-    // public float postureBrokenDuration = 1.5f;  // 破防持续时间
 
     public float currentPosture;  // 当前的架势值
     [HideInInspector] public bool isBroken;         // 是否处于破防状态
@@ -91,11 +90,4 @@ public class PostureSystem : MonoBehaviour
         OnPostureRecovered?.Invoke();
     }
 
-    /// <summary>
-    /// 获取架势比例（0-1）
-    /// </summary>
-    // public float GetPostureRatio()
-    // {
-    //     return currentPosture / maxPosture;
-    // }
 }

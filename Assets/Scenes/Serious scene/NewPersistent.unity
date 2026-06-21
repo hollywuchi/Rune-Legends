@@ -181,11 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 8
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!60 &37520019
 PolygonCollider2D:
@@ -544,11 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 5
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!1 &124098743
 GameObject:
@@ -1161,11 +1153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 5
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!1 &299998865
 GameObject:
@@ -1692,11 +1680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 8
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!1 &355743905
 GameObject:
@@ -2782,11 +2766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 8
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!60 &491672921
 PolygonCollider2D:
@@ -2975,11 +2955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 8
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!60 &593304855
 PolygonCollider2D:
@@ -3846,11 +3822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 8
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!60 &866578351
 PolygonCollider2D:
@@ -4438,7 +4410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &990209075
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5948,11 +5920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  attackRange: 0
-  attackRate: 0
   knockbackForce: 8
-  knockbackDuration: 0.2
-  canGainFocus: 1
   focusGain: 7
 --- !u!60 &1423653303
 PolygonCollider2D:
