@@ -153,6 +153,7 @@ public class SceneLoader : MonoBehaviour, ISaveable
     public void BackToMenu()
     {
         SceneToLoad = menuScene;
+        Time.timeScale = 1f;       // 让系统更加连贯
         SceneLoadEventSO.RaiseLoadRequestEvent(SceneToLoad, menuPosition, true);
     }
     #region 数据保存

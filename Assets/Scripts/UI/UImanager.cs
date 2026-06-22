@@ -26,7 +26,9 @@ public class UImanager : MonoBehaviour
     public GameObject mobleTouch;
     public GameObject PauseMenu;
     public Button SettingButton;
+    public Button PauseMenuSettingButton;
     public Slider AudioSlider;
+    public InputManager Actions;
 
     void Awake()
     {
@@ -44,6 +46,12 @@ public class UImanager : MonoBehaviour
         GameOverEvent.OnEventRaised += GameOver;
         BackToMenuEvent.OnEventRaised += LoadData;
         SynuEvent.OnEventRaised += OnSync;
+    }
+
+    void Start()
+    {
+        Actions = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().inputActions;   //获取输入系统
+        Actions.UI.Pause.performed += _ => TogglePausePanle();   //添加一个监听，按下暂停键时调用TogglePausePanle方法
     }
 
 
@@ -78,6 +86,7 @@ public class UImanager : MonoBehaviour
         {
             PauseEvnet.RaiseEvent();
             PauseMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(PauseMenuSettingButton.gameObject);   //设置默认选中按钮
             Time.timeScale = 0;             //暂停游戏
         }
     }
@@ -110,5 +119,10 @@ public class UImanager : MonoBehaviour
     {
         var persent = character.currentFocus / character.config.maxFocus;
         bar.ChangePower(persent);
+    }
+
+    public void OpenLink(string url)
+    {
+        Application.OpenURL(url);
     }
 }

@@ -109,6 +109,7 @@ public class Player : MonoBehaviour
             inputActions.AttackSystem.Disable();
             inputActions.SkillSystem.Disable();
             inputActions.MoveSystem.Rest.Disable();
+            inputActions.UI.Disable();
         }
         else
             inputActions.Enable(); // 非冻结时启用输入系统

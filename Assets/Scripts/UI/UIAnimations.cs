@@ -26,7 +26,7 @@ public class UIAnimations : MonoBehaviour
 
     private Vector2 mainIslandOriginPos;
     private Vector2[] satelliteOriginPositions;
-    private Color[] satelliteOriginColors;
+    // private Color[] satelliteOriginColors;
     private float[] satelliteYOffsets = { 0.2f, 0.5f, 0.8f, 1.1f }; // 卫星岛浮动相位差（制造错落感）
 
     private Sequence currentSequence;
@@ -53,13 +53,13 @@ public class UIAnimations : MonoBehaviour
         mainIslandOriginPos = mainIsland.anchoredPosition;
 
         satelliteOriginPositions = new Vector2[satelliteIslands.Length];
-        satelliteOriginColors = new Color[satelliteTexts.Length];
+        // satelliteOriginColors = new Color[satelliteTexts.Length];
 
         // 记录周围小石头的位置和文字初始颜色
         for (int i = 0; i < satelliteIslands.Length; i++)
         {
             satelliteOriginPositions[i] = satelliteIslands[i].anchoredPosition;
-            satelliteOriginColors[i] = satelliteTexts[i].color;
+            // satelliteOriginColors[i] = satelliteTexts[i].color;
         }
     }
 
