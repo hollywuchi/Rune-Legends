@@ -2,9 +2,8 @@ using UnityEngine;
 using RestartPlayer.HFSM;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
-// TODO：继续做UI适配
-// TODO：完善UI逻辑，最起码可以退出游戏
 public class Player : MonoBehaviour
 {
     public InputManager inputActions;
@@ -21,6 +20,7 @@ public class Player : MonoBehaviour
     [Header("事件引用")]
     public VoidSo cameraShakeEvent;
     public VoidSo NewGameEvent;
+    public VoidSo BackToMenuEvent;
     public CharacterEventSo HealthChangeEvent;
     public PlayerServices s;
     public PlayerContext ctx;
@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
     void OnEnable()
     {
         NewGameEvent.OnEventRaised += NewGame;
+        BackToMenuEvent.OnEventRaised += BackToMenu;
     }
 
     private void Start()
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
     {
         inputActions.Disable();
         NewGameEvent.OnEventRaised -= NewGame;
+        BackToMenuEvent.OnEventRaised -= BackToMenu;
     }
 
     private void Update()
@@ -199,6 +201,19 @@ public class Player : MonoBehaviour
         stateMachine.currentState.Exit();
         HealthChangeEvent.RaisedEvent(character);
         stateMachine.Initialize(PlayerStateId.Idle);
+    }
+
+    /// <summary>
+    /// 返回主菜单时，务必确保玩家面朝向右
+    /// </summary>
+    /// <exception cref="NotImplementedException"></exception>
+    private void BackToMenu()
+    {
+        if(gameObject.transform.rotation.y != 0)
+        {
+            ctx.SetFacingDirection(1);
+            motor.FlipFacing();
+        }
     }
 
     /// <summary>

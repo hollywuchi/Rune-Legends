@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 52bb559928860684bb467735d34c007d
-    m_Address: Forest
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b99598c618c7454bb860549a52f83a1
     m_Address: NewPersistent
     m_ReadOnly: 0
@@ -34,26 +29,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 716964ef5c04c5c43be392e9610cef7e
     m_Address: Initialition
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7ff3ac102f5f6a44d8077fe235d03213
-    m_Address: Persistent
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8bffafa98bff56543b6b6d7cf0808a18
-    m_Address: Main Scene
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b2145706d2d9c4d4c8b1fffe2d03199f
-    m_Address: Key/Xbox/xbox_style2.png
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dee08d73a3c789b44952af850ed76aab
-    m_Address: Cave
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

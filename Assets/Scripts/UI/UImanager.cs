@@ -14,6 +14,7 @@ public class UImanager : MonoBehaviour
     public CharacterEventSo HealthEvent;
     public SceneLoadEventSO SceneLoadEvent;
     public VoidSo LoadDataEvent;
+    public VoidSo afterLoadSceneEvent;
     public VoidSo GameOverEvent;
     public VoidSo BackToMenuEvent;
     public FloatEventSO SynuEvent;
@@ -32,13 +33,13 @@ public class UImanager : MonoBehaviour
 
     void Awake()
     {
-#if UNITY_STANDALONE    //此时代表的是主机模式下
-        mobleTouch.SetActive(false);    //默认不启动控制面板
-#endif
         SettingButton.onClick.AddListener(TogglePausePanle);    //添加一个监听
     }
+
+    // FIXME:玩家在重生之后没有UI，现在的摇杆手感还是稀烂
     private void OnEnable()
     {
+        afterLoadSceneEvent.OnEventRaised += PlatformCheck;
         HealthEvent.OnEvenetRaised += HealthChange;
         HealthEvent.OnEvenetRaised += PowerChange;
         SceneLoadEvent.LoadRequestEvent += checkMenu;
@@ -54,10 +55,11 @@ public class UImanager : MonoBehaviour
         Actions.UI.Pause.performed += _ => TogglePausePanle();   //添加一个监听，按下暂停键时调用TogglePausePanle方法
     }
 
-
+    
 
     private void OnDisable()
     {
+        afterLoadSceneEvent.OnEventRaised -= PlatformCheck;
         HealthEvent.OnEvenetRaised -= HealthChange;
         HealthEvent.OnEvenetRaised -= PowerChange;
         SceneLoadEvent.LoadRequestEvent -= checkMenu;
@@ -95,10 +97,15 @@ public class UImanager : MonoBehaviour
         GameOverPanle.SetActive(true);
         EventSystem.current.SetSelectedGameObject(RestartBut);
     }
+    private void PlatformCheck()
+    {
+        mobleTouch.SetActive(Application.isMobilePlatform);
+    }
 
     private void LoadData()
     {
         GameOverPanle.SetActive(false);
+        mobleTouch.SetActive(false);
     }
 
     private void checkMenu(GameSceneSO SceneLoaded, Vector3 arg1, bool arg2)
