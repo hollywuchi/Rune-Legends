@@ -45,9 +45,4 @@ public class Effect_Elements : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
-    void OnParticleSystemStopped()
-    {
-        ReleasePool();
-    }
 }

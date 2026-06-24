@@ -35,8 +35,6 @@ public class UImanager : MonoBehaviour
     {
         SettingButton.onClick.AddListener(TogglePausePanle);    //添加一个监听
     }
-
-    // FIXME:玩家在重生之后没有UI，现在的摇杆手感还是稀烂
     private void OnEnable()
     {
         afterLoadSceneEvent.OnEventRaised += PlatformCheck;
@@ -97,7 +95,7 @@ public class UImanager : MonoBehaviour
         GameOverPanle.SetActive(true);
         EventSystem.current.SetSelectedGameObject(RestartBut);
     }
-    private void PlatformCheck()
+    public void PlatformCheck()
     {
         mobleTouch.SetActive(Application.isMobilePlatform);
     }

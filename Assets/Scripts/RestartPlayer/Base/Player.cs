@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
     /// <exception cref="NotImplementedException"></exception>
     private void BackToMenu()
     {
-        if(gameObject.transform.rotation.y != 0)
+        if(gameObject.transform.rotation.y == -1)
         {
             ctx.SetFacingDirection(1);
             motor.FlipFacing();

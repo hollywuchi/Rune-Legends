@@ -63,6 +63,8 @@ public class PlayerFallState : PlayerAirState
     /// <returns></returns>
     private bool ShouldWallSlide()
     {
+        if(s.ctx.IsTouchingLeftWall && s.ctx.IsTouchingRightWall)
+            return false;
         if(s.ctx.IsTouchingLeftWall && s.ctx.FacingDirection == -1)
             return true;
         if(s.ctx.IsTouchingRightWall && s.ctx.FacingDirection == 1)

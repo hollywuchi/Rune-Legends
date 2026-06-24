@@ -19,6 +19,7 @@ public class MirrorCamera : MonoBehaviour
     {
         if (mirrorCamera != null)
         {
+            Debug.Log("尝试调整相机尺寸");
             mirrorCamera.orthographicSize = Camera.main.orthographicSize;
             if(mirrorRenderTexture != null && (mirrorRenderTexture.width != Screen.width || mirrorRenderTexture.height != Screen.height))
             {
@@ -32,7 +33,6 @@ public class MirrorCamera : MonoBehaviour
 
     void Start()
     {
-        // MainCameratrans = GameObject.FindGameObjectWithTag("MainCamera").transform;
         MainCameratrans = Camera.main.transform;
         positionConstraint = GetComponent<PositionConstraint>();
 

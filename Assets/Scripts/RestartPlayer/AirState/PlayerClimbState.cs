@@ -23,10 +23,6 @@ public class PlayerClimbState : PlayerAirState
         // 播放动画
         s.anim.TriggerClimb();
 
-        // 理想状态：
-        // 1) 先播放攀爬动画，动画事件在关键帧调用 Teleport_AfterClimb()，确保动画完整播放且位置正确
-        // 2) Teleport_AfterClimb() 内部调用 motor.Teleport()
-
     }
 
     public override Transition LogicUpdate()
