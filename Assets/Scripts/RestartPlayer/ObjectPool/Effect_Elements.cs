@@ -10,7 +10,6 @@ public class Effect_Elements : MonoBehaviour
     void Awake()
     {
         ps = GetComponent<ParticleSystem>();
-        ConfigureParticleSystem();
     }
 
     void OnEnable()
@@ -22,6 +21,11 @@ public class Effect_Elements : MonoBehaviour
     void OnDisable()
     {
         fxEventSO.ReliseFxEvent -= ReleasePool;
+    }
+
+    void OnParticleSystemStopped()
+    {
+        ReleasePool();
     }
 
     private void ConfigureParticleSystem()
