@@ -110,7 +110,7 @@ jobs:
 
       - name: Build Archive
         run: |
-          cd build/iOS
+          cd build/iOS/iOS
           xcodebuild -project Unity-iPhone.xcodeproj \
             -scheme Unity-iPhone \
             -sdk iphoneos \
@@ -122,10 +122,12 @@ jobs:
 
       - name: Package IPA
         run: |
-          cd build/iOS
+          cd build/iOS/iOS
           mkdir -p Payload
-          cp -r Unity-iPhone.xcarchive/Products/Applications/Unity-iPhone.app Payload/
-          zip -r -y ../iOS.ipa Payload
+          # 使用通配符 *.app 适配任何自定义的 Product Name
+          cp -r Unity-iPhone.xcarchive/Products/Applications/*.app Payload/
+          # 因为多进了一层目录，压缩输出路径需要退两层：../../iOS.ipa
+          zip -r -y ../../iOS.ipa Payload
           rm -rf Payload
 
       - name: Upload iOS IPA
