@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,17 +12,18 @@ public class UImanager : MonoBehaviour
     public bool isMenu;
     public PlayerStateBar bar;
     [Header("事件监听")]
-    public CharacterEventSo HealthEvent;
-    public SceneLoadEventSO SceneLoadEvent;
-    public VoidSo LoadDataEvent;
-    public VoidSo afterLoadSceneEvent;
-    public VoidSo GameOverEvent;
-    public VoidSo BackToMenuEvent;
-    public FloatEventSO SynuEvent;
-    [Header("事件广播")]
-    public VoidSo PauseEvnet;
+    // public CharacterEventSo HealthEvent;
+    private EventBinding<HealthChangeEvent> characterHealthEventBinding;
+    private EventBinding<FocusChangeEvent> focusChangeEventBinding;
+    private EventBinding<SceneLoadEvent> sceneLoadEventBinding;
+    private EventBinding<LoadDataEvent> loadDataEventBinding;
+    private EventBinding<AfterLoadSceneEvent> AfterLoadSceneEventBinding;
+    private EventBinding<GameOverEvent> gameOverEventBinding;
+    private EventBinding<BackToMenuEvent> backToMenuEventBinding;
+    private EventBinding<SynuEvent> synuEventBinding;
     [Header("组件")]
     public UIAnimations UIanim;
+    public GameObject PoseUI;
     public GameObject GameOverPanle;
     public GameObject RestartBut;
     public GameObject mobleTouch;
@@ -37,14 +39,22 @@ public class UImanager : MonoBehaviour
     }
     private void OnEnable()
     {
-        afterLoadSceneEvent.OnEventRaised += PlatformCheck;
-        HealthEvent.OnEvenetRaised += HealthChange;
-        HealthEvent.OnEvenetRaised += PowerChange;
-        SceneLoadEvent.LoadRequestEvent += checkMenu;
-        LoadDataEvent.OnEventRaised += LoadData;
-        GameOverEvent.OnEventRaised += GameOver;
-        BackToMenuEvent.OnEventRaised += LoadData;
-        SynuEvent.OnEventRaised += OnSync;
+        characterHealthEventBinding = new EventBinding<HealthChangeEvent>(HealthChange);
+        focusChangeEventBinding = new EventBinding<FocusChangeEvent>(PowerChange);
+        backToMenuEventBinding = new EventBinding<BackToMenuEvent>(LoadData);
+        loadDataEventBinding = new EventBinding<LoadDataEvent>(LoadData);
+        AfterLoadSceneEventBinding = new EventBinding<AfterLoadSceneEvent>(CheckPlatformAndMenu);
+        gameOverEventBinding = new EventBinding<GameOverEvent>(GameOver);
+        synuEventBinding = new EventBinding<SynuEvent>(OnSync);
+
+
+        EventBus<HealthChangeEvent>.Register(characterHealthEventBinding);
+        EventBus<FocusChangeEvent>.Register(focusChangeEventBinding);
+        EventBus<AfterLoadSceneEvent>.Register(AfterLoadSceneEventBinding);
+        EventBus<LoadDataEvent>.Register(loadDataEventBinding);
+        EventBus<GameOverEvent>.Register(gameOverEventBinding);
+        EventBus<BackToMenuEvent>.Register(backToMenuEventBinding);
+        EventBus<SynuEvent>.Register(synuEventBinding);
     }
 
     void Start()
@@ -53,23 +63,22 @@ public class UImanager : MonoBehaviour
         Actions.UI.Pause.performed += _ => TogglePausePanle();   //添加一个监听，按下暂停键时调用TogglePausePanle方法
     }
 
-    
+
 
     private void OnDisable()
     {
-        afterLoadSceneEvent.OnEventRaised -= PlatformCheck;
-        HealthEvent.OnEvenetRaised -= HealthChange;
-        HealthEvent.OnEvenetRaised -= PowerChange;
-        SceneLoadEvent.LoadRequestEvent -= checkMenu;
-        LoadDataEvent.OnEventRaised -= LoadData;
-        GameOverEvent.OnEventRaised -= GameOver;
-        BackToMenuEvent.OnEventRaised -= LoadData;
-        SynuEvent.OnEventRaised -= OnSync;
+        EventBus<HealthChangeEvent>.Deregister(characterHealthEventBinding);
+        EventBus<FocusChangeEvent>.Deregister(focusChangeEventBinding);
+        EventBus<AfterLoadSceneEvent>.Deregister(AfterLoadSceneEventBinding);
+        EventBus<LoadDataEvent>.Deregister(loadDataEventBinding);
+        EventBus<GameOverEvent>.Deregister(gameOverEventBinding);
+        EventBus<BackToMenuEvent>.Deregister(backToMenuEventBinding);
+        EventBus<SynuEvent>.Deregister(synuEventBinding);
     }
 
-    private void OnSync(float Count)
+    private void OnSync(SynuEvent e)
     {
-        AudioSlider.value = Count;
+        AudioSlider.value = e.count;
     }
 
     public void TogglePausePanle()
@@ -84,7 +93,7 @@ public class UImanager : MonoBehaviour
         }
         else
         {
-            PauseEvnet.RaiseEvent();
+            EventBus<PauseEvnet>.Raise(new PauseEvnet { });
             PauseMenu.SetActive(true);
             EventSystem.current.SetSelectedGameObject(PauseMenuSettingButton.gameObject);   //设置默认选中按钮
             Time.timeScale = 0;             //暂停游戏
@@ -95,9 +104,13 @@ public class UImanager : MonoBehaviour
         GameOverPanle.SetActive(true);
         EventSystem.current.SetSelectedGameObject(RestartBut);
     }
-    public void PlatformCheck()
+    public void CheckPlatformAndMenu(AfterLoadSceneEvent e)
     {
         mobleTouch.SetActive(Application.isMobilePlatform);
+
+        isMenu = e.LoadScene.sceneType == SceneType.Menu;
+        bar.gameObject.SetActive(!isMenu);
+        SettingButton.gameObject.SetActive(!isMenu);
     }
 
     private void LoadData()
@@ -106,28 +119,27 @@ public class UImanager : MonoBehaviour
         mobleTouch.SetActive(false);
     }
 
-    private void checkMenu(GameSceneSO SceneLoaded, Vector3 arg1, bool arg2)
+    private void HealthChange(HealthChangeEvent e)
     {
-        isMenu = SceneLoaded.sceneType == SceneType.Menu;
-        bar.gameObject.SetActive(!isMenu);
-        SettingButton.gameObject.SetActive(!isMenu);
-    }
-
-
-    private void HealthChange(Character character)
-    {
-        var persent = character.CurrentHealth / character.maxHealth;
+        if (!e.character.CompareTag("Player")) return;
+        var persent = e.character.CurrentHealth / e.character.maxHealth;
         bar.ChangeHealth(persent);
     }
 
-    private void PowerChange(Character character)
+    private void PowerChange(FocusChangeEvent e)
     {
-        var persent = character.currentFocus / character.config.maxFocus;
+        if (!e.character.CompareTag("Player")) return;
+        var persent = e.character.currentFocus / e.character.config.maxFocus;
         bar.ChangePower(persent);
     }
 
     public void OpenLink(string url)
     {
         Application.OpenURL(url);
+    }
+
+    public void BackToMenu()
+    {
+        EventBus<BackToMenuEvent>.Raise(new BackToMenuEvent { });
     }
 }

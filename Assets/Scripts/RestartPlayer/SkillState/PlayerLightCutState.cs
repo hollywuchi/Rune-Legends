@@ -1,5 +1,6 @@
 using RestartPlayer.HFSM;
 using UnityEngine;
+// using UnityEngine.UIElements;
 
 /// <summary>
 /// 霹雳一闪技能状态
@@ -39,8 +40,8 @@ public class PlayerLightCutState : PlayerState
         // 受伤状态检查（优先级最高）
         if (s.ctx.IsHurt)
         {
-            // 受伤打断蓄力，返回受伤状态
-            s.fxSpeaker.ReliseFX();
+            // FIXME:受伤打断蓄力，返回受伤状态,这里需要测试
+            // s.fxSpeaker.ReliseFX();
             return new Transition(PlayerStateId.Hurt);
         }
 
@@ -61,7 +62,7 @@ public class PlayerLightCutState : PlayerState
         // 打断条件：在蓄力阶段（未冲刺），松开按键，且蓄力未完成
         if (!s.ctx.IsHoldingLightCut && !s.ctx.IsLightCutting && !s.ctx.LightCutPerformedThisFrame)
         {
-            s.fxSpeaker.ReliseFX();
+            // s.fxSpeaker.ReliseFX();
             s.anim.SetExitCharging();
             return new Transition(PlayerStateId.Idle);
         }
@@ -108,7 +109,8 @@ public class PlayerLightCutState : PlayerState
         // 消耗专注值
         s.character.currentFocus -= s.config.lightCutFocusCost;
         s.ctx.CurrentFocus = s.character.currentFocus;
-        s.character.OnFocusChange?.Invoke(s.character);
+        // s.character.OnFocusChange?.Invoke(s.character);
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent{character = s.character});
     }
 
     public void OnLightCutAnimFinished()

@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public class AudioDefination : MonoBehaviour
 {
-    public PlayAudioEventSO playAudioEvent;
+    // public PlayAudioEventSO playAudioEvent;
     public AudioClip audioClip;
     public bool PlayOnEnable;
     private void OnEnable() 
@@ -15,6 +15,6 @@ public class AudioDefination : MonoBehaviour
     }
     public void PlayAudioClip()
     {
-        playAudioEvent.RaisedEvent(audioClip);
+        // playAudioEvent.RaisedEvent(audioClip);
     }
 }

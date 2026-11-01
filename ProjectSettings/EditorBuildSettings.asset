@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Serious scene/Initialition.unity
     guid: 716964ef5c04c5c43be392e9610cef7e
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Serious scene/Training Scene.unity
     guid: 2a1f57d24ebd398458bf41649e78ac2a
   - enabled: 0

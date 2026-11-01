@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,9 +9,16 @@ using UnityEngine.Events;
 public class PostureSystem : MonoBehaviour
 {
     [Header("架势参数")]
-    public float maxPosture = 100f;
-    public float postureRecoveryRate = 15f;     // 每秒减去的架势值
-    public float postureRecoveryDelay = 1.5f;   // 破防后持续时间，期间无法增加架势值
+    public float maxPosture;
+
+    [Header("脱战衰减机制")]
+    public float outOfCombatDelay;        // 脱战时间
+    public float postureDecayRate;        // 衰减速率
+
+    [Header("破防状态")]
+    // TODO:继续做破防衰减状态
+    public float postureRecoveryRate;     // 每秒减去的架势值
+    public float postureRecoveryDelay;   // 破防后持续时间，期间无法增加架势值
 
     public float currentPosture;  // 当前的架势值
     [HideInInspector] public bool isBroken;         // 是否处于破防状态
@@ -18,6 +26,13 @@ public class PostureSystem : MonoBehaviour
 
     public UnityEvent OnPostureBroken;
     public UnityEvent OnPostureRecovered;
+
+    private Character character;
+
+    void Awake()
+    {
+        character = GetComponent<Character>();
+    }
 
     private void OnEnable()
     {
@@ -36,7 +51,7 @@ public class PostureSystem : MonoBehaviour
             if (recoveryTimer <= 0f)
             {
                 currentPosture -= postureRecoveryRate * Time.deltaTime;
-                if (currentPosture < 0f) 
+                if (currentPosture < 0f)
                 {
                     currentPosture = 0f;
                     ResetPosture();
@@ -59,6 +74,15 @@ public class PostureSystem : MonoBehaviour
         {
             BreakPosture();
         }
+
+        if (character == null) return;
+        EventBus<PoseChangeEvent>.Raise(new PoseChangeEvent
+        {
+            character = character,
+            targetPosture = currentPosture,
+            maxPosture = maxPosture,
+            duration = 0.5f
+        });
     }
 
     /// <summary>
@@ -67,6 +91,15 @@ public class PostureSystem : MonoBehaviour
     public void ReducePosture(float amount)
     {
         currentPosture = Mathf.Max(currentPosture - amount, 0f);
+
+        if (character == null) return;
+        EventBus<PoseChangeEvent>.Raise(new PoseChangeEvent
+        {
+            character = character,
+            targetPosture = currentPosture,
+            maxPosture = maxPosture,
+            duration = 0.5f
+        });
     }
 
     /// <summary>
@@ -88,6 +121,13 @@ public class PostureSystem : MonoBehaviour
         currentPosture = 0f;
         recoveryTimer = 0f;
         OnPostureRecovered?.Invoke();
+        EventBus<PoseChangeEvent>.Raise(new PoseChangeEvent
+        {
+            character = character,
+            targetPosture = currentPosture,
+            maxPosture = maxPosture,
+            duration = 0.5f
+        });
     }
 
 }

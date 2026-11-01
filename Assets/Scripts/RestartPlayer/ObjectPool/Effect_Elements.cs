@@ -5,7 +5,8 @@ public class Effect_Elements : MonoBehaviour
 {
     private ObjectPool<GameObject> pool;
     private ParticleSystem ps;
-    public FxEventSO fxEventSO;
+    // public FxEventSO fxEventSO;
+    private EventBinding<ReliseFxEvent> reliseFxEvent;
 
     void Awake()
     {
@@ -15,12 +16,16 @@ public class Effect_Elements : MonoBehaviour
     void OnEnable()
     {
         ConfigureParticleSystem();
-        fxEventSO.ReliseFxEvent += ReleasePool;
+        // fxEventSO.ReliseFxEvent += ReleasePool;
+        reliseFxEvent = new EventBinding<ReliseFxEvent>(ReleasePool);
+
+        EventBus<ReliseFxEvent>.Register(reliseFxEvent);
     }
 
     void OnDisable()
     {
-        fxEventSO.ReliseFxEvent -= ReleasePool;
+        // fxEventSO.ReliseFxEvent -= ReleasePool;
+        EventBus<ReliseFxEvent>.Deregister(reliseFxEvent);
     }
 
     void OnParticleSystemStopped()

@@ -14,14 +14,19 @@ public class Player : MonoBehaviour
     public PhysicsCheck physicsCheck;
     public PlayerMotor2D motor;
     public PlayerAnimatorDriver anim;
-    public PlayerFxSpeaker fxSpeaker;
+    // public PlayerFxSpeaker fxSpeaker;
     public Character character;
 
     [Header("事件引用")]
-    public VoidSo cameraShakeEvent;
-    public VoidSo NewGameEvent;
-    public VoidSo BackToMenuEvent;
-    public CharacterEventSo HealthChangeEvent;
+    private EventBinding<CameraShakeEvent> cameraShakeEventBinding;
+    private EventBinding<NewGameEvent> newGameEventBinding;
+    private EventBinding<BackToMenuEvent> backToMenuEventBinding;
+    private EventBinding<DeathEvent> deathEventBinding;
+    private EventBinding<HurtEvent> hurtEventBinding;
+    // public VoidSo cameraShakeEvent;
+    // public VoidSo NewGameEvent;
+    // public VoidSo BackToMenuEvent;
+    // public CharacterEventSo HealthChangeEvent;
     public PlayerServices s;
     public PlayerContext ctx;
     public PlayerStateRegistry stateRegistry;
@@ -39,7 +44,7 @@ public class Player : MonoBehaviour
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();
-        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, fxSpeaker, inputGate, character, cameraShakeEvent);
+        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, inputGate, character);
 
         // WORKFLOW：在这里注册状态
         // 普通动作状态
@@ -81,8 +86,15 @@ public class Player : MonoBehaviour
     }
     void OnEnable()
     {
-        NewGameEvent.OnEventRaised += NewGame;
-        BackToMenuEvent.OnEventRaised += BackToMenu;
+        newGameEventBinding = new EventBinding<NewGameEvent>(NewGame);
+        backToMenuEventBinding = new EventBinding<BackToMenuEvent>(BackToMenu);
+        deathEventBinding = new EventBinding<DeathEvent>(PlayerDeath);
+        hurtEventBinding = new EventBinding<HurtEvent>(PlayerHurt);
+
+        EventBus<NewGameEvent>.Register(newGameEventBinding);
+        EventBus<BackToMenuEvent>.Register(backToMenuEventBinding);
+        EventBus<DeathEvent>.Register(deathEventBinding);
+        EventBus<HurtEvent>.Register(hurtEventBinding);
     }
 
     private void Start()
@@ -97,8 +109,10 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         inputActions.Disable();
-        NewGameEvent.OnEventRaised -= NewGame;
-        BackToMenuEvent.OnEventRaised -= BackToMenu;
+        EventBus<NewGameEvent>.Deregister(newGameEventBinding);
+        EventBus<BackToMenuEvent>.Deregister(backToMenuEventBinding);
+        EventBus<DeathEvent>.Deregister(deathEventBinding);
+        EventBus<HurtEvent>.Deregister(hurtEventBinding);
     }
 
     private void Update()
@@ -199,7 +213,10 @@ public class Player : MonoBehaviour
         ctx.Reset();
         inputActions.Enable();
         stateMachine.currentState.Exit();
-        HealthChangeEvent.RaisedEvent(character);
+
+        // FIXME:当前事件调用需要测试
+        EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = character });
+        // HealthChangeEvent.RaisedEvent(character);
         stateMachine.Initialize(PlayerStateId.Idle);
     }
 
@@ -209,7 +226,7 @@ public class Player : MonoBehaviour
     /// <exception cref="NotImplementedException"></exception>
     private void BackToMenu()
     {
-        if(gameObject.transform.rotation.y == -1)
+        if (gameObject.transform.rotation.y == -1)
         {
             ctx.SetFacingDirection(1);
             motor.FlipFacing();
@@ -239,11 +256,23 @@ public class Player : MonoBehaviour
 
     public void CreateSprintDust()
     {
-        fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.UnderDust);
+        // fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.UnderDust);
+        EventBus<FxEvent>.Raise(new FxEvent
+        {
+            playerTran = motor.transform.position,
+            dir = ctx.FacingDirection,
+            type = ParticalEffectType.UnderDust
+        });
     }
     public void CreateChargingFX()
     {
-        fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.Charging);
+        // fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.Charging);
+        EventBus<FxEvent>.Raise(new FxEvent
+        {
+            playerTran = motor.transform.position,
+            dir = ctx.FacingDirection,
+            type = ParticalEffectType.Charging
+        });
     }
 
     public IEnumerator Teleport_AfterClimb()
@@ -296,7 +325,7 @@ public class Player : MonoBehaviour
                 break;
         }
     }
-    
+
 
     public void Animation_ComboWindowOpen()
     {
@@ -310,15 +339,18 @@ public class Player : MonoBehaviour
         attackState?.OnComboWindowClose();
     }
 
-    public void PlayerHurt()
+    public void PlayerHurt(HurtEvent e)
     {
+        if (e.character != this.character) return;
         if (stateMachine.currentState is PlayerHurtState) return; // 已经在受伤状态了就别重复请求了
         ctx.IsHurt = true;
     }
 
-    public void PlayerDeath()
+    public void PlayerDeath(DeathEvent e)
     {
+        if (e.character != this.character) return;
         if (stateMachine.currentState is PlayerDeathState) return;
+        EventBus<GameOverEvent>.Raise(new GameOverEvent { });
         ctx.IsDead = true;
     }
 

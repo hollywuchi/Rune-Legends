@@ -6,8 +6,8 @@ public class CamreaControl : MonoBehaviour
     CinemachineConfiner2D confiner2D;
     // 获取脉冲源
     public CinemachineImpulseSource impulseSource;
-    public VoidSo CameraShakeEvent;// 获取刚刚写好的事件脚本
-    public VoidSo SceneAfterEvent; //这是场景加载之后的事件脚本
+    // public VoidSo CameraShakeEvent;// 获取刚刚写好的事件脚本
+    // public VoidSo SceneAfterEvent; //这是场景加载之后的事件脚本
     private void Awake() 
     {
         confiner2D = GetComponent<CinemachineConfiner2D>();
@@ -15,13 +15,13 @@ public class CamreaControl : MonoBehaviour
     }
     private void OnEnable() 
     {
-        CameraShakeEvent.OnEventRaised += Onshake;   
-        SceneAfterEvent.OnEventRaised += OnFindBound;
+        // CameraShakeEvent.OnEventRaised += Onshake;   
+        // SceneAfterEvent.OnEventRaised += OnFindBound;
     }
     private void OnDisable() 
     {
-        CameraShakeEvent.OnEventRaised -= Onshake;    
-        SceneAfterEvent.OnEventRaised -= OnFindBound;
+        // CameraShakeEvent.OnEventRaised -= Onshake;    
+        // SceneAfterEvent.OnEventRaised -= OnFindBound;
     }
     private void OnFindBound()
     {

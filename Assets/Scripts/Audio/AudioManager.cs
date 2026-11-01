@@ -7,36 +7,36 @@ public class AudioManager : MonoBehaviour
     public AudioSource BGMsourse;
     public AudioSource FXSourse;
     public AudioMixer audioMixer;
-    [Header("事件广播")]
-    public FloatEventSO syncEvent;
-    [Header("事件监听")]
-    public PlayAudioEventSO BGMEvent;
-    public PlayAudioEventSO FXEvent;
-    public VoidSo after_PlayAudio;//场景加载结束后该做的事
-    public FloatEventSO floatEventSO;
-    public VoidSo PauseEvent;
+    // [Header("事件广播")]
+    // public FloatEventSO syncEvent;
+    // [Header("事件监听")]
+    // public PlayAudioEventSO BGMEvent;
+    // public PlayAudioEventSO FXEvent;
+    // public VoidSo after_PlayAudio;//场景加载结束后该做的事
+    // public FloatEventSO floatEventSO;
+    // public VoidSo PauseEvent;
     private void OnEnable()
     {
-        FXEvent.OnEventRaised += OnFXEvent;
-        BGMEvent.OnEventRaised += OnBGMEvent;
-        after_PlayAudio.OnEventRaised += OnPlayBGM;
-        floatEventSO.OnEventRaised += OnVolumeEvent;
-        PauseEvent.OnEventRaised += OnPause;
+        // FXEvent.OnEventRaised += OnFXEvent;
+        // BGMEvent.OnEventRaised += OnBGMEvent;
+        // after_PlayAudio.OnEventRaised += OnPlayBGM;
+        // floatEventSO.OnEventRaised += OnVolumeEvent;
+        // PauseEvent.OnEventRaised += OnPause;
     }
     private void OnDisable()
     {
-        FXEvent.OnEventRaised -= OnFXEvent;
-        BGMEvent.OnEventRaised -= OnBGMEvent;
-        after_PlayAudio.OnEventRaised -= OnPlayBGM;
-        floatEventSO.OnEventRaised -= OnVolumeEvent;
-        PauseEvent.OnEventRaised -= OnPause;
+        // FXEvent.OnEventRaised -= OnFXEvent;
+        // BGMEvent.OnEventRaised -= OnBGMEvent;
+        // after_PlayAudio.OnEventRaised -= OnPlayBGM;
+        // floatEventSO.OnEventRaised -= OnVolumeEvent;
+        // PauseEvent.OnEventRaised -= OnPause;
     }
 
     private void OnPause()
     {
         float Count;
         audioMixer.GetFloat("MasterVolume",out Count);
-        syncEvent.RaiseEvent(Count);
+        // syncEvent.RaiseEvent(Count);
     }
 
     private void OnVolumeEvent(float Count)

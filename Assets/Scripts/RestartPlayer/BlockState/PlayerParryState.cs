@@ -23,7 +23,6 @@ public class PlayerParryState : PlayerState
         // s.fxSpeaker.CreateFX(s.motor.transform.position, s.ctx.FacingDirection, ParticalEffectType.ParrySpark);
 
         // 触发屏幕震动
-        s.cameraShakeEvent?.RaiseEvent();
 
         // Hit Stop（时间冻结）
         s.motor.StartCoroutine(HitStop());

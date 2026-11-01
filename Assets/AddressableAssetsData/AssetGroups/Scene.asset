@@ -17,18 +17,13 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: df9a748e9de2c2745b1731a605cb030c
   m_SerializeEntries:
-  - m_GUID: 2a1f57d24ebd398458bf41649e78ac2a
-    m_Address: Training Scene
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b99598c618c7454bb860549a52f83a1
-    m_Address: NewPersistent
+    m_Address: Assets/Scenes/Serious scene/NewPersistent.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f429e60103cd7324dac2cfd8cbc869d4
-    m_Address: Menu
+    m_Address: Assets/Scenes/Serious scene/Menu.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

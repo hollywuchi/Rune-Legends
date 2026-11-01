@@ -32,7 +32,6 @@ public class PlayerDeathState : PlayerState
     {
         base.Exit();
         s.inputGate.Freeze(0.5f);
-        Debug.Log("退出死亡状态");
         s.ctx.IsDead = false;
     }
 

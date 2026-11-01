@@ -10,9 +10,8 @@ public class SaveManager : MonoBehaviour
     public static SaveManager instance;
     Data saveData;
     public List<ISaveable> saveableList = new List<ISaveable>();           //要保存的场景中的东西
-    [Header("事件监听")]
-    public VoidSo SaveDataEvent;
-    public VoidSo LoadDataEvent;
+    // public VoidSo SaveDataEvent;
+    // public VoidSo LoadDataEvent;
     void Awake()    //实现单例模式，初始化存储单元
     {
         if (instance == null)               //单例模式的实现
@@ -26,13 +25,13 @@ public class SaveManager : MonoBehaviour
     }
     void OnEnable()
     {
-        SaveDataEvent.OnEventRaised += Save;
-        LoadDataEvent.OnEventRaised += Load;
+        // SaveDataEvent.OnEventRaised += Save;
+        // LoadDataEvent.OnEventRaised += Load;
     }
     void OnDisable()
     {
-        SaveDataEvent.OnEventRaised -= Save;
-        LoadDataEvent.OnEventRaised -= Load;
+        // SaveDataEvent.OnEventRaised -= Save;
+        // LoadDataEvent.OnEventRaised -= Load;
     }
 
     void Update()

@@ -50,17 +50,25 @@ public class Enemy : MonoBehaviour
     BaseState currnetState;
     protected BaseState patrolState;
     protected BaseState chaseState;
+
+    private Character character;
+    private EventBinding<DeathEvent> deathEventBinding;
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         physicsCheck = GetComponent<PhysicsCheck>();
         postureSystem = GetComponent<PostureSystem>();
+        character = GetComponent<Character>();
         CurrentSpeed = NormalSpeed;
         WaitTimeCounter = WaitTime;
     }
     private void OnEnable()
     {
+        deathEventBinding = new EventBinding<DeathEvent>(OnDie);
+
+        EventBus<DeathEvent>.Register(deathEventBinding);
+
         // 现在的状态转换为巡逻状态
         currnetState = patrolState;
         currnetState.OnEnter(this);
@@ -80,6 +88,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnDisable()
     {
+        EventBus<DeathEvent>.Deregister(deathEventBinding);
         currnetState.OnExit();
     }
 
@@ -125,7 +134,7 @@ public class Enemy : MonoBehaviour
     /// <param name="Attacker"></param>
     public void OnTakeDamage(Transform Attacker)
     {
-        if (postureSystem.isBroken) return;
+        if (postureSystem.isBroken || IsDeath) return;
         attacker = Attacker;
         if (attacker.transform.position.x - transform.position.x < 0)
             transform.localScale = new Vector3(1, 1, 1);
@@ -147,8 +156,9 @@ public class Enemy : MonoBehaviour
         Ishurt = false;
     }
 
-    public void OnDie()
+    public void OnDie(DeathEvent e)
     {
+        if (e.character != character) return;
         IsDeath = true;
 
         rb.velocity = new Vector2(0, rb.velocity.y);

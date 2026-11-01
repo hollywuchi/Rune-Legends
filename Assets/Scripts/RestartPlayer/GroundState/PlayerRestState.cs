@@ -15,7 +15,8 @@ public class PlayerRestState : PlayerGroundState
         s.character.CurrentHealth = s.character.maxHealth;
         s.character.currentFocus = s.config.maxFocus;
         s.ctx.CurrentFocus = s.config.maxFocus;
-        s.character.OnHealthChange?.Invoke(s.character);
+        // s.character.OnHealthChange?.Invoke(s.character);
+        EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent{character = s.character});
         s.character.resurrectPoint = s.ctx.ResurrectPoint;
 
         restIdleTimer = 0f;

@@ -20,7 +20,6 @@ public class MirrorCamera : MonoBehaviour
     {
         if (mirrorCamera != null)
         {
-            Debug.Log("尝试调整相机尺寸");
             mirrorCamera.orthographicSize = Camera.main.orthographicSize;
             mirrorCamera.aspect = Camera.main.aspect;
 

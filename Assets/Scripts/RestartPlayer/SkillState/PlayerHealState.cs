@@ -93,7 +93,9 @@ public class PlayerHealState : PlayerState
             // 消耗全部Focus
             s.ctx.CurrentFocus = 0;
             s.character.currentFocus = 0;
-            s.character.OnHealthChange?.Invoke(s.character);
+            // s.character.OnHealthChange?.Invoke(s.character);
+            EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = s.character });
+            EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
         }
     }
 

@@ -8,7 +8,7 @@ public class PoolManager : MonoBehaviour
     [Header("特效对象列表")]
     public List<GameObject> poolPrefabs;
     [Header("事件监听")]
-    public FxEventSO fxEventSO;
+    private EventBinding<FxEvent> fxEventBing;
     // 对象池的列表
     private List<ObjectPool<GameObject>> poolEffectList = new List<ObjectPool<GameObject>>();
     // private Queue<GameObject> soundQueue = new Queue<GameObject>();     // 队列，当做音效的对象池
@@ -19,12 +19,14 @@ public class PoolManager : MonoBehaviour
     }
     void OnEnable()
     {
-        fxEventSO.FxSpawnEvent += CreateFX;
+        fxEventBing = new EventBinding<FxEvent>(CreateFX);
+        
+        EventBus<FxEvent>.Register(fxEventBing);
     }
 
     void OnDisable()
     {
-        fxEventSO.FxSpawnEvent -= CreateFX;
+        EventBus<FxEvent>.Deregister(fxEventBing);
     }
 
     private void CreatePool()
@@ -56,9 +58,9 @@ public class PoolManager : MonoBehaviour
 
     // 在冲刺过程中，两个尘埃特效会同时触发，type疑似失效
     // 因为两个对象池相互污染，因为不是临时变量，所以调用的时候，会默认调用最后一个使用的对象池，然后就污染了
-    public void CreateFX(Vector3 playerTran, float dir, ParticalEffectType type)
+    public void CreateFX(FxEvent e)
     {
-        var objPool = type switch
+        var objPool = e.type switch
         {
             ParticalEffectType.SprintDust => poolEffectList[0],
             ParticalEffectType.UnderDust => poolEffectList[1],
@@ -71,7 +73,7 @@ public class PoolManager : MonoBehaviour
         if (objPool == null) return;
         
         GameObject obj = objPool.Get();
-        obj.transform.position = playerTran;
-        obj.transform.localScale = new Vector3(dir, obj.transform.localScale.y, obj.transform.localScale.z);
+        obj.transform.position = e.playerTran;
+        obj.transform.localScale = new Vector3(e.dir, obj.transform.localScale.y, obj.transform.localScale.z);
     }
 }

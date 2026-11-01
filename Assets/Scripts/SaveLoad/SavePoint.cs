@@ -3,7 +3,8 @@ using UnityEngine;
 public class SavePoint : MonoBehaviour, IInteractable
 {
     [Header("广播")]
-    public VoidSo SaveDataEvent;
+    // FIXME:之后来修存档
+    // public VoidSo SaveDataEvent;
     [Header("参数设置")]
     public SpriteRenderer NowSprite;
     public Sprite lightSprite;
@@ -24,7 +25,7 @@ public class SavePoint : MonoBehaviour, IInteractable
             NowSprite.sprite = lightSprite;
             isDone = true;
             // 保存数据
-            SaveDataEvent.RaiseEvent();
+            // SaveDataEvent.RaiseEvent();
             Light.SetActive(true);
         }
     }

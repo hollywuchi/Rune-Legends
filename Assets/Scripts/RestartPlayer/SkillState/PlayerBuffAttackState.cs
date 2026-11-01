@@ -102,7 +102,7 @@ public class PlayerLightCrownState : PlayerState
         // 消耗专注值
         s.character.currentFocus -= s.config.LightCrownFocusCost;
         s.ctx.CurrentFocus = s.character.currentFocus;
-        s.character.OnFocusChange?.Invoke(s.character);
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
 
         // 增加Buff层数
         s.character.attackBuffStack = Mathf.Min(
@@ -114,7 +114,8 @@ public class PlayerLightCrownState : PlayerState
         s.character.attackBuffMultiplier = s.config.attackBuffMultiplier;
 
         // TODO：UI方面,通知UI更新
-        s.character.OnHealthChange?.Invoke(s.character);
+        EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = s.character });
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
 
     }
 

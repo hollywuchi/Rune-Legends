@@ -12,13 +12,13 @@ public class SceneLoader : MonoBehaviour, ISaveable
     public Vector3 firstPosition;
     public Vector3 menuPosition;
     [Header("事件监听")]
-    public SceneLoadEventSO SceneLoadEventSO;
-    public VoidSo NewGameEvent;
-    public VoidSo BackToMenuEvent;
+    private EventBinding<SceneLoadEvent> sceneLoadEventBinding;
+    private EventBinding<NewGameEvent> newGameEventBinding;
+    private EventBinding<BackToMenuEvent> backToMenuEventBinding;
     [Header("事件广播")]
-    public VoidSo SceneAfterEvnet;
-    public FadeEventSO fadeEvent;
-    public SceneLoadEventSO SceneUnloadEvent;
+    // public VoidSo SceneAfterEvnet;
+    // public FadeEventSO fadeEvent;
+    // public SceneLoadEventSO SceneUnloadEvent;
     [Header("场景")]
     public GameSceneSO firstLoadScene;
     public GameSceneSO menuScene;
@@ -41,7 +41,15 @@ public class SceneLoader : MonoBehaviour, ISaveable
     private void Start()
     {
         // Initialization();    
-        SceneLoadEventSO.RaiseLoadRequestEvent(menuScene, menuPosition, true);
+        // SceneLoadEventSO.RaiseLoadRequestEvent(menuScene, menuPosition, true);
+        EventBus<SceneLoadEvent>.Raise(new SceneLoadEvent
+        {
+            LocationToLoad = menuScene,
+            posToGo = menuPosition,
+            fadeScreen = true
+        });
+        // sceneLoadEventBinding = new EventBinding<SceneLoadEvent>()
+        // EventBinding<SceneLoadEvent>
         // NOTICE：存档系统已被关闭
         // ISaveable saveable = this;
         // saveable.RegisterSaveData();
@@ -57,18 +65,21 @@ public class SceneLoader : MonoBehaviour, ISaveable
     // }
     private void OnEnable()
     {
+        sceneLoadEventBinding = new EventBinding<SceneLoadEvent>(OnLoadRequestEvent);
+        newGameEventBinding = new EventBinding<NewGameEvent>(Initialization);
+        backToMenuEventBinding = new EventBinding<BackToMenuEvent>(BackToMenu);
 
-        SceneLoadEventSO.LoadRequestEvent += OnLoadRequestEvent;
-        NewGameEvent.OnEventRaised += Initialization;
-        BackToMenuEvent.OnEventRaised += BackToMenu;
+
+        EventBus<SceneLoadEvent>.Register(sceneLoadEventBinding);
+        EventBus<NewGameEvent>.Register(newGameEventBinding);
+        EventBus<BackToMenuEvent>.Register(backToMenuEventBinding);
 
     }
     private void OnDisable()
     {
-        SceneLoadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
-        NewGameEvent.OnEventRaised -= Initialization;
-        BackToMenuEvent.OnEventRaised -= BackToMenu;
-
+        EventBus<SceneLoadEvent>.Deregister(sceneLoadEventBinding);
+        EventBus<NewGameEvent>.Deregister(newGameEventBinding);
+        EventBus<BackToMenuEvent>.Deregister(backToMenuEventBinding);
         // NOTICE：存档系统已被关闭
         // ISaveable saveable = this;
         // saveable.UnRegisterSaveData();
@@ -82,17 +93,25 @@ public class SceneLoader : MonoBehaviour, ISaveable
     public void Initialization()
     {
         SceneToLoad = firstLoadScene;
-        // OnLoadRequestEvent(SceneToLoad,firstPosition,true);
-        SceneLoadEventSO.RaiseLoadRequestEvent(SceneToLoad, firstPosition, true);
+        EventBus<SceneLoadEvent>.Raise(new SceneLoadEvent
+        {
+            LocationToLoad = SceneToLoad,
+            posToGo = firstPosition,
+            fadeScreen = true
+        });
     }
-    private void OnLoadRequestEvent(GameSceneSO sceneToLoad, Vector3 posToGo, bool fadeScreen)
+    /// <summary>
+    /// 加载场景方法
+    /// </summary>
+    /// <param name="e"></param>
+    private void OnLoadRequestEvent(SceneLoadEvent e)
     {
         if (isLoading)
             return;
         isLoading = true;
-        SceneToLoad = sceneToLoad;
-        Newplayerpos = posToGo;
-        FadeScreen = fadeScreen;
+        SceneToLoad = e.LocationToLoad;
+        Newplayerpos = e.posToGo;
+        FadeScreen = e.fadeScreen;
 
         // 如果当前没有场景，那么就加载一个场景进来
         if (currentLoadedScene != null)
@@ -113,11 +132,18 @@ public class SceneLoader : MonoBehaviour, ISaveable
     {
         if (FadeScreen)
         {
-            fadeEvent.FadeIn(fadeduration);
+            // fadeEvent.FadeIn(fadeduration);
+            EventBus<SceneFadeEvent>.Raise(new SceneFadeEvent
+            {
+                target = new Color(0, 0, 0, 1),
+                Duration = fadeduration,
+                fadeIn = true
+            });
         }
         yield return new WaitForSeconds(fadeduration);
         // 广播关闭血条显示(与之前逻辑不同，这次是在卸载时处理的UI，之前是在卸载之前处理的)
-        SceneUnloadEvent.RaiseLoadRequestEvent(SceneToLoad, Newplayerpos, true);
+        // SceneUnloadEvent.RaiseLoadRequestEvent(SceneToLoad, Newplayerpos, true);
+        EventBus<SceneUnloadEvent>.Raise(new SceneUnloadEvent { });
         yield return currentLoadedScene.sceneReference.UnLoadScene();
         // 关闭人物防止下坠
         playerPos.gameObject.SetActive(false);
@@ -142,19 +168,28 @@ public class SceneLoader : MonoBehaviour, ISaveable
         // saveable.RegisterSaveData();
         if (FadeScreen)
         {
-            fadeEvent.FadeOut(fadeduration);//淡出界面
+            // fadeEvent.FadeOut(fadeduration);//淡出界面
+            EventBus<SceneFadeEvent>.Raise(new SceneFadeEvent
+            {
+                target = new Color(0, 0, 0, 0),
+                Duration = fadeduration,
+                fadeIn = false
+            });
         }
         isLoading = false;
 
-        if (currentLoadedScene.sceneType == SceneType.Location)
-            SceneAfterEvnet.RaiseEvent();//场景加载完成之后将事件触发广播出去
+        EventBus<AfterLoadSceneEvent>.Raise(new AfterLoadSceneEvent { LoadScene = currentLoadedScene });
     }
 
     public void BackToMenu()
     {
-        SceneToLoad = menuScene;
         Time.timeScale = 1f;       // 让系统更加连贯
-        SceneLoadEventSO.RaiseLoadRequestEvent(SceneToLoad, menuPosition, true);
+        EventBus<SceneLoadEvent>.Raise(new SceneLoadEvent
+        {
+            LocationToLoad = menuScene,
+            posToGo = menuPosition,
+            fadeScreen = true
+        });
     }
     #region 数据保存
     public DataDefination GetSaveID()
@@ -175,7 +210,8 @@ public class SceneLoader : MonoBehaviour, ISaveable
             SceneToLoad = data.GetSaveScene();
             var posToGo = data.characterPosDic[playerID];
 
-            SceneLoadEventSO.RaiseLoadRequestEvent(SceneToLoad, posToGo, true);
+            // NOTICE:这里缺少一个事件引用
+            // SceneLoadEventSO.RaiseLoadRequestEvent(SceneToLoad, posToGo, true);
         }
     }
     #endregion

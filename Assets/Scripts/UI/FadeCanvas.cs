@@ -4,18 +4,21 @@ using UnityEngine.UI;
 public class FadeCanvas : MonoBehaviour
 {
     public Image FadeImage;
-    [Header("事件监听")]
-    public FadeEventSO fadeEvent;
+    // [Header("事件监听")]
+    // public FadeEventSO fadeEvent;
+    private EventBinding<SceneFadeEvent> sceneFadeEventBinding;
     private void OnEnable()
     {
-        fadeEvent.OnEventRaised += OnFadeEvent;
+        sceneFadeEventBinding = new EventBinding<SceneFadeEvent>(OnFadeEvent);
+        
+        EventBus<SceneFadeEvent>.Register(sceneFadeEventBinding);
     }
     private void OnDisable() 
     {
-        fadeEvent.OnEventRaised -= OnFadeEvent;
+        EventBus<SceneFadeEvent>.Deregister(sceneFadeEventBinding);
     }
-    void OnFadeEvent(Color target,float Duration,bool fadeIn)
+    void OnFadeEvent(SceneFadeEvent e)
     {
-        FadeImage.DOBlendableColor(target,Duration);
+        FadeImage.DOBlendableColor(e.target,e.Duration);
     }
 }

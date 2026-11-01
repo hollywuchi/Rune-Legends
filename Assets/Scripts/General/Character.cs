@@ -19,9 +19,9 @@ public class Character : MonoBehaviour, ISaveable
    public Vector3 fxOffset;  // 特效偏移位置
 
    [Header("事件监听")]
-   public VoidSo NewGameEvent;
-   [Header("事件广播")]
-   public FxEventSO fxEventSO;
+   private EventBinding<NewGameEvent> newGameEventBinding;
+   // [Header("事件广播")]
+   // 现在已经由EventBus接管
    [Header("属性模板")]
    public PlayerConfig config;
    [Header("专注值系统")]
@@ -40,19 +40,22 @@ public class Character : MonoBehaviour, ISaveable
    private Attack currentAttacker;
    private Rigidbody2D rb;
 
-   public UnityEvent<Character> OnHealthChange;
-   public UnityEvent<Character> OnFocusChange;
-   public UnityEvent Hurt;
-   public UnityEvent Death;
+   [Header("Unity事件系统")]
+   private EventBinding<HurtEvent> hurtEventBinding;
    #endregion
    private void OnEnable()
    {
       spriteRenderer = GetComponent<SpriteRenderer>();
-      NewGameEvent.OnEventRaised += NewGame;
-      Hurt.AddListener(_CreateFX);
-      Hurt.AddListener(KnockBack);
+      // NewGameEvent.OnEventRaised += NewGame;
+      newGameEventBinding = new EventBinding<NewGameEvent>(NewGame);
+      hurtEventBinding = new EventBinding<HurtEvent>(_CreateFX);
+      hurtEventBinding.Add(KnockBack);
+
+      EventBus<HurtEvent>.Register(hurtEventBinding);
+      EventBus<NewGameEvent>.Register(newGameEventBinding);
+
       postureSystem = GetComponent<PostureSystem>();
-      
+
       // NOTICE:存档系统已被关闭
       // ISaveable saveable = this;
       // saveable.RegisterSaveData();
@@ -60,8 +63,8 @@ public class Character : MonoBehaviour, ISaveable
 
    private void OnDisable()
    {
-      NewGameEvent.OnEventRaised -= NewGame;
-      Hurt.RemoveAllListeners();
+      EventBus<NewGameEvent>.Deregister(newGameEventBinding);
+      EventBus<HurtEvent>.Deregister(hurtEventBinding);
       // ISaveable saveable = this;
       // saveable.UnRegisterSaveData();
    }
@@ -95,8 +98,8 @@ public class Character : MonoBehaviour, ISaveable
          if (CurrentHealth > 0)
          {
             CurrentHealth = 0;
-            OnHealthChange?.Invoke(this);
-            Death?.Invoke();
+            EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = this });
+            EventBus<DeathEvent>.Raise(new DeathEvent { character = this });
          }
       }
    }
@@ -114,15 +117,17 @@ public class Character : MonoBehaviour, ISaveable
 
          //先无敌比较好
          invincibleTimer();
-         Hurt?.Invoke();
+         // Hurt?.Invoke();
+         EventBus<HurtEvent>.Raise(new HurtEvent { character = this });
       }
       else
       {
          // 宣布死亡
          CurrentHealth = 0;
-         Death?.Invoke();
+         // Death?.Invoke();
+         EventBus<DeathEvent>.Raise(new DeathEvent { character = this });
       }
-      OnHealthChange?.Invoke(this);
+      EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = this });
    }
 
    /// <summary>
@@ -132,7 +137,7 @@ public class Character : MonoBehaviour, ISaveable
    {
       CurrentHealth = maxHealth;
       transform.position = resurrectPoint;
-      OnHealthChange?.Invoke(this);
+      EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = this });
    }
 
    /// <summary>
@@ -141,25 +146,32 @@ public class Character : MonoBehaviour, ISaveable
    public void GainFocus(float amount)
    {
       currentFocus = Mathf.Min(currentFocus + amount, config.maxFocus);
-      OnFocusChange?.Invoke(this);
+      // OnFocusChange?.Invoke(this);
+      EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = this });
    }
 
-   private void _CreateFX()
+   private void _CreateFX(HurtEvent e)
    {
+      if (e.character != this) return;
       if (tag == null) return;
 
-      if (tag == "Enemy" && fxEventSO != null)
+      if (tag == "Enemy")
       {
-         fxEventSO.RaiseFxEvent(transform.position + fxOffset, transform.localScale.x, ParticalEffectType.Hit);
+         EventBus<FxEvent>.Raise(new FxEvent
+         {
+            playerTran = transform.position + fxOffset,
+            dir = transform.localScale.x,
+            type = ParticalEffectType.Hit
+         });
       }
       if (tag == "Player")
       {
          StartCoroutine(ColorPrompt());
       }
-      // fxSpeaker.CreateFX(transform, transform.position.x, ParticalEffectType.Hit);
    }
-   private void KnockBack()
+   private void KnockBack(HurtEvent e)
    {
+      if (e.character != this) return;
       if (currentAttacker == null || rb == null) return;
 
       // 计算击退方向：从攻击者指向被攻击者
@@ -224,7 +236,9 @@ public class Character : MonoBehaviour, ISaveable
          transform.position = data.characterPosDic[GetSaveID().ID];
          this.CurrentHealth = data.characterHealth[GetSaveID().ID + "health"];
       }
-      OnHealthChange?.Invoke(this);    //通知UI更新
+      // OnHealthChange?.Invoke(this);    //通知UI更新
+      EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = this });
+
    }
    #endregion
 }
