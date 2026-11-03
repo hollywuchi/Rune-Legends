@@ -47,7 +47,7 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     // public void TriggerCanLand() => animator.SetTrigger("CanLand");
 
     public void PlayToSprint() => animator.Play("ToSprint");
-    public void PlayTrickTurn() => animator.Play("TrickTurn");
+    public void PlayBreak() => animator.Play("Break");
     public void PlayLand() => animator.Play("Land", 0, 0);
     public void PlayIdle() => animator.Play("Idle", 0, 0);
 
@@ -67,6 +67,7 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void SetIsCharging(bool isCharging) => animator.SetBool("IsCharging", isCharging);
     public void SetExitCharging() => animator.SetTrigger("ExitCharging");
     public void SetToCharging() => animator.SetTrigger("ToCharging");
+    public void SetBreak() => animator.SetTrigger("Break");
 
     // ====== 攻击力Buff动画 ======
     public void SetIsLightCrown(bool LightCrown) => animator.SetBool("IsLightCrown", LightCrown);

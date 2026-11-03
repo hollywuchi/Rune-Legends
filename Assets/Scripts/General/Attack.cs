@@ -4,6 +4,7 @@ public class Attack : MonoBehaviour
 {
    [Header("攻击参数")]
    public int Damage = 1;
+   public int postureDamage;
 
    [Header("击退参数")]
    public float knockbackForce = 5f;
@@ -22,6 +23,7 @@ public class Attack : MonoBehaviour
             Damage = 1;
             playerCharacter.GainFocus(focusGain);
             Damage += (int)(playerCharacter.attackBuffStack * playerCharacter.attackBuffMultiplier);
+            character.postureSystem?.ResetCombatTimer();
          }
 
          // 检测目标是否在格挡状态

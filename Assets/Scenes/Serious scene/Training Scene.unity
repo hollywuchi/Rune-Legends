@@ -5608,6 +5608,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boar
       objectReference: {fileID: 0}
+    - target: {fileID: 3280450591488355904, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
+      propertyPath: postureDamage
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8798499485878426181, guid: 6005cc81e81ee7a438d4b23aa5f247ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: -67.04
@@ -5853,37 +5857,11 @@ MonoBehaviour:
   invincible: 0
   resurrectPoint: {x: 0, y: 0, z: 0}
   fxOffset: {x: 0, y: 0.43, z: 0}
-  NewGameEvent: {fileID: 11400000, guid: 96d704273973e7f459f550e09a6b7daa, type: 2}
-  fxEventSO: {fileID: 11400000, guid: 59426fd4402e16f4999dd77bd1489e4f, type: 2}
   config: {fileID: 0}
   currentFocus: 0
   attackBuffStack: 0
   attackBuffMultiplier: 2
   postureSystem: {fileID: 0}
-  OnHealthChange:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFocusChange:
-    m_PersistentCalls:
-      m_Calls: []
-  Hurt:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1728129698}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Hit
-          m_BoolArgument: 0
-        m_CallState: 2
-  Death:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1756246363
 GameObject:
   m_ObjectHideFlags: 0
@@ -6395,6 +6373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
+  postureDamage: 15
   knockbackForce: 15
   focusGain: 7.5
 --- !u!61 &2065592218

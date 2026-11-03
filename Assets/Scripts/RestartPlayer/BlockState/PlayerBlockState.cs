@@ -18,6 +18,7 @@ public class PlayerBlockState : PlayerState
         s.ctx.IsBlocking = true;
         s.anim.SetIsBlocking(true);
         s.anim.TriggerBlock();
+        s.anim.SetBreak();
         s.motor.SetVelocityX(0f);
         s.ctx.isParry = false;
 

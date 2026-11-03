@@ -117,8 +117,10 @@ public class Character : MonoBehaviour, ISaveable
 
          //先无敌比较好
          invincibleTimer();
-         // Hurt?.Invoke();
+         
+         postureSystem?.AddPosture(attacker.postureDamage);
          EventBus<HurtEvent>.Raise(new HurtEvent { character = this });
+         postureSystem?.ResetCombatTimer();
       }
       else
       {

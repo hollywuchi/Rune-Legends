@@ -30,7 +30,6 @@ public sealed class PlayerContext
     // ====== 能力与计数 ======
     public int JumpCount { get; set; }             // 0=未跳，1=一段，2=二段
     public int MaxJumpCount { get; set; } = 2;
-
     public bool CanSprint { get; set; } = true;
     public bool IsSprintFinished { get; set; }
 
@@ -53,6 +52,12 @@ public sealed class PlayerContext
     // ====== 土狼时间（从状态里搬出来）======
     public float CoyoteTime { get; set; } = 0.2f;
     public float CoyoteTimer { get; set; }         // >0 时允许"离地后仍可跳"
+    // ====== 转身输入冷却 ======
+    public float TurnTime { get; set; } = 0.1f;         // 持续按着
+    public float TurnTimer { get; set; }
+
+    // ====== 空中冲刺变量 =======
+    public float AirSprintMag { get; set;}
 
     // ====== 技能输入 ======
     public bool SkillPressedThisFrame { get; set; }     // 刚开始按下
@@ -105,8 +110,8 @@ public sealed class PlayerContext
     public float CurrentPosture { get; set; }       // 当前架势值
     public float MaxPosture { get; set; } = 100f;   // 最大架势值
     public bool IsPostureBroken { get; set; }       // 是否已破防
-    public float PostureBrokenTimer { get; set; }   // 破防硬直计时器
-    public float PostureRecoveryTimer { get; set; } // 架势恢复延迟计时器
+    // public float PostureBrokenTimer { get; set; }   // 破防硬直计时器
+    // public float PostureRecoveryTimer { get; set; } // 架势恢复延迟计时器
     public bool IsBlocking { get; set; }            // 是否正在格挡状态
     public bool IsParrying { get; set; }            // 是否正在弹反状态
 

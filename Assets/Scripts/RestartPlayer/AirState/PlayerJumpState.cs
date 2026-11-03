@@ -14,7 +14,11 @@ public class PlayerJumpState : PlayerAirState
         s.motor.Jump(s.config.jumpForce);
 
         if (Mathf.Abs(s.ctx.MoveInput.x) > 1f)
+        {
+            s.ctx.AirSprintMag = 1f;   
             s.anim.CrossFadeToSJump(0.05f);
+        }
+        else s.ctx.AirSprintMag = 0.5f;
 
 
     }
@@ -26,7 +30,7 @@ public class PlayerJumpState : PlayerAirState
         if (t.HasTarget) return t;
 
         // 空中横移（叶子状态做细节：你原来是0.5倍率）
-        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * 0.5f);
+        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * s.ctx.AirSprintMag);
 
         // 上升结束 -> Fall
         if (s.motor.Velocity.y < 0 && !s.ctx.IsAttacking)

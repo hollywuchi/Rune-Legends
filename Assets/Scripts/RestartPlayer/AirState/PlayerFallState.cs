@@ -37,7 +37,7 @@ public class PlayerFallState : PlayerAirState
             return new Transition(PlayerStateId.WallSlide);
 
         // 4) 空中横移
-        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * 0.5f);
+        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * s.ctx.AirSprintMag);
 
         // 5) 落地 -> Idle/Locomotion
         if (s.ctx.IsGrounded)

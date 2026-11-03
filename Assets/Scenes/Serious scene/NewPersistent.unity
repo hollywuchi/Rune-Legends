@@ -9712,7 +9712,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yelloLine: {fileID: 1889622999}
   character: {fileID: 1797461669}
-  currentPosture: 0
+  spriteRenderer_Line: {fileID: 1772071201}
+  spriteRenderer_Full: {fileID: 1889622999}
 --- !u!1 &1783532865
 GameObject:
   m_ObjectHideFlags: 0
@@ -10388,11 +10389,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPosture: 50
-  postureRecoveryRate: 15
-  postureRecoveryDelay: 1.5
+  outOfCombatDelay: 3
+  postureDecayRate: 5
+  brokenDuration: 1.5
   currentPosture: 0
   isBroken: 0
-  recoveryTimer: 0
   OnPostureBroken:
     m_PersistentCalls:
       m_Calls: []
@@ -10550,7 +10551,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 0.45, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1772071200}

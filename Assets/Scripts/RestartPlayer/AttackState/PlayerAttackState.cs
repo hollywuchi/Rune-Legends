@@ -28,6 +28,9 @@ public class PlayerAttackState : PlayerState
 
         // 攻击时减速
         s.motor.SetVelocityX(0f);
+
+        // 确保底层 Base Layer 回到 Idle，避免从跑步切入攻击时底层动画卡在跑步状态
+        s.anim.SetBreak();
         
         // 冻结移动输入
         s.inputGate.Freeze(0.1f);
@@ -50,9 +53,12 @@ public class PlayerAttackState : PlayerState
             return GetNextComboTransition();
         }
 
-        // 动画结束，返回地面状态
+        // 动画结束，返回地面状态（若仍按住方向键则直接衔接移动）
         if (isAnimFinished)
         {
+            if (Mathf.Abs(s.ctx.MoveInput.x) >= 0.1f)
+                return new Transition(PlayerStateId.Locomotion);
+
             return new Transition(PlayerStateId.Idle);
         }
 

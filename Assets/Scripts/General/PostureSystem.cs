@@ -16,18 +16,19 @@ public class PostureSystem : MonoBehaviour
     public float postureDecayRate;        // 衰减速率
 
     [Header("破防状态")]
-    // TODO:继续做破防衰减状态
-    public float postureRecoveryRate;     // 每秒减去的架势值
-    public float postureRecoveryDelay;   // 破防后持续时间，期间无法增加架势值
+    public float brokenDuration;            // 破防之后的大硬直时间
 
     public float currentPosture;  // 当前的架势值
     [HideInInspector] public bool isBroken;         // 是否处于破防状态
-    [HideInInspector] public float recoveryTimer;   // 恢复计时器
+    private float combatTimer;      // 脱战倒计时
+    private float brokenTimer;   // 破防恢复计时器
 
     public UnityEvent OnPostureBroken;
     public UnityEvent OnPostureRecovered;
 
     private Character character;
+
+    // private EventBinding<HurtEvent> hurtEventBinding;
 
     void Awake()
     {
@@ -38,26 +39,36 @@ public class PostureSystem : MonoBehaviour
     {
         currentPosture = 0f;
         isBroken = false;
-        recoveryTimer = 0f;
+        brokenTimer = 0f;
+        combatTimer = 0f;
+
+        // hurtEventBinding = new EventBinding<HurtEvent>(AddPosture);
     }
 
     private void Update()
     {
-        if (!isBroken) return;
+        // if (!isBroken) return;
 
-        if (currentPosture > 0f)
+        // if (currentPosture > 0f)
+        // {
+        //     brokenTimer -= Time.deltaTime;
+        //     if (brokenTimer <= 0f)
+        //     {
+        //         currentPosture -= postureRecoveryRate * Time.deltaTime;
+        //         if (currentPosture < 0f)
+        //         {
+        //             currentPosture = 0f;
+        //             ResetPosture();
+        //         }
+        //     }
+        // }
+        if (isBroken)
         {
-            recoveryTimer -= Time.deltaTime;
-            if (recoveryTimer <= 0f)
-            {
-                currentPosture -= postureRecoveryRate * Time.deltaTime;
-                if (currentPosture < 0f)
-                {
-                    currentPosture = 0f;
-                    ResetPosture();
-                }
-            }
+            UpdateBroken();
+            return;
         }
+
+        UpdateDecay();
     }
 
     /// <summary>
@@ -68,21 +79,50 @@ public class PostureSystem : MonoBehaviour
         if (isBroken) return;
 
         currentPosture = Mathf.Min(currentPosture + amount, maxPosture);
-        recoveryTimer = postureRecoveryDelay;
+
+        ResetCombatTimer();
 
         if (currentPosture >= maxPosture)
         {
             BreakPosture();
+            return;
         }
 
-        if (character == null) return;
-        EventBus<PoseChangeEvent>.Raise(new PoseChangeEvent
+        PostureChange(0.2f);
+    }
+
+    /// <summary>
+    /// 破防实现架势重置
+    /// </summary>
+    private void UpdateBroken()
+    {
+        brokenTimer -= Time.deltaTime;
+        if (brokenTimer <= 0f)
         {
-            character = character,
-            targetPosture = currentPosture,
-            maxPosture = maxPosture,
-            duration = 0.5f
-        });
+            ResetPosture();
+        }
+    }
+
+    /// <summary>
+    /// 没破防，正常脱战
+    /// </summary>
+    private void UpdateDecay()
+    {
+        if (currentPosture <= 0) return;
+
+        if (combatTimer > 0)
+        {
+            combatTimer -= Time.deltaTime;
+            return;
+        }
+
+        float prePoseture = currentPosture;
+        currentPosture = Mathf.Max(0, currentPosture - postureDecayRate * Time.deltaTime);
+        
+        if(Mathf.Abs(prePoseture-currentPosture) > 0.001f)
+        {
+            PostureChange(0f);
+        }
     }
 
     /// <summary>
@@ -90,16 +130,15 @@ public class PostureSystem : MonoBehaviour
     /// </summary>
     public void ReducePosture(float amount)
     {
+        if(isBroken) return;
         currentPosture = Mathf.Max(currentPosture - amount, 0f);
 
-        if (character == null) return;
-        EventBus<PoseChangeEvent>.Raise(new PoseChangeEvent
-        {
-            character = character,
-            targetPosture = currentPosture,
-            maxPosture = maxPosture,
-            duration = 0.5f
-        });
+        PostureChange(0.2f);
+    }
+
+    public void ResetCombatTimer()
+    {
+        combatTimer = outOfCombatDelay;
     }
 
     /// <summary>
@@ -109,7 +148,10 @@ public class PostureSystem : MonoBehaviour
     {
         isBroken = true;
         currentPosture = maxPosture;
+        brokenTimer = brokenDuration;
+
         OnPostureBroken?.Invoke();
+        PostureChange(0.1f);
     }
 
     /// <summary>
@@ -119,15 +161,20 @@ public class PostureSystem : MonoBehaviour
     {
         isBroken = false;
         currentPosture = 0f;
-        recoveryTimer = 0f;
+        brokenTimer = 0f;
         OnPostureRecovered?.Invoke();
-        EventBus<PoseChangeEvent>.Raise(new PoseChangeEvent
-        {
+        PostureChange(0.2f);
+    }
+
+    private void PostureChange(float duration)
+    {
+        if(character == null) return;
+
+        EventBus<PoseChangeEvent>.Raise(new PoseChangeEvent{
             character = character,
             targetPosture = currentPosture,
             maxPosture = maxPosture,
-            duration = 0.5f
+            duration = duration
         });
     }
-
 }

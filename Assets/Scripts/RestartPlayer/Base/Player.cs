@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
         // 普通动作状态
         stateRegistry.Register(PlayerStateId.Idle, new PlayerIdleState(s));
         stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(s));
-        stateRegistry.Register(PlayerStateId.Turn, new PlayerTurnState(s));
+        // stateRegistry.Register(PlayerStateId.Turn, new PlayerTurnState(s));
         stateRegistry.Register(PlayerStateId.Sprint, new PlayerSprintState(s));
         stateRegistry.Register(PlayerStateId.Jump, new PlayerJumpState(s));
         stateRegistry.Register(PlayerStateId.Fall, new PlayerFallState(s));
@@ -157,7 +157,8 @@ public class Player : MonoBehaviour
         // 霹雳一闪技能输入采样
         ctx.LightCutPressedThisFrame = inputActions.SkillSystem.LightCut.WasPressedThisFrame();
         ctx.IsHoldingLightCut = inputActions.SkillSystem.LightCut.IsPressed();
-        inputActions.SkillSystem.LightCut.performed += _ctx => ctx.LightCutPerformedThisFrame = true;
+        // inputActions.SkillSystem.LightCut.performed += _ctx => ctx.LightCutPerformedThisFrame = true;
+        ctx.LightCutPerformedThisFrame = inputActions.SkillSystem.LightCut.WasPerformedThisFrame();
 
         // 攻击力Buff技能输入采样
         ctx.LightCrownPressedThisFrame = inputActions.SkillSystem.LightCrown.WasPressedThisFrame();
@@ -193,6 +194,7 @@ public class Player : MonoBehaviour
         }
 
         // ====== 动画参数统一在 Driver 写入 ======
+        // bool lockGroundMoveAnim = ctx.IsAttacking || ctx.IsBlocking || ctx.IsHealing || ctx.IsLightCutCharging || ctx.IsLightCutting || ctx.IsBuffing;
         anim.SetInputX(Mathf.Abs(ctx.MoveInput.x));
         anim.SetIsGround(ctx.IsGrounded);
         anim.SetIsWall(ctx.IsTouchingWall);
@@ -216,7 +218,6 @@ public class Player : MonoBehaviour
 
         // FIXME:当前事件调用需要测试
         EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = character });
-        // HealthChangeEvent.RaisedEvent(character);
         stateMachine.Initialize(PlayerStateId.Idle);
     }
 
@@ -239,18 +240,6 @@ public class Player : MonoBehaviour
     public void Resurrect()
     {
         ctx.CanResurrect = true;
-    }
-
-    // 动画事件：转身结束
-    public void Animation_TurnFinished()
-    {
-        ctx.FlipFacing();
-        transform.Rotate(0, 180f, 0);
-
-        if (Mathf.Abs(ctx.MoveInput.x) < 0.01f)
-            stateMachine.RequestChangeState(PlayerStateId.Idle);
-        else
-            stateMachine.RequestChangeState(PlayerStateId.Locomotion);
     }
 
 
