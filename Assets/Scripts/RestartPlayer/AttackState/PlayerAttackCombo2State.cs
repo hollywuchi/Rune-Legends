@@ -11,7 +11,7 @@ public class PlayerAttackCombo2State : PlayerAttackState
     public override void Enter()
     {
         base.Enter();
-        s.ctx.AttackComboIndex = 2;
+        s.context.AttackComboIndex = 2;
         s.anim.SetAttackCombo(2);
         s.anim.SetIsAttacking(true);
         s.anim.TriggerAttack();

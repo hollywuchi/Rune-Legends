@@ -11,19 +11,19 @@ public class PlayerFallState : PlayerAirState
 
         // 只有“刚离地且未发生跳跃”的情况下才给土狼时间
         // 这里用 JumpCount==0 替代你之前的 jumpTime==0
-        s.ctx.CoyoteTimer = (s.ctx.JumpCount == 0) ? s.ctx.CoyoteTime : 0f;
+        s.context.CoyoteTimer = (s.context.JumpCount == 0) ? s.context.CoyoteTime : 0f;
     }
 
     public override Transition LogicUpdate()
     {
         // 1) 土狼时间优先级最高：在 base(Air) 处理二段跳前先截获
-        if (s.ctx.CoyoteTimer > 0f)
+        if (s.context.CoyoteTimer > 0f)
         {
-            s.ctx.CoyoteTimer -= Time.deltaTime;
+            s.context.CoyoteTimer -= Time.deltaTime;
 
-            if (s.ctx.JumpPressedThisFrame)
+            if (s.context.ConsumeJump())
             {
-                s.ctx.CoyoteTimer = 0f;
+                s.context.CoyoteTimer = 0f;
                 return new Transition(PlayerStateId.Jump);
             }
         }
@@ -37,12 +37,12 @@ public class PlayerFallState : PlayerAirState
             return new Transition(PlayerStateId.WallSlide);
 
         // 4) 空中横移
-        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * s.ctx.AirSprintMag);
+        s.motor.SetVelocityX(s.context.MoveInput.x * s.config.speed * s.context.AirSprintMag);
 
         // 5) 落地 -> Idle/Locomotion
-        if (s.ctx.IsGrounded)
+        if (s.context.IsGrounded)
         {
-            if (Mathf.Abs(s.ctx.MoveInput.x) < 0.1f)
+            if (Mathf.Abs(s.context.MoveInput.x) < 0.1f)
             {
                 s.anim.TriggerIdle();
                 return new Transition(PlayerStateId.Idle);
@@ -63,11 +63,11 @@ public class PlayerFallState : PlayerAirState
     /// <returns></returns>
     private bool ShouldWallSlide()
     {
-        if(s.ctx.IsTouchingLeftWall && s.ctx.IsTouchingRightWall)
+        if(s.context.IsTouchingLeftWall && s.context.IsTouchingRightWall)
             return false;
-        if(s.ctx.IsTouchingLeftWall && s.ctx.FacingDirection == -1)
+        if(s.context.IsTouchingLeftWall && s.context.FacingDirection == -1)
             return true;
-        if(s.ctx.IsTouchingRightWall && s.ctx.FacingDirection == 1)
+        if(s.context.IsTouchingRightWall && s.context.FacingDirection == 1)
             return true;
         return false;
     }

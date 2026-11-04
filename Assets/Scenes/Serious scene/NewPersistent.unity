@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
+  postureDamage: 0
   knockbackForce: 8
   focusGain: 7
 --- !u!60 &37520019
@@ -688,6 +689,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
+  postureDamage: 0
   knockbackForce: 5
   focusGain: 7
 --- !u!1 &116351357
@@ -1595,7 +1597,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  knockbackForce: 5
+  postureDamage: 0
+  knockbackForce: 8
   focusGain: 7
 --- !u!1 &299998865
 GameObject:
@@ -2281,7 +2284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
-  knockbackForce: 8
+  postureDamage: 0
+  knockbackForce: 10
   focusGain: 7
 --- !u!1 &351909169
 GameObject:
@@ -3102,12 +3106,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459923746}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17ae2b52c34e4e34c89d655f488cb432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulseSource: {fileID: 1612976016}
+  blockImpulseSource: {fileID: 1612976016}
+  heavyAtkImpulseSource: {fileID: 0}
 --- !u!114 &459923748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3499,6 +3504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
+  postureDamage: 0
   knockbackForce: 8
   focusGain: 7
 --- !u!60 &491672921
@@ -3844,6 +3850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
+  postureDamage: 0
   knockbackForce: 8
   focusGain: 7
 --- !u!60 &593304855
@@ -5154,6 +5161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
+  postureDamage: 0
   knockbackForce: 8
   focusGain: 7
 --- !u!60 &866578351
@@ -7501,6 +7509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 1
+  postureDamage: 0
   knockbackForce: 8
   focusGain: 7
 --- !u!60 &1423653303
@@ -8554,7 +8563,7 @@ GameObject:
   - component: {fileID: 1612976017}
   - component: {fileID: 1612976016}
   m_Layer: 0
-  m_Name: Camera Shake
+  m_Name: Block Camera Shake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8574,7 +8583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ImpulseDefinition:
     m_ImpulseChannel: 1
-    m_ImpulseShape: 3
+    m_ImpulseShape: 1
     m_CustomImpulseShape:
       serializedVersion: 2
       m_Curve: []
@@ -9684,8 +9693,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1452372239
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 399895756, guid: 2850b8fb60e664e4baa4493e6149aed7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

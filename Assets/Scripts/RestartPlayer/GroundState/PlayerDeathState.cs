@@ -11,7 +11,7 @@ public class PlayerDeathState : PlayerState
         s.anim.PlayDeath();
 
         s.character.currentFocus = 0;
-        s.ctx.CurrentFocus = 0;
+        s.context.CurrentFocus = 0;
         s.inputGate.Freeze(99999);
         s.character.attackBuffStack = 0;
 
@@ -20,7 +20,7 @@ public class PlayerDeathState : PlayerState
     public override Transition LogicUpdate()
     {
         // 死亡动画播完后切到休息状态
-        if (s.ctx.CanResurrect)
+        if (s.context.CanResurrect)
         {
             Resurrect();
             return new Transition(PlayerStateId.Rest);
@@ -32,14 +32,14 @@ public class PlayerDeathState : PlayerState
     {
         base.Exit();
         s.inputGate.Freeze(0.5f);
-        s.ctx.IsDead = false;
+        s.context.IsDead = false;
     }
 
     public void Resurrect()
     {
-        s.character.resurrectPoint = s.ctx.ResurrectPoint;
+        s.character.resurrectPoint = s.context.ResurrectPoint;
         s.character.Resurrect();
-        s.ctx.CanResurrect = false;
+        s.context.CanResurrect = false;
         s.anim.TriggerResurrect();
         s.inputGate.Freeze(0.5f);
     }

@@ -12,8 +12,8 @@ public class PlayerAirSprintState : PlayerAirState
         s.anim.ResetCommonTriggers();
         s.anim.PlayToSprint();
 
-        s.ctx.CanSprint = false;
-        s.ctx.IsSprintFinished = false;
+        s.context.CanSprint = false;
+        s.context.IsSprintFinished = false;
 
         s.motor.CaptureOriginalGravity();
         s.motor.GravityScale = 0f;
@@ -21,19 +21,20 @@ public class PlayerAirSprintState : PlayerAirState
         // s.fxSpeaker.CreateFX(s.motor.transform.position,s.ctx.FacingDirection,ParticalEffectType.AirDust);
         EventBus<FxEvent>.Raise(new FxEvent{
             playerTran = s.motor.transform.position,
-            dir = s.ctx.FacingDirection,
+            dir = s.context.FacingDirection,
             type = ParticalEffectType.AirDust
         });
-        s.motor.DashHorizontal(s.ctx.FacingDirection, s.config.sprintSpeed);
+        s.motor.DashHorizontal(s.context.FacingDirection, s.config.sprintSpeed);
     }
 
     public override Transition LogicUpdate()
     {
         // 空中冲刺期间：允许按跳打断（你的原逻辑）
-        if (s.ctx.JumpPressedThisFrame)
+        // if (s.context.JumpPressedThisFrame)
+        if(s.context.ConsumeJump())
             return new Transition(PlayerStateId.Jump);
 
-        if (s.ctx.IsSprintFinished)
+        if (s.context.IsSprintFinished)
             return new Transition(PlayerStateId.Fall);
 
         return Transition.None;

@@ -17,7 +17,7 @@ public class UImanager : MonoBehaviour
     private EventBinding<FocusChangeEvent> focusChangeEventBinding;
     private EventBinding<SceneLoadEvent> sceneLoadEventBinding;
     private EventBinding<LoadDataEvent> loadDataEventBinding;
-    private EventBinding<AfterLoadSceneEvent> AfterLoadSceneEventBinding;
+    private EventBinding<AfterSceneLoadEvent> AfterLoadSceneEventBinding;
     private EventBinding<GameOverEvent> gameOverEventBinding;
     private EventBinding<BackToMenuEvent> backToMenuEventBinding;
     private EventBinding<SynuEvent> synuEventBinding;
@@ -43,14 +43,14 @@ public class UImanager : MonoBehaviour
         focusChangeEventBinding = new EventBinding<FocusChangeEvent>(PowerChange);
         backToMenuEventBinding = new EventBinding<BackToMenuEvent>(LoadData);
         loadDataEventBinding = new EventBinding<LoadDataEvent>(LoadData);
-        AfterLoadSceneEventBinding = new EventBinding<AfterLoadSceneEvent>(CheckPlatformAndMenu);
+        AfterLoadSceneEventBinding = new EventBinding<AfterSceneLoadEvent>(CheckPlatformAndMenu);
         gameOverEventBinding = new EventBinding<GameOverEvent>(GameOver);
         synuEventBinding = new EventBinding<SynuEvent>(OnSync);
 
 
         EventBus<HealthChangeEvent>.Register(characterHealthEventBinding);
         EventBus<FocusChangeEvent>.Register(focusChangeEventBinding);
-        EventBus<AfterLoadSceneEvent>.Register(AfterLoadSceneEventBinding);
+        EventBus<AfterSceneLoadEvent>.Register(AfterLoadSceneEventBinding);
         EventBus<LoadDataEvent>.Register(loadDataEventBinding);
         EventBus<GameOverEvent>.Register(gameOverEventBinding);
         EventBus<BackToMenuEvent>.Register(backToMenuEventBinding);
@@ -69,7 +69,7 @@ public class UImanager : MonoBehaviour
     {
         EventBus<HealthChangeEvent>.Deregister(characterHealthEventBinding);
         EventBus<FocusChangeEvent>.Deregister(focusChangeEventBinding);
-        EventBus<AfterLoadSceneEvent>.Deregister(AfterLoadSceneEventBinding);
+        EventBus<AfterSceneLoadEvent>.Deregister(AfterLoadSceneEventBinding);
         EventBus<LoadDataEvent>.Deregister(loadDataEventBinding);
         EventBus<GameOverEvent>.Deregister(gameOverEventBinding);
         EventBus<BackToMenuEvent>.Deregister(backToMenuEventBinding);
@@ -104,7 +104,7 @@ public class UImanager : MonoBehaviour
         GameOverPanle.SetActive(true);
         EventSystem.current.SetSelectedGameObject(RestartBut);
     }
-    public void CheckPlatformAndMenu(AfterLoadSceneEvent e)
+    public void CheckPlatformAndMenu(AfterSceneLoadEvent e)
     {
         mobleTouch.SetActive(Application.isMobilePlatform);
 

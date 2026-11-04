@@ -13,36 +13,36 @@ public class PlayerAirState : PlayerState
         //     return Transition.None;
 
         // 空中上劈攻击,这里使用地面检测来简单的区分上劈和空中上劈
-        if (s.ctx.UpAttackPressedThisFrame && !s.ctx.IsAttacking)
+        if (!s.context.IsAttacking && s.context.ConsumeUpAttack())
         {
             return new Transition(PlayerStateId.AirUpAttack);
         }
 
         // 空中下劈攻击
-        if (s.ctx.DownAttackPressedThisFrame && !s.ctx.IsAttacking)
+        if (!s.context.IsAttacking && s.context.ConsumeDownAttack())
         {
             return new Transition(PlayerStateId.AirDownAttack);
         }
 
         // 空中攻击（优先级最高）
-        if (s.ctx.AttackPressedThisFrame && !s.ctx.IsAttacking)
+        if (!s.context.IsAttacking && s.context.ConsumeAttack())
         {
             return new Transition(PlayerStateId.AirAttack);
         }
 
         // 空中冲刺（域内规则）
-        if (s.ctx.SprintPressedThisFrame && s.ctx.CanSprint)
+        if ( s.context.CanSprint && s.context.ConsumeSprint())
             return new Transition(PlayerStateId.AirSprint);
 
         // 空中转向（安全：只做朝向，不切状态）
-        if (!Mathf.Approximately(s.ctx.MoveInput.x,0) && Mathf.Sign(s.ctx.MoveInput.x) != s.ctx.FacingDirection && !s.ctx.IsTouchingWall)
+        if (!Mathf.Approximately(s.context.MoveInput.x,0) && Mathf.Sign(s.context.MoveInput.x) != s.context.FacingDirection && !s.context.IsTouchingWall)
         {
-            s.ctx.FlipFacing();
+            s.context.FlipFacing();
             s.motor.FlipFacing();
         }
 
         // 二段跳
-        if (s.ctx.JumpPressedThisFrame && s.ctx.JumpCount < s.ctx.MaxJumpCount && !s.ctx.IsTouchingWall)
+        if (s.context.JumpCount < s.context.MaxJumpCount && !s.context.IsTouchingWall && s.context.ConsumeJump())
         {
             return new Transition(PlayerStateId.Jump2);
         }

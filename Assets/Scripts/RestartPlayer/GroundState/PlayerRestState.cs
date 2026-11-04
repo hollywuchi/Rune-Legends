@@ -14,10 +14,10 @@ public class PlayerRestState : PlayerGroundState
         base.Enter();
         s.character.CurrentHealth = s.character.maxHealth;
         s.character.currentFocus = s.config.maxFocus;
-        s.ctx.CurrentFocus = s.config.maxFocus;
+        s.context.CurrentFocus = s.config.maxFocus;
         // s.character.OnHealthChange?.Invoke(s.character);
         EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent{character = s.character});
-        s.character.resurrectPoint = s.ctx.ResurrectPoint;
+        s.character.resurrectPoint = s.context.ResurrectPoint;
 
         restIdleTimer = 0f;
 
@@ -52,13 +52,19 @@ public class PlayerRestState : PlayerGroundState
 
     private bool HasAnyInput()
     {
-        return Mathf.Abs(s.ctx.MoveInput.x) > 0.1f
-            // || Mathf.Abs(s.ctx.MoveInput.y) > 0.1f
-            || s.ctx.JumpPressedThisFrame
-            || s.ctx.SprintPressedThisFrame
-            || s.ctx.AttackPressedThisFrame
-            || s.ctx.SkillPressedThisFrame
-            || s.ctx.LightCutPressedThisFrame
-            || s.ctx.LightCrownPressedThisFrame;
+        return Mathf.Abs(s.context.MoveInput.x) > 0.1f
+               // || Mathf.Abs(s.ctx.MoveInput.y) > 0.1f
+               // || s.context.JumpPressedThisFrame
+               // || s.context.SprintPressedThisFrame
+               // || s.context.AttackPressedThisFrame
+               // || s.context.SkillPressedThisFrame
+               // || s.context.LightCutPressedThisFrame
+               // || s.context.LightCrownPressedThisFrame;
+               || s.context.ConsumeJump()
+               || s.context.ConsumeSprint()
+               || s.context.ConsumeAttack()
+               || s.context.ConsumeBlock()
+               || s.context.ConsumeDownAttack()
+               || s.context.ConsumeUpAttack();
     }
 }

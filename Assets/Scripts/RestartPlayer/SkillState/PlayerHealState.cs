@@ -18,10 +18,10 @@ public class PlayerHealState : PlayerState
         isAnimFinished = false;
 
         // 检查Focus是否足够
-        if (s.ctx.CurrentFocus < s.config.maxFocus) return;
+        if (s.context.CurrentFocus < s.config.maxFocus) return;
 
         // 设置治愈状态
-        s.ctx.IsHealing = true;
+        s.context.IsHealing = true;
         s.anim.SetIsHealing(true);
 
         // 停止移动
@@ -33,20 +33,20 @@ public class PlayerHealState : PlayerState
     public override Transition LogicUpdate()
     {
         // 受伤状态检查（优先级最高）
-        if (s.ctx.IsHurt)
+        if (s.context.IsHurt)
         {
             // 受伤打断治愈，返回受伤状态
             return new Transition(PlayerStateId.Hurt);
         }
 
         // 动画完成，恢复血量
-        if (s.ctx.SkillPerformedThisFrame)
+        if (s.context.SkillPerformedThisFrame)
         {
             HealPlayer();
             if (isAnimFinished)
                 return new Transition(PlayerStateId.Idle);
         }
-        else if (!s.ctx.IsHoldingSkill)
+        else if (!s.context.IsHoldingSkill)
         {
             return new Transition(PlayerStateId.Idle);
         }
@@ -58,7 +58,7 @@ public class PlayerHealState : PlayerState
         // }
 
         // 离地打断
-        if (!s.ctx.IsGrounded)
+        if (!s.context.IsGrounded)
         {
             return new Transition(PlayerStateId.Fall);
         }
@@ -75,7 +75,7 @@ public class PlayerHealState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsHealing = false;
+        s.context.IsHealing = false;
         s.anim.SetIsHealing(false);
     }
 
@@ -91,7 +91,7 @@ public class PlayerHealState : PlayerState
                 s.character.maxHealth
             );
             // 消耗全部Focus
-            s.ctx.CurrentFocus = 0;
+            s.context.CurrentFocus = 0;
             s.character.currentFocus = 0;
             // s.character.OnHealthChange?.Invoke(s.character);
             EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = s.character });

@@ -5,7 +5,7 @@ public sealed class PlayerServices
     // public Player player;
     public PlayerConfig config;
     public PlayerStateMachine stateMachine;
-    public PlayerContext ctx;
+    public PlayerContext context;
     public PlayerAnimatorDriver anim;
     public PlayerStateRegistry stateRegistry;
     public PlayerMotor2D motor;
@@ -19,7 +19,7 @@ public sealed class PlayerServices
     public PlayerServices(
         PlayerConfig config,
         PlayerStateMachine stateMachine,
-        PlayerContext ctx,
+        PlayerContext context,
         PlayerAnimatorDriver anim,
         PlayerStateRegistry stateRegistry,
         PlayerMotor2D motor,
@@ -30,7 +30,7 @@ public sealed class PlayerServices
         // this.player = player;
         this.config = config;
         this.stateMachine = stateMachine;
-        this.ctx = ctx;
+        this.context = context;
         this.anim = anim;
         this.stateRegistry = stateRegistry;
         this.motor = motor;

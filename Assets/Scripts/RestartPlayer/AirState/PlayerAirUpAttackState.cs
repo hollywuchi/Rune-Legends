@@ -21,8 +21,8 @@ public class PlayerAirUpAttackState : PlayerAirState
         isAnimFinished = false;
 
         // 设置攻击状态
-        s.ctx.IsAttacking = true;
-        s.ctx.IsUpAttacking = true;
+        s.context.IsAttacking = true;
+        s.context.IsUpAttacking = true;
         s.anim.SetIsUpAttacking(true);
         s.anim.SetIsAttacking(true);
 
@@ -45,7 +45,7 @@ public class PlayerAirUpAttackState : PlayerAirState
         }
 
         // 落地直接进入地面状态
-        if (s.ctx.IsGrounded)
+        if (s.context.IsGrounded)
         {
             s.anim.PlayIdle();
             return new Transition(PlayerStateId.Idle);
@@ -68,8 +68,8 @@ public class PlayerAirUpAttackState : PlayerAirState
         s.motor.RestoreOriginalGravity();
         
         // 清除攻击状态
-        s.ctx.IsAttacking = false;
-        s.ctx.IsUpAttacking = false;
+        s.context.IsAttacking = false;
+        s.context.IsUpAttacking = false;
         s.anim.SetIsUpAttacking(false);
         s.anim.SetIsAttacking(false);
     }

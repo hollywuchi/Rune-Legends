@@ -8,10 +8,10 @@ public class PlayerWallJumpState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
-        s.ctx.JumpCount++;
+        s.context.JumpCount++;
 
         // 换成直接添加力的方式，感觉更自然一些
-        s.motor.WallJump(s.config.wallJumpForce, -s.ctx.FacingDirection, s.config.wallHorizontalBoost);
+        s.motor.WallJump(s.config.wallJumpForce, -s.context.FacingDirection, s.config.wallHorizontalBoost);
         s.inputGate.Freeze(0.1f);
         // TODO：可以添加特效
 
@@ -25,12 +25,12 @@ public class PlayerWallJumpState : PlayerAirState
 
         // 继承JumpState的空中规则（空中横移/Fall）
         if (!s.inputGate.IsFrozen)
-            s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed * 0.5f);
+            s.motor.SetVelocityX(s.context.MoveInput.x * s.config.speed * 0.5f);
 
-        if (s.ctx.IsTouchingWall && s.ctx.MoveInput.x != 0)
+        if (s.context.IsTouchingWall && s.context.MoveInput.x != 0)
             return new Transition(PlayerStateId.WallSlide);
 
-        if (!s.ctx.IsTouchingWall && s.motor.Velocity.y < 0)
+        if (!s.context.IsTouchingWall && s.motor.Velocity.y < 0)
             return new Transition(PlayerStateId.Fall);
         return Transition.None;
     }

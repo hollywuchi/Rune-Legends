@@ -18,7 +18,7 @@ public class PlayerLightCrownState : PlayerState
         isAnimFinished = false;
 
         // 检查专注值是否足够
-        if (s.ctx.CurrentFocus < s.config.LightCrownFocusCost)
+        if (s.context.CurrentFocus < s.config.LightCrownFocusCost)
         {
             isAnimFinished = true;
             return;
@@ -32,7 +32,7 @@ public class PlayerLightCrownState : PlayerState
         }
 
         // 设置Buff状态
-        s.ctx.IsBuffing = true;
+        s.context.IsBuffing = true;
         s.anim.SetIsLightCrown(true);
 
         // 停止移动
@@ -43,7 +43,7 @@ public class PlayerLightCrownState : PlayerState
     public override Transition LogicUpdate()
     {
         // 受伤状态检查（优先级最高）
-        if (s.ctx.IsHurt)
+        if (s.context.IsHurt)
         {
             // 受伤打断Buff，返回受伤状态
             return new Transition(PlayerStateId.Hurt);
@@ -56,20 +56,20 @@ public class PlayerLightCrownState : PlayerState
         }
 
         // Buff动画完成，施加Buff
-        if (s.ctx.LightCrownPerformedThisFrame)
+        if (s.context.LightCrownPerformedThisFrame)
         {
             ApplyBuff();
             if (isAnimFinished)
                 return new Transition(PlayerStateId.Idle);
         }
         // 松开按键，取消Buff
-        else if (!s.ctx.IsHoldingLightCrown)
+        else if (!s.context.IsHoldingLightCrown)
         {
             return new Transition(PlayerStateId.Idle);
         }
 
         // 离地打断
-        if (!s.ctx.IsGrounded)
+        if (!s.context.IsGrounded)
         {
             return new Transition(PlayerStateId.Fall);
         }
@@ -86,8 +86,8 @@ public class PlayerLightCrownState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsBuffing = false;
-        s.ctx.LightCrownPerformedThisFrame = false;
+        s.context.IsBuffing = false;
+        s.context.LightCrownPerformedThisFrame = false;
         s.anim.SetIsLightCrown(false);
         Debug.Log("退出攻击力Buff状态");
     }
@@ -101,7 +101,7 @@ public class PlayerLightCrownState : PlayerState
 
         // 消耗专注值
         s.character.currentFocus -= s.config.LightCrownFocusCost;
-        s.ctx.CurrentFocus = s.character.currentFocus;
+        s.context.CurrentFocus = s.character.currentFocus;
         EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
 
         // 增加Buff层数
@@ -125,6 +125,6 @@ public class PlayerLightCrownState : PlayerState
     public void OnBuffAnimFinished()
     {
         isAnimFinished = true;
-        s.ctx.LightCrownPerformedThisFrame = true;
+        s.context.LightCrownPerformedThisFrame = true;
     }
 }

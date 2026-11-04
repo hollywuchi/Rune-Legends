@@ -8,13 +8,13 @@ public sealed class PlayerContext
 {
     // ====== 输入（每帧由Player.Update采样写入）======
     public Vector2 MoveInput { get; set; }
-    public bool JumpPressedThisFrame { get; set; }
-    public bool SprintPressedThisFrame { get; set; }
+    // public bool JumpPressedThisFrame { get; set; }
+    // public bool SprintPressedThisFrame { get; set; }
     public bool SprintIsHeld { get; set; }
 
     // ====== 图层信息 ======
-    public int playerLayer { get; set; }
-    public int enemyLayer { get; set; }
+    public int PlayerLayer { get; set; }
+    public int EnemyLayer { get; set; }
 
     // ====== 传感器 ======
     public bool IsGrounded { get; set; }
@@ -34,9 +34,9 @@ public sealed class PlayerContext
     public bool IsSprintFinished { get; set; }
 
     // ====== 攻击系统 ======
-    public bool AttackPressedThisFrame { get; set; }
-    public bool UpAttackPressedThisFrame { get; set; }
-    public bool DownAttackPressedThisFrame { get; set; }
+    // public bool AttackPressedThisFrame { get; set; }
+    // public bool UpAttackPressedThisFrame { get; set; }
+    // public bool DownAttackPressedThisFrame { get; set; }
     public int AttackComboIndex { get; set; }          // 当前连招段数: 0=无, 1=第一段, 2=第二段, 3=第三段
     public int MaxComboCount { get; set; } = 3;        // 最大连招段数
     public bool IsAttacking { get; set; }              // 是否正在攻击
@@ -57,7 +57,7 @@ public sealed class PlayerContext
     public float TurnTimer { get; set; }
 
     // ====== 空中冲刺变量 =======
-    public float AirSprintMag { get; set;}
+    public float AirSprintMag { get; set; }
 
     // ====== 技能输入 ======
     public bool SkillPressedThisFrame { get; set; }     // 刚开始按下
@@ -103,7 +103,7 @@ public sealed class PlayerContext
 
     // ===== 格挡系统 =====
     public bool BlockIsHeld { get; set; }           // 是否按住格挡键
-    public bool BlockPressedThisFrame { get; set; } // 本帧按下格挡键
+    // public bool BlockPressedThisFrame { get; set; } // 本帧按下格挡键
     public bool isParry { get; set; }                 // 是否在弹反状态
 
     // ===== 架势系统 =====
@@ -146,8 +146,8 @@ public sealed class PlayerContext
     {
         // 重置所有状态为初始值
         MoveInput = Vector2.zero;
-        JumpPressedThisFrame = false;
-        SprintPressedThisFrame = false;
+        // JumpPressedThisFrame = false;
+        // SprintPressedThisFrame = false;
         SprintIsHeld = false;
 
         IsGrounded = false;
@@ -198,16 +198,74 @@ public sealed class PlayerContext
         IsDead = false;
         CanResurrect = false;
     }
-    // /// <summary>
-    // /// 进入下一段连招
-    // /// </summary>
-    // public void AdvanceCombo()
-    // {
-    //     AttackComboIndex++;
-    //     if (AttackComboIndex > MaxComboCount)
-    //         AttackComboIndex = 1;
-    //     AttackAnimFinished = false;
-    //     CanCombo = false;
-    //     ComboWindowTimer = 0f;
-    // }
+
+    // ======== 预输入与缓冲 ========
+
+    // 所有的计时器 -- 更新
+    public float JumpBufferTimer { get; set; }
+    public float AttackBufferTimer { get; set; }
+    public float UpAttackBufferTimer { get; set; }
+    public float DownAttackBufferTimer { get; set; }
+    public float SprintBufferTimer { get; set; }
+    public float BlockBufferTimer { get; set; }
+
+
+    public void TickInputBuffers(float dt)
+    {
+        if (JumpBufferTimer > 0) JumpBufferTimer -= dt;
+        if (AttackBufferTimer > 0) AttackBufferTimer -= dt;
+        if (UpAttackBufferTimer > 0) UpAttackBufferTimer -= dt;
+        if (DownAttackBufferTimer > 0) DownAttackBufferTimer -= dt;
+        if (SprintBufferTimer > 0) SprintBufferTimer -= dt;
+        if (BlockBufferTimer > 0) BlockBufferTimer -= dt;
+    }
+
+    public bool ConsumeJump()
+    {
+        if (JumpBufferTimer > 0) { JumpBufferTimer = 0; return true; }
+        return false;
+    }
+
+    public bool ConsumeAttack()
+    {
+        if (AttackBufferTimer > 0) { AttackBufferTimer = 0; return true; }
+        return false;
+    }
+
+    public bool ConsumeUpAttack()
+    {
+        if (UpAttackBufferTimer > 0) { UpAttackBufferTimer = 0; return true; }
+        return false;
+    }
+
+    public bool ConsumeDownAttack()
+    {
+        if (DownAttackBufferTimer > 0) { DownAttackBufferTimer = 0; return true; }
+        return false;
+    }
+
+    public bool ConsumeSprint()
+    {
+        if (SprintBufferTimer > 0) { SprintBufferTimer = 0; return true; }
+        return false;
+    }
+
+    public bool ConsumeBlock()
+    {
+        if (BlockBufferTimer > 0) { BlockBufferTimer = 0; return true; }
+        return false;
+    }
+
+    /// <summary>
+    /// 清除所有的预输入，在受伤，死亡复活状态的时候要执行
+    /// </summary>
+    public void ClearAllBufferTimers()
+    {
+        JumpBufferTimer = 0;
+        AttackBufferTimer = 0;
+        UpAttackBufferTimer = 0;
+        DownAttackBufferTimer = 0;
+        SprintBufferTimer = 0;
+        BlockBufferTimer = 0;
+    }
 }

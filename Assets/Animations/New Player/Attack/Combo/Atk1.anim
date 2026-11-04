@@ -184,15 +184,15 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.4
-    functionName: Animation_ComboWindowOpen
+  - time: 0
+    functionName: Animation_ComboWindowClose
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.6
-    functionName: Animation_ComboWindowClose
+  - time: 0.46666667
+    functionName: Animation_ComboWindowOpen
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

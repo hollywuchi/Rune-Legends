@@ -35,8 +35,8 @@ public class PlayerPostureBrokenState : PlayerState
         if (brokenTimer >= s.config.postureBrokenDuration)
         {
             // 破防结束，重置架势
-            s.ctx.IsPostureBroken = false;
-            s.ctx.CurrentPosture = 0f;
+            s.context.IsPostureBroken = false;
+            s.context.CurrentPosture = 0f;
             return new Transition(PlayerStateId.Idle);
         }
 

@@ -7,16 +7,13 @@ using UnityEngine;
 /// </summary>
 public class PlayerAttackCombo3State : PlayerAttackState
 {
-    // 第三段攻击的连招窗口更晚打开，给玩家更明确的终结技反馈
-    protected override float ComboWindowDelay => 0.35f;
-    protected override float ComboWindowDuration => 0.4f;
 
     public PlayerAttackCombo3State(PlayerServices s) : base(s) { }
 
     public override void Enter()
     {
         base.Enter();
-        s.ctx.AttackComboIndex = 3;
+        s.context.AttackComboIndex = 3;
         s.anim.SetAttackCombo(3);
         s.anim.SetIsAttacking(true);
         s.anim.TriggerAttack();
@@ -32,6 +29,6 @@ public class PlayerAttackCombo3State : PlayerAttackState
     {
         base.Exit();
         // 重置连招状态，为下一轮连招做准备
-        s.ctx.ResetAttackState();
+        s.context.ResetAttackState();
     }
 }

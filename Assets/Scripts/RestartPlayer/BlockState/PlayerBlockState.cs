@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 格挡状态：按住格挡键进入，包含弹反窗口判定
 /// </summary>
-public class PlayerBlockState : PlayerState
+public class PlayerBlockState : PlayerGroundState
 {
     private bool isInParryWindow;
     private bool blockHitAnimPlayed;
@@ -15,15 +15,18 @@ public class PlayerBlockState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        s.ctx.IsBlocking = true;
+        s.context.IsBlocking = true;
         s.anim.SetIsBlocking(true);
         s.anim.TriggerBlock();
-        s.anim.SetBreak();
+        
         s.motor.SetVelocityX(0f);
-        s.ctx.isParry = false;
+        s.context.isParry = false;
+        isAnimFinished = false;
 
+        s.context.AttackBufferTimer = 0f;
+        
         blockHitAnimPlayed = false;
-        // Debug.Log("进入格挡状态，弹反窗口开启");
+        
     }
 
     public override Transition LogicUpdate()
@@ -31,20 +34,20 @@ public class PlayerBlockState : PlayerState
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
 
-        if (s.ctx.isParry && isInParryWindow)
+        if (s.context.isParry && isInParryWindow)
         {
             return new Transition(PlayerStateId.Parry);
         }
         // 架势破碎判定
-        if (s.ctx.IsPostureBroken)
+        if (s.context.IsPostureBroken)
             return new Transition(PlayerStateId.PostureBroken);
 
         // 松开格挡键 -> 退出格挡
-        if (!s.ctx.BlockIsHeld && isAnimFinished)
+        if (!s.context.BlockIsHeld && isAnimFinished)
             return new Transition(PlayerStateId.Idle);
 
         // 离地 -> 退出格挡
-        if (!s.ctx.IsGrounded)
+        if (!s.context.IsGrounded)
             return new Transition(PlayerStateId.Fall);
 
 
@@ -61,7 +64,7 @@ public class PlayerBlockState : PlayerState
     {
         base.Exit();
         s.anim.SetIsBlocking(false);
-        s.ctx.IsBlocking = false;
+        s.context.IsBlocking = false;
         // Debug.Log("退出格挡状态，弹反窗口关闭");
     }
 
@@ -90,8 +93,9 @@ public class PlayerBlockState : PlayerState
     {
         if (isParry)
         {
-            s.ctx.isParry = isParry;
+            s.context.isParry = isParry;
             // TODO：播放弹反粒子
+            EventBus<BlockCameraShakeEvent>.Raise(new BlockCameraShakeEvent());
         }
         else
         {

@@ -3,25 +3,37 @@ using UnityEngine;
 
 public class PlayerSprintState : PlayerGroundState
 {
-    public PlayerSprintState(PlayerServices s) : base(s) { }
+    public PlayerSprintState(PlayerServices s) : base(s)
+    {
+    }
 
     public override void Enter()
     {
         base.Enter();
 
-        s.ctx.IsSprintFinished = false;
+        s.context.IsSprintFinished = false;
 
         s.anim.ResetCommonTriggers();
         s.anim.PlayToSprint();
 
-        // s.fxSpeaker.CreateFX(s.motor.transform.position,s.ctx.FacingDirection,ParticalEffectType.SprintDust);
-        EventBus<FxEvent>.Raise(new FxEvent{
+        if (s.context.MoveInput.x != 0)
+        {
+            if(s.context.FacingDirection != Mathf.Sign(s.context.MoveInput.x))
+            {
+                s.motor.FlipFacing();
+                s.context.FlipFacing();
+            }
+            s.motor.SetVelocityX(Mathf.Sign(s.context.MoveInput.x) * s.config.sprintSpeed);
+        }
+        else
+            s.motor.SetVelocityX(s.context.FacingDirection * s.config.sprintSpeed);
+        
+        EventBus<FxEvent>.Raise(new FxEvent
+        {
             playerTran = s.motor.transform.position,
-            dir = s.ctx.FacingDirection,
+            dir = s.context.FacingDirection,
             type = ParticalEffectType.SprintDust
         });
-        s.motor.SetVelocityX(s.ctx.FacingDirection * s.config.sprintSpeed);
-
     }
 
     public override Transition LogicUpdate()
@@ -29,13 +41,14 @@ public class PlayerSprintState : PlayerGroundState
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
 
-        if (s.ctx.IsSprintFinished)
+        if (s.context.IsSprintFinished)
         {
-            if (s.ctx.SprintIsHeld || Mathf.Abs(s.ctx.MoveInput.x) > 0.1f)
+            if (s.context.SprintIsHeld || Mathf.Abs(s.context.MoveInput.x) > 0.1f)
             {
                 s.anim.TriggerIng();
                 return new Transition(PlayerStateId.Locomotion);
             }
+
             s.anim.TriggerIdle();
             return new Transition(PlayerStateId.Idle);
         }

@@ -19,13 +19,13 @@ public class PlayerLightCutState : PlayerState
         isAnimFinished = false;
 
         // 检查专注值是否足够
-        if (s.ctx.CurrentFocus < s.config.lightCutFocusCost)
+        if (s.context.CurrentFocus < s.config.lightCutFocusCost)
         {
             isAnimFinished = true;
             return;
         }
 
-        s.ctx.IsLightCutCharging = true;
+        s.context.IsLightCutCharging = true;
 
         // 停止移动
         s.motor.SetVelocityX(0);
@@ -38,7 +38,7 @@ public class PlayerLightCutState : PlayerState
     public override Transition LogicUpdate()
     {
         // 受伤状态检查（优先级最高）
-        if (s.ctx.IsHurt)
+        if (s.context.IsHurt)
         {
             // FIXME:受伤打断蓄力，返回受伤状态,这里需要测试
             // s.fxSpeaker.ReliseFX();
@@ -53,14 +53,14 @@ public class PlayerLightCutState : PlayerState
 
 
         // 蓄力阶段：松开按键则释放技能
-        if (!s.ctx.IsHoldingLightCut && !s.ctx.IsLightCutting && s.ctx.LightCutPerformedThisFrame)
+        if (!s.context.IsHoldingLightCut && !s.context.IsLightCutting && s.context.LightCutPerformedThisFrame)
         {
             ReleaseLightCut();
-            s.ctx.IsLightCutting = true;
+            s.context.IsLightCutting = true;
         }
 
         // 打断条件：在蓄力阶段（未冲刺），松开按键，且蓄力未完成
-        if (!s.ctx.IsHoldingLightCut && !s.ctx.IsLightCutting && !s.ctx.LightCutPerformedThisFrame)
+        if (!s.context.IsHoldingLightCut && !s.context.IsLightCutting && !s.context.LightCutPerformedThisFrame)
         {
             // s.fxSpeaker.ReliseFX();
             s.anim.SetExitCharging();
@@ -68,7 +68,7 @@ public class PlayerLightCutState : PlayerState
         }
 
         // 离地则中断
-        if (!s.ctx.IsGrounded && !isAnimFinished)
+        if (!s.context.IsGrounded && !isAnimFinished)
         {
             return new Transition(PlayerStateId.Fall);
         }
@@ -79,7 +79,7 @@ public class PlayerLightCutState : PlayerState
     public override void PhysicsUpdate()
     {
         // 蓄力期间保持静止
-        if (!s.ctx.IsLightCutting)
+        if (!s.context.IsLightCutting)
         {
             s.motor.SetVelocityX(0);
         }
@@ -88,11 +88,11 @@ public class PlayerLightCutState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsLightCutCharging = false;
-        s.ctx.LightCutPerformedThisFrame = false;
-        s.ctx.IsLightCutting = false;
-        s.ctx.IsHoldingLightCut = false;
-        s.motor.IgnorePlayerCollision(s.ctx.enemyLayer, false);
+        s.context.IsLightCutCharging = false;
+        s.context.LightCutPerformedThisFrame = false;
+        s.context.IsLightCutting = false;
+        s.context.IsHoldingLightCut = false;
+        s.motor.IgnorePlayerCollision(s.context.EnemyLayer, false);
     }
 
     /// <summary>
@@ -102,13 +102,13 @@ public class PlayerLightCutState : PlayerState
     {
         s.anim.SetIsCharging(false);
 
-        s.ctx.IsLightCutCharging = false;
-        s.ctx.LightCutPerformedThisFrame = false;
-        s.motor.IgnorePlayerCollision(s.ctx.enemyLayer, true); // 冲刺期间无敌
+        s.context.IsLightCutCharging = false;
+        s.context.LightCutPerformedThisFrame = false;
+        s.motor.IgnorePlayerCollision(s.context.EnemyLayer, true); // 冲刺期间无敌
 
         // 消耗专注值
         s.character.currentFocus -= s.config.lightCutFocusCost;
-        s.ctx.CurrentFocus = s.character.currentFocus;
+        s.context.CurrentFocus = s.character.currentFocus;
         // s.character.OnFocusChange?.Invoke(s.character);
         EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent{character = s.character});
     }
@@ -116,11 +116,11 @@ public class PlayerLightCutState : PlayerState
     public void OnLightCutAnimFinished()
     {
         isAnimFinished = true;
-        s.ctx.IsLightCutting = false;
+        s.context.IsLightCutting = false;
     }
 
     public void LightCutMove(float cutForce)
     {
-        s.motor.LightCutDash(s.ctx.FacingDirection, cutForce);
+        s.motor.LightCutDash(s.context.FacingDirection, cutForce);
     }
 }

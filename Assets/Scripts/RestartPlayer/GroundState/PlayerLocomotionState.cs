@@ -11,7 +11,8 @@ public class PlayerLocomotionState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        _TurnTime = s.ctx.TurnTime;
+        _TurnTime = s.context.TurnTime;
+        // s.anim.ReSetBresk();
     }
 
     public override Transition LogicUpdate()
@@ -21,13 +22,13 @@ public class PlayerLocomotionState : PlayerGroundState
 
         Run();
 
-        if (MathF.Abs(s.ctx.MoveInput.x) >= 0.1f)
+        if (MathF.Abs(s.context.MoveInput.x) >= 0.1f)
         {
-            _TurnTime = s.ctx.TurnTime;
+            _TurnTime = s.context.TurnTime;
 
-            if (Mathf.Sign(s.ctx.MoveInput.x) != s.ctx.FacingDirection)
+            if (Mathf.Sign(s.context.MoveInput.x) != s.context.FacingDirection)
             {
-                s.ctx.FlipFacing();
+                s.context.FlipFacing();
                 s.motor.FlipFacing();
             }
 
@@ -38,7 +39,7 @@ public class PlayerLocomotionState : PlayerGroundState
 
         if (_TurnTime <= 0f)
         {
-            s.anim.SetBreak();
+            // s.anim.SetBreak();
             return new Transition(PlayerStateId.Idle);
         }
 
@@ -53,6 +54,6 @@ public class PlayerLocomotionState : PlayerGroundState
 
     private void Run()
     {
-        s.motor.SetVelocityX(s.ctx.MoveInput.x * s.config.speed);
+        s.motor.SetVelocityX(s.context.MoveInput.x * s.config.speed);
     }
 }

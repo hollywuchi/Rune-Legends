@@ -31,9 +31,9 @@ public class PlayerClimbState : PlayerAirState
         if (t.HasTarget) return t;
 
         // 和Fall状态一样的转换
-        if (s.ctx.IsGrounded)
+        if (s.context.IsGrounded)
         {
-            if (Mathf.Abs(s.ctx.MoveInput.x) < 0.1f)
+            if (Mathf.Abs(s.context.MoveInput.x) < 0.1f)
             {
                 s.anim.TriggerIdle();
                 return new Transition(PlayerStateId.Idle);

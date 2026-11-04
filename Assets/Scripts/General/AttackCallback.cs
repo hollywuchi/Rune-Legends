@@ -14,7 +14,7 @@ public class AttackCallback : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
-            player.ctx.DownAttackBounced = true;
+            player.context.DownAttackBounced = true;
     }
 
 }

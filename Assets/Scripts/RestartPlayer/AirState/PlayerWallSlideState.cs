@@ -11,7 +11,7 @@ public class PlayerWallSlideState : PlayerAirState
     {
         base.Enter();
         s.motor.FlipFacing();
-        s.ctx.JumpCount = 0; // 重置跳跃计数，允许玩家在墙上进行多段跳跃
+        s.context.JumpCount = 0; // 重置跳跃计数，允许玩家在墙上进行多段跳跃
     }
 
     public override Transition LogicUpdate()
@@ -21,13 +21,13 @@ public class PlayerWallSlideState : PlayerAirState
 
         WallSlide();
 
-        if (s.ctx.IsTouchingWall && !s.ctx.IsTouchingTopWall)
+        if (s.context.IsTouchingWall && !s.context.IsTouchingTopWall)
             return new Transition(PlayerStateId.Climb);
-        if (s.ctx.JumpPressedThisFrame)
+        if (s.context.ConsumeJump())
             return new Transition(PlayerStateId.WallJump);
-        if (s.ctx.IsGrounded)
+        if (s.context.IsGrounded)
             return new Transition(PlayerStateId.Idle);
-        if (!s.ctx.IsTouchingWall)
+        if (!s.context.IsTouchingWall)
             return new Transition(PlayerStateId.Fall);
 
         return Transition.None;

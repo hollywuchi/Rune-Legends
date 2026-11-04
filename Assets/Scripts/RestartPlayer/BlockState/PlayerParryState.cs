@@ -14,7 +14,7 @@ public class PlayerParryState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        s.ctx.IsParrying = true;
+        s.context.IsParrying = true;
 
         // 播放弹反动画
         // s.anim.TriggerParrySuccess();
@@ -28,7 +28,7 @@ public class PlayerParryState : PlayerState
         s.motor.StartCoroutine(HitStop());
 
         // 减少自身架势值
-        s.ctx.CurrentPosture = Mathf.Max(s.ctx.CurrentPosture - s.config.parryPostureRecovery, 0f);
+        s.context.CurrentPosture = Mathf.Max(s.context.CurrentPosture - s.config.parryPostureRecovery, 0f);
 
         parryTimer = 0f;
 
@@ -45,7 +45,7 @@ public class PlayerParryState : PlayerState
         if (parryTimer >= ParryDuration)
         {
             // 松开格挡键 -> 回到Idle
-            if (!s.ctx.BlockIsHeld)
+            if (!s.context.BlockIsHeld)
                 return new Transition(PlayerStateId.Idle);
             // 继续按住 -> 回到格挡状态
             return new Transition(PlayerStateId.Block);
@@ -57,7 +57,7 @@ public class PlayerParryState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsParrying = false;
+        s.context.IsParrying = false;
     }
 
     /// <summary>

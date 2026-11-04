@@ -178,7 +178,7 @@ public class SceneLoader : MonoBehaviour, ISaveable
         }
         isLoading = false;
 
-        EventBus<AfterLoadSceneEvent>.Raise(new AfterLoadSceneEvent { LoadScene = currentLoadedScene });
+        EventBus<AfterSceneLoadEvent>.Raise(new AfterSceneLoadEvent { LoadScene = currentLoadedScene });
     }
 
     public void BackToMenu()

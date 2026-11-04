@@ -26,7 +26,7 @@ public class NewSavePoint : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            context = collision.GetComponent<Player>().ctx;
+            context = collision.GetComponent<Player>().context;
             if (context == null) return;
 
             // 判断当前 Sequence 是否存在且正在播放

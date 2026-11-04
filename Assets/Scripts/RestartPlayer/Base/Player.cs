@@ -9,26 +9,28 @@ public class Player : MonoBehaviour
     public InputManager inputActions;
     // private Transform telePoint => GetComponent<Transform>().Find("ClimbPoint");
 
-    [Header("基本组件")]
-    public PlayerConfig config;
+    [Header("基本组件")] public PlayerConfig config;
     public PhysicsCheck physicsCheck;
     public PlayerMotor2D motor;
+
     public PlayerAnimatorDriver anim;
+
     // public PlayerFxSpeaker fxSpeaker;
     public Character character;
 
-    [Header("事件引用")]
-    private EventBinding<CameraShakeEvent> cameraShakeEventBinding;
+    [Header("事件引用")] private EventBinding<BlockCameraShakeEvent> cameraShakeEventBinding;
     private EventBinding<NewGameEvent> newGameEventBinding;
     private EventBinding<BackToMenuEvent> backToMenuEventBinding;
     private EventBinding<DeathEvent> deathEventBinding;
+
     private EventBinding<HurtEvent> hurtEventBinding;
+
     // public VoidSo cameraShakeEvent;
     // public VoidSo NewGameEvent;
     // public VoidSo BackToMenuEvent;
     // public CharacterEventSo HealthChangeEvent;
     public PlayerServices s;
-    public PlayerContext ctx;
+    public PlayerContext context;
     public PlayerStateRegistry stateRegistry;
     public PlayerStateMachine stateMachine;
     public PlayerInputGate inputGate;
@@ -40,11 +42,11 @@ public class Player : MonoBehaviour
 
         // ====== 服务容器初始化 ======
         character = GetComponent<Character>();
-        if (ctx == null) ctx = new PlayerContext();
+        if (context == null) context = new PlayerContext();
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();
-        s = new PlayerServices(config, stateMachine, ctx, anim, stateRegistry, motor, inputGate, character);
+        s = new PlayerServices(config, stateMachine, context, anim, stateRegistry, motor, inputGate, character);
 
         // WORKFLOW：在这里注册状态
         // 普通动作状态
@@ -84,6 +86,7 @@ public class Player : MonoBehaviour
         // 休息状态
         stateRegistry.Register(PlayerStateId.Rest, new PlayerRestState(s));
     }
+
     void OnEnable()
     {
         newGameEventBinding = new EventBinding<NewGameEvent>(NewGame);
@@ -100,9 +103,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         // 初始化朝向（与旧字段FacingDirection一致的职责转移到ctx）
-        ctx.SetFacingDirection(1);
-        ctx.playerLayer = LayerMask.NameToLayer("Player");
-        ctx.enemyLayer = LayerMask.NameToLayer("Enemy");
+        context.SetFacingDirection(1);
+        context.PlayerLayer = LayerMask.NameToLayer("Player");
+        context.EnemyLayer = LayerMask.NameToLayer("Enemy");
         stateMachine.Initialize(PlayerStateId.Idle);
     }
 
@@ -117,7 +120,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-
         inputGate.Tick(Time.deltaTime); // 更新输入冻结计时器
         if (inputGate.IsFrozen || SceneManager.GetSceneByName("Menu").isLoaded)
         {
@@ -137,67 +139,85 @@ public class Player : MonoBehaviour
             move.x *= 2;
         }
 
-        // ctx.MoveInput = move;
-        ctx.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
+        context.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
 
-        ctx.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
-        ctx.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
-        ctx.SprintIsHeld = inputActions.MoveSystem.Sprint.IsPressed();
-
-        // 攻击输入采样
-        ctx.AttackPressedThisFrame = inputActions.AttackSystem.Attack.WasPressedThisFrame();
-        ctx.UpAttackPressedThisFrame = inputActions.AttackSystem.UpAttack.WasPressedThisFrame();
-        ctx.DownAttackPressedThisFrame = inputActions.AttackSystem.DownAttack.WasPressedThisFrame();
+        context.SprintIsHeld = inputActions.MoveSystem.Sprint.IsPressed();
+        // 部分输入检测已经被预输入替代
+        // context.JumpPressedThisFrame = inputActions.MoveSystem.Jump.WasPressedThisFrame();
+        // context.SprintPressedThisFrame = inputActions.MoveSystem.Sprint.WasPressedThisFrame();
+        // context.AttackPressedThisFrame = inputActions.AttackSystem.Attack.WasPressedThisFrame();
+        // context.UpAttackPressedThisFrame = inputActions.AttackSystem.UpAttack.WasPressedThisFrame();
+        // context.DownAttackPressedThisFrame = inputActions.AttackSystem.DownAttack.WasPressedThisFrame();
+        // context.BlockPressedThisFrame = inputActions.AttackSystem.Block.WasPressedThisFrame();
 
         // 治疗技能输入采样
-        ctx.SkillPressedThisFrame = inputActions.SkillSystem.Heal.WasPressedThisFrame();
-        ctx.IsHoldingSkill = inputActions.SkillSystem.Heal.IsPressed();
-        ctx.SkillPerformedThisFrame = inputActions.SkillSystem.Heal.WasPerformedThisFrame();
+        context.SkillPressedThisFrame = inputActions.SkillSystem.Heal.WasPressedThisFrame();
+        context.IsHoldingSkill = inputActions.SkillSystem.Heal.IsPressed();
+        context.SkillPerformedThisFrame = inputActions.SkillSystem.Heal.WasPerformedThisFrame();
 
         // 霹雳一闪技能输入采样
-        ctx.LightCutPressedThisFrame = inputActions.SkillSystem.LightCut.WasPressedThisFrame();
-        ctx.IsHoldingLightCut = inputActions.SkillSystem.LightCut.IsPressed();
+        context.LightCutPressedThisFrame = inputActions.SkillSystem.LightCut.WasPressedThisFrame();
+        context.IsHoldingLightCut = inputActions.SkillSystem.LightCut.IsPressed();
         // inputActions.SkillSystem.LightCut.performed += _ctx => ctx.LightCutPerformedThisFrame = true;
-        ctx.LightCutPerformedThisFrame = inputActions.SkillSystem.LightCut.WasPerformedThisFrame();
+        context.LightCutPerformedThisFrame = inputActions.SkillSystem.LightCut.WasPerformedThisFrame();
 
         // 攻击力Buff技能输入采样
-        ctx.LightCrownPressedThisFrame = inputActions.SkillSystem.LightCrown.WasPressedThisFrame();
-        ctx.IsHoldingLightCrown = inputActions.SkillSystem.LightCrown.IsPressed();
-        ctx.LightCrownPerformedThisFrame = inputActions.SkillSystem.LightCrown.WasPerformedThisFrame();
+        context.LightCrownPressedThisFrame = inputActions.SkillSystem.LightCrown.WasPressedThisFrame();
+        context.IsHoldingLightCrown = inputActions.SkillSystem.LightCrown.IsPressed();
+        context.LightCrownPerformedThisFrame = inputActions.SkillSystem.LightCrown.WasPerformedThisFrame();
 
         // 格挡输入采样
-        ctx.BlockIsHeld = inputActions.AttackSystem.Block.IsPressed();
-        ctx.BlockPressedThisFrame = inputActions.AttackSystem.Block.WasPressedThisFrame();
+        context.BlockIsHeld = inputActions.AttackSystem.Block.IsPressed();
 
         // 激活存档点按键采样
-        ctx.ActivatePressedThisFrame = inputActions.SkillSystem.ActivePoint.WasPressedThisFrame();
-        ctx.IsHoldingActivate = inputActions.SkillSystem.ActivePoint.IsPressed();
-        ctx.ActivatePerformedThisFrame = inputActions.SkillSystem.ActivePoint.WasPerformedThisFrame();
+        context.ActivatePressedThisFrame = inputActions.SkillSystem.ActivePoint.WasPressedThisFrame();
+        context.IsHoldingActivate = inputActions.SkillSystem.ActivePoint.IsPressed();
+        context.ActivatePerformedThisFrame = inputActions.SkillSystem.ActivePoint.WasPerformedThisFrame();
 
         // 休息按键采样
-        ctx.RestPressedThisFrame = inputActions.MoveSystem.Rest.WasPressedThisFrame();
+        context.RestPressedThisFrame = inputActions.MoveSystem.Rest.WasPressedThisFrame();
+
+        // ====== 预输入缓冲计时器 =======
+
+        context.TickInputBuffers(Time.deltaTime);
+
+        if (inputActions.MoveSystem.Jump.WasPressedThisFrame())
+            context.JumpBufferTimer = config.jumpBufferTime;
+        if (inputActions.MoveSystem.Sprint.WasPressedThisFrame())
+            context.SprintBufferTimer = config.sprintBufferTime;
+        if (inputActions.AttackSystem.Attack.WasPressedThisFrame())
+            context.AttackBufferTimer = config.attackBufferTime;
+        if (inputActions.AttackSystem.UpAttack.WasPressedThisFrame())
+            context.AttackBufferTimer = config.attackBufferTime;
+        if (inputActions.AttackSystem.DownAttack.WasPressedThisFrame())
+            context.AttackBufferTimer = config.attackBufferTime;
+        if (inputActions.AttackSystem.Block.WasPressedThisFrame())
+            context.BlockBufferTimer = config.blockBufferTime;
+
 
         // ====== 传感器 -> ctx ======
-        ctx.CurrentFocus = character.currentFocus;
-        ctx.IsGrounded = physicsCheck.IsGround;
-        ctx.IsTouchingLeftWall = physicsCheck.touchLeftWall;
-        ctx.IsTouchingRightWall = physicsCheck.touchRightWall;
-        ctx.IsTouchingTopLeftWall = physicsCheck.touchLeftTopWall;
-        ctx.IsTouchingTopRightWall = physicsCheck.touchRightTopWall;
+        context.CurrentFocus = character.currentFocus;
+        context.IsGrounded = physicsCheck.IsGround;
+        context.IsTouchingLeftWall = physicsCheck.touchLeftWall;
+        context.IsTouchingRightWall = physicsCheck.touchRightWall;
+        context.IsTouchingTopLeftWall = physicsCheck.touchLeftTopWall;
+        context.IsTouchingTopRightWall = physicsCheck.touchRightTopWall;
 
         // 架势系统同步
         if (character.postureSystem != null)
         {
-            ctx.CurrentPosture = character.postureSystem.currentPosture;
-            ctx.MaxPosture = character.postureSystem.maxPosture;
-            ctx.IsPostureBroken = character.postureSystem.isBroken;
+            context.CurrentPosture = character.postureSystem.currentPosture;
+            context.MaxPosture = character.postureSystem.maxPosture;
+            context.IsPostureBroken = character.postureSystem.isBroken;
         }
 
         // ====== 动画参数统一在 Driver 写入 ======
-        // bool lockGroundMoveAnim = ctx.IsAttacking || ctx.IsBlocking || ctx.IsHealing || ctx.IsLightCutCharging || ctx.IsLightCutting || ctx.IsBuffing;
-        anim.SetInputX(Mathf.Abs(ctx.MoveInput.x));
-        anim.SetIsGround(ctx.IsGrounded);
-        anim.SetIsWall(ctx.IsTouchingWall);
+        // if (context.IsAttacking || context.IsBlocking)
+        //     anim.SetInputX(0);
+        // else
+        anim.SetInputX(Mathf.Abs(context.MoveInput.x));
+        anim.SetIsGround(context.IsGrounded);
+        anim.SetIsWall(context.IsTouchingWall);
         anim.SetVelocityY(Mathf.Clamp(motor.Velocity.y, -1f, 1f));
 
         // ====== 状态机 Tick（统一提交切换）======
@@ -212,7 +232,7 @@ public class Player : MonoBehaviour
     private void NewGame()
     {
         // 新游戏注册方法，用于重置玩家的各项数值
-        ctx.Reset();
+        context.Reset();
         inputActions.Enable();
         stateMachine.currentState.Exit();
 
@@ -229,7 +249,7 @@ public class Player : MonoBehaviour
     {
         if (gameObject.transform.rotation.y == -1)
         {
-            ctx.SetFacingDirection(1);
+            context.SetFacingDirection(1);
             motor.FlipFacing();
         }
     }
@@ -239,7 +259,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Resurrect()
     {
-        ctx.CanResurrect = true;
+        context.CanResurrect = true;
     }
 
 
@@ -249,24 +269,26 @@ public class Player : MonoBehaviour
         EventBus<FxEvent>.Raise(new FxEvent
         {
             playerTran = motor.transform.position,
-            dir = ctx.FacingDirection,
+            dir = context.FacingDirection,
             type = ParticalEffectType.UnderDust
         });
     }
+
     public void CreateChargingFX()
     {
         // fxSpeaker.CreateFX(motor.transform.position, ctx.FacingDirection, ParticalEffectType.Charging);
         EventBus<FxEvent>.Raise(new FxEvent
         {
             playerTran = motor.transform.position,
-            dir = ctx.FacingDirection,
+            dir = context.FacingDirection,
             type = ParticalEffectType.Charging
         });
     }
 
     public IEnumerator Teleport_AfterClimb()
     {
-        motor.Teleport(transform.position + new Vector3(ctx.FacingDirection * 1.372f, 2.67f, 0)); // 这里直接上移1单位，避免攀爬点设置不准引发的bug
+        motor.Teleport(transform.position +
+                       new Vector3(context.FacingDirection * 1.372f, 2.67f, 0)); // 这里直接上移1单位，避免攀爬点设置不准引发的bug
         yield return new WaitForSeconds(0.01f); // 等待0.1秒，确保位置更新后再播放落地动画
         anim.PlayLand();
     }
@@ -308,7 +330,7 @@ public class Player : MonoBehaviour
                 break;
             case PlayerSprintState:
             case PlayerAirSprintState:
-                ctx.IsSprintFinished = true;
+                context.IsSprintFinished = true;
                 break;
             default:
                 break;
@@ -332,7 +354,7 @@ public class Player : MonoBehaviour
     {
         if (e.character != this.character) return;
         if (stateMachine.currentState is PlayerHurtState) return; // 已经在受伤状态了就别重复请求了
-        ctx.IsHurt = true;
+        context.IsHurt = true;
     }
 
     public void PlayerDeath(DeathEvent e)
@@ -340,7 +362,7 @@ public class Player : MonoBehaviour
         if (e.character != this.character) return;
         if (stateMachine.currentState is PlayerDeathState) return;
         EventBus<GameOverEvent>.Raise(new GameOverEvent { });
-        ctx.IsDead = true;
+        context.IsDead = true;
     }
 
     public void Animation_ParryWindowOff()
@@ -360,6 +382,7 @@ public class Player : MonoBehaviour
         var attackState = stateMachine.currentState as PlayerAttackState;
         attackState?.ApplyAttackMove(distance);
     }
+
     /// <summary>
     /// 为流光闪击提供的动画事件回调：执行冲刺移动
     /// </summary>

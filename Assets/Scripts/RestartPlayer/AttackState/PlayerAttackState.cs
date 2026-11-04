@@ -4,59 +4,68 @@ using UnityEngine;
 /// <summary>
 /// 攻击状态基类，管理连招逻辑
 /// </summary>
-public class PlayerAttackState : PlayerState
+public class PlayerAttackState : PlayerGroundState
 {
-    protected float attackTimer;
-    protected float comboWindowTimer;
     protected bool isAnimFinished;
-    
+    protected bool ComboBuffered;
+
     // 自动连招窗口配置
-    protected virtual float ComboWindowDelay => 0.2f;  // 连招窗口打开延迟（秒）
+    protected virtual float ComboWindowDelay => 0.2f; // 连招窗口打开延迟（秒）
     protected virtual float ComboWindowDuration => 0.5f; // 连招窗口持续时间（秒）
 
-    public PlayerAttackState(PlayerServices s) : base(s) { }
+    public PlayerAttackState(PlayerServices s) : base(s)
+    {
+    }
 
     public override void Enter()
     {
         base.Enter();
-        s.ctx.IsAttacking = true;
-        s.ctx.AttackAnimFinished = false;
-        s.ctx.CanCombo = false;
+        s.context.IsAttacking = true;
+        s.context.AttackAnimFinished = false;
+        s.context.CanCombo = false;
         isAnimFinished = false;
-        attackTimer = 0f;
-        comboWindowTimer = 0f;
+        ComboBuffered = false;
 
         // 攻击时减速
         s.motor.SetVelocityX(0f);
 
         // 确保底层 Base Layer 回到 Idle，避免从跑步切入攻击时底层动画卡在跑步状态
-        s.anim.SetBreak();
-        
+        // s.anim.SetBreak();
+
         // 冻结移动输入
-        s.inputGate.Freeze(0.1f);
+        // s.inputGate.Freeze(0.1f);
     }
 
     public override Transition LogicUpdate()
     {
+        var t = base.LogicUpdate();
+        if (t.HasTarget) return t;
+
         // 受伤状态检查（优先级最高）
-        if (s.ctx.IsHurt)
+        if (s.context.IsHurt)
         {
             // 受伤打断攻击，返回受伤状态
             return new Transition(PlayerStateId.Hurt);
         }
 
-        attackTimer += Time.deltaTime;
+        if (s.context.ConsumeAttack())
+            ComboBuffered = true;
+
+
+        // if (attackTimer >= 0.1f && s.context.ConsumeAttack())
+        // ComboBuffered = true;
 
         // 检测连招输入
-        if (s.ctx.CanCombo && s.ctx.AttackPressedThisFrame)
+        if (s.context.CanCombo && ComboBuffered)
         {
+            ComboBuffered = false;
             return GetNextComboTransition();
         }
 
         // 动画结束，返回地面状态（若仍按住方向键则直接衔接移动）
         if (isAnimFinished)
         {
-            if (Mathf.Abs(s.ctx.MoveInput.x) >= 0.1f)
+            if (Mathf.Abs(s.context.MoveInput.x) >= 0.1f)
                 return new Transition(PlayerStateId.Locomotion);
 
             return new Transition(PlayerStateId.Idle);
@@ -74,8 +83,9 @@ public class PlayerAttackState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsAttacking = false;
+        s.context.IsAttacking = false;
         s.anim.SetIsAttacking(false);
+        ComboBuffered = false;
     }
 
     /// <summary>
@@ -92,7 +102,7 @@ public class PlayerAttackState : PlayerState
     public void OnAttackAnimFinished()
     {
         isAnimFinished = true;
-        s.ctx.AttackAnimFinished = true;
+        s.context.AttackAnimFinished = true;
     }
 
     /// <summary>
@@ -100,7 +110,7 @@ public class PlayerAttackState : PlayerState
     /// </summary>
     public void OnComboWindowOpen()
     {
-        s.ctx.CanCombo = true;
+        s.context.CanCombo = true;
     }
 
     /// <summary>
@@ -108,7 +118,7 @@ public class PlayerAttackState : PlayerState
     /// </summary>
     public void OnComboWindowClose()
     {
-        s.ctx.CanCombo = false;
+        s.context.CanCombo = false;
     }
 
     /// <summary>
@@ -116,7 +126,7 @@ public class PlayerAttackState : PlayerState
     /// </summary>
     public void ApplyAttackMove(float distance)
     {
-        float dir = s.ctx.FacingDirection;
+        float dir = s.context.FacingDirection;
         s.motor.Teleport(s.motor.transform.position + new Vector3(dir * distance, 0, 0));
     }
 }

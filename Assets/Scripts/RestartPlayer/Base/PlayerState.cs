@@ -17,11 +17,11 @@ public abstract class PlayerState
     /// </summary>
     public virtual Transition LogicUpdate() 
     {
-        if(s.ctx.IsDead)
+        if(s.context.IsDead)
         {
             return new Transition(PlayerStateId.Death);
         }
-        if(s.ctx.IsHurt)
+        if(s.context.IsHurt)
         {
             return new Transition(PlayerStateId.Hurt);
         }

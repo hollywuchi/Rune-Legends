@@ -16,7 +16,7 @@ public class PlayerHurtState : PlayerState
         base.Enter();
 
         // 设置受伤状态
-        s.ctx.IsHurt = true;
+        s.context.IsHurt = true;
 
         // 播放受伤动画
         s.anim.TriggerHurt();
@@ -37,7 +37,7 @@ public class PlayerHurtState : PlayerState
         // 时间到，退出受伤状态
         if (hurtTimer <= 0)
         {
-            if (s.ctx.IsPostureBroken)
+            if (s.context.IsPostureBroken)
                 return new Transition(PlayerStateId.PostureBroken);
             return new Transition(PlayerStateId.Idle);
         }
@@ -48,6 +48,6 @@ public class PlayerHurtState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        s.ctx.IsHurt = false;
+        s.context.IsHurt = false;
     }
 }

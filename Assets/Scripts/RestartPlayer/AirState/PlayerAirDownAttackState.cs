@@ -24,8 +24,8 @@ public class PlayerAirDownAttackState : PlayerAirState
         isAnimFinished = false;
 
         // 设置攻击状态
-        s.ctx.IsAttacking = true;
-        s.ctx.IsDownAttacking = true;
+        s.context.IsAttacking = true;
+        s.context.IsDownAttacking = true;
         s.anim.SetIsDownAttacking(true);
         s.anim.SetIsAttacking(true);
 
@@ -41,10 +41,10 @@ public class PlayerAirDownAttackState : PlayerAirState
     public override Transition LogicUpdate()
     {
         // 命中敌人弹跳
-        if (s.ctx.DownAttackBounced)
+        if (s.context.DownAttackBounced)
         {
             s.motor.Jump(BounceForce);
-            s.ctx.DownAttackBounced = false;
+            s.context.DownAttackBounced = false;
         }
         // 攻击时间结束或动画完成，进入降落状态
         if (isAnimFinished)
@@ -53,7 +53,7 @@ public class PlayerAirDownAttackState : PlayerAirState
         }
 
         // 落地直接进入地面状态
-        if (s.ctx.IsGrounded)
+        if (s.context.IsGrounded)
         {
             s.anim.PlayIdle();
             return new Transition(PlayerStateId.Idle);
@@ -76,8 +76,8 @@ public class PlayerAirDownAttackState : PlayerAirState
         s.motor.RestoreOriginalGravity();
 
         // 清除攻击状态
-        s.ctx.IsAttacking = false;
-        s.ctx.IsDownAttacking = false;
+        s.context.IsAttacking = false;
+        s.context.IsDownAttacking = false;
         s.anim.SetIsDownAttacking(false);
         s.anim.SetIsAttacking(false);
     }
