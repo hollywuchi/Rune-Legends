@@ -73,3 +73,6 @@ TagManager:
   - name: forward3
     uniqueID: 4153474851
     locked: 0
+  - name: CameraSortingLayer
+    uniqueID: 3974369545
+    locked: 0

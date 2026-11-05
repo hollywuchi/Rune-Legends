@@ -158,8 +158,11 @@ public class Player : MonoBehaviour
         // 霹雳一闪技能输入采样
         context.LightCutPressedThisFrame = inputActions.SkillSystem.LightCut.WasPressedThisFrame();
         context.IsHoldingLightCut = inputActions.SkillSystem.LightCut.IsPressed();
-        // inputActions.SkillSystem.LightCut.performed += _ctx => ctx.LightCutPerformedThisFrame = true;
-        context.LightCutPerformedThisFrame = inputActions.SkillSystem.LightCut.WasPerformedThisFrame();
+        if (inputActions.SkillSystem.LightCut.WasPerformedThisFrame()) context.LightCutPerformedThisFrame = true;
+        
+        // 危险的操作，会导致内存泄露
+        // inputActions.SkillSystem.LightCut.performed += _ctx => context.LightCutPerformedThisFrame = true;
+        // context.LightCutPerformedThisFrame = inputActions.SkillSystem.LightCut.WasPerformedThisFrame();
 
         // 攻击力Buff技能输入采样
         context.LightCrownPressedThisFrame = inputActions.SkillSystem.LightCrown.WasPressedThisFrame();
@@ -188,9 +191,9 @@ public class Player : MonoBehaviour
         if (inputActions.AttackSystem.Attack.WasPressedThisFrame())
             context.AttackBufferTimer = config.attackBufferTime;
         if (inputActions.AttackSystem.UpAttack.WasPressedThisFrame())
-            context.AttackBufferTimer = config.attackBufferTime;
+            context.UpAttackBufferTimer = config.attackBufferTime;
         if (inputActions.AttackSystem.DownAttack.WasPressedThisFrame())
-            context.AttackBufferTimer = config.attackBufferTime;
+            context.DownAttackBufferTimer = config.attackBufferTime;
         if (inputActions.AttackSystem.Block.WasPressedThisFrame())
             context.BlockBufferTimer = config.blockBufferTime;
 

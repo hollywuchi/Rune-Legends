@@ -92,10 +92,12 @@ public struct SynuEvent : IEvent
 
 public struct BlockCameraShakeEvent : IEvent
 {
+    public float Force;
 }
 
 public struct HeavyAtkCameraShakeEvent : IEvent
 {
+    public float Force;
 }
 
 #endregion

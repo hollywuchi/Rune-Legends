@@ -1,5 +1,6 @@
 using RestartPlayer.HFSM;
 using UnityEngine;
+
 // using UnityEngine.UIElements;
 
 /// <summary>
@@ -11,7 +12,9 @@ public class PlayerLightCutState : PlayerState
 {
     private bool isAnimFinished;
 
-    public PlayerLightCutState(PlayerServices s) : base(s) { }
+    public PlayerLightCutState(PlayerServices s) : base(s)
+    {
+    }
 
     public override void Enter()
     {
@@ -26,11 +29,12 @@ public class PlayerLightCutState : PlayerState
         }
 
         s.context.IsLightCutCharging = true;
+        s.context.LightCutPerformedThisFrame = false;
 
         // 停止移动
         s.motor.SetVelocityX(0);
 
-        // 冻结移动输入
+
         s.anim.SetToCharging();
         s.anim.SetIsCharging(true);
     }
@@ -40,8 +44,6 @@ public class PlayerLightCutState : PlayerState
         // 受伤状态检查（优先级最高）
         if (s.context.IsHurt)
         {
-            // FIXME:受伤打断蓄力，返回受伤状态,这里需要测试
-            // s.fxSpeaker.ReliseFX();
             return new Transition(PlayerStateId.Hurt);
         }
 
@@ -62,8 +64,6 @@ public class PlayerLightCutState : PlayerState
         // 打断条件：在蓄力阶段（未冲刺），松开按键，且蓄力未完成
         if (!s.context.IsHoldingLightCut && !s.context.IsLightCutting && !s.context.LightCutPerformedThisFrame)
         {
-            // s.fxSpeaker.ReliseFX();
-            s.anim.SetExitCharging();
             return new Transition(PlayerStateId.Idle);
         }
 
@@ -88,6 +88,11 @@ public class PlayerLightCutState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        if (s.context.IsLightCutCharging)
+        {
+            s.anim.SetExitCharging();
+            EventBus<ReliseFxEvent>.Raise(new ReliseFxEvent());
+        }
         s.context.IsLightCutCharging = false;
         s.context.LightCutPerformedThisFrame = false;
         s.context.IsLightCutting = false;
@@ -109,8 +114,7 @@ public class PlayerLightCutState : PlayerState
         // 消耗专注值
         s.character.currentFocus -= s.config.lightCutFocusCost;
         s.context.CurrentFocus = s.character.currentFocus;
-        // s.character.OnFocusChange?.Invoke(s.character);
-        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent{character = s.character});
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
     }
 
     public void OnLightCutAnimFinished()

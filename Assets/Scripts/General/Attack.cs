@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Attack : MonoBehaviour
@@ -9,8 +10,17 @@ public class Attack : MonoBehaviour
    [Header("击退参数")]
    public float knockbackForce = 5f;
 
+   [Header("震屏参数")] 
+   public bool shakeOnHit;
+   public float shakeForce;
+   private bool hasShakenThisSwing;
    [Header("专注获取")]
    public float focusGain = 7.5f;         // 获得专注值
+
+   private void OnEnable()
+   {
+      hasShakenThisSwing = false;
+   }
 
    private void OnTriggerEnter2D(Collider2D other)
    {
@@ -41,6 +51,12 @@ public class Attack : MonoBehaviour
             {
                Enemy enemy = other.GetComponent<Enemy>();
                enemy?.OnTakeDamage(transform);
+
+               if (shakeOnHit && !hasShakenThisSwing)
+               {
+                  hasShakenThisSwing = true;
+                  EventBus<HeavyAtkCameraShakeEvent>.Raise(new HeavyAtkCameraShakeEvent(){Force = shakeForce});
+               }
             }
          }
       }

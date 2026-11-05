@@ -47,8 +47,8 @@ public class CameraControl : MonoBehaviour
     /// <summary>
     /// 实现震动效果（官方函数）
     /// </summary>
-    private void OnBlockShake() => blockImpulseSource.GenerateImpulse();
-    private void OnHeavyAtkShake() => heavyAtkImpulseSource.GenerateImpulse();
+    private void OnBlockShake(BlockCameraShakeEvent e) => blockImpulseSource.GenerateImpulse(e.Force);
+    private void OnHeavyAtkShake(HeavyAtkCameraShakeEvent e) => heavyAtkImpulseSource.GenerateImpulse(e.Force);
 
     /// <summary>
     /// 找到这个场景中的边界碰撞体

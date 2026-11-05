@@ -60,6 +60,12 @@ public sealed class PlayerAnimatorDriver : MonoBehaviour
     public void SetIsUpAttacking(bool isUpAttacking) => animator.SetBool("IsUpAttacking", isUpAttacking);
     public void SetIsDownAttacking(bool isDownAttacking) => animator.SetBool("IsDownAttacking", isDownAttacking);
 
+    // ====== 屏幕震动 ======
+    public void HeavyAtkCameraShake() =>
+        EventBus<HeavyAtkCameraShakeEvent>.Raise(new HeavyAtkCameraShakeEvent() { Force = 2f });
+
+    public void ToChargingCameraShake() =>
+        EventBus<HeavyAtkCameraShakeEvent>.Raise(new HeavyAtkCameraShakeEvent() { Force = 1f });
     // ====== 治愈动画 ======
     public void SetIsHealing(bool isHealing) => animator.SetBool("IsHealing", isHealing);
 

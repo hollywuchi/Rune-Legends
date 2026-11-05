@@ -22,7 +22,7 @@ public class PlayerGroundState : PlayerState
         // 先调用基类的逻辑更新，处理受伤状态
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
-        
+
         if (s.context.CanRest && s.context.RestPressedThisFrame)
             return new Transition(PlayerStateId.Rest);
 
@@ -45,8 +45,8 @@ public class PlayerGroundState : PlayerState
         }
 
         // 霹雳一闪技能输入检测
-        if (s.context.LightCutPressedThisFrame && !s.context.IsHealing && !s.context.IsAttacking
-            && s.context.CurrentFocus >= s.config.lightCutFocusCost)
+        if (s.context.LightCutPressedThisFrame && !s.context.IsHealing &&
+            s.context.CurrentFocus >= s.config.lightCutFocusCost)
         {
             return new Transition(PlayerStateId.LightCut);
         }
@@ -68,5 +68,4 @@ public class PlayerGroundState : PlayerState
 
         return base.LogicUpdate();
     }
-   
 }

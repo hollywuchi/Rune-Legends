@@ -41,22 +41,21 @@ public class PlayerAttackState : PlayerGroundState
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
 
-        // 受伤状态检查（优先级最高）
-        if (s.context.IsHurt)
-        {
-            // 受伤打断攻击，返回受伤状态
-            return new Transition(PlayerStateId.Hurt);
-        }
+        // // 受伤状态检查（优先级最高）
+        // if (s.context.IsHurt)
+        // {
+        //     // 受伤打断攻击，返回受伤状态
+        //     return new Transition(PlayerStateId.Hurt);
+        // }
+        
+        // if(s.context.light)
 
-        if (s.context.ConsumeAttack())
+        // 只有在当前段还未锁存连招时才消耗预输入缓冲，避免在同一段攻击里把下一段的预输入也提前吞掉
+        if (!ComboBuffered && s.context.ConsumeAttack())
             ComboBuffered = true;
 
-
-        // if (attackTimer >= 0.1f && s.context.ConsumeAttack())
-        // ComboBuffered = true;
-
-        // 检测连招输入
-        if (s.context.CanCombo && ComboBuffered)
+        // 检测连招输入（若动画已到最后一帧结束且有锁存输入，也直接衔接下一段，防止在最后一帧被吞）
+        if ((s.context.CanCombo || isAnimFinished) && ComboBuffered)
         {
             ComboBuffered = false;
             return GetNextComboTransition();

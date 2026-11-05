@@ -191,6 +191,13 @@ AnimationClip:
     floatParameter: 35
     intParameter: 0
     messageOptions: 0
+  - time: 0.11764706
+    functionName: HeavyAtkCameraShake
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.5882353
     functionName: Animation_Callback
     data: 

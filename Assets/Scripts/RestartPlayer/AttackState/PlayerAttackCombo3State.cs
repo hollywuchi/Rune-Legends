@@ -17,6 +17,7 @@ public class PlayerAttackCombo3State : PlayerAttackState
         s.anim.SetAttackCombo(3);
         s.anim.SetIsAttacking(true);
         s.anim.TriggerAttack();
+        
     }
 
     protected override Transition GetNextComboTransition()

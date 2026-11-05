@@ -22,7 +22,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.11111111
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -31,7 +31,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.2
+        time: 0.16666667
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -40,7 +40,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.26666668
+        time: 0.22222222
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -61,38 +61,38 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 21300000, guid: 334665d993d83ee44888d4310ff355bc, type: 3}
-    - time: 0.06666667
+    - time: 0.055555556
       value: {fileID: 21300000, guid: 85625d6ad776daa4ab7f6ed368cec33d, type: 3}
-    - time: 0.13333334
+    - time: 0.11111111
       value: {fileID: 21300000, guid: 62d99fe5dc98bff4991e7d68386e4d11, type: 3}
-    - time: 0.2
+    - time: 0.16666667
       value: {fileID: 21300000, guid: ea54b4382edaa97458bd38a304de3a26, type: 3}
-    - time: 0.26666668
+    - time: 0.22222222
       value: {fileID: 21300000, guid: 74190e975e3dc6c47b914f2c6ccdae14, type: 3}
-    - time: 0.33333334
+    - time: 0.2777778
       value: {fileID: 21300000, guid: de9b38534d74a054fb2ab955c02248c4, type: 3}
-    - time: 0.4
+    - time: 0.33333334
       value: {fileID: 21300000, guid: 612f0eb4f9995224b92c44ff0883a6fe, type: 3}
-    - time: 0.46666667
+    - time: 0.3888889
       value: {fileID: 21300000, guid: 4e80e515051461042bfa76ce2ad44404, type: 3}
-    - time: 0.53333336
+    - time: 0.44444445
       value: {fileID: 21300000, guid: 320c180f81d95804b9d7117834d364c3, type: 3}
-    - time: 0.6
+    - time: 0.5
       value: {fileID: 21300000, guid: 1ea66e01411dbad469f1966cd11ae1b7, type: 3}
-    - time: 0.6666667
+    - time: 0.5555556
       value: {fileID: 21300000, guid: d21024f9735c36347b2dabbacb085461, type: 3}
-    - time: 0.73333335
+    - time: 0.6111111
       value: {fileID: 21300000, guid: 49b504a8fd4db4f4a8c3711ae92f2c81, type: 3}
-    - time: 0.8
+    - time: 0.6666667
       value: {fileID: 21300000, guid: 830636567a61ac44393adad435faa37c, type: 3}
-    - time: 0.8666667
+    - time: 0.7222222
       value: {fileID: 21300000, guid: 73896668080302c478044552e8ade43d, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 15
+  m_SampleRate: 18
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -137,7 +137,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.93333334
+    m_StopTime: 0.7777778
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -158,7 +158,7 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.13333334
+        time: 0.11111111
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -167,7 +167,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.2
+        time: 0.16666667
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -176,7 +176,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.26666668
+        time: 0.22222222
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -203,21 +203,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.13333334
+  - time: 0.11111111
     functionName: Animation_Move
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 1
     intParameter: 0
     messageOptions: 0
-  - time: 0.4
+  - time: 0.33333334
     functionName: Animation_ComboWindowOpen
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.93333334
+  - time: 0.7777778
     functionName: Animation_Callback
     data: 
     objectReferenceParameter: {fileID: 11500000, guid: 9870fcdc5de837f4d96d510172093aec, type: 3}
