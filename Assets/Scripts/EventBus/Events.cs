@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 public interface IEvent
@@ -38,14 +39,16 @@ public struct SceneFadeEvent : IEvent
 
 #region =========玩家相关=========
 
-public struct HealthChangeEvent : IEvent
-{
-    public Character character;
-}
-
 public struct FocusChangeEvent : IEvent
 {
-    public Character character;
+    public bool isGetFous;
+    public float changeFocusCount;
+}
+
+public struct FocusUIChangeEvent : IEvent
+{
+    public float currentFocus;
+    public float maxFocus;
 }
 
 public struct PoseChangeEvent : IEvent
@@ -56,6 +59,7 @@ public struct PoseChangeEvent : IEvent
     public float duration;
 }
 
+// TODO 需要注释或删除
 public struct HurtEvent : IEvent
 {
     public Character character;

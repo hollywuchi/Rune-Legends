@@ -86,16 +86,8 @@ public class PlayerHealState : PlayerState
     {
         if (s.character != null)
         {
-            s.character.CurrentHealth = Mathf.Min(
-                s.character.CurrentHealth + s.config.healAmount,
-                s.character.maxHealth
-            );
-            // 消耗全部Focus
-            s.context.CurrentFocus = 0;
-            s.character.currentFocus = 0;
-            // s.character.OnHealthChange?.Invoke(s.character);
-            EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = s.character });
-            EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
+            EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { isGetFous = false,changeFocusCount = 999});
+            s.character.HealthChange(s.config.healAmount);
         }
     }
 

@@ -25,7 +25,7 @@ public class PlayerLightCrownState : PlayerState
         }
 
         // 检查是否达到最大叠加层数
-        if (s.character.attackBuffStack >= s.config.maxAttackBuffStack)
+        if (s.focusSystem.attackBuffStack >= s.config.maxAttackBuffStack)
         {
             isAnimFinished = true;
             return;
@@ -99,24 +99,8 @@ public class PlayerLightCrownState : PlayerState
     {
         if (s.character == null) return;
 
-        // 消耗专注值
-        s.character.currentFocus -= s.config.LightCrownFocusCost;
-        s.context.CurrentFocus = s.character.currentFocus;
-        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
-
-        // 增加Buff层数
-        s.character.attackBuffStack = Mathf.Min(
-            s.character.attackBuffStack + 1,
-            s.config.maxAttackBuffStack
-        );
-
-        // 更新配置中的倍率（可选，用于显示）
-        s.character.attackBuffMultiplier = s.config.attackBuffMultiplier;
-
-        // TODO：UI方面,通知UI更新
-        EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = s.character });
-        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
-
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent
+            { isGetFous = false, changeFocusCount = s.config.LightCrownFocusCost });
     }
 
     /// <summary>

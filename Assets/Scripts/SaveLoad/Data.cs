@@ -21,5 +21,3 @@ public class Data
     }
     #endregion
 }
-// TODO:工厂模式
-// 保存了人物的血量，和场景信息

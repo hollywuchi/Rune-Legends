@@ -2776,7 +2776,8 @@ Transform:
   m_LocalPosition: {x: 57.2, y: 6.1499996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1094995341}
   m_Father: {fileID: 711216039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &401248953
@@ -5455,6 +5456,7 @@ MonoBehaviour:
   SettingButton: {fileID: 1788917214}
   PauseMenuSettingButton: {fileID: 1789903897}
   AudioSlider: {fileID: 1475822776}
+  character: {fileID: 1797461669}
 --- !u!4 &923747628
 Transform:
   m_ObjectHideFlags: 0
@@ -6158,11 +6160,11 @@ Transform:
   m_GameObject: {fileID: 1094995339}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.3, y: 5.34, z: -0.082262285}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 360653505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1123544521
 GameObject:
@@ -7710,7 +7712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4f9e76ca6ad8845884ef49a272720b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 8
   postureDamage: 3
   knockbackForce: 8
   shakeOnHit: 0
@@ -10325,6 +10327,7 @@ GameObject:
   - component: {fileID: 1797461658}
   - component: {fileID: 1797461669}
   - component: {fileID: 1797461670}
+  - component: {fileID: 1797461671}
   m_Layer: 8
   m_Name: //Player
   m_TagString: Player
@@ -10566,6 +10569,8 @@ MonoBehaviour:
   motor: {fileID: 1797461664}
   anim: {fileID: 1797461665}
   character: {fileID: 1797461669}
+  postureSystem: {fileID: 0}
+  focusSystem: {fileID: 0}
 --- !u!114 &1797461669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10581,14 +10586,6 @@ MonoBehaviour:
   maxHealth: 10
   CurrentHealth: 0
   invincibleTime: 0.8
-  invincible: 0
-  resurrectPoint: {x: -27.66, y: -8.91, z: 0}
-  fxOffset: {x: 0, y: 0, z: 0}
-  config: {fileID: 11400000, guid: d0942015eed47b140939030805478dc3, type: 2}
-  currentFocus: 50
-  attackBuffStack: 0
-  attackBuffMultiplier: 2
-  postureSystem: {fileID: 1797461670}
 --- !u!114 &1797461670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10613,6 +10610,22 @@ MonoBehaviour:
   OnPostureRecovered:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1797461671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797461655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8737df96974f41a77f3815ea6d3ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: d0942015eed47b140939030805478dc3, type: 2}
+  currentFocus: 0
+  attackBuffStack: 0
+  attackBuffMultiplier: 0
 --- !u!1 &1814747616
 GameObject:
   m_ObjectHideFlags: 0
@@ -11953,4 +11966,3 @@ SceneRoots:
   - {fileID: 1072138995}
   - {fileID: 420241192}
   - {fileID: 762134287}
-  - {fileID: 1094995341}

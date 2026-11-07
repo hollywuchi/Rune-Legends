@@ -65,9 +65,10 @@ public class Enemy : MonoBehaviour
     }
     private void OnEnable()
     {
-        deathEventBinding = new EventBinding<DeathEvent>(OnDie);
 
-        EventBus<DeathEvent>.Register(deathEventBinding);
+        character.OnHurt += HandleHurt;
+        character.OnDeath += HandleDeath;
+        character.OnAttackBlocked += OnBlockedByPlayer;
 
         // 现在的状态转换为巡逻状态
         currnetState = patrolState;
@@ -88,8 +89,53 @@ public class Enemy : MonoBehaviour
     }
     private void OnDisable()
     {
-        EventBus<DeathEvent>.Deregister(deathEventBinding);
         currnetState.OnExit();
+        character.OnHurt -= HandleHurt;
+        character.OnDeath -= HandleDeath;
+        character.OnAttackBlocked -= OnBlockedByPlayer;
+    }
+
+
+    private void HandleHurt(DamageData data)
+    {
+        if(IsDeath || isBlocked) return;
+
+        if (data.attacker != null)
+        {
+            // 挨打转头
+            float dirX = data.attacker.transform.position.x - transform.position.x;
+            transform.localScale = new Vector3(dirX > 0 ? -1 : 1, 1, 1);
+        }
+
+        Ishurt = true;
+        anim.SetTrigger("hurt");
+
+        rb.velocity = Vector2.zero;
+        rb.AddForce(data.knockBackDir * data.knockBackForce,ForceMode2D.Impulse);
+        EventBus<FxEvent>.Raise(new FxEvent { dir = 1,playerTran = data.hitPoint, type = ParticalEffectType.Hit });
+        print("尝试发射粒子");
+        StartCoroutine(HurtRecoveryTime(0.4f));
+    }
+
+    private void HandleDeath()
+    {
+        IsDeath = true;
+        rb.velocity = Vector2.zero;
+        anim.SetBool("Death",true);
+    }
+
+    /// <summary>
+    /// 受伤之后的短暂硬直   
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
+    private IEnumerator HurtRecoveryTime(float time)
+    {
+        if (!IsDeath && !isBlocked)
+        {
+            yield return new WaitForSeconds(time);
+            Ishurt = false;
+        }
     }
 
     /// <summary>

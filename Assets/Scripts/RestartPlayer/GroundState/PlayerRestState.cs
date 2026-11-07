@@ -13,11 +13,15 @@ public class PlayerRestState : PlayerGroundState
     {
         base.Enter();
         s.character.CurrentHealth = s.character.maxHealth;
-        s.character.currentFocus = s.config.maxFocus;
-        s.context.CurrentFocus = s.config.maxFocus;
+        // s.character.currentFocus = s.config.maxFocus;
+        // s.context.CurrentFocus = s.config.maxFocus;
         // s.character.OnHealthChange?.Invoke(s.character);
-        EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent{character = s.character});
-        s.character.resurrectPoint = s.context.ResurrectPoint;
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent {isGetFous = true,changeFocusCount = 999});
+        // EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent{character = s.character});
+        s.character.RestartHealth();
+        
+        //FIXME:这里更像是存档点，之后做存档的时候来做
+        // s.character.resurrectPoint = s.context.ResurrectPoint;
 
         restIdleTimer = 0f;
 

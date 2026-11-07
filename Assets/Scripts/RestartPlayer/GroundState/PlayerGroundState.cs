@@ -54,7 +54,7 @@ public class PlayerGroundState : PlayerState
         // 攻击力Buff技能输入检测
         if (s.context.LightCrownPressedThisFrame && !s.context.IsBuffing && !s.context.IsAttacking
             && s.context.CurrentFocus >= s.config.LightCrownFocusCost
-            && s.character.attackBuffStack < s.config.maxAttackBuffStack)
+            && s.focusSystem.attackBuffStack < s.config.maxAttackBuffStack)
         {
             return new Transition(PlayerStateId.LightCrown);
         }

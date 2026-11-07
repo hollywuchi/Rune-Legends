@@ -17,18 +17,14 @@ public class Player : MonoBehaviour
 
     // public PlayerFxSpeaker fxSpeaker;
     public Character character;
+    public PostureSystem postureSystem;
+    public FocusSystem focusSystem;
 
-    [Header("事件引用")] private EventBinding<BlockCameraShakeEvent> cameraShakeEventBinding;
+    [Header("事件引用")] 
+    // private EventBinding<BlockCameraShakeEvent> cameraShakeEventBinding;
     private EventBinding<NewGameEvent> newGameEventBinding;
     private EventBinding<BackToMenuEvent> backToMenuEventBinding;
-    private EventBinding<DeathEvent> deathEventBinding;
 
-    private EventBinding<HurtEvent> hurtEventBinding;
-
-    // public VoidSo cameraShakeEvent;
-    // public VoidSo NewGameEvent;
-    // public VoidSo BackToMenuEvent;
-    // public CharacterEventSo HealthChangeEvent;
     public PlayerServices s;
     public PlayerContext context;
     public PlayerStateRegistry stateRegistry;
@@ -42,11 +38,14 @@ public class Player : MonoBehaviour
 
         // ====== 服务容器初始化 ======
         character = GetComponent<Character>();
+        postureSystem = GetComponent<PostureSystem>();
+        focusSystem = GetComponent<FocusSystem>();
         if (context == null) context = new PlayerContext();
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();
-        s = new PlayerServices(config, stateMachine, context, anim, stateRegistry, motor, inputGate, character);
+        s = new PlayerServices(config, stateMachine, context, anim, stateRegistry, motor, inputGate, character,
+            postureSystem, focusSystem);
 
         // WORKFLOW：在这里注册状态
         // 普通动作状态
@@ -91,13 +90,16 @@ public class Player : MonoBehaviour
     {
         newGameEventBinding = new EventBinding<NewGameEvent>(NewGame);
         backToMenuEventBinding = new EventBinding<BackToMenuEvent>(BackToMenu);
-        deathEventBinding = new EventBinding<DeathEvent>(PlayerDeath);
-        hurtEventBinding = new EventBinding<HurtEvent>(PlayerHurt);
+        // deathEventBinding = new EventBinding<DeathEvent>(PlayerDeath);
+        // hurtEventBinding = new EventBinding<HurtEvent>(PlayerHurt);
 
         EventBus<NewGameEvent>.Register(newGameEventBinding);
         EventBus<BackToMenuEvent>.Register(backToMenuEventBinding);
-        EventBus<DeathEvent>.Register(deathEventBinding);
-        EventBus<HurtEvent>.Register(hurtEventBinding);
+        // EventBus<DeathEvent>.Register(deathEventBinding);
+        // EventBus<HurtEvent>.Register(hurtEventBinding);
+
+        character.OnHurt += PlayerHurt;
+        character.OnDeath += PlayerDeath;
     }
 
     private void Start()
@@ -114,8 +116,9 @@ public class Player : MonoBehaviour
         inputActions.Disable();
         EventBus<NewGameEvent>.Deregister(newGameEventBinding);
         EventBus<BackToMenuEvent>.Deregister(backToMenuEventBinding);
-        EventBus<DeathEvent>.Deregister(deathEventBinding);
-        EventBus<HurtEvent>.Deregister(hurtEventBinding);
+
+        character.OnHurt -= PlayerHurt;
+        character.OnDeath -= PlayerDeath;
     }
 
     private void Update()
@@ -199,7 +202,9 @@ public class Player : MonoBehaviour
 
 
         // ====== 传感器 -> ctx ======
-        context.CurrentFocus = character.currentFocus;
+        
+        context.CurrentFocus = focusSystem.currentFocus;
+        
         context.IsGrounded = physicsCheck.IsGround;
         context.IsTouchingLeftWall = physicsCheck.touchLeftWall;
         context.IsTouchingRightWall = physicsCheck.touchRightWall;
@@ -207,11 +212,11 @@ public class Player : MonoBehaviour
         context.IsTouchingTopRightWall = physicsCheck.touchRightTopWall;
 
         // 架势系统同步
-        if (character.postureSystem != null)
+        if (postureSystem != null)
         {
-            context.CurrentPosture = character.postureSystem.currentPosture;
-            context.MaxPosture = character.postureSystem.maxPosture;
-            context.IsPostureBroken = character.postureSystem.isBroken;
+            context.CurrentPosture = postureSystem.currentPosture;
+            context.MaxPosture = postureSystem.maxPosture;
+            context.IsPostureBroken = postureSystem.isBroken; 
         }
 
         // ====== 动画参数统一在 Driver 写入 ======
@@ -239,9 +244,9 @@ public class Player : MonoBehaviour
         inputActions.Enable();
         stateMachine.currentState.Exit();
 
-        // FIXME:当前事件调用需要测试
-        EventBus<HealthChangeEvent>.Raise(new HealthChangeEvent { character = character });
+        character.RestartHealth();
         stateMachine.Initialize(PlayerStateId.Idle);
+        
     }
 
     /// <summary>
@@ -353,16 +358,14 @@ public class Player : MonoBehaviour
         attackState?.OnComboWindowClose();
     }
 
-    public void PlayerHurt(HurtEvent e)
+    public void PlayerHurt(DamageData data)
     {
-        if (e.character != this.character) return;
         if (stateMachine.currentState is PlayerHurtState) return; // 已经在受伤状态了就别重复请求了
         context.IsHurt = true;
     }
 
-    public void PlayerDeath(DeathEvent e)
+    public void PlayerDeath()
     {
-        if (e.character != this.character) return;
         if (stateMachine.currentState is PlayerDeathState) return;
         EventBus<GameOverEvent>.Raise(new GameOverEvent { });
         context.IsDead = true;

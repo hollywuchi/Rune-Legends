@@ -9,9 +9,10 @@ public sealed class PlayerServices
     public PlayerAnimatorDriver anim;
     public PlayerStateRegistry stateRegistry;
     public PlayerMotor2D motor;
-    // public PlayerFxSpeaker fxSpeaker;
     public PlayerInputGate inputGate;
     public Character character;
+    public PostureSystem postureSystem;
+    public FocusSystem focusSystem;
     
     
     public PlayerServices(
@@ -22,7 +23,9 @@ public sealed class PlayerServices
         PlayerStateRegistry stateRegistry,
         PlayerMotor2D motor,
         PlayerInputGate inputGate,
-        Character character)
+        Character character,
+        PostureSystem postureSystem,
+        FocusSystem focusSystem)
     {
         
         this.config = config;
@@ -33,5 +36,7 @@ public sealed class PlayerServices
         this.motor = motor;
         this.inputGate = inputGate;
         this.character = character;
+        this.postureSystem = postureSystem;
+        this.focusSystem = focusSystem;
     }
 }

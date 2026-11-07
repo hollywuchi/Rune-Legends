@@ -112,9 +112,10 @@ public class PlayerLightCutState : PlayerState
         s.motor.IgnorePlayerCollision(s.context.EnemyLayer, true); // 冲刺期间无敌
 
         // 消耗专注值
-        s.character.currentFocus -= s.config.lightCutFocusCost;
-        s.context.CurrentFocus = s.character.currentFocus;
-        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent { character = s.character });
+        // s.character.currentFocus -= s.config.lightCutFocusCost;
+        // s.context.CurrentFocus = s.character.currentFocus;
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent
+            { isGetFous = false, changeFocusCount = s.config.lightCutFocusCost });
     }
 
     public void OnLightCutAnimFinished()

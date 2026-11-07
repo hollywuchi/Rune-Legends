@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+   private FocusSystem focusSystem;
+   
    [Header("攻击参数")]
    public int Damage = 1;
    public int postureDamage;
@@ -14,8 +16,13 @@ public class Attack : MonoBehaviour
    public bool shakeOnHit;
    public float shakeForce;
    private bool hasShakenThisSwing;
-   [Header("专注获取")]
-   public float focusGain = 7.5f;         // 获得专注值
+   [Header("专注获取")] 
+   public float focusGain;         // 获得专注值
+
+   private void Awake()
+   {
+      focusSystem = GetComponentInParent<FocusSystem>();
+   }
 
    private void OnEnable()
    {
@@ -24,103 +31,30 @@ public class Attack : MonoBehaviour
 
    private void OnTriggerEnter2D(Collider2D other)
    {
-      Character character = other.GetComponent<Character>();
-      if (character != null)
+      var character = other.GetComponent<Character>();
+      if(character == null) return;
+
+      int finalDamage = (focusSystem != null && focusSystem.attackBuffStack > 0)
+         ? focusSystem.attackBuffStack * focusSystem.attackBuffMultiplier * Damage
+         : Damage;
+      
+      Vector2 knockBackDir = (other.transform.position - transform.position).normalized;
+
+      DamageData data = new DamageData()
       {
-         Character playerCharacter = GetComponentInParent<Character>();
-         if (playerCharacter != null && CompareTag("Attack"))
-         {
-            Damage = 1;
-            playerCharacter.GainFocus(focusGain);
-            Damage += (int)(playerCharacter.attackBuffStack * playerCharacter.attackBuffMultiplier);
-            character.postureSystem?.ResetCombatTimer();
-         }
-
-         // 检测目标是否在格挡状态
-         PlayerBlockState blockState = GetBlockState(other);
-         if (blockState != null)
-         {
-            // 目标正在格挡
-            HandleBlockInteraction(character, blockState, playerCharacter);
-         }
-         else
-         {
-            // 普通伤害
-            character.TakeDamage(this);
-            if(character.CompareTag("Enemy"))
-            {
-               Enemy enemy = other.GetComponent<Enemy>();
-               enemy?.OnTakeDamage(transform);
-
-               if (shakeOnHit && !hasShakenThisSwing)
-               {
-                  hasShakenThisSwing = true;
-                  EventBus<HeavyAtkCameraShakeEvent>.Raise(new HeavyAtkCameraShakeEvent(){Force = shakeForce});
-               }
-            }
-         }
-      }
-   }
-
-   /// <summary>
-   /// 获取目标的格挡状态（如果正在格挡）
-   /// </summary>
-   private PlayerBlockState GetBlockState(Collider2D other)
-   {
-      // 检查是否是玩家
-      Player player = other.GetComponent<Player>();
-      if (player != null)
-      {
-         return player.stateMachine.currentState as PlayerBlockState;
-      }
-      return null;
-   }
-
-   private void HandleBlockInteraction(Character targetCharacter, PlayerBlockState blockState, Character attackerCharacter)
-   {
-      // 获取敌人组件（Attack collider 是 Enemy 的子物体）
-      Enemy enemy = GetComponentInParent<Enemy>();
-
-      if (blockState.IsInParryWindow())
-      {
-         // 弹反成功！
-         // 对攻击者造成架势伤害
-         if (attackerCharacter != null && attackerCharacter.postureSystem != null)
-         {
-            attackerCharacter.postureSystem.AddPosture(targetCharacter.config.parryPostureDamageToEnemy);
-         }
-
-         // 减少目标自身架势值
-         if (targetCharacter.postureSystem != null)
-         {
-            targetCharacter.postureSystem.ReducePosture(targetCharacter.config.parryPostureRecovery);
-         }
-
-         // 通知格挡状态弹反成功
-         blockState.OnBlocked(true);
-
-         // 通知敌人被弹反
-         enemy?.OnBlockedByPlayer(true, targetCharacter.transform);
-      }
-      else
-      {
-         // 普通格挡，不对目标造成伤害，但是对目标造成架势伤害
-         if (targetCharacter.postureSystem != null)
-         {
-            targetCharacter.postureSystem.AddPosture(targetCharacter.config.blockPostureDamage);
-         }
-
-         // 同时也会对自己造成架势伤害
-         if (attackerCharacter != null && attackerCharacter.postureSystem != null)
-         {
-            attackerCharacter.postureSystem.AddPosture(targetCharacter.config.parryPostureDamageToSelf);
-         }
-
-         // 通知格挡状态普通格挡
-         blockState.OnBlocked(false);
-
-         // 通知敌人被格挡
-         enemy?.OnBlockedByPlayer(false, targetCharacter.transform);
-      }
+         damage = finalDamage, 
+         postureDamage = postureDamage,
+         knockBackDir = knockBackDir,
+         knockBackForce = knockbackForce,
+         hitPoint = other.ClosestPoint(other.transform.position),
+         attacker = transform.root.gameObject,
+         isHeavyAttack = shakeOnHit,
+         shakeForce = shakeForce
+      };
+      
+      character.TakeDamage(data);
+      // 同步获取的专注值
+      if(focusGain != 0)
+         EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent() {changeFocusCount = focusGain,isGetFous = true});
    }
 }

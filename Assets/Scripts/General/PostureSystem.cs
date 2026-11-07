@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,7 +29,6 @@ public class PostureSystem : MonoBehaviour
 
     private Character character;
 
-    // private EventBinding<HurtEvent> hurtEventBinding;
 
     void Awake()
     {
@@ -42,26 +42,19 @@ public class PostureSystem : MonoBehaviour
         brokenTimer = 0f;
         combatTimer = 0f;
 
-        // hurtEventBinding = new EventBinding<HurtEvent>(AddPosture);
+        if (character != null)
+            character.OnHurt += PoseHurt;
     }
+
+    private void OnDisable()
+    {
+        if (character != null)
+            character.OnHurt -= PoseHurt;
+    }
+
 
     private void Update()
     {
-        // if (!isBroken) return;
-
-        // if (currentPosture > 0f)
-        // {
-        //     brokenTimer -= Time.deltaTime;
-        //     if (brokenTimer <= 0f)
-        //     {
-        //         currentPosture -= postureRecoveryRate * Time.deltaTime;
-        //         if (currentPosture < 0f)
-        //         {
-        //             currentPosture = 0f;
-        //             ResetPosture();
-        //         }
-        //     }
-        // }
         if (isBroken)
         {
             UpdateBroken();
@@ -89,6 +82,11 @@ public class PostureSystem : MonoBehaviour
         }
 
         PostureChange(0.2f);
+    }
+    
+    private void PoseHurt(DamageData data)
+    {
+        AddPosture(data.postureDamage);
     }
 
     /// <summary>
@@ -136,7 +134,7 @@ public class PostureSystem : MonoBehaviour
         PostureChange(0.2f);
     }
 
-    public void ResetCombatTimer()
+    private void ResetCombatTimer()
     {
         combatTimer = outOfCombatDelay;
     }
@@ -157,7 +155,7 @@ public class PostureSystem : MonoBehaviour
     /// <summary>
     /// 破防结束，重置架势
     /// </summary>
-    public void ResetPosture()
+    private void ResetPosture()
     {
         isBroken = false;
         currentPosture = 0f;

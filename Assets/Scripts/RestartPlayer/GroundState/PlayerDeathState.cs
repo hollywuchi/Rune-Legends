@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using RestartPlayer.HFSM;
 
@@ -10,10 +11,10 @@ public class PlayerDeathState : PlayerState
         base.Enter();
         s.anim.PlayDeath();
 
-        s.character.currentFocus = 0;
-        s.context.CurrentFocus = 0;
+        // s.character.currentFocus = 0;
+        EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent{isGetFous = false,changeFocusCount = 999});
         s.inputGate.Freeze(99999);
-        s.character.attackBuffStack = 0;
+        s.focusSystem.attackBuffStack = 0;
 
     }
 
@@ -37,8 +38,9 @@ public class PlayerDeathState : PlayerState
 
     public void Resurrect()
     {
-        s.character.resurrectPoint = s.context.ResurrectPoint;
-        s.character.Resurrect();
+        // s.character.resurrectPoint = s.context.ResurrectPoint;
+        
+        // TODO 这里不知道出现了什么错误 s.character.Resurrect();
         s.context.CanResurrect = false;
         s.anim.TriggerResurrect();
         s.inputGate.Freeze(0.5f);

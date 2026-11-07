@@ -27,9 +27,8 @@ public class PlayerParryState : PlayerState
         // Hit Stop（时间冻结）
         s.motor.StartCoroutine(HitStop());
 
-        // 减少自身架势值
-        s.context.CurrentPosture = Mathf.Max(s.context.CurrentPosture - s.config.parryPostureRecovery, 0f);
-
+        // 减少自身架势值（已在 PlayerBlockState.HandleBlockDamage 中通过 ReducePosture 处理）
+        // s.context.CurrentPosture = Mathf.Max(s.context.CurrentPosture - s.config.parryPostureRecovery, 0f);
         parryTimer = 0f;
 
         // 冻结输入

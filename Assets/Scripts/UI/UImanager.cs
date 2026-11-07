@@ -12,9 +12,7 @@ public class UImanager : MonoBehaviour
     public bool isMenu;
     public PlayerStateBar bar;
     [Header("事件监听")]
-    // public CharacterEventSo HealthEvent;
-    private EventBinding<HealthChangeEvent> characterHealthEventBinding;
-    private EventBinding<FocusChangeEvent> focusChangeEventBinding;
+    private EventBinding<FocusUIChangeEvent> focusUIChangeEventBinding;
     private EventBinding<SceneLoadEvent> sceneLoadEventBinding;
     private EventBinding<LoadDataEvent> loadDataEventBinding;
     private EventBinding<AfterSceneLoadEvent> AfterLoadSceneEventBinding;
@@ -32,6 +30,7 @@ public class UImanager : MonoBehaviour
     public Button PauseMenuSettingButton;
     public Slider AudioSlider;
     public InputManager Actions;
+    public Character character;
 
     void Awake()
     {
@@ -39,8 +38,8 @@ public class UImanager : MonoBehaviour
     }
     private void OnEnable()
     {
-        characterHealthEventBinding = new EventBinding<HealthChangeEvent>(HealthChange);
-        focusChangeEventBinding = new EventBinding<FocusChangeEvent>(PowerChange);
+        // characterHealthEventBinding = new EventBinding<HealthChangeEvent>(HealthChange);
+        focusUIChangeEventBinding = new EventBinding<FocusUIChangeEvent>(PowerChange);
         backToMenuEventBinding = new EventBinding<BackToMenuEvent>(LoadData);
         loadDataEventBinding = new EventBinding<LoadDataEvent>(LoadData);
         AfterLoadSceneEventBinding = new EventBinding<AfterSceneLoadEvent>(CheckPlatformAndMenu);
@@ -48,13 +47,16 @@ public class UImanager : MonoBehaviour
         synuEventBinding = new EventBinding<SynuEvent>(OnSync);
 
 
-        EventBus<HealthChangeEvent>.Register(characterHealthEventBinding);
-        EventBus<FocusChangeEvent>.Register(focusChangeEventBinding);
+        // EventBus<HealthChangeEvent>.Register(characterHealthEventBinding);
+        EventBus<FocusUIChangeEvent>.Register(focusUIChangeEventBinding);
         EventBus<AfterSceneLoadEvent>.Register(AfterLoadSceneEventBinding);
         EventBus<LoadDataEvent>.Register(loadDataEventBinding);
         EventBus<GameOverEvent>.Register(gameOverEventBinding);
         EventBus<BackToMenuEvent>.Register(backToMenuEventBinding);
         EventBus<SynuEvent>.Register(synuEventBinding);
+
+        if (character != null)
+            character.OnHealthChange += HealthChange;
     }
 
     void Start()
@@ -67,13 +69,16 @@ public class UImanager : MonoBehaviour
 
     private void OnDisable()
     {
-        EventBus<HealthChangeEvent>.Deregister(characterHealthEventBinding);
-        EventBus<FocusChangeEvent>.Deregister(focusChangeEventBinding);
+        // EventBus<HealthChangeEvent>.Deregister(characterHealthEventBinding);
+        EventBus<FocusUIChangeEvent>.Deregister(focusUIChangeEventBinding);
         EventBus<AfterSceneLoadEvent>.Deregister(AfterLoadSceneEventBinding);
         EventBus<LoadDataEvent>.Deregister(loadDataEventBinding);
         EventBus<GameOverEvent>.Deregister(gameOverEventBinding);
         EventBus<BackToMenuEvent>.Deregister(backToMenuEventBinding);
         EventBus<SynuEvent>.Deregister(synuEventBinding);
+
+        if (character != null)
+            character.OnHealthChange -= HealthChange;
     }
 
     private void OnSync(SynuEvent e)
@@ -119,17 +124,15 @@ public class UImanager : MonoBehaviour
         mobleTouch.SetActive(false);
     }
 
-    private void HealthChange(HealthChangeEvent e)
+    private void HealthChange(float currentHealth,float maxHealth)
     {
-        if (!e.character.CompareTag("Player")) return;
-        var persent = e.character.CurrentHealth / e.character.maxHealth;
+        var persent = currentHealth / maxHealth;
         bar.ChangeHealth(persent);
     }
 
-    private void PowerChange(FocusChangeEvent e)
+    private void PowerChange(FocusUIChangeEvent e)
     {
-        if (!e.character.CompareTag("Player")) return;
-        var persent = e.character.currentFocus / e.character.config.maxFocus;
+        var persent = e.currentFocus / e.maxFocus;
         bar.ChangePower(persent);
     }
 

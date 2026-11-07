@@ -26,7 +26,9 @@ public class PlayerBlockState : PlayerGroundState
         s.context.AttackBufferTimer = 0f;
         
         blockHitAnimPlayed = false;
-        
+
+        if (s.character != null)
+            s.character.OnTryBlockDamage = HandleBlockDamage;
     }
 
     public override Transition LogicUpdate()
@@ -65,7 +67,9 @@ public class PlayerBlockState : PlayerGroundState
         base.Exit();
         s.anim.SetIsBlocking(false);
         s.context.IsBlocking = false;
-        // Debug.Log("退出格挡状态，弹反窗口关闭");
+
+        if (s.character != null && s.character.OnTryBlockDamage == HandleBlockDamage)
+            s.character.OnTryBlockDamage = null;
     }
 
     /// <summary>
@@ -106,6 +110,43 @@ public class PlayerBlockState : PlayerGroundState
                 // blockHitAnimPlayed = true;
             }
         }
+    }
+
+    private bool HandleBlockDamage(DamageData data)
+    {
+        Character attackerCharacter = data.attacker != null ? data.attacker.GetComponent<Character>() : null;
+        PostureSystem attackerPosture = data.attacker != null ? data.attacker.GetComponent<PostureSystem>() : null;
+
+        if (IsInParryWindow())
+        {
+            Debug.Log("完美格挡！");
+            // 弹反成功！
+            // 对攻击者造成架势伤害
+            attackerPosture?.AddPosture(s.config.parryPostureDamageToEnemy);
+
+            // 减少目标自身架势值
+            s.postureSystem?.ReducePosture(s.config.parryPostureRecovery);
+
+            // 通知格挡状态弹反成功
+            OnBlocked(true);
+
+            // 通知攻击者被弹反
+            attackerCharacter?.NotifyAttackBlocked(true, s.character.transform);
+        }
+        else
+        {
+            // 普通格挡
+            // 对目标造成架势伤害
+            s.postureSystem?.AddPosture(s.config.blockPostureDamage);
+
+            // 通知格挡状态普通格挡
+            OnBlocked(false);
+
+            // 通知攻击者被格挡
+            attackerCharacter?.NotifyAttackBlocked(false, s.character.transform);
+        }
+
+        return true;
     }
 
     // public void HandleBlockInteraction(Character attackerCharacter, Enemy enemy)

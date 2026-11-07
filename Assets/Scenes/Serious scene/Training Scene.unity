@@ -5906,6 +5906,7 @@ GameObject:
   - component: {fileID: 1728129695}
   - component: {fileID: 1728129698}
   - component: {fileID: 1728129699}
+  - component: {fileID: 1728129700}
   m_Layer: 8
   m_Name: Dummy
   m_TagString: Enemy
@@ -6089,14 +6090,45 @@ MonoBehaviour:
   maxHealth: 9999
   CurrentHealth: 0
   invincibleTime: 0
-  invincible: 0
-  resurrectPoint: {x: 0, y: 0, z: 0}
-  fxOffset: {x: 0, y: 0.43, z: 0}
-  config: {fileID: 0}
-  currentFocus: 0
-  attackBuffStack: 0
-  attackBuffMultiplier: 2
+--- !u!114 &1728129700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728129692}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc253eea24b4c664d954e94b56624005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicsCheck: {fileID: 0}
+  anim: {fileID: 0}
+  NormalSpeed: 0
+  chaseSpeed: 0
+  CurrentSpeed: 0
+  dir: {x: 0, y: 0, z: 0}
+  attacker: {fileID: 0}
+  Backforce: 0
+  CheckOffset: {x: 0, y: 0}
+  CheckSize: {x: 0, y: 0}
+  CheckDistance: 0
+  AttackLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  WaitTime: 0
+  WaitTimeCounter: 0
+  LostTime: 0
+  LostTimeCounter: 0
+  IsWait: 0
+  Ishurt: 0
+  IsDeath: 0
   postureSystem: {fileID: 0}
+  isBlocked: 0
+  parryRecoilForce: 8
+  blockRecoilForce: 5
+  parryStaggerDuration: 0.8
+  blockStaggerDuration: 0.5
 --- !u!1 &1756246363
 GameObject:
   m_ObjectHideFlags: 0
@@ -6456,6 +6488,8 @@ MonoBehaviour:
   Damage: 1
   postureDamage: 15
   knockbackForce: 15
+  shakeOnHit: 0
+  shakeForce: 0
   focusGain: 7.5
 --- !u!61 &2065592218
 BoxCollider2D:
