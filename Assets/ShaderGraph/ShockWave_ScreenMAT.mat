@@ -62,7 +62,7 @@ Material:
     - _QueueOffset: 0
     - _Size: 0.1
     - _WaveDistenceFromCenter: 0.5
-    - _WavePower: 0.033
+    - _WavePower: 0.05
     m_Colors:
     - _WavePosition: {r: 0.5, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []

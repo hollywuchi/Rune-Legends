@@ -4,6 +4,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
    private FocusSystem focusSystem;
+   private Collider2D coll;
    
    [Header("攻击参数")]
    public int Damage = 1;
@@ -22,6 +23,7 @@ public class Attack : MonoBehaviour
    private void Awake()
    {
       focusSystem = GetComponentInParent<FocusSystem>();
+      coll = GetComponent<Collider2D>();
    }
 
    private void OnEnable()
@@ -37,6 +39,8 @@ public class Attack : MonoBehaviour
       int finalDamage = (focusSystem != null && focusSystem.attackBuffStack > 0)
          ? focusSystem.attackBuffStack * focusSystem.attackBuffMultiplier * Damage
          : Damage;
+
+      Vector3 center = coll != null ? coll.bounds.center : transform.position;
       
       Vector2 knockBackDir = (other.transform.position - transform.position).normalized;
 
@@ -46,15 +50,15 @@ public class Attack : MonoBehaviour
          postureDamage = postureDamage,
          knockBackDir = knockBackDir,
          knockBackForce = knockbackForce,
-         hitPoint = other.ClosestPoint(other.transform.position),
+         hitPoint = other.ClosestPoint(center),
          attacker = transform.root.gameObject,
-         isHeavyAttack = shakeOnHit,
-         shakeForce = shakeForce
       };
       
       character.TakeDamage(data);
       // 同步获取的专注值
       if(focusGain != 0)
          EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent() {changeFocusCount = focusGain,isGetFous = true});
+      if (shakeOnHit && !hasShakenThisSwing)
+         EventBus<HeavyAtkCameraShakeEvent>.Raise(new HeavyAtkCameraShakeEvent{Force = shakeForce});
    }
 }

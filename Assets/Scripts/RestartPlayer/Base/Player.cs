@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         character = GetComponent<Character>();
         postureSystem = GetComponent<PostureSystem>();
         focusSystem = GetComponent<FocusSystem>();
-        if (context == null) context = new PlayerContext();
+        context ??= new PlayerContext();
         stateRegistry = new PlayerStateRegistry();
         stateMachine = new PlayerStateMachine(stateRegistry);
         inputGate = new PlayerInputGate();

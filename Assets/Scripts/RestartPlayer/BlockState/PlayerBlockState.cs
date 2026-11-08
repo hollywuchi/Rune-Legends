@@ -99,7 +99,6 @@ public class PlayerBlockState : PlayerGroundState
         {
             s.context.isParry = isParry;
             // TODO：播放弹反粒子
-            EventBus<BlockCameraShakeEvent>.Raise(new BlockCameraShakeEvent());
         }
         else
         {
@@ -117,9 +116,19 @@ public class PlayerBlockState : PlayerGroundState
         Character attackerCharacter = data.attacker != null ? data.attacker.GetComponent<Character>() : null;
         PostureSystem attackerPosture = data.attacker != null ? data.attacker.GetComponent<PostureSystem>() : null;
 
+        Vector3 blockFxPoint = s.character.transform.position + new Vector3(s.context.FacingDirection, 2f, 0f);
         if (IsInParryWindow())
         {
             Debug.Log("完美格挡！");
+
+            EventBus<FxEvent>.Raise(new FxEvent
+            {
+                dir = s.context.FacingDirection,
+                playerTran = blockFxPoint,
+                type = ParticalEffectType.PerfBlock
+            });
+            EventBus<BlockCameraShakeEvent>.Raise(new BlockCameraShakeEvent{Force = 0.5f});
+            
             // 弹反成功！
             // 对攻击者造成架势伤害
             attackerPosture?.AddPosture(s.config.parryPostureDamageToEnemy);
@@ -137,6 +146,15 @@ public class PlayerBlockState : PlayerGroundState
         {
             // 普通格挡
             // 对目标造成架势伤害
+
+            EventBus<FxEvent>.Raise(new FxEvent
+            {
+                dir = s.context.FacingDirection,
+                playerTran = blockFxPoint,
+                type = ParticalEffectType.BlockFx
+            });
+            EventBus<BlockCameraShakeEvent>.Raise(new BlockCameraShakeEvent{Force = 0.2f});
+            
             s.postureSystem?.AddPosture(s.config.blockPostureDamage);
 
             // 通知格挡状态普通格挡
@@ -148,49 +166,4 @@ public class PlayerBlockState : PlayerGroundState
 
         return true;
     }
-
-    // public void HandleBlockInteraction(Character attackerCharacter, Enemy enemy)
-    // {
-    //     if (IsInParryWindow())
-    //     {
-    //         Debug.Log("完美格挡！");
-    //         // 弹反成功！
-    //         // 对攻击者造成架势伤害
-    //         if (attackerCharacter != null && attackerCharacter.postureSystem != null)
-    //         {
-    //             attackerCharacter.postureSystem.AddPosture(s.character.config.parryPostureDamageToEnemy);
-    //         }
-
-    //         // 减少目标自身架势值
-    //         if (s.character.postureSystem != null)
-    //         {
-    //             s.character.postureSystem.ReducePosture(s.character.config.parryPostureRecovery);
-    //         }
-
-    //         // 通知格挡状态弹反成功
-    //         OnBlocked(true);
-
-    //         // 通知敌人被弹反
-    //         enemy?.OnBlockedByPlayer(true, s.character.transform);
-    //     }
-    //     else
-    //     {
-    //         // 普通格挡
-    //         // TODO:伤害判定对目标造成减伤
-    //         // targetCharacter.TakeBlockedDamage(this, targetCharacter.config.blockDamageReduction);
-
-    //         // 对目标造成架势伤害
-    //         if (s.character.postureSystem != null)
-    //         {
-    //             s.character.postureSystem.AddPosture(s.character.config.blockPostureDamage);
-    //         }
-
-    //         // 通知格挡状态普通格挡
-    //         OnBlocked(false);
-
-    //         // 通知敌人被格挡
-    //         enemy?.OnBlockedByPlayer(false, s.character.transform);
-    //     }
-    // }
-
 }

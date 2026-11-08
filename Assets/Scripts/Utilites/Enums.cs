@@ -20,6 +20,5 @@ public enum AreaName
 public enum ParticalEffectType
 {
     SprintDust,UnderDust,AirDust,Hit,Charging,
-    // REVIEW：格挡系统 - 新增弹反火花特效类型
-    ParrySpark
+    BlockFx,PerfBlock,WaveFX
 }

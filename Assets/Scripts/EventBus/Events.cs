@@ -59,16 +59,15 @@ public struct PoseChangeEvent : IEvent
     public float duration;
 }
 
-// TODO 需要注释或删除
-public struct HurtEvent : IEvent
-{
-    public Character character;
-}
-
-public struct DeathEvent : IEvent
-{
-    public Character character;
-}
+// public struct HurtEvent : IEvent
+// {
+//     public Character character;
+// }
+//
+// public struct DeathEvent : IEvent
+// {
+//     public Character character;
+// }
 
 #endregion
 

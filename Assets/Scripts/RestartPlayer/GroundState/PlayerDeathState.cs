@@ -40,7 +40,7 @@ public class PlayerDeathState : PlayerState
     {
         // s.character.resurrectPoint = s.context.ResurrectPoint;
         
-        // TODO 这里不知道出现了什么错误 s.character.Resurrect();
+        s.motor.Teleport(s.context.ResurrectPoint);
         s.context.CanResurrect = false;
         s.anim.TriggerResurrect();
         s.inputGate.Freeze(0.5f);

@@ -11,40 +11,38 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public PhysicsCheck physicsCheck;
     [HideInInspector] public Animator anim;
 
-    [Header("基本参数")]
-    public float NormalSpeed;
+    [Header("基本参数")] public float NormalSpeed;
+
     // 追逐速度
     public float chaseSpeed;
+
     public float CurrentSpeed;
+
     // 敌人的面朝方向
     public Vector3 dir;
     public Transform attacker;
     public float Backforce;
-    [Header("检测玩家")]
-    public Vector2 CheckOffset;
+    [Header("检测玩家")] public Vector2 CheckOffset;
     public Vector2 CheckSize;
     public float CheckDistance;
     public LayerMask AttackLayer;
 
-    [Header("计时器")]
-    public float WaitTime;
+    [Header("计时器")] public float WaitTime;
     public float WaitTimeCounter;
     public float LostTime;
     public float LostTimeCounter;
-    [Header("状态")]
-    public bool IsWait;
+    [Header("状态")] public bool IsWait;
     public bool Ishurt;
     public bool IsDeath;
 
-    [Header("架势系统")]
-    public PostureSystem postureSystem;  // 架势系统组件引用
+    [Header("架势系统")] public PostureSystem postureSystem; // 架势系统组件引用
 
-    [Header("被格挡反应参数")]
-    public bool isBlocked;                       // 是否被格挡/弹反
-    public float parryRecoilForce = 8f;          // 弹反后退力
-    public float blockRecoilForce = 5f;          // 格挡后退力
-    public float parryStaggerDuration = 0.8f;    // 弹反硬直时间
-    public float blockStaggerDuration = 0.5f;    // 格挡硬直时间
+    [Header("被格挡反应参数")] public bool isBlocked; // 是否被格挡/弹反
+    public float parryRecoilForce = 8f; // 弹反后退力
+    public float blockRecoilForce = 5f; // 格挡后退力
+    public float parryStaggerDuration = 0.8f; // 弹反硬直时间
+    public float blockStaggerDuration = 0.5f; // 格挡硬直时间
+    public float knockbackDeceleration = 30f; // 击退刹车减速度
 
     // 现在的状态
     BaseState currnetState;
@@ -52,7 +50,7 @@ public class Enemy : MonoBehaviour
     protected BaseState chaseState;
 
     private Character character;
-    private EventBinding<DeathEvent> deathEventBinding;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -63,9 +61,9 @@ public class Enemy : MonoBehaviour
         CurrentSpeed = NormalSpeed;
         WaitTimeCounter = WaitTime;
     }
+
     private void OnEnable()
     {
-
         character.OnHurt += HandleHurt;
         character.OnDeath += HandleDeath;
         character.OnAttackBlocked += OnBlockedByPlayer;
@@ -74,6 +72,7 @@ public class Enemy : MonoBehaviour
         currnetState = patrolState;
         currnetState.OnEnter(this);
     }
+
     private void Update()
     {
         dir = new Vector3(-transform.localScale.x, 0, 0);
@@ -81,12 +80,25 @@ public class Enemy : MonoBehaviour
         currnetState.LogicUpdate();
         TimeCount();
     }
+
     private void FixedUpdate()
     {
-        if (!Ishurt && !IsDeath && !IsWait && !isBlocked)
+        bool isBroken = postureSystem != null && postureSystem.isBroken;
+
+        if (!Ishurt && !IsDeath && !IsWait && !isBlocked && !isBroken)
+        {
             Move();
+        }
+        else if (Ishurt || isBlocked || isBroken)
+        {
+            // 受击/被弹反/破防时：让水平击退速度快速衰减刹停，防止一直往后滑行
+            float newVelX = Mathf.MoveTowards(rb.velocity.x, 0f, knockbackDeceleration * Time.fixedDeltaTime);
+            rb.velocity = new Vector2(newVelX, rb.velocity.y);
+        }
+
         currnetState.PhysicsUpdate();
     }
+
     private void OnDisable()
     {
         currnetState.OnExit();
@@ -98,7 +110,7 @@ public class Enemy : MonoBehaviour
 
     private void HandleHurt(DamageData data)
     {
-        if(IsDeath || isBlocked) return;
+        if (IsDeath) return;
 
         if (data.attacker != null)
         {
@@ -111,17 +123,17 @@ public class Enemy : MonoBehaviour
         anim.SetTrigger("hurt");
 
         rb.velocity = Vector2.zero;
-        rb.AddForce(data.knockBackDir * data.knockBackForce,ForceMode2D.Impulse);
-        EventBus<FxEvent>.Raise(new FxEvent { dir = 1,playerTran = data.hitPoint, type = ParticalEffectType.Hit });
-        print("尝试发射粒子");
-        StartCoroutine(HurtRecoveryTime(0.4f));
+        rb.AddForce(data.knockBackDir * data.knockBackForce, ForceMode2D.Impulse);
+        EventBus<FxEvent>.Raise(new FxEvent { dir = 1, playerTran = data.hitPoint, type = ParticalEffectType.Hit });
+        if (postureSystem == null || !postureSystem.isBroken)
+            StartCoroutine(HurtRecoveryTime(0.4f));
     }
 
     private void HandleDeath()
     {
         IsDeath = true;
         rb.velocity = Vector2.zero;
-        anim.SetBool("Death",true);
+        anim.SetBool("Death", true);
     }
 
     /// <summary>
@@ -131,9 +143,9 @@ public class Enemy : MonoBehaviour
     /// <returns></returns>
     private IEnumerator HurtRecoveryTime(float time)
     {
-        if (!IsDeath && !isBlocked)
+        yield return new WaitForSeconds(time);
+        if (!IsDeath && !isBlocked && (postureSystem == null || !postureSystem.isBroken))
         {
-            yield return new WaitForSeconds(time);
             Ishurt = false;
         }
     }
@@ -162,6 +174,7 @@ public class Enemy : MonoBehaviour
                 physicsCheck.GroundOffset.x *= transform.localScale.x;
             }
         }
+
         if (!FindPlayer())
         {
             LostTimeCounter -= Time.deltaTime;
@@ -171,9 +184,9 @@ public class Enemy : MonoBehaviour
         else
         {
             LostTimeCounter = LostTime;
-
         }
     }
+
     /// <summary>
     /// 背刺回头方法&受伤击退
     /// </summary>
@@ -192,7 +205,6 @@ public class Enemy : MonoBehaviour
         Vector2 dir = new Vector2(transform.position.x - attacker.transform.position.x, 0).normalized;
         rb.velocity = new Vector2(0, rb.velocity.y);
         StartCoroutine(WaitAttack(dir));
-
     }
 
     IEnumerator WaitAttack(Vector2 dir)
@@ -202,14 +214,13 @@ public class Enemy : MonoBehaviour
         Ishurt = false;
     }
 
-    public void OnDie(DeathEvent e)
-    {
-        if (e.character != character) return;
-        IsDeath = true;
-
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        anim.SetBool("Death", IsDeath);
-    }
+    // public void OnDie()
+    // {
+    //     IsDeath = true;
+    //
+    //     rb.velocity = new Vector2(0, rb.velocity.y);
+    //     anim.SetBool("Death", IsDeath);
+    // }
 
     /// <summary>
     /// 架势破碎处理（被弹反多次后触发）
@@ -217,9 +228,14 @@ public class Enemy : MonoBehaviour
     public void OnPostureBroken()
     {
         Ishurt = true;
-        rb.velocity = new Vector2(0, rb.velocity.y);
         anim.SetTrigger("hurt");
         anim.SetBool("isBroken", true);
+        EventBus<FxEvent>.Raise(new FxEvent
+        {
+            dir = 1,
+            playerTran = transform.position + new Vector3(1,2,0),
+            type = ParticalEffectType.WaveFX
+        });
         StartCoroutine(PostureBrokenRecovery());
     }
 
@@ -237,6 +253,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void OnBlockedByPlayer(bool isParry, Transform playerTransform)
     {
+        // if (postureSystem != null && postureSystem.isBroken) return;
+
         isBlocked = true;
         // 立即停止移动
         rb.velocity = new Vector2(0, rb.velocity.y);
@@ -278,8 +296,10 @@ public class Enemy : MonoBehaviour
     public bool FindPlayer()
     {
         // 一个新的盒装检测器：参数有很多（原点，盒子的大小，盒子角度，向什么方向投射，形状的最大距离，检测的碰撞器）
-        return Physics2D.BoxCast((Vector2)transform.position + CheckOffset, CheckSize, 0, dir, CheckDistance, AttackLayer);
+        return Physics2D.BoxCast((Vector2)transform.position + CheckOffset, CheckSize, 0, dir, CheckDistance,
+            AttackLayer);
     }
+
     /// <summary>
     /// 状态的检测和转换
     /// </summary>
@@ -304,6 +324,7 @@ public class Enemy : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + (Vector3)CheckOffset + new Vector3(CheckDistance * -transform.localScale.x, 0), 1f);
+        Gizmos.DrawWireSphere(
+            transform.position + (Vector3)CheckOffset + new Vector3(CheckDistance * -transform.localScale.x, 0), 1f);
     }
 }

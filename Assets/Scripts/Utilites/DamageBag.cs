@@ -14,7 +14,4 @@ public struct DamageData
     //来源信息
     public GameObject attacker;
     
-    // 打击表现
-    public bool isHeavyAttack;
-    public float shakeForce;
 }

@@ -101,6 +101,8 @@ public class PlayerLightCrownState : PlayerState
 
         EventBus<FocusChangeEvent>.Raise(new FocusChangeEvent
             { isGetFous = false, changeFocusCount = s.config.LightCrownFocusCost });
+
+        s.focusSystem.attackBuffStack = Mathf.Min(s.focusSystem.attackBuffStack + 1, s.config.maxAttackBuffStack);
     }
 
     /// <summary>
