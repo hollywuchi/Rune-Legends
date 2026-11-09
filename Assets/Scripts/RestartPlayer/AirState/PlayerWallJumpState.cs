@@ -13,7 +13,6 @@ public class PlayerWallJumpState : PlayerAirState
         // 换成直接添加力的方式，感觉更自然一些
         s.motor.WallJump(s.config.wallJumpForce, -s.context.FacingDirection, s.config.wallHorizontalBoost);
         s.inputGate.Freeze(0.1f);
-        // TODO：可以添加特效
 
     }
 

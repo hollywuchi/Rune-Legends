@@ -22,3 +22,13 @@ public enum ParticalEffectType
     SprintDust,UnderDust,AirDust,Hit,Charging,
     BlockFx,PerfBlock,WaveFX
 }
+
+public enum EnemyState
+{
+    
+}
+
+public enum BtLifeTimeState
+{
+    Success,Failure,Running
+}

@@ -51,12 +51,6 @@ public class PlayerHealState : PlayerState
             return new Transition(PlayerStateId.Idle);
         }
 
-        // REVIEW:被攻击打断
-        // if (!s.ctx.IsHealing)
-        // {
-        //     return new Transition(PlayerStateId.Idle);
-        // }
-
         // 离地打断
         if (!s.context.IsGrounded)
         {

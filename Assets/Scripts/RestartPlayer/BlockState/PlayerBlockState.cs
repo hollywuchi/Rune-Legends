@@ -98,11 +98,9 @@ public class PlayerBlockState : PlayerGroundState
         if (isParry)
         {
             s.context.isParry = isParry;
-            // TODO：播放弹反粒子
         }
         else
         {
-            // TODO：播放普通粒子
             if (!blockHitAnimPlayed)
             {
                 // s.anim.TriggerBlockHit();

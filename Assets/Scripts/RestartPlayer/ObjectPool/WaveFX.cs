@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class WaveFX : MonoBehaviour
 {
-    private readonly float waveTime = 0.5f;
+    private readonly float waveTime = 0.2f;
     private Material material;
     private static readonly int WaveDistenceFromCenter = Shader.PropertyToID("_WaveDistenceFromCenter");
 
