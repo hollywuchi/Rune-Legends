@@ -7,6 +7,7 @@ public abstract class BtBaseNode : ScriptableObject
     [HideInInspector] public string Guid;
     [HideInInspector] public EnemyContext context;
     [HideInInspector] public Blackboard blackBoard;
+    [HideInInspector] public Vector2 position;
 
     [TextArea] public string descrpition;
 

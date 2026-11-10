@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 顺序节点：先序遍历，所有节点顺序执行
+/// 遍历节点，直到所有节点返回Success
+/// </summary>
 public class SequenceNode : CompositeNode
 {
     private int _currentChildIndex;

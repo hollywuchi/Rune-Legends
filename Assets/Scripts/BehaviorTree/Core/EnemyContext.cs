@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 所有组件的上下文，只有叶子节点会读取这个上下文并获取组件
+/// </summary>
 public class EnemyContext
 {
     public GameObject gameObject;
