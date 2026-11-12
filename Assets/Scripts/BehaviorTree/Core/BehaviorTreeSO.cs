@@ -11,7 +11,7 @@ namespace BehaviorTree.Core
     [CreateAssetMenu(fileName = "BehaviorTree", menuName = "BehaviorTreeName", order = 0)]
     public class BehaviorTreeSO : ScriptableObject
     {
-        public BtBaseNode rootNode;         // 根节点，这个节点连接所有同其他的节点
+        public BtBaseNode rootNode; // 根节点，这个节点连接所有同其他的节点
         public List<BtBaseNode> allNodes = new();
         public BtLifeTimeState treeState = BtLifeTimeState.Running;
         public Blackboard blackBoard;
@@ -25,6 +25,11 @@ namespace BehaviorTree.Core
         {
             BehaviorTreeSO behaviorTreeSo = Instantiate(this);
             behaviorTreeSo.rootNode = rootNode.Clone();
+            
+            // 清空旧拷贝的节点 装入刚刚clone出来的新节点
+            behaviorTreeSo.allNodes = new List<BtBaseNode>();
+            Traverse(behaviorTreeSo.rootNode,node => behaviorTreeSo.allNodes.Add(node));
+            
             return behaviorTreeSo;
         }
 
@@ -36,7 +41,7 @@ namespace BehaviorTree.Core
                 node.blackBoard = blackBoard;
             });
         }
-        
+
         /// <summary>
         /// 遍历行为树
         /// </summary>
@@ -57,11 +62,16 @@ namespace BehaviorTree.Core
             {
                 foreach (var item in compositeNode.children)
                 {
-                    Traverse(item,visitor);
+                    Traverse(item, visitor);
                 }
             }
+
+            if (node is RootNode rootNode && rootNode.child != null)
+            {
+                Traverse(rootNode.child, visitor);
+            }
         }
-        
+
         /// <summary>
         /// 向文件中添加节点
         /// </summary>
@@ -73,18 +83,18 @@ namespace BehaviorTree.Core
 
             node.name = type.Name;
             node.Guid = Guid.NewGuid().ToString();
-            
+
             allNodes.Add(node);
 
 #if UNITY_EDITOR
             // 把新建的Node作为子资产添加进这个SO文件中
-            AssetDatabase.AddObjectToAsset(node,this);
+            AssetDatabase.AddObjectToAsset(node, this);
             AssetDatabase.SaveAssets();
 #endif
 
             return node;
         }
-        
+
         /// <summary>
         /// 在文件中删除节点
         /// </summary>
@@ -95,9 +105,9 @@ namespace BehaviorTree.Core
 #if UNITY_EDITOR
             AssetDatabase.RemoveObjectFromAsset(node);
             AssetDatabase.SaveAssets();
-#endif 
+#endif
         }
-        
+
         /// <summary>
         /// 在数据层把子节点塞到父节点中
         /// </summary>
@@ -119,8 +129,15 @@ namespace BehaviorTree.Core
                 EditorUtility.SetDirty(decoratorNode);
 #endif
             }
+            else if (parent is RootNode node)
+            {
+                node.child = child;
+#if UNITY_EDITOR
+                EditorUtility.SetDirty(node);
+#endif
+            }
         }
-        
+
         /// <summary>
         /// 同理，删除
         /// </summary>
@@ -142,8 +159,13 @@ namespace BehaviorTree.Core
                 EditorUtility.SetDirty(decoratorNode);
 #endif
             }
+            else if (parent is RootNode node)
+            {
+                node.child = child = null;
+#if UNITY_EDITOR
+                EditorUtility.SetDirty(node);
+#endif
+            }
         }
-        
-        // public 
     }
 }

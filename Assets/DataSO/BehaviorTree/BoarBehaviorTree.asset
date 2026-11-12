@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8216058904499069656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73cbe03991f442efa7a254dc214e5c11, type: 3}
+  m_Name: ChaseNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 31e9d816-1103-4e5a-85c9-f753d99e01cf
+  position: {x: -21.14286, y: 329.36893}
+  descrpition: "\u8FFD\u51FB\u8282\u70B9"
+--- !u!114 &-5910275143639367492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a27b92af9d594b70af4e70665d7c7bdc, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 4f58b5a8-5cd4-4bbe-a2dc-1474ddd7c2c8
+  position: {x: 0, y: 0}
+  descrpition: 
+  child: {fileID: 1435289529193161373}
+--- !u!114 &-4367342704300883501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97078530b59411bafd59a73a992dcb8, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 3efad31a-2504-4a69-8574-4a284ee3ceda
+  position: {x: -30.285748, y: 217.14284}
+  descrpition: "\u8FFD\u51FB"
+  children:
+  - {fileID: -8216058904499069656}
+--- !u!114 &-328376155338056897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97078530b59411bafd59a73a992dcb8, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 94f6772b-f4ce-493c-92e6-dd830d9c0ddf
+  position: {x: 153.14279, y: 217.14285}
+  descrpition: 
+  children: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6e971f82db746b7ba3e8c07b8c87dd5, type: 3}
+  m_Name: BoarBehaviorTree
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: -5910275143639367492}
+  allNodes:
+  - {fileID: -5910275143639367492}
+  - {fileID: 1435289529193161373}
+  - {fileID: 4911344354178844541}
+  - {fileID: -4367342704300883501}
+  - {fileID: -328376155338056897}
+  - {fileID: -8216058904499069656}
+  treeState: 2
+--- !u!114 &1435289529193161373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8456dedcfed54eceb64c1d0c1840adf7, type: 3}
+  m_Name: SelectorNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 99859af9-715e-4b25-83a7-f6661db122f9
+  position: {x: -21.142853, y: 102.28569}
+  descrpition: "\u4F18\u5148\u7EA7\u6267\u884C"
+  children:
+  - {fileID: 4911344354178844541}
+  - {fileID: -4367342704300883501}
+  - {fileID: -328376155338056897}
+--- !u!114 &4911344354178844541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97078530b59411bafd59a73a992dcb8, type: 3}
+  m_Name: SequenceNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: da6d452f-3067-4e77-9795-7800bbf55aef
+  position: {x: -247.94568, y: 217.14285}
+  descrpition: "\u53D7\u51FB\u6B7B\u4EA1\u7EC4\u5408\u8282\u70B9"
+  children: []

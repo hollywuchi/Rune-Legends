@@ -1,3 +1,4 @@
+using BehaviorTree.Core;
 using UnityEngine;
 
 public abstract class BtBaseNode : ScriptableObject
@@ -36,6 +37,22 @@ public abstract class BtBaseNode : ScriptableObject
     public virtual BtBaseNode Clone()
     {
         return Instantiate(this);
+    }
+    
+    /// <summary>
+    /// 打断方法
+    /// </summary>
+    public void Abort()
+    {
+        BehaviorTreeSO.Traverse(this,node =>
+        {
+            if (node.Started)
+            {
+                node.Started = false;
+                node.State = BtLifeTimeState.Running;
+                node.OnStop();
+            }
+        });
     }
     
     protected abstract void OnStart();

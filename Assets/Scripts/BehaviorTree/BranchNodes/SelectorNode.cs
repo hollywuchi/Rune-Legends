@@ -8,27 +8,38 @@ using UnityEngine;
 public class SelectorNode : CompositeNode
 {
     private int _currentChildren;
-    
+    private int _lastRunningIndex;
+
     protected override void OnStart()
     {
         _currentChildren = 0;
+        _lastRunningIndex = -1;
     }
 
     protected override BtLifeTimeState OnUpdate()
     {
         if (children.Count == 0) return BtLifeTimeState.Failure;
-        for (int i = _currentChildren; i < children.Count; i++)
+        for (int i = 0; i < children.Count; i++)
         {
             var _State = children[i].Evalucate();
-            if (_State == BtLifeTimeState.Running) _currentChildren = i;
-            if (_State != BtLifeTimeState.Failure) return _State;
+            if (_State != BtLifeTimeState.Failure)
+            {
+                // 如果上一帧还在跑比当前优先级更低的旧分支，那么就先打断他
+                if (_lastRunningIndex != -1 && _lastRunningIndex > i)
+                {
+                    children[_lastRunningIndex].Abort();
+                }
+
+                _lastRunningIndex = _State == BtLifeTimeState.Running ? i : -1;
+                return _State;
+            }
         }
 
+        _lastRunningIndex = -1;
         return BtLifeTimeState.Failure;
     }
 
     protected override void OnStop()
     {
-        
     }
 }

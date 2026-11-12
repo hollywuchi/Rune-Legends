@@ -5,7 +5,7 @@ using UnityEngine;
 public class BehaviorTreeRunner : MonoBehaviour
 {
     public BehaviorTreeSO treeAssets;
-    private BehaviorTreeSO _runtimeTree;
+    [HideInInspector] public BehaviorTreeSO _runtimeTree;
 
     private void Start()
     {

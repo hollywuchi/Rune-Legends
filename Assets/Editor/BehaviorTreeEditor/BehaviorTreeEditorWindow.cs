@@ -20,9 +20,23 @@ namespace Editor.BehaviorTreeEditor
 
         private void CreateGUI()
         {
+            var splitView = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
+            splitView.style.flexGrow = 1.0f;
+            rootVisualElement.Add(splitView);
+
+            var inspectorView = new InspectorView();
+            var rightView = new VisualElement();
+            rightView.style.flexGrow = 1.0f;
+            
             _treeView = new BehaviorTreeView();
             _treeView.style.flexGrow = 1.0f;
-            rootVisualElement.Add(_treeView);
+            
+            rightView.Add(_treeView);
+            splitView.Add(inspectorView);
+            splitView.Add(rightView);
+
+            _treeView.OnNodeSelected = inspectorView.UpdateSelectView; 
+            
 
             var sheetStyle =
                 AssetDatabase.LoadAssetAtPath<StyleSheet>(
@@ -44,13 +58,19 @@ namespace Editor.BehaviorTreeEditor
             {
                 var runner = Selection.activeGameObject.GetComponent<BehaviorTreeRunner>();
                 if (runner != null)
-                    tree = runner.treeAssets;
-
-                if (tree != null && _treeView != null)
-                {
-                    _treeView.PopulateView(tree);
-                }
+                    // 当游戏运行时，点击怪物就能直接看到他身上的树
+                    tree = Application.isPlaying ? runner._runtimeTree : runner.treeAssets;
             }
+
+            if (tree != null && _treeView != null)
+            {
+                _treeView.PopulateView(tree);
+            }
+        }
+
+        public void OnInspectorUpdate()
+        {
+            _treeView?.UpdateNodeStatus();
         }
     }
 }

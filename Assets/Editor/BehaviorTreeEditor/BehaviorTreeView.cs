@@ -9,8 +9,9 @@ namespace Editor.BehaviorTreeEditor
 {
     public class BehaviorTreeView : GraphView
     {
-
         public BehaviorTreeSO currentTree;
+        public System.Action<NodeView> OnNodeSelected;
+
         public BehaviorTreeView()
         {
             this.AddManipulator(new ContentZoomer()); // 滚轮缩放
@@ -22,13 +23,9 @@ namespace Editor.BehaviorTreeEditor
             Insert(0, background); // 移动到最底层
             background.StretchToParentSize(); // 画布铺满整个屏幕
 
-            // currentTree =
-            //     AssetDatabase.LoadAssetAtPath<BehaviorTreeSO>("Assets/DataSO/BehaviorTree/BehaviorTree.asset");
-
             graphViewChanged = OnGraphViewChanged;
         }
-        
-        // BUG: 现在点击右键没有菜单出现
+
         /// <summary>
         /// 重写右键菜单的逻辑，实现右键菜单创建节点
         /// </summary>
@@ -36,24 +33,45 @@ namespace Editor.BehaviorTreeEditor
         public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
         {
             // base.BuildContextualMenu(evt);
-            Vector2 mousePos = contentViewContainer.WorldToLocal(evt.localMousePosition);
-            
-            if(currentTree == null) return;
-            evt.menu.AppendAction("创建组合节点/SelectorNode", _ =>
+            Vector2 mousePos = contentViewContainer.WorldToLocal(evt.mousePosition);
+
+            if (currentTree == null)
             {
-                var node = currentTree.CreateNode(typeof(SelectorNode));
-                node.position = mousePos;
-                CreateNodeView(node);
-            });
+                evt.menu.AppendAction("请选择一个BhaviorTreeSO文件",null,DropdownMenuAction.Status.Disabled);
+                return;
+            }
             
-            evt.menu.AppendAction("创建组合节点/SequenceNode", _ =>
+            // 自动识别所有相同类型的节点，并在右键菜单中显示
+            // 之后每写一个新的怪物行为，都能在右键菜单中添加
+            var actionNodes = TypeCache.GetTypesDerivedFrom<ActionNode>();
+            foreach (var item in actionNodes)
             {
-                var node = currentTree.CreateNode(typeof(SequenceNode));
-                node.position = mousePos;
-                CreateNodeView(node);
-            });
+                if(item.IsAbstract) continue;
+                evt.menu.AppendAction($"Action/{item.Name}",_ => CreateNodeAtMousePos(item,mousePos));
+            }
+
+            var compositeNodes = TypeCache.GetTypesDerivedFrom<CompositeNode>();
+            foreach (var item in compositeNodes)
+            {
+                if(item.IsAbstract) continue;
+                evt.menu.AppendAction($"Composite/{item.Name}",_ => CreateNodeAtMousePos(item,mousePos));
+            }
+
+            var decoratorNodes = TypeCache.GetTypesDerivedFrom<DecoratorNode>();
+            foreach (var item in decoratorNodes)
+            {
+                if (item.IsAbstract) continue;
+                evt.menu.AppendAction($"Decorator/{item.Name}",_ => CreateNodeAtMousePos(item,mousePos));
+            }
         }
-        
+
+        private void CreateNodeAtMousePos(System.Type type, Vector2 mousePos)
+        {
+            var node = currentTree.CreateNode(type);
+            node.position = mousePos;
+            CreateNodeView(node);
+        }
+
         /// <summary>
         /// 重写连线方法
         /// 如果方向和节点都不同，那么就允许连接
@@ -63,19 +81,17 @@ namespace Editor.BehaviorTreeEditor
         /// <returns></returns>
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
-            // return base.GetCompatiblePorts(startPort, nodeAdapter);
-
             var compatiblePorts = new List<Port>();
 
             ports.ForEach(port =>
             {
-                if(startPort != port && startPort.node != port.node && startPort.direction != port.direction)
+                if (startPort != port && startPort.node != port.node && startPort.direction != port.direction)
                     compatiblePorts.Add(port);
             });
 
             return compatiblePorts;
         }
-        
+
         /// <summary>
         /// 创建一个nodeView的辅助方法
         /// </summary>
@@ -84,6 +100,7 @@ namespace Editor.BehaviorTreeEditor
         {
             NodeView nodeView = new NodeView(baseNode);
             AddElement(nodeView);
+            nodeView.OnNodeSelected = OnNodeSelected;
         }
 
         /// <summary>
@@ -98,11 +115,11 @@ namespace Editor.BehaviorTreeEditor
             {
                 foreach (var item in change.edgesToCreate)
                 {
-                    if(item.output.node is NodeView parentView && item.input.node is NodeView childView)
-                        currentTree.AddChild(parentView.nodeData,childView.nodeData);
+                    if (item.output.node is NodeView parentView && item.input.node is NodeView childView)
+                        currentTree.AddChild(parentView.nodeData, childView.nodeData);
                 }
             }
-            
+
             // 如果删除了
             if (change.elementsToRemove != null)
             {
@@ -112,8 +129,9 @@ namespace Editor.BehaviorTreeEditor
                     if (item is Edge edge)
                     {
                         if (edge.output.node is NodeView parentView && edge.input.node is NodeView childrenView)
-                            currentTree.RemoveChild(parentView.nodeData,childrenView.nodeData);
+                            currentTree.RemoveChild(parentView.nodeData, childrenView.nodeData);
                     }
+
                     // 删的是节点
                     if (item is NodeView nodeView)
                     {
@@ -124,7 +142,7 @@ namespace Editor.BehaviorTreeEditor
 
             return change;
         }
-        
+
         /// <summary>
         /// 反序列化绘图，把当前选中的BehaviorTree显示在图中
         /// </summary>
@@ -135,12 +153,19 @@ namespace Editor.BehaviorTreeEditor
             graphViewChanged -= OnGraphViewChanged;
             DeleteElements(graphElements);
             graphViewChanged += OnGraphViewChanged;
-            
-            if(currentTree == null) return;
-            
+
+            if (currentTree == null) return;
+
+            // 创建唯一的RootNode
+            if (currentTree.rootNode == null)
+            {
+                currentTree.rootNode = currentTree.CreateNode(typeof(RootNode));
+                EditorUtility.SetDirty(currentTree);
+                AssetDatabase.SaveAssets();
+            }
             // 创建所有节点
             currentTree.allNodes.ForEach(node => CreateNodeView(node));
-            
+
             // 连接所有的连线
             currentTree.allNodes.ForEach(node =>
             {
@@ -158,9 +183,9 @@ namespace Editor.BehaviorTreeEditor
                 }
             });
         }
-        
+
         /// <summary>
-        /// 用GUID找每一个孩子
+        /// 用GUID找每一个孩子（视觉层）
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
@@ -168,9 +193,9 @@ namespace Editor.BehaviorTreeEditor
         {
             return GetNodeByGuid(node.Guid) as NodeView;
         }
-        
+
         /// <summary>
-        /// 找到每一个节点下面的所有孩子
+        /// 找到每一个节点下面的所有孩子（数据层）
         /// </summary>
         /// <param name="parent"></param>
         /// <returns></returns>
@@ -179,7 +204,18 @@ namespace Editor.BehaviorTreeEditor
             if (parent is CompositeNode compositeNode) return compositeNode.children;
             if (parent is DecoratorNode decoratorNode && decoratorNode.child != null)
                 return new List<BtBaseNode> { decoratorNode.child };
+            if (parent is RootNode rootNode && rootNode.child != null)
+                return new List<BtBaseNode> { rootNode.child };
             return new List<BtBaseNode>();
+        }
+
+
+        public void UpdateNodeStatus()
+        {
+            nodes.ForEach(n =>
+            {
+                if (n is NodeView nodeView) nodeView.UpdateState();
+            });
         }
     }
 }
