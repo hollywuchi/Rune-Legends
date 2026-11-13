@@ -15,8 +15,9 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 31e9d816-1103-4e5a-85c9-f753d99e01cf
-  position: {x: -21.14286, y: 329.36893}
+  position: {x: 18.991508, y: 401.13843}
   descrpition: "\u8FFD\u51FB\u8282\u70B9"
+  isFindPlayer: 0
 --- !u!114 &-5910275143639367492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,6 +36,23 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   descrpition: 
   child: {fileID: 1435289529193161373}
+--- !u!114 &-5871236822247156887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f002d3bfb745b6abf578a7f5feefb2, type: 3}
+  m_Name: MoveNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 0ea9ff77-6543-4622-bc6b-5caaa7d129e3
+  position: {x: 6.8571167, y: 425.7143}
+  descrpition: 
 --- !u!114 &-4367342704300883501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,10 +68,11 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 3efad31a-2504-4a69-8574-4a284ee3ceda
-  position: {x: -30.285748, y: 217.14284}
+  position: {x: -49.714294, y: 309.14282}
   descrpition: "\u8FFD\u51FB"
   children:
-  - {fileID: -8216058904499069656}
+  - {fileID: 2133905584286280346}
+  - {fileID: -5871236822247156887}
 --- !u!114 &-328376155338056897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,7 +110,8 @@ MonoBehaviour:
   - {fileID: 4911344354178844541}
   - {fileID: -4367342704300883501}
   - {fileID: -328376155338056897}
-  - {fileID: -8216058904499069656}
+  - {fileID: 2133905584286280346}
+  - {fileID: -5871236822247156887}
   treeState: 2
 --- !u!114 &1435289529193161373
 MonoBehaviour:
@@ -112,8 +132,28 @@ MonoBehaviour:
   descrpition: "\u4F18\u5148\u7EA7\u6267\u884C"
   children:
   - {fileID: 4911344354178844541}
+  - {fileID: 4911344354178844541}
+  - {fileID: -4367342704300883501}
   - {fileID: -4367342704300883501}
   - {fileID: -328376155338056897}
+  - {fileID: -328376155338056897}
+--- !u!114 &2133905584286280346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0ee9ca44ae4aed9cdbcf6e126821b3, type: 3}
+  m_Name: CheckTargetInRangeNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 413e3a71-8ab3-4c9b-a94b-c1af32b1bb55
+  position: {x: -211.71423, y: 425.71426}
+  descrpition: 
 --- !u!114 &4911344354178844541
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ namespace Editor.BehaviorTreeEditor
             // 提前销毁旧的Editor,防止内存泄露
             UnityEngine.Object.DestroyImmediate(editor);
 
-            if (nodeView == null && nodeView.nodeData == null) return;
+            if (nodeView == null || nodeView.nodeData == null) return;
 
             editor = UnityEditor.Editor.CreateEditor(nodeView.nodeData);
             IMGUIContainer container = new IMGUIContainer(() =>
@@ -23,7 +23,7 @@ namespace Editor.BehaviorTreeEditor
                     editor.OnInspectorGUI();
                 }
             });
-            Add(container);   
+            Add(container);
         }
     }
 }

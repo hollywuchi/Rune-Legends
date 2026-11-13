@@ -21,7 +21,7 @@ public class SelectorNode : CompositeNode
         if (children.Count == 0) return BtLifeTimeState.Failure;
         for (int i = 0; i < children.Count; i++)
         {
-            var _State = children[i].Evalucate();
+            var _State = children[i].Evaluate();
             if (_State != BtLifeTimeState.Failure)
             {
                 // 如果上一帧还在跑比当前优先级更低的旧分支，那么就先打断他

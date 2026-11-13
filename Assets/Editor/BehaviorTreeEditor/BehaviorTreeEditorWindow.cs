@@ -10,6 +10,9 @@ namespace Editor.BehaviorTreeEditor
     {
         private BehaviorTreeView _treeView;
         
+        /// <summary>
+        /// MenuItem来让下方的函数被调用
+        /// </summary>
         [MenuItem("Tools/BehaviorTreeEditor")] 
         private static void ShowWindow()
         {
@@ -17,27 +20,46 @@ namespace Editor.BehaviorTreeEditor
             window.titleContent = new GUIContent("Behavior Tree Editor");
             window.Show();
         }
-
+        
+        /// <summary>
+        /// 生命周期函数，当生成GUI的时候调用
+        /// </summary>
         private void CreateGUI()
         {
-            var splitView = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal);
-            splitView.style.flexGrow = 1.0f;
+            var splitView = new TwoPaneSplitView(0, 250, TwoPaneSplitViewOrientation.Horizontal)
+            {
+                style =
+                {
+                    flexGrow = 1.0f
+                }
+            };
             rootVisualElement.Add(splitView);
 
             var inspectorView = new InspectorView();
-            var rightView = new VisualElement();
-            rightView.style.flexGrow = 1.0f;
-            
-            _treeView = new BehaviorTreeView();
-            _treeView.style.flexGrow = 1.0f;
-            
+            var rightView = new VisualElement
+            {
+                style =
+                {
+                    flexGrow = 1.0f
+                }
+            };
+
+            _treeView = new BehaviorTreeView
+            {
+                style =
+                {
+                    flexGrow = 1.0f
+                }
+            };
+
             rightView.Add(_treeView);
             splitView.Add(inspectorView);
             splitView.Add(rightView);
 
             _treeView.OnNodeSelected = inspectorView.UpdateSelectView; 
             
-
+            
+            // 背景样式
             var sheetStyle =
                 AssetDatabase.LoadAssetAtPath<StyleSheet>(
                     "Assets/Editor/BehaviorTreeEditor/BehaviorTreeEditor.uss");
@@ -67,7 +89,10 @@ namespace Editor.BehaviorTreeEditor
                 _treeView.PopulateView(tree);
             }
         }
-
+        
+        /// <summary>
+        /// 事件函数，类似Update，但是每秒只调用10帧
+        /// </summary>
         public void OnInspectorUpdate()
         {
             _treeView?.UpdateNodeStatus();

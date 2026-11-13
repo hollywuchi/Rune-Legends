@@ -9,7 +9,7 @@ namespace Editor.BehaviorTreeEditor
 {
     public class BehaviorTreeView : GraphView
     {
-        public BehaviorTreeSO currentTree;
+        private BehaviorTreeSO currentTree;
         public System.Action<NodeView> OnNodeSelected;
 
         public BehaviorTreeView()
@@ -209,7 +209,10 @@ namespace Editor.BehaviorTreeEditor
             return new List<BtBaseNode>();
         }
 
-
+        
+        /// <summary>
+        /// 更新节点颜色
+        /// </summary>
         public void UpdateNodeStatus()
         {
             nodes.ForEach(n =>

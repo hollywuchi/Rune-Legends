@@ -12,7 +12,7 @@ public abstract class BtBaseNode : ScriptableObject
 
     [TextArea] public string descrpition;
 
-    public BtLifeTimeState Evalucate()
+    public BtLifeTimeState Evaluate()
     {
         if (!Started)
         {

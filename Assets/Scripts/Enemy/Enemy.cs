@@ -191,28 +191,28 @@ public class Enemy : MonoBehaviour
     /// 背刺回头方法&受伤击退
     /// </summary>
     /// <param name="Attacker"></param>
-    public void OnTakeDamage(Transform Attacker)
-    {
-        if (postureSystem.isBroken || IsDeath) return;
-        attacker = Attacker;
-        if (attacker.transform.position.x - transform.position.x < 0)
-            transform.localScale = new Vector3(1, 1, 1);
-        if (attacker.transform.position.x - transform.position.x > 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+    // public void OnTakeDamage(Transform Attacker)
+    // {
+    //     if (postureSystem.isBroken || IsDeath) return;
+    //     attacker = Attacker;
+    //     if (attacker.transform.position.x - transform.position.x < 0)
+    //         transform.localScale = new Vector3(1, 1, 1);
+    //     if (attacker.transform.position.x - transform.position.x > 0)
+    //         transform.localScale = new Vector3(-1, 1, 1);
+    //
+    //     Ishurt = true;
+    //     anim.SetTrigger("hurt");
+    //     Vector2 dir = new Vector2(transform.position.x - attacker.transform.position.x, 0).normalized;
+    //     rb.velocity = new Vector2(0, rb.velocity.y);
+    //     StartCoroutine(WaitAttack(dir));
+    // }
 
-        Ishurt = true;
-        anim.SetTrigger("hurt");
-        Vector2 dir = new Vector2(transform.position.x - attacker.transform.position.x, 0).normalized;
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        StartCoroutine(WaitAttack(dir));
-    }
-
-    IEnumerator WaitAttack(Vector2 dir)
-    {
-        rb.AddForce(dir * Backforce, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(0.5f);
-        Ishurt = false;
-    }
+    // IEnumerator WaitAttack(Vector2 dir)
+    // {
+    //     rb.AddForce(dir * Backforce, ForceMode2D.Impulse);
+    //     yield return new WaitForSeconds(0.5f);
+    //     Ishurt = false;
+    // }
 
     // public void OnDie()
     // {

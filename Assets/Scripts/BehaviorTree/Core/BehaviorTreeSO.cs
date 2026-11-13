@@ -18,7 +18,7 @@ namespace BehaviorTree.Core
 
         public BtLifeTimeState UpdateTree()
         {
-            return rootNode.Evalucate();
+            return rootNode.Evaluate();
         }
 
         public BehaviorTreeSO Clone()

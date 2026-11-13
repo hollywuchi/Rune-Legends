@@ -21,7 +21,7 @@ public class SequenceNode : CompositeNode
         if (children.Count == 0) return BtLifeTimeState.Failure;
         for (int i = _currentChildIndex; i < children.Count; i++)
         {
-            var state = children[i].Evalucate();
+            var state = children[i].Evaluate();
             if (state == BtLifeTimeState.Running) _currentChildIndex = i;
             if(state != BtLifeTimeState.Success) return state;
         }

@@ -13,7 +13,7 @@ namespace BehaviorTree.Core
 
         protected override BtLifeTimeState OnUpdate()
         {
-            return child.Evalucate();
+            return child.Evaluate();
         }
 
         protected override void OnStop()

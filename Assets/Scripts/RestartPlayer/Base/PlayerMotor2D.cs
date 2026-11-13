@@ -23,71 +23,39 @@ public sealed class PlayerMotor2D : MonoBehaviour
         set => rb.gravityScale = value;
     }
 
-    public void CaptureOriginalGravity()
-    {
-        _originalGravity = rb.gravityScale;
-    }
+    public void CaptureOriginalGravity()  => _originalGravity = rb.gravityScale;
 
-    public void RestoreOriginalGravity()
-    {
-        rb.gravityScale = _originalGravity;
-    }
+    public void RestoreOriginalGravity()  => rb.gravityScale = _originalGravity;
 
-    public void SetVelocity(Vector2 v)
-    {
-        rb.velocity = v;
-    }
+    public void SetVelocity(Vector2 v) => rb.velocity = v;
 
-    public void SetVelocityX(float x)
-    {
-        rb.velocity = new Vector2(x, rb.velocity.y);
-    }
+    public void SetVelocityX(float x)  =>rb.velocity = new Vector2(x, rb.velocity.y);
 
-    public void SetVelocityY(float y)
-    {
-        rb.velocity = new Vector2(rb.velocity.x, y);
-    }
+    public void SetVelocityY(float y)  => rb.velocity = new Vector2(rb.velocity.x, y);
 
-    public void Jump(float jumpForce)
-    {
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-    }
+    public void Jump(float jumpForce)  => rb.velocity = new Vector2(rb.velocity.x, jumpForce);
 
-    public void WallJump(float jumpForce, int facingDir, float horizontalBoost)
-    {
+    public void WallJump(float jumpForce, int facingDir, float horizontalBoost) =>
         rb.AddForce(new Vector2(facingDir * horizontalBoost, jumpForce), ForceMode2D.Impulse);
-    }
 
-    public void DashHorizontal(int facingDir, float dashSpeed)
-    {
-        rb.velocity = new Vector2(facingDir * dashSpeed, 0f);
-    }
-    public void LightCutDash(int facingDir, float cutForce)
-    {
+    public void DashHorizontal(int facingDir, float dashSpeed) => rb.velocity = new Vector2(facingDir * dashSpeed, 0f);
+
+    public void LightCutDash(int facingDir, float cutForce) =>
         rb.AddForce(new Vector3(facingDir * cutForce, 0f), ForceMode2D.Impulse);
-    }
 
     /// <summary>
     /// 忽略玩家和目标层的碰撞
     /// </summary>
     /// <param name="layer"></param>
     /// <param name="ignore"></param>
-    public void IgnorePlayerCollision(int layer, bool ignore)
-    {
+    public void IgnorePlayerCollision(int layer, bool ignore) =>
         Physics2D.IgnoreLayerCollision(gameObject.layer, layer, ignore);
-    }
     /// <summary>
     /// 翻转玩家朝向,物理层面
     /// </summary>
-    public void FlipFacing()
-    {
-        rb.transform.Rotate(0, 180f, 0);
-    }
+    public void FlipFacing() => rb.transform.Rotate(0, 180f, 0);
 
-    public void Teleport(Vector2 position)
-    {
-        rb.position = position;
-    }
+    public void Teleport(Vector2 position) => rb.position = position;
 
     public void SwtichInterpolate(bool enable)
     {
