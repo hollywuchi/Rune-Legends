@@ -23,6 +23,8 @@ public class Character : MonoBehaviour
    public Func<DamageData, bool> OnTryBlockDamage;
    public event Action<bool, Transform> OnAttackBlocked;
 
+   [HideInInspector] public bool isHurt;
+
    private void Awake()
    {
       CurrentHealth = maxHealth;
@@ -32,6 +34,7 @@ public class Character : MonoBehaviour
    {
       if (invincibleTimer > 0)
          invincibleTimer -= Time.deltaTime;
+      else isHurt = false;
    }
 
    public void TakeDamage(DamageData data)
@@ -45,6 +48,8 @@ public class Character : MonoBehaviour
       }
       
       invincibleTimer = invincibleTime;
+      isHurt = true;
+      
       CurrentHealth = Mathf.Max(0, CurrentHealth - data.damage);
       
       OnHealthChange?.Invoke(CurrentHealth,maxHealth);

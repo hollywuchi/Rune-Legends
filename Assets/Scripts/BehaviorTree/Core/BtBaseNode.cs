@@ -9,11 +9,15 @@ public abstract class BtBaseNode : ScriptableObject
     [HideInInspector] public EnemyContext context;
     [HideInInspector] public Blackboard blackBoard;
     [HideInInspector] public Vector2 position;
+    [HideInInspector] public EnemyConfig config;
+    [HideInInspector] public float LastEvaluateTime = -1;
 
     [TextArea] public string descrpition;
 
     public BtLifeTimeState Evaluate()
     {
+        LastEvaluateTime = Time.unscaledTime;
+        
         if (!Started)
         {
             OnStart();
@@ -50,6 +54,7 @@ public abstract class BtBaseNode : ScriptableObject
             {
                 node.Started = false;
                 node.State = BtLifeTimeState.Running;
+                LastEvaluateTime = -1;
                 node.OnStop();
             }
         });

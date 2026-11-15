@@ -18,4 +18,6 @@ public class BehaviorTreeRunner : MonoBehaviour
     {
         _runtimeTree.UpdateTree();
     }
+
+    public void DestroySelf() => Destroy(gameObject);
 }

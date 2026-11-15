@@ -116,7 +116,10 @@ namespace Editor.BehaviorTreeEditor
                 foreach (var item in change.edgesToCreate)
                 {
                     if (item.output.node is NodeView parentView && item.input.node is NodeView childView)
+                    {
                         currentTree.AddChild(parentView.nodeData, childView.nodeData);
+                        parentView.SortChildren(parentView.nodeData);
+                    }
                 }
             }
 

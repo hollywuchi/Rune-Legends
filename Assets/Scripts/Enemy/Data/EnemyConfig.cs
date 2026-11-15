@@ -9,6 +9,10 @@ public class EnemyConfig : ScriptableObject
 
     public float normalSpeed;
     public float chaseSpeed;
-
+    
+    [Header("脱战时间")]
     public float loseTargetTime;
+
+    [Header("撞墙等待时间")] 
+    public float waitingTime;
 }

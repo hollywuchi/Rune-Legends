@@ -1,38 +1,54 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyMotor : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Character character;
-    public bool isHurt;
-    
-    [Header("攻击距离参数")]
-    public Vector2 checkOffset;
+    private float FacingDir => -transform.localScale.x;
+    public Transform attacker { get; private set; }
+
+    [Header("敌人视野参数")] public Vector2 offset;
     public Vector2 checkSize;
-    public float checkDistance;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        character = GetComponent<Character>();
+    }
+
+    private void OnEnable()
+    {
+        if (character != null) character.OnHurt += GetHurt;
+    }
+
+    private void OnDisable()
+    {
+        if (character != null) character.OnHurt -= GetHurt;
     }
 
     public void Move(float velocity) =>
-        rb.velocity = new Vector2(velocity * transform.localScale.x, rb.velocity.y);
+        rb.velocity = new Vector2(velocity * FacingDir, rb.velocity.y);
 
-    public void GetHurt(DamageData data)
+    private void GetHurt(DamageData data)
     {
-        isHurt = true;
-        // 挨打掉头
-        var dirX = data.attacker.transform.position.x - transform.position.x;
-        transform.localScale = new Vector3(dirX > 0 ? -1 : 1, 1, 1);
+        attacker = data.attacker != null ? data.attacker.transform : null;
 
         // 击退效果
         rb.velocity = Vector2.zero;
         rb.AddForce(data.knockBackDir * data.knockBackForce, ForceMode2D.Impulse);
         // 生成特效
         EventBus<FxEvent>.Raise(new FxEvent { dir = 1, playerTran = data.hitPoint, type = ParticalEffectType.Hit });
+    }
+
+    public void FaceTarget(Transform target)
+    {
+        if (target == null) return;
+        var dirX = target.position.x - transform.position.x;
+        if (Mathf.Approximately(dirX, 0)) return;
+        transform.localScale = new Vector3(dirX > 0 ? -1 : 1, 1, 1);
     }
 
     /// <summary>
@@ -44,29 +60,23 @@ public class EnemyMotor : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(stunTime);
-        isHurt = false;
     }
 
     /// <summary>
     /// 发现玩家的方法
     /// </summary>
-    /// <param name="checkOffset">原点</param>
-    /// <param name="checkSize">大小</param>
-    /// <param name="dir">方向</param>
-    /// <param name="checkDistance">距离</param>
-    /// <param name="attackLayer">检测的LayerMask</param>
-    /// <returns></returns>
     public Transform FindPlayer()
     {
-        return Physics2D.BoxCast((Vector2)transform.position + checkOffset, checkSize, 0, transform.localScale, checkDistance,
-            LayerMask.GetMask("Player")).transform;
+        var hit = Physics2D.OverlapBox(GetBoxOri(), checkSize, 0f, LayerMask.GetMask("Player"));
+        return hit != null ? hit.transform : null;
     }
+
+    private Vector2 GetBoxOri() => (Vector2)transform.position + new Vector2(offset.x * FacingDir, offset.y);
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(
-            transform.position + (Vector3)checkOffset + new Vector3(checkDistance * -transform.localScale.x, 0), 1f);
+        Gizmos.DrawWireCube(GetBoxOri(), checkSize);
     }
 
     /// <summary>
