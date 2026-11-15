@@ -4,23 +4,23 @@ namespace BehaviorTree.Leaves.Condition
 {
     public class CheckTargetInRangeNode : ActionNode
     {
-        private float loseTargetTime;
         private float loseTargetTimer;
 
         protected override void OnStart()
         {
-            if (context.Config != null)
-                loseTargetTime = context.Config.loseTargetTime;
         }
 
         protected override BtLifeTimeState OnUpdate()
         {
             var playerTrans = context.Motor.FindPlayer();
-            if (playerTrans == null) return BtLifeTimeState.Failure;
-
-            loseTargetTimer = loseTargetTime;
-            if (blackBoard != null)
-                blackBoard.targetPlayer = playerTrans;
+            
+            if (playerTrans != null)
+            {
+                loseTargetTimer = config != null ? config.loseTargetTime : 1f;
+                if (blackBoard != null)
+                    blackBoard.targetPlayer = playerTrans;
+                return BtLifeTimeState.Success;
+            }
 
             if (loseTargetTimer > 0)
             {
@@ -28,8 +28,8 @@ namespace BehaviorTree.Leaves.Condition
                 return BtLifeTimeState.Success;
             }
 
-            if (blackBoard != null) blackBoard.targetPlayer = null;
-
+            if (blackBoard != null) blackBoard.targetPlayer = null; 
+            
             return BtLifeTimeState.Failure;
         }
 

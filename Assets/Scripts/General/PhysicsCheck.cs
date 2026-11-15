@@ -34,14 +34,7 @@ public class PhysicsCheck : MonoBehaviour
     void Update()
     {
         CheckGround();
-        if (IsGround)
-        {
-            coll.sharedMaterial = Walk;
-        }
-        else
-        {
-            coll.sharedMaterial = Wall;
-        }
+        coll.sharedMaterial = IsGround ? Walk : Wall;
     }
     /// <summary>
     /// 地面检测方法，使用的是，physice2D碰撞检测中的球形碰撞检测
@@ -73,11 +66,16 @@ public class PhysicsCheck : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position + rightTopOffset, PhyRadius);
 
     }
-    // 这里就是无论什么时候都可以绘制（永久出现）
-    // private void OnDrawGizmos() 
-    // {
 
-    // }
+    public bool TouchWall_R()
+    {
+        return transform.localScale.x < 0 && touchLeftWall || transform.localScale.x > 0 && touchRightWall;
+    }
+
+    public bool TouchWall_L()
+    {
+        return transform.localScale.x > 0 && touchLeftWall || transform.localScale.x < 0 && touchRightWall;
+    }
     public void AutoChangeOffset()
     {
         rightOffset = new Vector2(coll.bounds.size.x / 2 + coll.offset.x, coll.size.y / 2);

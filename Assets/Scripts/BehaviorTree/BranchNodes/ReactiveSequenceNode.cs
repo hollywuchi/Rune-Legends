@@ -1,14 +1,29 @@
-public abstract class ReactiveSequenceNode : CompositeNode
+public class ReactiveSequenceNode : CompositeNode
 {
+    protected override void OnStart()
+    {
+    }
+
     protected override BtLifeTimeState OnUpdate()
     {
         if (children.Count == 0) return BtLifeTimeState.Failure;
-        foreach (var t in children)
+        for (var i = 0; i < children.Count; i++)
         {
-            var state = t.Evaluate();
-            if(state != BtLifeTimeState.Success) return state;
+            var state = children[i].Evaluate();
+            if (state == BtLifeTimeState.Success) continue;
+            for (var j = i + 1; j < children.Count; j++)
+            {
+                if(children[j].Started)
+                    children[j].Abort();
+            }
+
+            return state;
         }
 
         return BtLifeTimeState.Success;
+    }
+
+    protected override void OnStop()
+    {
     }
 }

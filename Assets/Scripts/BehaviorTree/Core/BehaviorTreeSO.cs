@@ -15,6 +15,7 @@ namespace BehaviorTree.Core
         public List<BtBaseNode> allNodes = new();
         public BtLifeTimeState treeState = BtLifeTimeState.Running;
         public Blackboard blackBoard;
+        public EnemyConfig config;
 
         public BtLifeTimeState UpdateTree()
         {
@@ -25,6 +26,7 @@ namespace BehaviorTree.Core
         {
             BehaviorTreeSO behaviorTreeSo = Instantiate(this);
             behaviorTreeSo.rootNode = rootNode.Clone();
+            behaviorTreeSo.blackBoard = new Blackboard();
             
             // 清空旧拷贝的节点 装入刚刚clone出来的新节点
             behaviorTreeSo.allNodes = new List<BtBaseNode>();
@@ -39,6 +41,7 @@ namespace BehaviorTree.Core
             {
                 node.context = context;
                 node.blackBoard = blackBoard;
+                node.config = config;
             });
         }
 

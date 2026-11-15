@@ -6678,7 +6678,7 @@ MonoBehaviour:
   OnPostureBroken:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6190414144336011803}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
         m_MethodName: OnPostureBroken
         m_Mode: 1
@@ -6784,7 +6784,7 @@ MonoBehaviour:
     m_Bits: 64
   GroundOffset: {x: -1.5, y: 0}
   LeftOffset: {x: -1.5, y: 0.65}
-  rightOffset: {x: 1.5, y: 0.63}
+  rightOffset: {x: 1.49, y: 0.63}
   leftTopOffset: {x: 0, y: 0}
   rightTopOffset: {x: 0, y: 0}
   IsGround: 0
@@ -6883,7 +6883,7 @@ GameObject:
   - component: {fileID: 8914707848686212913}
   - component: {fileID: 5626566792491756666}
   - component: {fileID: 8092899479570261609}
-  - component: {fileID: 6190414144336011803}
+  - component: {fileID: 8914707848686212915}
   - component: {fileID: 4603810781759019055}
   - component: {fileID: 7782011365600366073}
   - component: {fileID: 6377368981437909743}
@@ -6896,46 +6896,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6190414144336011803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5741764631284144926}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce1ec6a98280e2b42971367a65b99279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicsCheck: {fileID: 0}
-  anim: {fileID: 0}
-  NormalSpeed: 100
-  chaseSpeed: 260
-  CurrentSpeed: 0
-  dir: {x: 0, y: 0, z: 0}
-  attacker: {fileID: 0}
-  Backforce: 5
-  CheckOffset: {x: 0, y: 0.67}
-  CheckSize: {x: 1, y: 1}
-  CheckDistance: 4.5
-  AttackLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  WaitTime: 2
-  WaitTimeCounter: 0
-  LostTime: 3
-  LostTimeCounter: 0
-  IsWait: 0
-  Ishurt: 0
-  IsDeath: 0
-  postureSystem: {fileID: 3565027537396402420}
-  isBlocked: 0
-  parryRecoilForce: 8
-  blockRecoilForce: 3
-  parryStaggerDuration: 0.8
-  blockStaggerDuration: 0.3
-  knockbackDeceleration: 30
 --- !u!61 &6377368981437909743
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7098,6 +7058,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   treeAssets: {fileID: 11400000, guid: a2a111d9d516826499de8ea9d56fdabf, type: 2}
   _runtimeTree: {fileID: 0}
+--- !u!114 &8914707848686212915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5741764631284144926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12d27ba0f23453fbf6e605b1621e697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 4, y: 0.75}
+  checkSize: {x: 8, y: 1.5}
 --- !u!114 &9057115520981388892
 MonoBehaviour:
   m_ObjectHideFlags: 0

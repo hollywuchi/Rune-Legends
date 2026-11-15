@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace Editor.BehaviorTreeEditor
@@ -20,7 +21,12 @@ namespace Editor.BehaviorTreeEditor
             {
                 if (editor != null && editor.target != null)
                 {
+                    EditorGUI.BeginChangeCheck();
                     editor.OnInspectorGUI();
+                    if (EditorGUI.EndChangeCheck())
+                    {
+                        nodeView.UpdateDescription();
+                    }
                 }
             });
             Add(container);

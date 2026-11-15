@@ -44,10 +44,6 @@ public class Enemy : MonoBehaviour
     public float blockStaggerDuration = 0.5f; // 格挡硬直时间
     public float knockbackDeceleration = 30f; // 击退刹车减速度
 
-    // 现在的状态
-    BaseState currnetState;
-    protected BaseState patrolState;
-    protected BaseState chaseState;
 
     private Character character;
 
@@ -67,17 +63,12 @@ public class Enemy : MonoBehaviour
         character.OnHurt += HandleHurt;
         character.OnDeath += HandleDeath;
         character.OnAttackBlocked += OnBlockedByPlayer;
-
-        // 现在的状态转换为巡逻状态
-        currnetState = patrolState;
-        currnetState.OnEnter(this);
     }
 
     private void Update()
     {
         dir = new Vector3(-transform.localScale.x, 0, 0);
 
-        currnetState.LogicUpdate();
         TimeCount();
     }
 
@@ -96,12 +87,10 @@ public class Enemy : MonoBehaviour
             rb.velocity = new Vector2(newVelX, rb.velocity.y);
         }
 
-        currnetState.PhysicsUpdate();
     }
 
     private void OnDisable()
     {
-        currnetState.OnExit();
         character.OnHurt -= HandleHurt;
         character.OnDeath -= HandleDeath;
         character.OnAttackBlocked -= OnBlockedByPlayer;
@@ -300,25 +289,6 @@ public class Enemy : MonoBehaviour
             AttackLayer);
     }
 
-    /// <summary>
-    /// 状态的检测和转换
-    /// </summary>
-    /// <param name="state"></param>
-    public void SwitchState(NPCstate state)
-    {
-        // 新版的"语法糖"
-        // 也就是传入一个新的状态,在枚举内判断
-        // 之后再改变状态
-        var newState = state switch
-        {
-            NPCstate.Patrol => patrolState,
-            NPCstate.Chase => chaseState,
-            _ => null
-        };
-        currnetState.OnExit();
-        currnetState = newState;
-        currnetState.OnEnter(this);
-    }
 
 
     private void OnDrawGizmosSelected()

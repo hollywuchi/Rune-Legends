@@ -8,7 +8,6 @@ public class EnemyContext
     public GameObject GameObject;
     public Transform Transform;
     public EnemyMotor Motor;
-    public EnemyConfig Config;
     public Animator Anim;
     public PhysicsCheck PhysicsCheck;
     public PostureSystem PostureSystem;
@@ -21,7 +20,6 @@ public class EnemyContext
             GameObject = _go,
             Transform = _go.GetComponent<Transform>(),
             Motor = _go.GetComponent<EnemyMotor>(),
-            Config = _go.GetComponent<EnemyConfig>(),
             Anim = _go.GetComponent<Animator>(),
             PhysicsCheck = _go.GetComponent<PhysicsCheck>(),
             PostureSystem = _go.GetComponent<PostureSystem>(),
