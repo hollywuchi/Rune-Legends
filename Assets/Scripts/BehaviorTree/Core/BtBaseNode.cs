@@ -54,7 +54,7 @@ public abstract class BtBaseNode : ScriptableObject
             {
                 node.Started = false;
                 node.State = BtLifeTimeState.Running;
-                LastEvaluateTime = -1;
+                node.LastEvaluateTime = -1;
                 node.OnStop();
             }
         });

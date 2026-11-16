@@ -27,11 +27,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6005cc81e81ee7a438d4b23aa5f247ac
-    m_Address: Boar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6b67abd07732b304a9082a8b56cc2f81
     m_Address: SprintDust
     m_ReadOnly: 0

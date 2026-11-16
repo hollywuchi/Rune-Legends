@@ -4,7 +4,8 @@ namespace BehaviorTree.Leaves.Condition
 {
     public class CheckTargetInRangeNode : ActionNode
     {
-        private float loseTargetTimer;
+        public Vector2 offset;
+        public Vector2 checkSize;
 
         protected override void OnStart()
         {
@@ -12,21 +13,18 @@ namespace BehaviorTree.Leaves.Condition
 
         protected override BtLifeTimeState OnUpdate()
         {
+            context.Motor.offset = offset;
+            context.Motor.checkSize = checkSize;
             var playerTrans = context.Motor.FindPlayer();
             
             if (playerTrans != null)
             {
-                loseTargetTimer = config != null ? config.loseTargetTime : 1f;
+                // loseTargetTimer = config != null ? config.loseTargetTime : 1f;
                 if (blackBoard != null)
                     blackBoard.targetPlayer = playerTrans;
                 return BtLifeTimeState.Success;
             }
 
-            if (loseTargetTimer > 0)
-            {
-                loseTargetTimer -= Time.deltaTime;
-                return BtLifeTimeState.Success;
-            }
 
             if (blackBoard != null) blackBoard.targetPlayer = null; 
             

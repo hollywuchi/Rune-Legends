@@ -117,8 +117,6 @@ public class PlayerBlockState : PlayerGroundState
         Vector3 blockFxPoint = s.character.transform.position + new Vector3(s.context.FacingDirection, 2f, 0f);
         if (IsInParryWindow())
         {
-            Debug.Log("完美格挡！");
-
             EventBus<FxEvent>.Raise(new FxEvent
             {
                 dir = s.context.FacingDirection,

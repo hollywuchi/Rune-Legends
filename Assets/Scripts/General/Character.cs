@@ -34,7 +34,6 @@ public class Character : MonoBehaviour
    {
       if (invincibleTimer > 0)
          invincibleTimer -= Time.deltaTime;
-      else isHurt = false;
    }
 
    public void TakeDamage(DamageData data)
@@ -48,7 +47,6 @@ public class Character : MonoBehaviour
       }
       
       invincibleTimer = invincibleTime;
-      isHurt = true;
       
       CurrentHealth = Mathf.Max(0, CurrentHealth - data.damage);
       

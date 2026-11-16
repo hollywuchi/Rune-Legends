@@ -8,10 +8,17 @@ public class EnemyMotor : MonoBehaviour
     private Rigidbody2D rb;
     private Character character;
     private float FacingDir => -transform.localScale.x;
-    public Transform attacker { get; private set; }
+    public Transform Attacker { get; private set; } 
+    public bool IsBlocked { get; private set; }
+    public bool attackFinished;
+    private float blockTimer;
 
-    [Header("敌人视野参数")] public Vector2 offset;
+    [Header("敌人视野参数")] 
+    public Vector2 offset;
     public Vector2 checkSize;
+
+    private float hurtTime;
+
 
     private void Awake()
     {
@@ -21,12 +28,39 @@ public class EnemyMotor : MonoBehaviour
 
     private void OnEnable()
     {
-        if (character != null) character.OnHurt += GetHurt;
+        if (character != null)
+        {
+            character.OnHurt += GetHurt;
+            character.OnAttackBlocked += HandleAttackBlocked;
+        }
     }
 
     private void OnDisable()
     {
-        if (character != null) character.OnHurt -= GetHurt;
+        if (character != null)
+        {
+            character.OnHurt -= GetHurt;
+            character.OnAttackBlocked -= HandleAttackBlocked;
+        }
+    }
+
+    private void Update()
+    {
+        if (hurtTime > 0)
+        {
+            hurtTime -= Time.deltaTime;
+            if (hurtTime <= 0 && character != null)
+            {
+                character.isHurt = false;
+            }
+        }
+
+        if (blockTimer > 0)
+        {
+            blockTimer -= Time.deltaTime;
+            if (blockTimer < 0)
+                IsBlocked = false;
+        }
     }
 
     public void Move(float velocity) =>
@@ -34,8 +68,9 @@ public class EnemyMotor : MonoBehaviour
 
     private void GetHurt(DamageData data)
     {
-        attacker = data.attacker != null ? data.attacker.transform : null;
-
+        Attacker = data.attacker != null ? data.attacker.transform : null;
+        character.isHurt = true;
+        hurtTime = 0.5f;
         // 击退效果
         rb.velocity = Vector2.zero;
         rb.AddForce(data.knockBackDir * data.knockBackForce, ForceMode2D.Impulse);
@@ -49,17 +84,6 @@ public class EnemyMotor : MonoBehaviour
         var dirX = target.position.x - transform.position.x;
         if (Mathf.Approximately(dirX, 0)) return;
         transform.localScale = new Vector3(dirX > 0 ? -1 : 1, 1, 1);
-    }
-
-    /// <summary>
-    /// 受伤硬直协程
-    /// </summary>
-    /// <param name="stunTime">硬直时间</param>
-    /// <returns></returns>
-    public IEnumerator HurtStun(float stunTime)
-    {
-        rb.velocity = Vector2.zero;
-        yield return new WaitForSeconds(stunTime);
     }
 
     /// <summary>
@@ -80,27 +104,19 @@ public class EnemyMotor : MonoBehaviour
     }
 
     /// <summary>
-    /// 被玩家格挡之后的反应
+    /// 被格挡之后的反应
     /// </summary>
-    /// <param name="playerTransform">玩家的位置</param>
-    /// <param name="recoilForce">被击退的力</param>
-    /// <param name="recoverTime">恢复时间</param>
-    public void OnBlockedByPlayer(Transform playerTransform, float recoilForce, float recoverTime)
+    /// <param name="isParry"></param>
+    /// <param name="playerTrans"></param>
+   private void HandleAttackBlocked(bool isParry,Transform playerTrans)
     {
-        // 立即停止移动
-        rb.velocity = new Vector2(0, rb.velocity.y);
+        IsBlocked = true;
+        var backForce = isParry ? 8f : 4f;
+        blockTimer = isParry ? 0.8f : 0.5f;
 
-        // 计算后退方向（远离玩家）
-        Vector2 recoilDir = (transform.position - playerTransform.position).normalized;
-
-        rb.AddForce(recoilDir * recoilForce, ForceMode2D.Impulse);
-
-        StartCoroutine(BlockedRecovery(recoverTime));
-    }
-
-    private IEnumerator BlockedRecovery(float duration)
-    {
-        yield return new WaitForSeconds(duration);
+        rb.velocity = Vector2.zero;
+        var backDir = (transform.position - playerTrans.position).normalized;
+        rb.AddForce(new Vector2( backDir.x * backForce,0), ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -110,6 +126,8 @@ public class EnemyMotor : MonoBehaviour
     {
         transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
     }
-
+    
     public void Stop() => rb.velocity = Vector2.zero;
+
+    public void AnimCallBack() => attackFinished = true;
 }

@@ -5,7 +5,7 @@ public class HurtNode : ActionNode
     protected override void OnStart()
     {
         context.Anim.SetTrigger(EnemyAnimHush.Hurt);
-    }
+    }   
 
     protected override BtLifeTimeState OnUpdate()
     {
@@ -14,6 +14,6 @@ public class HurtNode : ActionNode
 
     protected override void OnStop()
     {
-        context.Motor.FaceTarget(context.Motor.attacker);
+        context.Motor.FaceTarget(context.Motor.Attacker);
     }
 }

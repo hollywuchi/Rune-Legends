@@ -114,10 +114,10 @@ public class PostureSystem : MonoBehaviour
             return;
         }
 
-        float prePoseture = currentPosture;
+        var prePosture = currentPosture;
         currentPosture = Mathf.Max(0, currentPosture - postureDecayRate * Time.deltaTime);
         
-        if(Mathf.Abs(prePoseture-currentPosture) > 0.001f)
+        if(Mathf.Abs(prePosture-currentPosture) > 0.001f)
         {
             PostureChange(0f);
         }

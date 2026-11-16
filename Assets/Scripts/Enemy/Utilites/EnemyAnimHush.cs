@@ -7,4 +7,5 @@ public class EnemyAnimHush
     public static readonly int Hurt = Animator.StringToHash("hurt");
     public static readonly int Death = Animator.StringToHash("Death");
     public static readonly int IsBroken = Animator.StringToHash("isBroken");
+    public static readonly int Attack = Animator.StringToHash("Attack");
 }

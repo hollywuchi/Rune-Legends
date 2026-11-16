@@ -3,10 +3,11 @@ using UnityEngine;
 public class WaitNode : ActionNode
 {
     private float waitingTimer;
+    public float waitTime;
 
     protected override void OnStart()
     {
-        waitingTimer = config != null ? config.waitingTime : 1f;
+        waitingTimer = waitTime;
     }
 
     protected override BtLifeTimeState OnUpdate()

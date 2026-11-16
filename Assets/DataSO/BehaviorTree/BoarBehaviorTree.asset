@@ -71,7 +71,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: dab5a898-5a43-45e4-86f5-0cd49708e7f8
-  position: {x: -470.85724, y: 360.57147}
+  position: {x: -651.9789, y: 360.57147}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -93,7 +93,7 @@ MonoBehaviour:
   position: {x: 14.285797, y: -5.4665847}
   config: {fileID: 0}
   LastEvaluateTime: 0
-  descrpition: 
+  descrpition: "\u91CE\u732A"
   child: {fileID: 1435289529193161373}
 --- !u!114 &-5871236822247156887
 MonoBehaviour:
@@ -132,6 +132,26 @@ MonoBehaviour:
   position: {x: 409.7143, y: 372}
   config: {fileID: 0}
   LastEvaluateTime: 0
+  descrpition: 
+  waitTime: 0
+--- !u!114 &-2686599112504040394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6491b7794c64d65b4a59aa86200e9a9, type: 3}
+  m_Name: BlockNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 39aad9b1-62b1-4169-84bf-a86968e870b4
+  position: {x: -485.7143, y: 360.57144}
+  config: {fileID: 0}
+  LastEvaluateTime: -1
   descrpition: 
 --- !u!114 &-2494326343814831374
 MonoBehaviour:
@@ -226,6 +246,7 @@ MonoBehaviour:
   - {fileID: 672563802135584366}
   - {fileID: -2494326343814831374}
   - {fileID: -8909673503116814214}
+  - {fileID: -2686599112504040394}
   treeState: 2
   config: {fileID: 11400000, guid: 0305e44047d64304cb0c99c8b75637a6, type: 2}
 --- !u!114 &672563802135584366
@@ -243,12 +264,13 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 62c5850c-23b2-4520-8e99-c0425fea86cc
-  position: {x: -362, y: 235.4286}
+  position: {x: -502.2572, y: 247.7435}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: " \u53D7\u51FB\uFF0C\u6B7B\u4EA1\u8282\u70B9"
   children:
   - {fileID: -7637519730352953033}
+  - {fileID: -2686599112504040394}
   - {fileID: -2494326343814831374}
 --- !u!114 &1435289529193161373
 MonoBehaviour:
@@ -292,6 +314,8 @@ MonoBehaviour:
   config: {fileID: 0}
   LastEvaluateTime: 0
   descrpition: 
+  offset: {x: 4, y: 0.75}
+  checkSize: {x: 0, y: 0}
 --- !u!114 &4945799535299198281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,4 +377,3 @@ MonoBehaviour:
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
-  FxOffset: {x: 0, y: 0, z: 0}
