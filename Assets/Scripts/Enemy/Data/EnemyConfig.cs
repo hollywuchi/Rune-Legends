@@ -13,6 +13,7 @@ public class EnemyConfig : ScriptableObject
     [Header("脱战时间")]
     public float loseTargetTime;
 
-    [Header("撞墙等待时间")] 
-    public float waitingTime;
+    [Header("巡逻等待时间")] 
+    public float waitingTime;   // 撞墙等待时间
+    public float patrolTime;    // 最长巡逻时间
 }

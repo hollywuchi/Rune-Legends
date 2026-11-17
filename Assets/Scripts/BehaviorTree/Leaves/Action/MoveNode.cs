@@ -9,7 +9,7 @@ namespace BehaviorTree.Leaves.Action
 
         protected override void OnStart()
         {
-            activeAnimHush = blackBoard.targetPlayer != null ? EnemyAnimHush.Run : EnemyAnimHush.Walk;
+            activeAnimHush = blackBoard.TargetPlayer != null ? EnemyAnimHush.Run : EnemyAnimHush.Walk;
             context.Anim.SetBool(activeAnimHush, true);
         }
 
@@ -17,10 +17,10 @@ namespace BehaviorTree.Leaves.Action
         {
             if (blackBoard == null) return BtLifeTimeState.Failure;
 
-            if (context.PhysicsCheck.TouchWall_L())
+            if (context.PhysicsCheck.TouchFrontWall(context.Motor.facingRight))
                 return BtLifeTimeState.Success;
 
-            context.Motor.Move(blackBoard.targetPlayer == null
+            context.Motor.Move(blackBoard.TargetPlayer == null
                 ? config.normalSpeed
                 : config.chaseSpeed);
 

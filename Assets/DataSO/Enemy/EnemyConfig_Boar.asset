@@ -18,3 +18,4 @@ MonoBehaviour:
   chaseSpeed: 7
   loseTargetTime: 3
   waitingTime: 3
+  patrolTime: 5

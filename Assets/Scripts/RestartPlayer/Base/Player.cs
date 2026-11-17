@@ -205,7 +205,7 @@ public class Player : MonoBehaviour
         
         context.CurrentFocus = focusSystem.currentFocus;
         
-        context.IsGrounded = physicsCheck.IsGround;
+        context.IsGrounded = physicsCheck.isGround;
         context.IsTouchingLeftWall = physicsCheck.touchLeftWall;
         context.IsTouchingRightWall = physicsCheck.touchRightWall;
         context.IsTouchingTopLeftWall = physicsCheck.touchLeftTopWall;

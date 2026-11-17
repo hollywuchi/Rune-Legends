@@ -7,15 +7,17 @@ public class EnemyMotor : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Character character;
-    private float FacingDir => -transform.localScale.x;
-    public Transform Attacker { get; private set; } 
+    public bool facingRight;
+    private float DefaultSign => facingRight ? 1f : -1f;
+    public float FacingDir => Mathf.Sign(transform.localScale.x) * DefaultSign;
+    public Transform Attacker { get; private set; }
     public bool IsBlocked { get; private set; }
     public bool attackFinished;
     private float blockTimer;
 
-    [Header("敌人视野参数")] 
-    public Vector2 offset;
-    public Vector2 checkSize;
+    [Header("敌人视野参数")] public Vector2 offset;
+    public Vector2 checkSizeFinding;
+    public float checkSizeFound;
 
     private float hurtTime;
 
@@ -83,24 +85,45 @@ public class EnemyMotor : MonoBehaviour
         if (target == null) return;
         var dirX = target.position.x - transform.position.x;
         if (Mathf.Approximately(dirX, 0)) return;
-        transform.localScale = new Vector3(dirX > 0 ? -1 : 1, 1, 1);
+
+        var desiredDir = dirX > 0 ? 1f : -1f;
+        transform.localScale = new Vector3(desiredDir * DefaultSign, 1, 1);
     }
 
     /// <summary>
-    /// 发现玩家的方法
+    /// 发现敌人方法（未发现玩家时）
     /// </summary>
     public Transform FindPlayer()
     {
-        var hit = Physics2D.OverlapBox(GetBoxOri(), checkSize, 0f, LayerMask.GetMask("Player"));
+        var hit = Physics2D.OverlapBox(GetBoxOri(), checkSizeFinding, 0f, LayerMask.GetMask("Player"));
         return hit != null ? hit.transform : null;
     }
+
+    public Transform FoundPlayer()
+    {
+        var hit = Physics2D.OverlapCircle(transform.position, checkSizeFound, LayerMask.GetMask("Player"));
+        return hit != null ? hit.transform : null;
+    }
+
+    /// <summary>
+    /// 检测玩家是否在近战攻击范围内
+    /// </summary>
+    public bool CheckAttackRange(Vector2 attackOffset, Vector2 attackSize)
+    {
+        var hit = Physics2D.OverlapBox(GetAttackBoxOri(attackOffset), attackSize, 0f, LayerMask.GetMask("Player"));
+        return hit != null;
+    }
+
+    public Vector2 GetAttackBoxOri(Vector2 attackOffset) => (Vector2)transform.position + new Vector2(attackOffset.x * FacingDir, attackOffset.y);
 
     private Vector2 GetBoxOri() => (Vector2)transform.position + new Vector2(offset.x * FacingDir, offset.y);
 
     private void OnDrawGizmosSelected()
     {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(GetBoxOri(), checkSizeFinding);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(GetBoxOri(), checkSize);
+        Gizmos.DrawWireSphere(transform.position, checkSizeFound);
     }
 
     /// <summary>
@@ -108,7 +131,7 @@ public class EnemyMotor : MonoBehaviour
     /// </summary>
     /// <param name="isParry"></param>
     /// <param name="playerTrans"></param>
-   private void HandleAttackBlocked(bool isParry,Transform playerTrans)
+    private void HandleAttackBlocked(bool isParry, Transform playerTrans)
     {
         IsBlocked = true;
         var backForce = isParry ? 8f : 4f;
@@ -116,7 +139,7 @@ public class EnemyMotor : MonoBehaviour
 
         rb.velocity = Vector2.zero;
         var backDir = (transform.position - playerTrans.position).normalized;
-        rb.AddForce(new Vector2( backDir.x * backForce,0), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(backDir.x * backForce, 0), ForceMode2D.Impulse);
     }
 
     /// <summary>
@@ -126,7 +149,7 @@ public class EnemyMotor : MonoBehaviour
     {
         transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
     }
-    
+
     public void Stop() => rb.velocity = Vector2.zero;
 
     public void AnimCallBack() => attackFinished = true;

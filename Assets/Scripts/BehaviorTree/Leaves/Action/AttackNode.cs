@@ -7,7 +7,7 @@ namespace BehaviorTree.Leaves.Action
             context.Motor.attackFinished = false;
             context.Motor.Stop();
             context.Anim.SetTrigger(EnemyAnimHush.Attack);
-            context.Motor.FaceTarget(blackBoard.targetPlayer);
+            context.Motor.FaceTarget(blackBoard.TargetPlayer);
         }
 
         protected override BtLifeTimeState OnUpdate()

@@ -5,6 +5,9 @@ using UnityEngine;
 /// </summary>
 public class Blackboard
 {
-    public Transform targetPlayer;
-    public Vector2 tragetPosition;
+    public Transform TargetPlayer;
+    public Vector2 TargetPosition;
+
+    public float LoseTargetTimer;
+    public bool IsVision;
 }

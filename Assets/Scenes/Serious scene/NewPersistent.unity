@@ -2773,7 +2773,7 @@ Transform:
   m_GameObject: {fileID: 360653500}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.449997, y: -6.1100006, z: 0}
+  m_LocalPosition: {x: 52.15, y: -5.7200003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3323,7 +3323,7 @@ Transform:
   m_GameObject: {fileID: 459923746}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.449997, y: -6.1100006, z: 0}
+  m_LocalPosition: {x: 52.15, y: -5.7200003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10314,7 +10314,7 @@ Transform:
   m_GameObject: {fileID: 1797461655}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -81.17, y: -8.13, z: 0}
+  m_LocalPosition: {x: -2.57, y: -7.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10429,17 +10429,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Wall: {fileID: 6200000, guid: 55e506ed79d8c1e498f7a6c73f538eb6, type: 2}
   Walk: {fileID: 6200000, guid: b24f56e555b5d9d4a9e4ae7a93fb9957, type: 2}
-  Auto: 0
-  PhyRadius: 0.1
-  CheckLayer:
+  phyRadius: 0.1
+  checkLayer:
     serializedVersion: 2
     m_Bits: 64
-  GroundOffset: {x: 0, y: 0}
-  LeftOffset: {x: -0.31, y: 2.75}
+  leftGroundOffset: {x: 0, y: 0}
+  rightGroundOffset: {x: 0, y: 0}
+  leftOffset: {x: -0.31, y: 2.75}
   rightOffset: {x: 0.36, y: 2.75}
   leftTopOffset: {x: -0.31, y: 2.95}
   rightTopOffset: {x: 0.36, y: 2.95}
-  IsGround: 0
+  isGround: 0
+  isLeftGround: 0
+  isRightGround: 0
   touchLeftWall: 0
   touchRightWall: 0
   touchLeftTopWall: 0
