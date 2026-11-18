@@ -134,7 +134,7 @@ MonoBehaviour:
   knockbackForce: 15
   shakeOnHit: 0
   shakeForce: 0
-  focusGain: 7.5
+  focusGain: 0
 --- !u!58 &8710406456130045517
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -296,7 +296,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8725289146003858102
 Transform:
   m_ObjectHideFlags: 0
@@ -424,7 +424,9 @@ MonoBehaviour:
   facingRight: 0
   attackFinished: 0
   offset: {x: 4, y: 0.75}
-  checkSize: {x: 8, y: 1.5}
+  checkSizeFinding: {x: 0, y: 0}
+  checkSizeFound: 0
+  maxVerticalDistance: 0
 --- !u!114 &8326270026129768749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,6 +452,8 @@ MonoBehaviour:
   leftTopOffset: {x: 0, y: 0}
   rightTopOffset: {x: 0, y: 0}
   isGround: 0
+  isLeftGround: 0
+  isRightGround: 0
   touchLeftWall: 0
   touchRightWall: 0
   touchLeftTopWall: 0

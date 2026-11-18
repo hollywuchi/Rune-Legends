@@ -1168,7 +1168,7 @@ MonoBehaviour:
   playerPos: {fileID: 1797461657}
   firstPosition: {x: -24.7, y: -5.48, z: 0}
   menuPosition: {x: 2.48, y: 4.13, z: 0}
-  firstLoadScene: {fileID: 11400000, guid: 3f3dc5e4ed312a7439844ff5d814d16e, type: 2}
+  firstLoadScene: {fileID: 11400000, guid: 079ebc6a961280840bac4c68456a0069, type: 2}
   menuScene: {fileID: 11400000, guid: 50f3df05ec1249440a137aa612575ff0, type: 2}
   fadeduration: 1
 --- !u!4 &170033613
@@ -2748,7 +2748,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2772,8 +2772,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360653500}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 52.15, y: -5.7200003, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 172.18, y: -3.9000003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3297,7 +3297,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1797461657}
   m_Lens:
     FieldOfView: 34
-    OrthographicSize: 6
+    OrthographicSize: 10
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3323,7 +3323,7 @@ Transform:
   m_GameObject: {fileID: 459923746}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 52.15, y: -5.7200003, z: 0}
+  m_LocalPosition: {x: 172.18, y: -3.9000003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10314,7 +10314,7 @@ Transform:
   m_GameObject: {fileID: 1797461655}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.57, y: -7.74, z: 0}
+  m_LocalPosition: {x: 117.46, y: -5.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

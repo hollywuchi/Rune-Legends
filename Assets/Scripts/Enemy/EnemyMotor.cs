@@ -7,17 +7,19 @@ public class EnemyMotor : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Character character;
-    public bool facingRight;
     private float DefaultSign => facingRight ? 1f : -1f;
-    public float FacingDir => Mathf.Sign(transform.localScale.x) * DefaultSign;
+    private float FacingDir => Mathf.Sign(transform.localScale.x) * DefaultSign;
     public Transform Attacker { get; private set; }
     public bool IsBlocked { get; private set; }
     public bool attackFinished;
     private float blockTimer;
 
+    [Header("素材是否默认面向右")] public bool facingRight;
+    [Header("敌人是否有霸体")] public bool hasSuperArmor;
     [Header("敌人视野参数")] public Vector2 offset;
     public Vector2 checkSizeFinding;
     public float checkSizeFound;
+    [Tooltip("垂直方向上最大距离")] public float maxVerticalDistance;
 
     private float hurtTime;
 
@@ -70,6 +72,12 @@ public class EnemyMotor : MonoBehaviour
 
     private void GetHurt(DamageData data)
     {
+        // 当前是霸体状态，只播放一个受击特效即可
+        if (hasSuperArmor)
+        {
+            EventBus<FxEvent>.Raise(new FxEvent { dir = 1, playerTran = data.hitPoint, type = ParticalEffectType.Hit });
+            return;
+        }
         Attacker = data.attacker != null ? data.attacker.transform : null;
         character.isHurt = true;
         hurtTime = 0.5f;
@@ -84,7 +92,7 @@ public class EnemyMotor : MonoBehaviour
     {
         if (target == null) return;
         var dirX = target.position.x - transform.position.x;
-        if (Mathf.Approximately(dirX, 0)) return;
+        if (Mathf.Abs(dirX) < 0.2f) return;
 
         var desiredDir = dirX > 0 ? 1f : -1f;
         transform.localScale = new Vector3(desiredDir * DefaultSign, 1, 1);
@@ -99,10 +107,17 @@ public class EnemyMotor : MonoBehaviour
         return hit != null ? hit.transform : null;
     }
 
+    /// <summary>
+    /// 警戒范围，如果玩家在这个范围，就会尝试追击
+    /// </summary>
+    /// <returns></returns>
     public Transform FoundPlayer()
     {
         var hit = Physics2D.OverlapCircle(transform.position, checkSizeFound, LayerMask.GetMask("Player"));
-        return hit != null ? hit.transform : null;
+        if (hit == null) return null;
+
+        // 因为警戒范围是
+        return Mathf.Abs(hit.transform.position.y - transform.position.y) > maxVerticalDistance ? null : hit.transform;
     }
 
     /// <summary>
@@ -114,7 +129,8 @@ public class EnemyMotor : MonoBehaviour
         return hit != null;
     }
 
-    public Vector2 GetAttackBoxOri(Vector2 attackOffset) => (Vector2)transform.position + new Vector2(attackOffset.x * FacingDir, attackOffset.y);
+    private Vector2 GetAttackBoxOri(Vector2 attackOffset) =>
+        (Vector2)transform.position + new Vector2(attackOffset.x * FacingDir, attackOffset.y);
 
     private Vector2 GetBoxOri() => (Vector2)transform.position + new Vector2(offset.x * FacingDir, offset.y);
 
@@ -124,6 +140,10 @@ public class EnemyMotor : MonoBehaviour
         Gizmos.DrawWireCube(GetBoxOri(), checkSizeFinding);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, checkSizeFound);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position,
+            new Vector2(transform.position.x, transform.position.y + maxVerticalDistance));
     }
 
     /// <summary>
@@ -153,4 +173,12 @@ public class EnemyMotor : MonoBehaviour
     public void Stop() => rb.velocity = Vector2.zero;
 
     public void AnimCallBack() => attackFinished = true;
+    
+    /// <summary>
+    /// 敌人冲刺方法
+    /// </summary>
+    public void Dash(float speed,float forwardSign = 1)
+    {
+        rb.velocity = new Vector2(speed * FacingDir * forwardSign, rb.velocity.y);
+    }
 }

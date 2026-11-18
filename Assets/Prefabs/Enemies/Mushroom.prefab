@@ -152,7 +152,7 @@ MonoBehaviour:
   knockbackForce: 15
   shakeOnHit: 0
   shakeForce: 0
-  focusGain: 7.5
+  focusGain: 0
 --- !u!60 &6744800064797535351
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -531,6 +531,7 @@ MonoBehaviour:
   offset: {x: 5, y: 1.13}
   checkSizeFinding: {x: 8, y: 2.3}
   checkSizeFound: 12
+  maxVerticalDistance: 0
 --- !u!114 &2832610266985477632
 MonoBehaviour:
   m_ObjectHideFlags: 0

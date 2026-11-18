@@ -14,8 +14,14 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Serious scene/NewPersistent.unity
     guid: 5b99598c618c7454bb860549a52f83a1
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Serious scene/Menu.unity
     guid: f429e60103cd7324dac2cfd8cbc869d4
+  - enabled: 1
+    path: Assets/Scenes/Serious scene/Main Scene.unity
+    guid: 8bffafa98bff56543b6b6d7cf0808a18
+  - enabled: 1
+    path: Assets/Scenes/Serious scene/Cave.unity
+    guid: dee08d73a3c789b44952af850ed76aab
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 27aec0203070dbf4d827ef76ced829ca, type: 2}

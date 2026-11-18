@@ -6183,7 +6183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f9126c56e714840b1180ed67fd8aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playAudioEvent: {fileID: 11400000, guid: f45c16cbe5026ff4ea328b6d1b382431, type: 2}
   audioClip: {fileID: 8300000, guid: f0cbc7dbd5c968d4698e2365278bfac5, type: 3}
   PlayOnEnable: 1
 --- !u!4 &1547362257
@@ -7436,7 +7435,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f9126c56e714840b1180ed67fd8aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playAudioEvent: {fileID: 11400000, guid: 0f803795e7998434bbe614f1d0fff07f, type: 2}
   audioClip: {fileID: 8300000, guid: 6e8772b49f34d402a90016ed445d8a2f, type: 3}
   PlayOnEnable: 0
 --- !u!114 &1887902643
@@ -7451,7 +7449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f9126c56e714840b1180ed67fd8aeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playAudioEvent: {fileID: 11400000, guid: 0f803795e7998434bbe614f1d0fff07f, type: 2}
   audioClip: {fileID: 8300000, guid: 81652031b64c342cc8dbc59c138d77c5, type: 3}
   PlayOnEnable: 0
 --- !u!1 &1982468103

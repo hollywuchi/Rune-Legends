@@ -8,12 +8,12 @@ public class Character : MonoBehaviour
 {
    [Header("生命值")]
    public float maxHealth;
-   public float CurrentHealth;
+   public float currentHealth;
    
    [Header("无敌时间")]
    public float invincibleTime;
    private float invincibleTimer;
-   public bool invincible => invincibleTimer > 0;
+   private bool Invincible => invincibleTimer > 0;
    
    // 事件广播
    public event Action<DamageData> OnHurt;
@@ -27,7 +27,7 @@ public class Character : MonoBehaviour
 
    private void Awake()
    {
-      CurrentHealth = maxHealth;
+      currentHealth = maxHealth;
    }
 
    private void Update()
@@ -38,7 +38,7 @@ public class Character : MonoBehaviour
 
    public void TakeDamage(DamageData data)
    {
-      if(invincible || CurrentHealth <= 0) return;
+      if(Invincible || currentHealth <= 0) return;
 
       // 先询问是否有防御状态拦截这次攻击
       if (OnTryBlockDamage != null && OnTryBlockDamage.Invoke(data))
@@ -48,11 +48,11 @@ public class Character : MonoBehaviour
       
       invincibleTimer = invincibleTime;
       
-      CurrentHealth = Mathf.Max(0, CurrentHealth - data.damage);
+      currentHealth = Mathf.Max(0, currentHealth - data.damage);
       
-      OnHealthChange?.Invoke(CurrentHealth,maxHealth);
+      OnHealthChange?.Invoke(currentHealth,maxHealth);
 
-      if(CurrentHealth == 0)
+      if(currentHealth == 0)
          OnDeath?.Invoke();
       else
          OnHurt?.Invoke(data);
@@ -60,18 +60,27 @@ public class Character : MonoBehaviour
 
    public void RestartHealth()
    {
-      CurrentHealth = maxHealth;
-      OnHealthChange?.Invoke(CurrentHealth,maxHealth);
+      currentHealth = maxHealth;
+      OnHealthChange?.Invoke(currentHealth,maxHealth);
    }
    
    public void HealthChange(float healCount)
    {
-      CurrentHealth = Mathf.Min(CurrentHealth + healCount, maxHealth);
-      OnHealthChange?.Invoke(CurrentHealth,maxHealth);
+      currentHealth = Mathf.Min(currentHealth + healCount, maxHealth);
+      OnHealthChange?.Invoke(currentHealth,maxHealth);
    }
 
    public void NotifyAttackBlocked(bool isParry,Transform defender)
    {
       OnAttackBlocked?.Invoke(isParry, defender);
+   }
+   
+   /// <summary>
+   /// 在这期间无敌
+   /// </summary>
+   /// <param name="duration"></param>
+   public void SetInvincibleTime(float duration)
+   {
+      invincibleTimer = Mathf.Max(invincibleTime, duration);
    }
 }

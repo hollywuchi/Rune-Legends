@@ -360,7 +360,7 @@ MonoBehaviour:
   position: {x: -175.42851, y: 358.2857}
   config: {fileID: 0}
   LastEvaluateTime: -1
-  descrpition: "\u5C0F\u8303\u56F4\u8282\u70B9"
+  descrpition: "\u653B\u51FB\u8303\u56F4\u8282\u70B9"
   offset: {x: 1.7, y: 1.13}
   checkSize: {x: 2.3, y: 2.3}
 --- !u!114 &6199061143149369722

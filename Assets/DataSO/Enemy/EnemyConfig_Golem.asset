@@ -15,7 +15,7 @@ MonoBehaviour:
   maxHealth: 10
   maxPosture: 50
   normalSpeed: 3
-  chaseSpeed: 10
+  chaseSpeed: 7
   loseTargetTime: 3
   waitingTime: 3
   patrolTime: 5

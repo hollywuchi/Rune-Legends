@@ -22,11 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f429e60103cd7324dac2cfd8cbc869d4
-    m_Address: Assets/Scenes/Serious scene/Menu.unity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3de8e03f60058284bb07df13a9392601, type: 2}
   m_SchemaSet:

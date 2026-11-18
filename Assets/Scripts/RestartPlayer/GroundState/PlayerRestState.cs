@@ -12,7 +12,7 @@ public class PlayerRestState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        s.character.CurrentHealth = s.character.maxHealth;
+        s.character.currentHealth = s.character.maxHealth;
         // s.character.currentFocus = s.config.maxFocus;
         // s.context.CurrentFocus = s.config.maxFocus;
         // s.character.OnHealthChange?.Invoke(s.character);

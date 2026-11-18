@@ -14,13 +14,24 @@ namespace BehaviorTree.Leaves.Action
             if (blackBoard == null || blackBoard.TargetPlayer == null)
                 return BtLifeTimeState.Failure;
 
+            var dirX = blackBoard.TargetPlayer.position.x - context.Transform.position.x;
+            var absDirX = Mathf.Abs(dirX);
+
+            if (absDirX < 0.3f)
+            {
+                context.Motor.Stop();
+                context.Anim.SetBool(EnemyAnimHush.Run,false);
+                return BtLifeTimeState.Running;
+            }
             // 追击时实时面向目标
+            context.Anim.SetBool(EnemyAnimHush.Run,true);
             context.Motor.FaceTarget(blackBoard.TargetPlayer);
 
             // 前方撞墙时刹停等待，防止卡墙持续加速
             if (context.PhysicsCheck != null && context.PhysicsCheck.TouchFrontWall(context.Motor.facingRight))
             {
                 context.Motor.Stop();
+                context.Anim.SetBool(EnemyAnimHush.Run,false);
                 return BtLifeTimeState.Running;
             }
 

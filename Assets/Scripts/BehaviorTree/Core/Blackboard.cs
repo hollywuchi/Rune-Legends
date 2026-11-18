@@ -10,4 +10,6 @@ public class Blackboard
 
     public float LoseTargetTimer;
     public bool IsVision;
+
+    public bool HasPlayedIntro;
 }
