@@ -1,35 +1,36 @@
 using UnityEngine;
 
-public class CheckDistanceBandNode : ActionNode
+namespace BehaviorTree.Leaves.Condition
 {
-    private float minDistance;
-    private float maxDistance;
-
-    protected override void OnStart()
+    /// <summary>
+    /// 检查 Boss 与目标玩家的水平距离是否在指定区间内。
+    /// </summary>
+    public class CheckDistanceBandNode : ActionNode
     {
-    }
+        [Tooltip("最小水平距离（包含）")]
+        public float minDistance = 0f;
 
-    protected override BtLifeTimeState OnUpdate()
-    {
-        var distance = Mathf.Abs(context.Transform.position.x - blackBoard.TargetPlayer.position.x);
+        [Tooltip("最大水平距离（包含）")]
+        public float maxDistance = 3f;
 
-        if (distance < minDistance)
+        protected override void OnStart()
         {
-            // 这里放近距离会干的事
-        }
-        else if (distance > minDistance && distance < maxDistance)
-        {
-            // 这里放中距离会干的事
-        }
-        else
-        {
-            // 这里放远距离干的事   
         }
 
-        return BtLifeTimeState.Success;
-    }
+        protected override BtLifeTimeState OnUpdate()
+        {
+            if (blackBoard == null || blackBoard.TargetPlayer == null || context == null || context.Transform == null)
+            {
+                return BtLifeTimeState.Failure;
+            }
 
-    protected override void OnStop()
-    {
+            float distanceX = Mathf.Abs(context.Transform.position.x - blackBoard.TargetPlayer.position.x);
+            bool inBand = distanceX >= minDistance && distanceX <= maxDistance;
+            return inBand ? BtLifeTimeState.Success : BtLifeTimeState.Failure;
+        }
+
+        protected override void OnStop()
+        {
+        }
     }
 }

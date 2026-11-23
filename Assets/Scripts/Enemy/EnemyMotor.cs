@@ -72,20 +72,18 @@ public class EnemyMotor : MonoBehaviour
 
     private void GetHurt(DamageData data)
     {
-        // 当前是霸体状态，只播放一个受击特效即可
-        if (hasSuperArmor)
-        {
-            EventBus<FxEvent>.Raise(new FxEvent { dir = 1, playerTran = data.hitPoint, type = ParticalEffectType.Hit });
-            return;
-        }
         Attacker = data.attacker != null ? data.attacker.transform : null;
+        // 生成特效
+        EventBus<FxEvent>.Raise(new FxEvent { dir = 1, playerTran = data.hitPoint, type = ParticalEffectType.Hit });
+
+        // 当前是霸体状态，只播放一个受击特效即可
+        if (hasSuperArmor) return;
+
         character.isHurt = true;
         hurtTime = 0.5f;
         // 击退效果
         rb.velocity = Vector2.zero;
         rb.AddForce(data.knockBackDir * data.knockBackForce, ForceMode2D.Impulse);
-        // 生成特效
-        EventBus<FxEvent>.Raise(new FxEvent { dir = 1, playerTran = data.hitPoint, type = ParticalEffectType.Hit });
     }
 
     public void FaceTarget(Transform target)

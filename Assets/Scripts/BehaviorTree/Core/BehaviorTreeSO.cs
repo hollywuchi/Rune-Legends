@@ -99,6 +99,34 @@ namespace BehaviorTree.Core
         }
 
         /// <summary>
+        /// 将已有节点实例注册到行为树资产中（支持批量粘贴时延后统一保存）
+        /// </summary>
+        public void AddExistingNode(BtBaseNode node, bool saveAssets = true)
+        {
+            if (node == null) return;
+
+            if (!allNodes.Contains(node))
+            {
+                allNodes.Add(node);
+            }
+
+#if UNITY_EDITOR
+            if (EditorUtility.IsPersistent(this) && !AssetDatabase.Contains(node))
+            {
+                AssetDatabase.AddObjectToAsset(node, this);
+            }
+
+            EditorUtility.SetDirty(this);
+            EditorUtility.SetDirty(node);
+
+            if (saveAssets)
+            {
+                AssetDatabase.SaveAssets();
+            }
+#endif
+        }
+
+        /// <summary>
         /// 在文件中删除节点
         /// </summary>
         /// <param name="node"></param>

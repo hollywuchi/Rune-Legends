@@ -12,4 +12,5 @@ public class Blackboard
     public bool IsVision;
 
     public bool HasPlayedIntro;
+    public int CurrentPhase = 1;
 }

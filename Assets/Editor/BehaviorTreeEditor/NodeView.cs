@@ -26,6 +26,11 @@ namespace Editor.BehaviorTreeEditor
             CreateDescriptionLabel();
             CreateInputPorts();
             CreateOutputPorts();
+
+            if (nodeData is RootNode)
+            {
+                capabilities &= ~Capabilities.Copiable;
+            }
         }
 
         private void CreateInputPorts()

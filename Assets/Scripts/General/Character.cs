@@ -81,6 +81,6 @@ public class Character : MonoBehaviour
    /// <param name="duration"></param>
    public void SetInvincibleTime(float duration)
    {
-      invincibleTimer = Mathf.Max(invincibleTime, duration);
+      invincibleTimer = Mathf.Max(invincibleTimer, duration);
    }
 }
