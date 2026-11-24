@@ -16,6 +16,17 @@ public class PlayerConfig : ScriptableObject
     public float wallSlideSpeed;
     public float wallHorizontalBoost;
 
+    [Header("疾跑与大跳参数")]
+    public float sprintRunSpeed = 16f;
+    public float sprintJumpSpeedX = 16f;
+    public float sprintJumpForceY = 18f;
+    public float airMaxSpeed = 7f;
+    public float airAcceleration = 35f;
+    public float airDeceleration = 25f;
+    public float sprintLandDuration = 0.25f;
+    public float sprintLandCancelTime = 0.12f;
+    public float landBrakeDeceleration = 45f;
+
     [Header("流光闪击参数")]
     public float lightCutFocusCost = 20f;           // 专注值消耗
 

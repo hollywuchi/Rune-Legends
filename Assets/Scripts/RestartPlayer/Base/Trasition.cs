@@ -6,8 +6,8 @@ namespace RestartPlayer.HFSM
     {
         // WORKFLOW:在这里添加状态ID
         None = 0,
-        Idle, Locomotion, Sprint, Rest,
-        Jump, Jump2, WallJump, Fall, AirSprint, WallSlide, Climb,
+        Idle, Locomotion, Sprint, SprintRun, Land, Rest,
+        Jump, Jump2, SprintJump, WallJump, Fall, AirSprint, WallSlide, Climb,
         Attack, AttackCombo1, AttackCombo2, AttackCombo3, UpAttack,
         AirAttack, AirDownAttack, AirUpAttack,
         Heal, LightCut, LightCrown, Hurt,

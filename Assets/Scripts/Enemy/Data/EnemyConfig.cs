@@ -16,4 +16,8 @@ public class EnemyConfig : ScriptableObject
     [Header("巡逻等待时间")] 
     public float waitingTime;   // 撞墙等待时间
     public float patrolTime;    // 最长巡逻时间
+
+    [Header("攻击距离分区")]
+    public float closeRange = 2.8f;
+    public float midRange = 6f;
 }

@@ -75,13 +75,15 @@ public class PlayerAttackState : PlayerGroundState
 
     public override void PhysicsUpdate()
     {
-        // 攻击时保持静止或微小位移
-        s.motor.SetVelocityX(0f);
+        // 攻击时保持静止或微小位移（若正在执行帧事件强制位移，则不覆盖速度）
+        if (!s.motor.IsForceMoving)
+            s.motor.SetVelocityX(0f);
     }
 
     public override void Exit()
     {
         base.Exit();
+        s.motor.StopForceMove();
         s.context.IsAttacking = false;
         s.anim.SetIsAttacking(false);
         ComboBuffered = false;
@@ -125,7 +127,6 @@ public class PlayerAttackState : PlayerGroundState
     /// </summary>
     public void ApplyAttackMove(float distance)
     {
-        float dir = s.context.FacingDirection;
-        s.motor.Teleport(s.motor.transform.position + new Vector3(dir * distance, 0, 0));
+        s.motor.ForceMoveDistance(s.context.FacingDirection, distance, 0.2f);
     }
 }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace BehaviorTree.Leaves.Action
@@ -44,7 +45,7 @@ namespace BehaviorTree.Leaves.Action
             }
 
             float dirSign = awayFromPlayer ? -1f : 1f;
-            context.Motor.Dash(dodgeSpeed, dirSign);
+            context.Motor.ForceMoveVelocity(dodgeSpeed, dashDuration, dirSign, Ease.OutCubic);
 
             if (context.Anim != null)
             {

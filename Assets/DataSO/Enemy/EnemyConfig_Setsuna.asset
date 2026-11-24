@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127393c633f546f2ae2129c0ba10591e, type: 3}
   m_Name: EnemyConfig_Setsuna
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  maxPosture: 0
-  normalSpeed: 0
-  chaseSpeed: 0
+  maxHealth: 10
+  maxPosture: 50
+  normalSpeed: 3
+  chaseSpeed: 7
   loseTargetTime: 0
   waitingTime: 0
   patrolTime: 0
+  closeRange: 5.5
+  midRange: 10

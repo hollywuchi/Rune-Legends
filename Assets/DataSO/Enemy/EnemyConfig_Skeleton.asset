@@ -19,3 +19,5 @@ MonoBehaviour:
   loseTargetTime: 3
   waitingTime: 3
   patrolTime: 5
+  closeRange: 2.8
+  midRange: 20

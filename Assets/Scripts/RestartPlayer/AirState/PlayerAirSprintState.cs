@@ -29,10 +29,9 @@ public class PlayerAirSprintState : PlayerAirState
 
     public override Transition LogicUpdate()
     {
-        // 空中冲刺期间：允许按跳打断（你的原逻辑）
-        // if (s.context.JumpPressedThisFrame)
-        if(s.context.ConsumeJump())
-            return new Transition(PlayerStateId.Jump);
+        // 空中冲刺期间：允许按跳打断（需检查跳跃次数）
+        if (s.context.JumpCount < s.context.MaxJumpCount && s.context.ConsumeJump())
+            return new Transition(s.context.JumpCount == 0 ? PlayerStateId.Jump : PlayerStateId.Jump2);
 
         if (s.context.IsSprintFinished)
             return new Transition(PlayerStateId.Fall);

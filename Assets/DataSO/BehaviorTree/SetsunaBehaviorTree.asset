@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9153983661780345791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
+  m_Name: BossAttackNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 31f881aa-b55b-4a44-9324-47cca9d08529
+  position: {x: 725.71423, y: 1305.7142}
+  config: {fileID: 0}
+  LastEvaluateTime: -1
+  descrpition: AttackCombo
+  animTriggerName: AttackCombo
+  faceTargetOnStart: 1
+  superArmorDuringAttack: 1
+  lungeSpeed: 0
+  fallbackTimeout: 4
 --- !u!114 &-8485675605977723902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +84,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 532f23d7-30bb-4e44-858a-ceb99558016c
-  position: {x: 2723.7144, y: 606.8572}
+  position: {x: 2962.286, y: 621.6314}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: "\u4E00\u9636\u6BB5"
@@ -113,30 +137,6 @@ MonoBehaviour:
   - {fileID: -1308795637901687443}
   - {fileID: -4205218595472559838}
   - {fileID: 9024179176012497164}
---- !u!114 &-7652078713948252999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
-  m_Name: BossAttackNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: 35814b6c-1e3a-4efe-9da6-5f845575e0e8
-  position: {x: 2693.4287, y: 1164.5715}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: Attack1
-  animTriggerName: Attack1
-  faceTargetOnStart: 1
-  superArmorDuringAttack: 1
-  lungeSpeed: 0
-  fallbackTimeout: 4
 --- !u!114 &-7590087943452852888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 2e9162af-350e-4a56-bb2b-3eca487b9b13
-  position: {x: 2330.5718, y: 1081.7144}
+  position: {x: 2266.3801, y: 1081.7142}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -171,10 +171,34 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: c914b650-0f6e-426b-b703-e76771ceb0c7
-  position: {x: 831.71436, y: 261.14282}
+  position: {x: 870.8572, y: 237.71436}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
+--- !u!114 &-7410103709558969822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
+  m_Name: BossAttackNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: fdf405aa-fb16-4bbb-b9d8-a30ef914ae90
+  position: {x: 2945.1428, y: 1064.5714}
+  config: {fileID: 0}
+  LastEvaluateTime: -1
+  descrpition: Attack1
+  animTriggerName: Attack1
+  faceTargetOnStart: 1
+  superArmorDuringAttack: 1
+  lungeSpeed: 0
+  fallbackTimeout: 4
 --- !u!114 &-7156525581398027881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +214,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 9109fd57-1052-4946-9682-4f9b5f1783dd
-  position: {x: 1111.143, y: 1305.7142}
+  position: {x: 1062.0442, y: 1305.7142}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: Attack1
@@ -240,32 +264,9 @@ MonoBehaviour:
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
+  band: 1
   minDistance: 0
   maxDistance: 2.8
---- !u!114 &-6189651005371784800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
-  m_Name: BossAttackNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: b300f559-49b9-4d3f-bd32-bb557b37e7b6
-  position: {x: 2850.0005, y: 1164.5715}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: Attack2
-  animTriggerName: Attack2
-  faceTargetOnStart: 1
-  superArmorDuringAttack: 1
-  lungeSpeed: 0
-  fallbackTimeout: 4
 --- !u!114 &-5706008886741992250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +308,7 @@ MonoBehaviour:
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
+  band: 2
   minDistance: 2.8
   maxDistance: 6
 --- !u!114 &-5341298171854437043
@@ -372,7 +374,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: dba86821-3cad-4b96-9b1f-bc6d2e8cdc47
-  position: {x: 550.85693, y: 359.42847}
+  position: {x: 588, y: 359.42856}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -391,7 +393,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 09d926e5-bd64-4838-9d5e-252ec88ea9c3
-  position: {x: 1556.8573, y: 1327.4286}
+  position: {x: 1391.4286, y: 1164.8572}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -410,13 +412,13 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 0e939183-4e42-4bd1-be71-a4340645a8fd
-  position: {x: 2741.4287, y: 1064.5715}
+  position: {x: 2741.143, y: 1064.5714}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
   children:
-  - {fileID: -7652078713948252999}
-  - {fileID: -6189651005371784800}
+  - {fileID: 5291348932554815557}
+  - {fileID: 3901071553878176212}
 --- !u!114 &-4205218595472559838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,11 +478,11 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 59528903-f3eb-435d-9285-58c22851da5e
-  position: {x: 1740.2858, y: 1182.2856}
+  position: {x: 1721.143, y: 1182.2859}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
-  child: {fileID: -1949710364933570039}
+  child: {fileID: 2542658266367619114}
   cooldownTime: 5
   triggerCooldownOnFailure: 0
 --- !u!114 &-3654647295575471161
@@ -502,6 +504,7 @@ MonoBehaviour:
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
+  band: 1
   minDistance: 0
   maxDistance: 2.8
 --- !u!114 &-2884207539805034885
@@ -519,7 +522,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: a09aca68-47ba-4cf7-96ca-4388b0e35f7b
-  position: {x: 1430.5717, y: 1204}
+  position: {x: 1265.4288, y: 1055.4285}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -541,11 +544,11 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 6385d0d5-f6b6-4667-93c8-b4b2070c3586
-  position: {x: 770.0001, y: 1204}
+  position: {x: 720.90137, y: 1204}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
-  child: {fileID: 2060692665654284735}
+  child: {fileID: -9153983661780345791}
   cooldownTime: 10
   triggerCooldownOnFailure: 0
 --- !u!114 &-2493304503041075454
@@ -585,58 +588,10 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 1edfbe4c-1e71-426d-ada2-ccb3cdcb7c61
-  position: {x: 2964.8574, y: 773.1428}
+  position: {x: 3352.1821, y: 773.1428}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: "\u8FDC\u8DDD\u79BB"
---- !u!114 &-1949710364933570039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
-  m_Name: BossAttackNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: 618065fe-cdc5-4db9-92dc-3ebe50457aba
-  position: {x: 1740.2858, y: 1298.8572}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: Attack3
-  animTriggerName: Attack3
-  faceTargetOnStart: 1
-  superArmorDuringAttack: 1
-  lungeSpeed: 4
-  fallbackTimeout: 4
---- !u!114 &-1713067407272875495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
-  m_Name: BossAttackNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: b6405c7f-cd73-4713-b83e-e0e6664b5958
-  position: {x: 2500.8574, y: 1164.5715}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: Attack3
-  animTriggerName: Attack3
-  faceTargetOnStart: 1
-  superArmorDuringAttack: 1
-  lungeSpeed: 0
-  fallbackTimeout: 4
 --- !u!114 &-1541841818291937655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,11 +607,11 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 4642b8aa-8097-4ce4-9d37-2ad25ed8c94b
-  position: {x: 2500.8574, y: 1064.5715}
+  position: {x: 2502.286, y: 1064.5714}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
-  child: {fileID: -1713067407272875495}
+  child: {fileID: 6740108896640521364}
   cooldownTime: 10
   triggerCooldownOnFailure: 0
 --- !u!114 &-1308795637901687443
@@ -681,6 +636,7 @@ MonoBehaviour:
   children:
   - {fileID: 4834850933448219968}
   - {fileID: -1209118821292151943}
+  - {fileID: -2884207539805034885}
 --- !u!114 &-1209118821292151943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -696,7 +652,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: a0ab6d06-670f-46e9-bb4b-a4e0dd20eed5
-  position: {x: 1067.7142, y: 1041.7144}
+  position: {x: 961.143, y: 1055.4283}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: "\u8FD1\u8DDD\u79BB"
@@ -704,7 +660,6 @@ MonoBehaviour:
   - {fileID: -2787270493019164559}
   - {fileID: -822535195315818379}
   - {fileID: 3968273236833276057}
-  - {fileID: -2884207539805034885}
   weights: []
 --- !u!114 &-1099834113907489047
 MonoBehaviour:
@@ -745,7 +700,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: b5f924d6-ddcd-491d-8a10-628429b86257
-  position: {x: 953.4286, y: 1204}
+  position: {x: 904.33, y: 1204}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -767,13 +722,14 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 2b17c9df-48fc-40f9-b1c4-67b2dd2648ec
-  position: {x: 2576.2861, y: 773.1428}
+  position: {x: 2605.7144, y: 773.1429}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: "\u8FD1\u8DDD\u79BB"
   children:
   - {fileID: -3654647295575471161}
   - {fileID: 6937185277779365309}
+  - {fileID: 8448945150357458887}
 --- !u!114 &-555327718517282063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,7 +767,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: fe04cedd-50d4-4e5c-87e7-61035e0c2d02
-  position: {x: 1175.1431, y: 270.85718}
+  position: {x: 1214.2859, y: 247.42862}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -881,7 +837,6 @@ MonoBehaviour:
   - {fileID: 4834850933448219968}
   - {fileID: -5425985305601230877}
   - {fileID: -2787270493019164559}
-  - {fileID: 2060692665654284735}
   - {fileID: -822535195315818379}
   - {fileID: 1668630693199496329}
   - {fileID: 3968273236833276057}
@@ -891,19 +846,13 @@ MonoBehaviour:
   - {fileID: 8359164964793555120}
   - {fileID: -4518697413635116293}
   - {fileID: -3699540504234255316}
-  - {fileID: -1949710364933570039}
-  - {fileID: 1451123066016618159}
   - {fileID: 7689944238264556771}
   - {fileID: -8276407239547417843}
   - {fileID: -688459980189037339}
   - {fileID: -3654647295575471161}
   - {fileID: 6937185277779365309}
   - {fileID: -1541841818291937655}
-  - {fileID: -1713067407272875495}
   - {fileID: -4369001701266056556}
-  - {fileID: -6189651005371784800}
-  - {fileID: -7652078713948252999}
-  - {fileID: 7588665906845547931}
   - {fileID: 8448945150357458887}
   - {fileID: 6191660622319953156}
   - {fileID: 8515066190834798828}
@@ -914,6 +863,13 @@ MonoBehaviour:
   - {fileID: 6256956957677580706}
   - {fileID: -4205218595472559838}
   - {fileID: 9024179176012497164}
+  - {fileID: -9153983661780345791}
+  - {fileID: 6352253398416744243}
+  - {fileID: -7410103709558969822}
+  - {fileID: 5291348932554815557}
+  - {fileID: 3901071553878176212}
+  - {fileID: 6740108896640521364}
+  - {fileID: 2542658266367619114}
   treeState: 2
   config: {fileID: 11400000, guid: c004edd266169d1499e4e3c38106e36b, type: 2}
 --- !u!114 &446057817270124698
@@ -975,7 +931,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 79cc7bcb-be2e-425a-aac7-28ea5e5c7fc4
-  position: {x: 368.5713, y: 359.42847}
+  position: {x: 382.85724, y: 359.42856}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -1019,27 +975,8 @@ MonoBehaviour:
   descrpition: "\u4E2D\u8DDD\u79BB"
   children:
   - {fileID: -3699540504234255316}
-  - {fileID: 1451123066016618159}
+  - {fileID: 6352253398416744243}
   weights: []
---- !u!114 &1451123066016618159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39f002d3bfb745b6abf578a7f5feefb2, type: 3}
-  m_Name: MoveNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: f46f75f2-f077-4637-a602-f8294a555d3f
-  position: {x: 2006.5714, y: 1182.2856}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: 
 --- !u!114 &1590760416182234407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,16 +1011,16 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: e3bc7b2c-ca35-41f6-af10-cb829adc2f86
-  position: {x: 953.4286, y: 1304}
+  position: {x: 904.33, y: 1304}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: Attack3
   animTriggerName: Attack3
   faceTargetOnStart: 1
   superArmorDuringAttack: 1
-  lungeSpeed: 4
+  lungeSpeed: 0
   fallbackTimeout: 4
---- !u!114 &2060692665654284735
+--- !u!114 &2542658266367619114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1097,15 +1034,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 2
   Started: 0
-  Guid: 0353eee8-4b2b-4523-9f80-c4ea73f5efe7
-  position: {x: 770.0001, y: 1305.7142}
+  Guid: 5d4524a9-f67e-418d-b36a-eb7454835941
+  position: {x: 1721.143, y: 1305.7145}
   config: {fileID: 0}
   LastEvaluateTime: -1
-  descrpition: AttackCombo
-  animTriggerName: AttackCombo
+  descrpition: DodgeCounterPierce
+  animTriggerName: DodgeCounterPierce
   faceTargetOnStart: 1
   superArmorDuringAttack: 1
-  lungeSpeed: 2
+  lungeSpeed: 0
   fallbackTimeout: 4
 --- !u!114 &3383113893006418955
 MonoBehaviour:
@@ -1122,7 +1059,31 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: ed437f06-b349-49dd-ab73-a42ed70be545
-  position: {x: 1268.2858, y: 1305.7142}
+  position: {x: 1225.7144, y: 1305.7142}
+  config: {fileID: 0}
+  LastEvaluateTime: -1
+  descrpition: Attack2
+  animTriggerName: Attack2
+  faceTargetOnStart: 1
+  superArmorDuringAttack: 1
+  lungeSpeed: 0
+  fallbackTimeout: 4
+--- !u!114 &3901071553878176212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
+  m_Name: BossAttackNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 9ab0322f-ce73-44d3-a7b4-8a53f74459ea
+  position: {x: 2888.5715, y: 1190.857}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: Attack2
@@ -1146,7 +1107,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 64d45504-d794-4d7a-8924-a729c14934ea
-  position: {x: 1700.5713, y: 339.4286}
+  position: {x: 1653.6416, y: 349.14282}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -1167,7 +1128,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 812ce636-81bb-418c-af86-293ca831ee62
-  position: {x: 1171.143, y: 1204}
+  position: {x: 1122.0442, y: 1204}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -1193,8 +1154,33 @@ MonoBehaviour:
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
+  band: 1
   minDistance: 0
   maxDistance: 2.8
+--- !u!114 &5291348932554815557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
+  m_Name: BossAttackNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 291a5e9e-c2a8-4ac0-aeb9-202311d502ce
+  position: {x: 2708, y: 1190.857}
+  config: {fileID: 0}
+  LastEvaluateTime: -1
+  descrpition: Attack1
+  animTriggerName: Attack1
+  faceTargetOnStart: 1
+  superArmorDuringAttack: 1
+  lungeSpeed: 0
+  fallbackTimeout: 4
 --- !u!114 &6191660622319953156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,11 +1196,11 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 051121dc-d9e8-4d87-a688-a88c53cc0477
-  position: {x: 3180.2861, y: 1186.2856}
+  position: {x: 3161.2737, y: 1064.5713}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
-  waitTime: 0.35
+  waitTime: 0.8
 --- !u!114 &6256956957677580706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1237,6 +1223,49 @@ MonoBehaviour:
   children:
   - {fileID: 8634284696699492920}
   - {fileID: -7744034739340077983}
+--- !u!114 &6352253398416744243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57757d82446949dcb0378f7d6407c6c1, type: 3}
+  m_Name: ChaseMoveNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 4f31dd0c-7d8c-465c-8023-5d57c5acd290
+  position: {x: 2028.2861, y: 1182.2856}
+  config: {fileID: 0}
+  LastEvaluateTime: -1
+  descrpition: 
+--- !u!114 &6740108896640521364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
+  m_Name: BossAttackNode
+  m_EditorClassIdentifier: 
+  State: 2
+  Started: 0
+  Guid: 925bec2e-2b28-4f0b-96e4-d27fa3f9450f
+  position: {x: 2502.286, y: 1190.857}
+  config: {fileID: 0}
+  LastEvaluateTime: -1
+  descrpition: Attack3
+  animTriggerName: Attack3
+  faceTargetOnStart: 1
+  superArmorDuringAttack: 1
+  lungeSpeed: 0
+  fallbackTimeout: 4
 --- !u!114 &6808038337973965537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1259,7 +1288,7 @@ MonoBehaviour:
   animTriggerName: DodgeCounterPierce
   faceTargetOnStart: 1
   superArmorDuringAttack: 1
-  lungeSpeed: 10
+  lungeSpeed: 0
   fallbackTimeout: 4
 --- !u!114 &6937185277779365309
 MonoBehaviour:
@@ -1283,33 +1312,8 @@ MonoBehaviour:
   children:
   - {fileID: -1541841818291937655}
   - {fileID: -4369001701266056556}
-  - {fileID: 7588665906845547931}
-  - {fileID: 8448945150357458887}
+  - {fileID: -7410103709558969822}
   weights: []
---- !u!114 &7588665906845547931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0bb644425575d344bc24c8bc024fc41, type: 3}
-  m_Name: BossAttackNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: d6701913-daa1-4cef-b45e-b1a7ac849e43
-  position: {x: 3017.4287, y: 1064.5715}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: Attack1
-  animTriggerName: Attack1
-  faceTargetOnStart: 1
-  superArmorDuringAttack: 1
-  lungeSpeed: 0
-  fallbackTimeout: 4
 --- !u!114 &7689944238264556771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1325,10 +1329,11 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 01f83379-56b1-4f28-ae2c-becb01e2442a
-  position: {x: 2083.7144, y: 1081.7144}
+  position: {x: 2048.6658, y: 1081.7142}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
+  band: 3
   minDistance: 6
   maxDistance: 999
 --- !u!114 &7949183956676323239
@@ -1370,11 +1375,11 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 8e52650a-0766-4ddc-9649-40e6463de970
-  position: {x: 1430.5717, y: 1327.4286}
+  position: {x: 1265.1428, y: 1164.8572}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
-  waitTime: 0.35
+  waitTime: 0.6
 --- !u!114 &8448945150357458887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,7 +1395,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 1f3d1467-6149-45bd-adb6-b80f11090a78
-  position: {x: 3196.8574, y: 1064.5715}
+  position: {x: 3189.6565, y: 909.1429}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -1412,7 +1417,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 3a15b783-dfd2-44e7-8dc7-861172065815
-  position: {x: 3332.2861, y: 1186.2856}
+  position: {x: 3313.2734, y: 1064.5713}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -1452,7 +1457,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 21754ba7-201c-4adc-800e-32d59ebcb1f1
-  position: {x: 2116.5713, y: 932.0002}
+  position: {x: 2081.8086, y: 932}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: "\u8FDC\u8DDD\u79BB"

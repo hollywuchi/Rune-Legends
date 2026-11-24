@@ -16,7 +16,12 @@ public class PlayerIdleState : PlayerGroundState
         if (t.HasTarget) return t;
 
         if (Mathf.Abs(s.context.MoveInput.x) > 0.1f)
+        {
+            if (s.context.SprintIsHeld)
+                return new Transition(PlayerStateId.Sprint);
+
             return new Transition(PlayerStateId.Locomotion);
+        }
 
         return Transition.None;
     }

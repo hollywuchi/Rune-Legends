@@ -15,9 +15,12 @@ namespace BehaviorTree.Leaves.Action
         public float fallbackDuration = 3.5f;
 
         private float timer;
+        private bool hasRaisedStartEvent;
 
         protected override void OnStart()
         {
+            hasRaisedStartEvent = false;
+
             if (context != null && context.Motor != null)
             {
                 context.Motor.attackFinished = false;
@@ -47,6 +50,7 @@ namespace BehaviorTree.Leaves.Action
             if (context == null || context.Motor == null)
             {
                 if (blackBoard != null) blackBoard.HasPlayedIntro = true;
+                RaiseBossBattleStart();
                 return BtLifeTimeState.Success;
             }
 
@@ -55,6 +59,7 @@ namespace BehaviorTree.Leaves.Action
             if (context.Motor.attackFinished || timer <= 0f)
             {
                 if (blackBoard != null) blackBoard.HasPlayedIntro = true;
+                RaiseBossBattleStart();
                 return BtLifeTimeState.Success;
             }
 
@@ -68,10 +73,24 @@ namespace BehaviorTree.Leaves.Action
                 blackBoard.HasPlayedIntro = true;
             }
 
+            RaiseBossBattleStart();
+
             if (context != null && context.Motor != null)
             {
                 context.Motor.attackFinished = false;
             }
+        }
+
+        private void RaiseBossBattleStart()
+        {
+            if (hasRaisedStartEvent || context == null || context.Character == null) return;
+
+            hasRaisedStartEvent = true;
+            EventBus<BossBattleStartEvent>.Raise(new BossBattleStartEvent
+            {
+                bossCharacter = context.Character,
+                bossPosture = context.PostureSystem
+            });
         }
     }
 }

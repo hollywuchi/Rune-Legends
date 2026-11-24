@@ -18,7 +18,16 @@ public class PlayerLocomotionState : PlayerGroundState
     public override Transition LogicUpdate()
     {
         var t = base.LogicUpdate();
-        if (t.HasTarget) return t;
+        if (t.HasTarget)
+        {
+            if (t.Target == PlayerStateId.Jump && s.context.SprintIsHeld)
+                return new Transition(PlayerStateId.SprintJump);
+
+            return t;
+        }
+
+        if (s.context.SprintIsHeld && Mathf.Abs(s.context.MoveInput.x) > 0.1f)
+            return new Transition(PlayerStateId.Sprint);
 
         Run();
 

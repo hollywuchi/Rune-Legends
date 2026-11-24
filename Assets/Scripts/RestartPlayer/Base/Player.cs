@@ -53,10 +53,13 @@ public class Player : MonoBehaviour
         stateRegistry.Register(PlayerStateId.Locomotion, new PlayerLocomotionState(s));
         // stateRegistry.Register(PlayerStateId.Turn, new PlayerTurnState(s));
         stateRegistry.Register(PlayerStateId.Sprint, new PlayerSprintState(s));
+        stateRegistry.Register(PlayerStateId.SprintRun, new PlayerSprintRunState(s));
+        stateRegistry.Register(PlayerStateId.Land, new PlayerLandState(s));
         stateRegistry.Register(PlayerStateId.Jump, new PlayerJumpState(s));
         stateRegistry.Register(PlayerStateId.Fall, new PlayerFallState(s));
         stateRegistry.Register(PlayerStateId.AirSprint, new PlayerAirSprintState(s));
         stateRegistry.Register(PlayerStateId.Jump2, new PlayerJump2State(s));
+        stateRegistry.Register(PlayerStateId.SprintJump, new PlayerSprintJumpState(s));
         stateRegistry.Register(PlayerStateId.WallSlide, new PlayerWallSlideState(s));
         stateRegistry.Register(PlayerStateId.WallJump, new PlayerWallJumpState(s));
         stateRegistry.Register(PlayerStateId.Climb, new PlayerClimbState(s));
@@ -137,10 +140,6 @@ public class Player : MonoBehaviour
 
         // ====== 采样输入 -> ctx ======
         var move = inputActions.MoveSystem.WalkOrRun.ReadValue<Vector2>();
-        if (inputActions.MoveSystem.Sprint.IsPressed())
-        {
-            move.x *= 2;
-        }
 
         context.MoveInput = inputGate.FilterMove(move); // 通过输入门过滤移动输入
 
@@ -223,7 +222,7 @@ public class Player : MonoBehaviour
         // if (context.IsAttacking || context.IsBlocking)
         //     anim.SetInputX(0);
         // else
-        anim.SetInputX(Mathf.Abs(context.MoveInput.x));
+        anim.SetInputX(context.IsSprintRunning ? 2f : Mathf.Abs(context.MoveInput.x));
         anim.SetIsGround(context.IsGrounded);
         anim.SetIsWall(context.IsTouchingWall);
         anim.SetVelocityY(Mathf.Clamp(motor.Velocity.y, -1f, 1f));
@@ -385,8 +384,22 @@ public class Player : MonoBehaviour
 
     public void Animation_Move(float distance)
     {
-        var attackState = stateMachine.currentState as PlayerAttackState;
-        attackState?.ApplyAttackMove(distance);
+        motor.ForceMoveDistance(context.FacingDirection, distance, 0.2f);
+    }
+
+    /// <summary>
+    /// 动画帧事件：自定义位移距离与时长（floatParameter=位移距离，正前负后；intParameter=持续毫秒数，0则默认200ms）
+    /// </summary>
+    public void Animation_ForceMove(AnimationEvent evt)
+    {
+        float duration = evt.intParameter > 0 ? evt.intParameter / 1000f : 0.2f;
+        motor.ForceMoveDistance(context.FacingDirection, evt.floatParameter, duration);
+    }
+
+    public void Animation_StopMove()
+    {
+        motor.StopForceMove();
+        motor.SetVelocityX(0f);
     }
 
     /// <summary>

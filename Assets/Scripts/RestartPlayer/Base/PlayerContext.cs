@@ -55,7 +55,7 @@ public sealed class PlayerContext
     public float TurnTimer { get; set; }
 
     // ====== 空中冲刺变量 =======
-    public float AirSprintMag { get; set; }
+    public bool IsSprintRunning { get; set; }
 
     // ====== 技能输入 ======
     public bool SkillPressedThisFrame { get; set; }     // 刚开始按下
@@ -159,6 +159,7 @@ public sealed class PlayerContext
 
         CanSprint = true;
         IsSprintFinished = false;
+        IsSprintRunning = false;
 
         ResetAttackState();
 

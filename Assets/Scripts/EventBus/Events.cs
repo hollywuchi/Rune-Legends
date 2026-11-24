@@ -128,3 +128,17 @@ public struct PauseEvnet : IEvent
 }
 
 #endregion
+
+#region =========Boss相关=========
+
+public struct BossBattleStartEvent : IEvent
+{
+    public Character bossCharacter;
+    public PostureSystem bossPosture;
+}
+
+public struct BossBattleEndEvent : IEvent
+{
+}
+
+#endregion

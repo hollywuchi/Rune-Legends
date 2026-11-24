@@ -36,10 +36,7 @@ public class PlayerFallState : PlayerAirState
         if (ShouldWallSlide())
             return new Transition(PlayerStateId.WallSlide);
 
-        // 4) 空中横移
-        s.motor.SetVelocityX(s.context.MoveInput.x * s.config.speed * s.context.AirSprintMag);
-
-        // 5) 落地 -> Idle/Locomotion
+        // 4) 落地 -> Idle/Locomotion
         if (s.context.IsGrounded)
         {
             if (Mathf.Abs(s.context.MoveInput.x) < 0.1f)
@@ -55,6 +52,13 @@ public class PlayerFallState : PlayerAirState
         }
 
         return Transition.None;
+    }
+
+    public override void PhysicsUpdate()
+    {
+        float targetX = s.context.MoveInput.x * s.config.airMaxSpeed;
+        float accel = Mathf.Abs(s.context.MoveInput.x) > 0.01f ? s.config.airAcceleration : s.config.airDeceleration;
+        s.motor.MoveVelocityX(targetX, accel * Time.fixedDeltaTime);
     }
 
     /// <summary>

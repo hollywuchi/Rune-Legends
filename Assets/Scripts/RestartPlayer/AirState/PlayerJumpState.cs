@@ -12,15 +12,6 @@ public class PlayerJumpState : PlayerAirState
 
         // 跳跃起速：由motor负责
         s.motor.Jump(s.config.jumpForce);
-
-        if (Mathf.Abs(s.context.MoveInput.x) > 1f)
-        {
-            s.context.AirSprintMag = 1f;   
-            s.anim.CrossFadeToSJump(0.05f);
-        }
-        else s.context.AirSprintMag = 0.5f;
-
-
     }
 
     public override Transition LogicUpdate()
@@ -29,13 +20,17 @@ public class PlayerJumpState : PlayerAirState
         var t = base.LogicUpdate();
         if (t.HasTarget) return t;
 
-        // 空中横移（叶子状态做细节：你原来是0.5倍率）
-        s.motor.SetVelocityX(s.context.MoveInput.x * s.config.speed * s.context.AirSprintMag);
-
         // 上升结束 -> Fall
         if (s.motor.Velocity.y < 0 && !s.context.IsAttacking)
             return new Transition(PlayerStateId.Fall);
 
         return Transition.None;
+    }
+
+    public override void PhysicsUpdate()
+    {
+        float targetX = s.context.MoveInput.x * s.config.airMaxSpeed;
+        float accel = Mathf.Abs(s.context.MoveInput.x) > 0.01f ? s.config.airAcceleration : s.config.airDeceleration;
+        s.motor.MoveVelocityX(targetX, accel * Time.fixedDeltaTime);
     }
 }
