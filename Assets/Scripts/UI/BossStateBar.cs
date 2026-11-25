@@ -26,7 +26,7 @@ public class BossStateBar : MonoBehaviour
     private EventBinding<BossBattleStartEvent> battleStartBinding;
     private EventBinding<BossBattleEndEvent> battleEndBinding;
     private EventBinding<PoseChangeEvent> poseChangeBinding;
-    private EventBinding<SceneUnloadEvent> sceneUnloadBinding;
+    // private EventBinding<SceneUnloadEvent> sceneUnloadBinding;
     private EventBinding<BackToMenuEvent> backToMenuBinding;
 
     private void Awake()
@@ -51,13 +51,13 @@ public class BossStateBar : MonoBehaviour
         battleStartBinding = new EventBinding<BossBattleStartEvent>(OnBossBattleStart);
         battleEndBinding = new EventBinding<BossBattleEndEvent>(HideAndUnbind);
         poseChangeBinding = new EventBinding<PoseChangeEvent>(HandlePostureChange);
-        sceneUnloadBinding = new EventBinding<SceneUnloadEvent>(HideAndUnbind);
+        // sceneUnloadBinding = new EventBinding<SceneUnloadEvent>(HideAndUnbind);
         backToMenuBinding = new EventBinding<BackToMenuEvent>(HideAndUnbind);
 
         EventBus<BossBattleStartEvent>.Register(battleStartBinding);
         EventBus<BossBattleEndEvent>.Register(battleEndBinding);
         EventBus<PoseChangeEvent>.Register(poseChangeBinding);
-        EventBus<SceneUnloadEvent>.Register(sceneUnloadBinding);
+        // EventBus<SceneUnloadEvent>.Register(sceneUnloadBinding);
         EventBus<BackToMenuEvent>.Register(backToMenuBinding);
     }
 
@@ -66,7 +66,7 @@ public class BossStateBar : MonoBehaviour
         EventBus<BossBattleStartEvent>.Deregister(battleStartBinding);
         EventBus<BossBattleEndEvent>.Deregister(battleEndBinding);
         EventBus<PoseChangeEvent>.Deregister(poseChangeBinding);
-        EventBus<SceneUnloadEvent>.Deregister(sceneUnloadBinding);
+        // EventBus<SceneUnloadEvent>.Deregister(sceneUnloadBinding);
         EventBus<BackToMenuEvent>.Deregister(backToMenuBinding);
 
         UnbindCurrentBoss();

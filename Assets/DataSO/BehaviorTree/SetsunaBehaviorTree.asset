@@ -156,25 +156,6 @@ MonoBehaviour:
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
---- !u!114 &-7486104490174643112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c92630404e9446db5156b2d5bc58aa9, type: 3}
-  m_Name: CheckBossIntroNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: c914b650-0f6e-426b-b703-e76771ceb0c7
-  position: {x: 870.8572, y: 237.71436}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: 
 --- !u!114 &-7410103709558969822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,28 +248,6 @@ MonoBehaviour:
   band: 1
   minDistance: 0
   maxDistance: 2.8
---- !u!114 &-5706008886741992250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f97078530b59411bafd59a73a992dcb8, type: 3}
-  m_Name: SequenceNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: 7a2bdea1-3c34-486d-b62b-0cd8d5b06a5f
-  position: {x: 1039.7144, y: 109.14282}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: "\u51FA\u573A\u52A8\u753B\u8282\u70B9\uFF0C\u4E00\u6B21\u6027"
-  children:
-  - {fileID: -7486104490174643112}
-  - {fileID: -349872557756294548}
 --- !u!114 &-5425985305601230877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,7 +316,6 @@ MonoBehaviour:
   descrpition: 
   children:
   - {fileID: 446057817270124698}
-  - {fileID: -5706008886741992250}
   - {fileID: 1012108794815334750}
 --- !u!114 &-5010987127628199144
 MonoBehaviour:
@@ -374,7 +332,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: dba86821-3cad-4b96-9b1f-bc6d2e8cdc47
-  position: {x: 588, y: 359.42856}
+  position: {x: 600.5713, y: 359.42865}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -566,7 +524,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 143e9777-16be-4813-93cb-eb4118bb35b1
-  position: {x: 452.5713, y: 237.71423}
+  position: {x: 465.14282, y: 237.71436}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -752,27 +710,6 @@ MonoBehaviour:
   child: {fileID: -5341298171854437043}
   cooldownTime: 8
   triggerCooldownOnFailure: 0
---- !u!114 &-349872557756294548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58c90dfd5a8a34146829165f4283f110, type: 3}
-  m_Name: BossIntroNode
-  m_EditorClassIdentifier: 
-  State: 2
-  Started: 0
-  Guid: fe04cedd-50d4-4e5c-87e7-61035e0c2d02
-  position: {x: 1214.2859, y: 247.42862}
-  config: {fileID: 0}
-  LastEvaluateTime: -1
-  descrpition: 
-  introInvincibleDuration: 3
-  fallbackDuration: 3.5
 --- !u!114 &-251194919151608944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -815,9 +752,6 @@ MonoBehaviour:
   - {fileID: -2493304503041075454}
   - {fileID: 1118931215151475600}
   - {fileID: -5010987127628199144}
-  - {fileID: -5706008886741992250}
-  - {fileID: -7486104490174643112}
-  - {fileID: -349872557756294548}
   - {fileID: 1012108794815334750}
   - {fileID: -8485675605977723902}
   - {fileID: 7949183956676323239}
@@ -887,7 +821,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: a1e74340-c23c-406e-82f8-7836fab940e9
-  position: {x: 223.42847, y: 109.14282}
+  position: {x: 235.99976, y: 109.14288}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: "\u6B7B\u4EA1\uFF0C\u53D7\u51FB\u8282\u70B9"
@@ -931,7 +865,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 79cc7bcb-be2e-425a-aac7-28ea5e5c7fc4
-  position: {x: 382.85724, y: 359.42856}
+  position: {x: 395.42847, y: 359.42865}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -950,7 +884,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: 9ae7f92a-5060-4ac7-812e-82ee589fcba1
-  position: {x: 174.28564, y: 237.71423}
+  position: {x: 186.85693, y: 237.71436}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 
@@ -992,7 +926,7 @@ MonoBehaviour:
   State: 2
   Started: 0
   Guid: c13bcd60-d75a-41e9-abd7-398bcbbe762f
-  position: {x: 311.99988, y: 237.71423}
+  position: {x: 324.5713, y: 237.71436}
   config: {fileID: 0}
   LastEvaluateTime: -1
   descrpition: 

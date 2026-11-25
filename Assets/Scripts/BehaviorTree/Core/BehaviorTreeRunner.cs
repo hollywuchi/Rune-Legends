@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BehaviorTreeRunner : MonoBehaviour
 {
+    public bool isInto = true;
     public BehaviorTreeSO treeAssets;
     [HideInInspector] public BehaviorTreeSO _runtimeTree;
-
+    
     private void Start()
     {
         var context = EnemyContext.CreateFromObject(gameObject);
@@ -16,7 +17,8 @@ public class BehaviorTreeRunner : MonoBehaviour
 
     private void Update()
     {
-        _runtimeTree.UpdateTree();
+        if (isInto)
+            _runtimeTree.UpdateTree();
     }
 
     public void DestroySelf() => Destroy(gameObject);
